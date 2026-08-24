@@ -1,0 +1,25 @@
+# 1. Dependency packages (too heavy, easily re-installed)
+node_modules/
+backend/venv/
+backend/__pycache__/
+*.pyc
+*.pyo
+
+# 2. Secret keys & environment variables (Crucial for security!)
+.env
+.env.local
+*.env
+
+# 3. Production build folders
+dist/
+build/
+out/
+.next/
+
+# 4. Logs and system files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

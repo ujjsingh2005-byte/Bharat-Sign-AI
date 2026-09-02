@@ -173,6 +173,10 @@ PHRASE_DICTIONARY = {
     "ठीक बा": "It is good",
     "डॉक्टर के बोलाइब": "Call the doctor",
     "हमरा बुखार बा": "I have fever",
+    "हमरा बहुत भूख लागल बा": "I am very hungry",
+    "तोहार घर कहाँ बा": "Where is your house",
+    "हमरा के रास्ता बता दीं": "Show me the way",
+    "हमरा रुपया चाहीं": "I need money",
 
     # Telugu
     "మీరు ఎక్కడ నివసిస్తున్నారు": "Where do you live",
@@ -183,6 +187,9 @@ PHRASE_DICTIONARY = {
     "నాకు అన్నం కావాలి": "I want food",
     "ఆసుపత్రి ఎక్కడ ఉంది": "Where is the hospital",
     "నాకు జ్వరం వచ్చింది": "I have fever",
+    "నాకు చాలా ఆకలిగా ఉంది": "I am very hungry",
+    "పోలీస్ స్టేషన్ ఎక్కడ ఉంది": "Where is the police station",
+    "రైలు ఎప్పుడు వస్తుంది": "When will the train arrive",
 
     # Tamil
     "நீங்கள் எங்கே வசிக்கிறீர்கள்": "Where do you live",
@@ -193,6 +200,9 @@ PHRASE_DICTIONARY = {
     "எனக்கு உணவு வேண்டும்": "I want food",
     "மருத்துவமனை எங்கே உள்ளது": "Where is the hospital",
     "எனக்கு காய்ச்சல் உள்ளது": "I have fever",
+    "எனக்கு மிகவும் பசிக்கிறது": "I am very hungry",
+    "காவல் நிலையம் எங்கே உள்ளது": "Where is the police station",
+    "ரயில் எப்போது வரும்": "When will the train arrive",
 
     # Bengali
     "তুমি কোথায় থাকো": "Where do you live",
@@ -205,6 +215,9 @@ PHRASE_DICTIONARY = {
     "আমার খাবার চাই": "I want food",
     "হাসপাতাল কোথায়": "Where is the hospital",
     "আমার জ্বর হয়েছে": "I have fever",
+    "আমার খুব খিদে পেয়েছে": "I am very hungry",
+    "পুলিশ স্টেশন কোথায়": "Where is the police station",
+    "ট্রেন কখন আসবে": "When will the train arrive",
 
     # Marathi
     "तुम्ही कुठे राहता": "Where do you live",
@@ -216,6 +229,9 @@ PHRASE_DICTIONARY = {
     "मला जेवण हवे आहे": "I want food",
     "दवाखाना कुठे आहे": "Where is the hospital",
     "मला ताप आला आहे": "I have fever",
+    "मला खूप भूक लागली आहे": "I am very hungry",
+    "पोलीस स्टेशन कुठे आहे": "Where is the police station",
+    "ट्रेन कधी येणार": "When will the train arrive",
 
     # Gujarati
     "મને પાણી જોઈએ છે": "I want water",
@@ -223,6 +239,9 @@ PHRASE_DICTIONARY = {
     "તમારું નામ શું છે": "What is your name",
     "મને મદદ જોઈએ છે": "I need help",
     "હોસ્પિટલ ક્યાં છે": "Where is the hospital",
+    "મને ખૂબ ભૂખ લાગી છે": "I am very hungry",
+    "પોલીસ સ્ટેશન ક્યાં છે": "Where is the police station",
+    "ટ્રેન ક્યારે આવશે": "When will the train arrive",
 
     # Punjabi
     "ਮੈਨੂੰ ਪਾਣੀ ਚਾਹੀਦਾ ਹੈ": "I want water",
@@ -230,6 +249,9 @@ PHRASE_DICTIONARY = {
     "ਤੁਹਾਡਾ ਨਾਮ ਕੀ ਹੈ": "What is your name",
     "ਮੈਨੂੰ ਮਦਦ ਚਾਹੀਦੀ ਹੈ": "I need help",
     "ਹਸਪਤਾਲ ਕਿੱਥੇ ਹੈ": "Where is the hospital",
+    "ਮੈਨੂੰ ਬਹੁਤ ਭੁੱਖ ਲੱਗੀ ਹੈ": "I am very hungry",
+    "ਪੁਲਿਸ ਸਟੇਸ਼ਨ ਕਿੱਥੇ ਹੈ": "Where is the police station",
+    "ਟ੍ਰੇਨ ਕਦੋਂ ਆਵੇਗੀ": "When will the train arrive",
 
     # Malayalam
     "നിങ്ങൾ എവിടെയാണ് താമസിക്കുന്നത്": "Where do you live",
@@ -237,6 +259,8 @@ PHRASE_DICTIONARY = {
     "സുഖമാണോ": "How are you",
     "എനിക്ക് സഹായം വേണം": "I need help",
     "നിങ്ങളുടെ പേരെന്താണ്": "What is your name",
+    "എനിക്ക് വിശക്കുന്നു": "I am hungry",
+    "പോലീസ് സ്റ്റേഷൻ എവിടെയാണ്": "Where is the police station",
 
     # Kannada
     "ನೀವು ಎಲ್ಲಿದ್ದೀರಿ": "Where do you live",
@@ -244,6 +268,20 @@ PHRASE_DICTIONARY = {
     "ನೀವು ಹೇಗಿದ್ದೀರಿ": "How are you",
     "ನನಗೆ ಸಹಾಯ ಬೇಕು": "I need help",
     "ನಿಮ್ಮ ಹೆಸರೇನು": "What is your name",
+    "ನನಗೆ ಹಸಿವಾಗಿದೆ": "I am hungry",
+    "ಪೊಲೀಸ್ ಸ್ಟೇಷನ್ ಎಲ್ಲಿದೆ": "Where is the police station",
+
+    # Odia
+    "ମୋତେ ଭୋକ ଲାଗୁଛି": "I am hungry",
+    "ମୋତେ ପାଣି ଦରକାର": "I want water",
+    "ଆପଣ କେମିତି ଅଛନ୍ତି": "How are you",
+    "ପୋଲିସ ଷ୍ଟେସନ କେଉଁଠି": "Where is the police station",
+
+    # Assamese
+    "মোৰ ভোক লাগিছে": "I am hungry",
+    "মোৰ পানী লাগে": "I want water",
+    "আপুনি কেমন আছে": "How are you",
+    "আৰক্ষী থানা ক'ত আছে": "Where is the police station",
 }
 
 # Word-level vocabulary lexicon

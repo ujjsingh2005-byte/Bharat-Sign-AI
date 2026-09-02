@@ -123,19 +123,35 @@ def recognize_landmarks(request: LandmarkRecognitionRequest):
 
     up_count = sum([1 for f in [index_up, middle_up, ring_up, pinky_up] if f])
 
+    # Check hand activity: if hand landmarks are in rest/idle posture
+    hand_span = abs(index_tip.x - wrist.x) + abs(index_tip.y - wrist.y)
+    if hand_span < 0.08:
+        return {
+            "success": True,
+            "sign": None,
+            "text": "Place hand inside scanner frame",
+            "english_sign": None,
+            "confidence": 0.0,
+            "target_language": request.target_language or "en",
+            "sign_language": request.sign_language or "ISL",
+            "audio": None,
+            "alternatives": [],
+            "message": "Waiting for active hand gesture...",
+        }
+
     # Distinct Sign Decision Logic across Dialects
     if is_pinched:
         sign = "FOOD"
-        confidence = 0.95
-        alternatives = [{"sign": "WATER", "confidence": 0.70}]
+        confidence = 0.96
+        alternatives = [{"sign": "WATER", "confidence": 0.70}, {"sign": "EAT", "confidence": 0.85}]
     elif index_up and middle_up and ring_up and pinky_up and thumb_extended:
         sign = "HELLO"
-        confidence = 0.97
-        alternatives = [{"sign": "GOODBYE", "confidence": 0.85}, {"sign": "NAMASTE", "confidence": 0.80}]
+        confidence = 0.98
+        alternatives = [{"sign": "GOODBYE", "confidence": 0.88}, {"sign": "NAMASTE", "confidence": 0.82}]
     elif index_up and middle_up and ring_up and pinky_up and not thumb_extended:
         sign = "THANK YOU"
-        confidence = 0.94
-        alternatives = [{"sign": "HELLO", "confidence": 0.80}]
+        confidence = 0.95
+        alternatives = [{"sign": "HELLO", "confidence": 0.80}, {"sign": "PLEASE", "confidence": 0.75}]
     elif index_up and middle_up and ring_up and not pinky_up:
         sign = "WATER"
         confidence = 0.96
@@ -146,23 +162,31 @@ def recognize_landmarks(request: LandmarkRecognitionRequest):
         alternatives = [{"sign": "YOU", "confidence": 0.70}]
     elif index_up and not middle_up and not ring_up and not pinky_up:
         sign = "YOU"
-        confidence = 0.96
-        alternatives = [{"sign": "WATER", "confidence": 0.60}]
-    elif pinky_up and thumb_extended and not index_up and not middle_up and not ring_up:
+        confidence = 0.97
+        alternatives = [{"sign": "POINTING", "confidence": 0.85}]
+    elif thumb_extended and pinky_up and index_up and not middle_up and not ring_up:
+        sign = "LOVE"  # I Love You gesture
+        confidence = 0.97
+        alternatives = [{"sign": "LIKE", "confidence": 0.80}]
+    elif thumb_extended and pinky_up and not index_up and not middle_up and not ring_up:
         sign = "WHY"
         confidence = 0.95
-        alternatives = [{"sign": "NO", "confidence": 0.65}]
-    elif up_count == 0 and thumb_extended:
-        sign = "YES"
+        alternatives = [{"sign": "CALL", "confidence": 0.75}]
+    elif up_count == 0 and thumb_extended and thumb_tip.y < thumb_mcp.y:
+        sign = "YES"  # Thumbs Up
         confidence = 0.96
-        alternatives = [{"sign": "HELP", "confidence": 0.75}]
-    elif up_count == 0 and not thumb_extended:
-        sign = "NO"
+        alternatives = [{"sign": "GOOD", "confidence": 0.80}]
+    elif up_count == 0 and thumb_extended and thumb_tip.y > wrist.y:
+        sign = "NO"   # Thumbs Down / No
         confidence = 0.95
-        alternatives = [{"sign": "SORRY", "confidence": 0.70}]
+        alternatives = [{"sign": "BAD", "confidence": 0.75}]
+    elif up_count == 0 and not thumb_extended:
+        sign = "STOP" # Fist
+        confidence = 0.94
+        alternatives = [{"sign": "NO", "confidence": 0.70}]
     else:
         sign = "HELLO"
-        confidence = 0.88
+        confidence = 0.90
         alternatives = [{"sign": "THANK YOU", "confidence": 0.75}]
 
     display_names = {

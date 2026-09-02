@@ -407,15 +407,15 @@ def translate_text(
                 "target_language": target_language,
             }
 
-    # Tier 3: GoogleTranslator (handles Hinglish when src='hi' and pure Indic languages)
+    # Tier 3: GoogleTranslator (Native Neural Translation with auto-detection for all 14 regional scripts)
     try:
-        src = "hi" if is_hinglish(raw) or source_language == "bho" or source_language == "auto" else source_language
+        src = "hi" if is_hinglish(raw) or source_language == "bho" else (source_language or "auto")
         tgt = "hi" if target_language == "bho" else target_language
         res = GoogleTranslator(source=src, target=tgt).translate(raw)
-        if res and res.strip():
+        if res and res.strip() and not res.strip().startswith("Â"):
             return {
                 "success": True,
-                "message": "Translation successful via Google.",
+                "message": "Translation successful via Google Neural Engine.",
                 "original_text": raw,
                 "translated_text": res.strip(),
                 "source_language": source_language,
@@ -424,13 +424,13 @@ def translate_text(
     except Exception:
         pass
 
-    # Tier 4: MyMemoryTranslator API
+    # Tier 4: MyMemoryTranslator API Fallback
     try:
         src_tag = f"{source_language}-IN" if source_language != "auto" and source_language != "en" else "hi-IN"
         tgt_tag = "en-GB" if target_language == "en" else f"{target_language}-IN"
 
         res = MyMemoryTranslator(source=src_tag, target=tgt_tag).translate(raw)
-        if res and res.strip() and not res.startswith("MYMEMORY WARNING"):
+        if res and res.strip() and not res.startswith("MYMEMORY WARNING") and not res.strip().startswith("Â"):
             return {
                 "success": True,
                 "message": "Translation successful via MyMemory.",

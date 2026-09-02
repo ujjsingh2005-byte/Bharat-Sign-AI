@@ -78,12 +78,16 @@ PHRASE_MAPPINGS = {
     "thankyou": "THANK YOU",
     "good morning": "GOOD MORNING",
     "good night": "GOOD NIGHT",
+    "good afternoon": "GOOD AFTERNOON",
+    "good evening": "GOOD EVENING",
     "good bye": "GOODBYE",
     "goodbye": "GOODBYE",
     "bye": "GOODBYE",
     "see you": "SEE YOU",
+    "see you tomorrow": "SEE YOU TOMORROW",
     "nice to meet you": "NICE TO MEET YOU",
     "welcome": "WELCOME",
+    "welcome to our home": "WELCOME HOME",
     "you are welcome": "WELCOME",
     "excuse me": "EXCUSE ME",
     "sorry": "SORRY",
@@ -93,6 +97,11 @@ PHRASE_MAPPINGS = {
     "need help": "HELP",
     "i need water": "WATER",
     "give me water": "WATER",
+    "i need food": "FOOD",
+    "i am hungry": "HUNGRY",
+    "i am thirsty": "THIRSTY",
+    "call doctor": "DOCTOR CALL",
+    "call the doctor": "DOCTOR CALL",
 }
 
 # Universal Recognized ISL Action Verbs mapping

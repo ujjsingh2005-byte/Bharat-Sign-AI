@@ -364,8 +364,11 @@ export default function CameraSignPanel() {
           return prev;
         });
       }
-    } else if (data && data.message) {
-      setTranslatedText(data.message);
+    } else {
+      setDetectedSign(null);
+      setConfidence(0);
+      setAlternatives([]);
+      setTranslatedText(data?.text || data?.message || "Place hand inside camera frame");
     }
   }, [playAudioOutput, targetLanguage, autoVoiceOutput]);
 

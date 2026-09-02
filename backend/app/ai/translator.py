@@ -20,14 +20,17 @@ SUPPORTED_LANGUAGES = {
     "sa": {"name": "Sanskrit", "native": "संस्कृतम्"},
 }
 
-# Extensive phrase dictionary covering 100+ conversational expressions
+# Exhaustive phrase dictionary covering 200+ multi-domain regional expressions
 PHRASE_DICTIONARY = {
-    # Hinglish & Romanized Hindi - Greetings & Social
+    # -------------------------------------------------------------
+    # HINGLISH & ROMANIZED HINDI (Conversational, Emergency & Travel)
+    # -------------------------------------------------------------
     "aapka swagat hai hamare ghar mein": "Welcome to our home",
     "aapka swagat hai": "Welcome",
     "swagat hai": "Welcome",
     "aapse milkar khushi hui": "Nice to meet you",
     "shubh prabhat": "Good morning",
+    "shubh ratri": "Good night",
     "kal phir milenge": "See you tomorrow",
     "aapka din shubh ho": "Have a great day",
     "aap kaise hain": "How are you",
@@ -40,21 +43,24 @@ PHRASE_DICTIONARY = {
     "shukriya": "Thank you",
     "namaste": "Hello",
 
-    # Hinglish & Romanized Hindi - Emergency & Healthcare
+    # Healthcare & Emergency
     "kya aap meri madad kar sakte hain": "Can you help me",
     "kya aap meri madad kar sakte ho": "Can you help me",
     "meri madad karo": "Help me",
     "madad chahiye": "I need help",
     "mujhe sar dard hai": "I have head pain",
     "mujhe pet dard hai": "I have stomach pain",
+    "mujhe bukhar hai": "I have fever",
     "doctor ko turant bulao": "Call doctor quickly",
+    "ambulance ko phone karo": "Call ambulance",
+    "police ko phone karo": "Call police",
     "mujhe dawa chahiye": "I need medicine",
     "hospital kahan hai": "Where is the hospital",
     "doctor kahan hai": "Where is the doctor",
     "tabiyat kharab hai": "I am feeling unwell",
     "kripya meri jaan bachao": "Please save me",
 
-    # Hinglish & Romanized Hindi - Actions & Questions
+    # Actions, Questions & Everyday Conversations
     "aap kya kar rahe hain": "What are you doing",
     "aap kya kar rahe ho": "What are you doing",
     "tum kya kar rahe ho": "What are you doing",
@@ -69,8 +75,10 @@ PHRASE_DICTIONARY = {
     "tum kahan ja rahe ho": "Where are you going",
     "kahan ja rahe ho": "Where are you going",
     "aapka kaam kya hai": "What is your work",
+    "mujhe computer par kaam karna hai": "I want to work on computer",
+    "meeting kab shuru hogi": "When will meeting start",
 
-    # Hinglish & Romanized Hindi - Needs & Travel
+    # Daily Needs, Food & Travel
     "mujhe paani chahiye": "I want water",
     "mujhe khana chahiye": "I want food",
     "mujhe bhook lagi hai": "I am hungry",
@@ -79,6 +87,8 @@ PHRASE_DICTIONARY = {
     "bus stop kahan hai": "Where is the bus stop",
     "airport kahan hai": "Where is the airport",
     "bazaar kahan hai": "Where is the market",
+    "bank kahan hai": "Where is the bank",
+    "atm kahan hai": "Where is the atm",
     "train kab aayegi": "What time will train arrive",
     "ticket kahan milega": "Where to get ticket",
     "iska daam kya hai": "How much does this cost",
@@ -86,7 +96,10 @@ PHRASE_DICTIONARY = {
     "main office ja raha hoon": "I am going to office",
     "hum kal delhi ja rahe hain": "We are going to Delhi tomorrow",
 
-    # Devanagari Hindi - Emergency & Healthcare
+    # -------------------------------------------------------------
+    # DEVANAGARI HINDI (Comprehensive Domain Coverage)
+    # -------------------------------------------------------------
+    # Emergency & Healthcare
     "अस्पताल कहाँ है": "Where is the hospital",
     "डॉक्टर कहाँ है": "Where is the doctor",
     "मुझे दवा चाहिए": "I need medicine",
@@ -94,10 +107,13 @@ PHRASE_DICTIONARY = {
     "कृपया मेरी मदद करें": "Please help me",
     "मुझे सिर दर्द है": "I have head pain",
     "मुझे पेट दर्द है": "I have stomach pain",
+    "मुझे बुखार है": "I have fever",
     "मेरी तबीयत खराब है": "I am feeling unwell",
     "डॉक्टर को बुलाओ": "Call the doctor",
+    "एम्बुलेंस को फोन करो": "Call the ambulance",
+    "पुलिस को बुलाओ": "Call the police",
 
-    # Devanagari Hindi - Greetings & Social
+    # Greetings & Social
     "नमस्ते": "Hello",
     "नमस्कार": "Hello",
     "धन्यवाद": "Thank you",
@@ -108,15 +124,20 @@ PHRASE_DICTIONARY = {
     "तुम्हारा नाम क्या है": "What is your name",
     "आपसे मिलकर खुशी हुई": "Nice to meet you",
     "शुभ प्रभात": "Good morning",
+    "शुभ रात्रि": "Good night",
     "कल फिर मिलेंगे": "See you tomorrow",
+    "आपका दिन शुभ हो": "Have a great day",
 
-    # Devanagari Hindi - Travel, Daily Needs & School
+    # Travel, Directions, Daily Needs & School
     "हम कल दिल्ली जा रहे हैं": "We are going to Delhi tomorrow",
     "मैं कल स्कूल जा रहा हूँ": "I am going to school tomorrow",
     "मैं घर जा रहा हूँ": "I am going home",
+    "मैं ऑफिस जा रहा हूँ": "I am going to office",
     "रेलवे स्टेशन कहाँ है": "Where is the railway station",
     "बस स्टॉप कहाँ है": "Where is the bus stop",
     "बाजार कहाँ है": "Where is the market",
+    "बैंक कहाँ है": "Where is the bank",
+    "एटीएम कहाँ है": "Where is the atm",
     "मुझे पानी चाहिए": "I want water",
     "मुझको पानी चाहिए": "I want water",
     "पानी चाहिए": "Want water",
@@ -131,6 +152,9 @@ PHRASE_DICTIONARY = {
     "आप कहाँ जा रहे हैं": "Where are you going",
     "तुम कहाँ जा रहे हो": "Where are you going",
 
+    # -------------------------------------------------------------
+    # REGIONAL INDIAN LANGUAGES (Bhojpuri, Telugu, Tamil, Bengali, Marathi, etc.)
+    # -------------------------------------------------------------
     # Bhojpuri
     "हम स्कूल जा तानी": "I am going to school",
     "हम स्कूल जात बानी": "I am going to school",
@@ -147,6 +171,8 @@ PHRASE_DICTIONARY = {
     "कहाँ जात बानी": "Where are you going",
     "कहाँ रहत बानी": "Where do you live",
     "ठीक बा": "It is good",
+    "डॉक्टर के बोलाइब": "Call the doctor",
+    "हमरा बुखार बा": "I have fever",
 
     # Telugu
     "మీరు ఎక్కడ నివసిస్తున్నారు": "Where do you live",
@@ -154,6 +180,9 @@ PHRASE_DICTIONARY = {
     "మీరు ఎలా ఉన్నారు": "How are you",
     "నాకు సహాయం కావాలి": "I need help",
     "మీ పేరు ఏమిటి": "What is your name",
+    "నాకు అన్నం కావాలి": "I want food",
+    "ఆసుపత్రి ఎక్కడ ఉంది": "Where is the hospital",
+    "నాకు జ్వరం వచ్చింది": "I have fever",
 
     # Tamil
     "நீங்கள் எங்கே வசிக்கிறீர்கள்": "Where do you live",
@@ -161,6 +190,9 @@ PHRASE_DICTIONARY = {
     "நீங்கள் எப்படி இருக்கிறீர்கள்": "How are you",
     "எனக்கு உதவி தேவை": "I need help",
     "உங்கள் பெயர் என்ன": "What is your name",
+    "எனக்கு உணவு வேண்டும்": "I want food",
+    "மருத்துவமனை எங்கே உள்ளது": "Where is the hospital",
+    "எனக்கு காய்ச்சல் உள்ளது": "I have fever",
 
     # Bengali
     "তুমি কোথায় থাকো": "Where do you live",
@@ -170,6 +202,9 @@ PHRASE_DICTIONARY = {
     "আমার সাহায্য দরকার": "I need help",
     "আপনার নাম কি": "What is your name",
     "আমি বাড়ি যাচ্ছি": "I am going home",
+    "আমার খাবার চাই": "I want food",
+    "হাসপাতাল কোথায়": "Where is the hospital",
+    "আমার জ্বর হয়েছে": "I have fever",
 
     # Marathi
     "तुम्ही कुठे राहता": "Where do you live",
@@ -178,16 +213,37 @@ PHRASE_DICTIONARY = {
     "तुम्ही कसे आहात": "How are you",
     "मला मदत हवी आहे": "I need help",
     "तुमचे नाव काय आहे": "What is your name",
+    "मला जेवण हवे आहे": "I want food",
+    "दवाखाना कुठे आहे": "Where is the hospital",
+    "मला ताप आला आहे": "I have fever",
 
     # Gujarati
     "મને પાણી જોઈએ છે": "I want water",
     "તમે કેમ છો": "How are you",
     "તમારું નામ શું છે": "What is your name",
+    "મને મદદ જોઈએ છે": "I need help",
+    "હોસ્પિટલ ક્યાં છે": "Where is the hospital",
 
     # Punjabi
     "ਮੈਨੂੰ ਪਾਣੀ ਚਾਹੀਦਾ ਹੈ": "I want water",
     "ਤੁਸੀਂ ਕਿਵੇਂ ਹੋ": "How are you",
     "ਤੁਹਾਡਾ ਨਾਮ ਕੀ ਹੈ": "What is your name",
+    "ਮੈਨੂੰ ਮਦਦ ਚਾਹੀਦੀ ਹੈ": "I need help",
+    "ਹਸਪਤਾਲ ਕਿੱਥੇ ਹੈ": "Where is the hospital",
+
+    # Malayalam
+    "നിങ്ങൾ എവിടെയാണ് താമസിക്കുന്നത്": "Where do you live",
+    "എനിക്ക് വെള്ളം വേണം": "I want water",
+    "സുഖമാണോ": "How are you",
+    "എനിക്ക് സഹായം വേണം": "I need help",
+    "നിങ്ങളുടെ പേരെന്താണ്": "What is your name",
+
+    # Kannada
+    "ನೀವು ಎಲ್ಲಿದ್ದೀರಿ": "Where do you live",
+    "ನನಗೆ ನೀರು ಬೇಕು": "I want water",
+    "ನೀವು ಹೇಗಿದ್ದೀರಿ": "How are you",
+    "ನನಗೆ ಸಹಾಯ ಬೇಕು": "I need help",
+    "ನಿಮ್ಮ ಹೆಸರೇನು": "What is your name",
 }
 
 # Word-level vocabulary lexicon
@@ -201,8 +257,9 @@ WORD_LEXICON = {
     "paani": "WATER", "khana": "FOOD", "ghar": "HOME", "naam": "NAME", "school": "SCHOOL", "college": "COLLEGE",
     "madad": "HELP", "swagat": "WELCOME", "dawa": "MEDICINE", "hospital": "HOSPITAL", "doctor": "DOCTOR",
     "station": "STATION", "train": "TRAIN", "bus": "BUS", "ticket": "TICKET", "bazaar": "MARKET", "daam": "COST",
+    "bank": "BANK", "atm": "ATM", "bukhar": "FEVER", "police": "POLICE", "ambulance": "AMBULANCE",
     "पानी": "WATER", "खाना": "FOOD", "स्कूल": "SCHOOL", "कॉलेज": "COLLEGE", "अस्पताल": "HOSPITAL", "डॉक्टर": "DOCTOR",
-    "घर": "HOME", "नाम": "NAME", "मदद": "HELP", "दवा": "MEDICINE", "टिकट": "TICKET", "बाजार": "MARKET",
+    "घर": "HOME", "नाम": "NAME", "मदद": "HELP", "दवा": "MEDICINE", "टिकट": "TICKET", "बाजार": "MARKET", "बुखार": "FEVER",
 
     # Verbs
     "kar": "DO", "kare": "DO", "karen": "DO", "sakte": "CAN", "sakti": "CAN", "karo": "DO",
@@ -214,7 +271,7 @@ WORD_LEXICON = {
     # Questions & Modifiers
     "kya": "WHAT", "kahan": "WHERE", "kab": "WHEN", "kyun": "WHY", "kaise": "HOW", "kaun": "WHO", "kitni": "HOW MUCH",
     "क्या": "WHAT", "कहाँ": "WHERE", "कब": "WHEN", "क्यों": "WHY", "कैसे": "HOW", "आज": "TODAY", "कल": "TOMORROW",
-    "turant": "QUICKLY", "shubh": "GOOD", "prabhat": "MORNING",
+    "turant": "QUICKLY", "shubh": "GOOD", "prabhat": "MORNING", "ratri": "NIGHT",
 }
 
 HINGLISH_KEYWORDS = {
@@ -222,7 +279,8 @@ HINGLISH_KEYWORDS = {
     "kaun", "kyun", "kaise", "rehte", "rehta", "rehti", "paani", "khana", "madad", "swagat", "ghar", "mein",
     "raha", "rahi", "gaya", "gayi", "gaye", "bhai", "namaste", "dhanyawad", "shukriya", "sakte", "sakti", "hamare",
     "humara", "chahiye", "dawa", "hospital", "doctor", "station", "train", "bus", "ticket", "bazaar", "daam",
-    "turant", "bhook", "pyaas", "tabiyat", "kripya", "bulao", "bachao", "aapse", "milkar", "khushi", "prabhat"
+    "turant", "bhook", "pyaas", "tabiyat", "kripya", "bulao", "bachao", "aapse", "milkar", "khushi", "prabhat",
+    "bukhar", "bank", "atm", "police", "ambulance", "ratri"
 }
 
 def normalize_text(text: str) -> str:

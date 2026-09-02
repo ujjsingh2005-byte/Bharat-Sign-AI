@@ -44,78 +44,39 @@ export default function UniversalSemanticPanel({
   ];
 
   const SAMPLE_PRESETS = [
-    {
-      lang: "bho",
-      name: "Bhojpuri School",
-      text: "हम स्कूल जा तानी।",
-      desc: "I am going to school.",
-    },
-    {
-      lang: "hi",
-      name: "Hindi Location",
-      text: "तुम कहाँ रहते हो?",
-      desc: "Where do you live?",
-    },
-    {
-      lang: "auto",
-      name: "Hinglish Action",
-      text: "Aap kya kar rahe hain?",
-      desc: "What are you doing?",
-    },
-    {
-      lang: "en",
-      name: "Emergency Medical",
-      text: "Doctor I have stomach pain please give medicine",
-      desc: "Healthcare request.",
-    },
-    {
-      lang: "hi",
-      name: "Hindi Emergency",
-      text: "मुझे तुरंत दवा चाहिए और डॉक्टर को बुलाओ।",
-      desc: "I need medicine quickly.",
-    },
-    {
-      lang: "en",
-      name: "Travel Direction",
-      text: "Where is the railway station?",
-      desc: "Navigation question.",
-    },
-    {
-      lang: "en",
-      name: "Education College",
-      text: "I am studying computer science in college.",
-      desc: "Academic statement.",
-    },
-    {
-      lang: "bho",
-      name: "Bhojpuri Need",
-      text: "हमरा पानी चाहीं।",
-      desc: "I need water.",
-    },
-    {
-      lang: "te",
-      name: "Telugu Need",
-      text: "నాకు నీళ్లు కావాలి।",
-      desc: "I need water.",
-    },
-    {
-      lang: "ta",
-      name: "Tamil Greeting",
-      text: "நீங்கள் எப்படி இருக்கிறீர்கள்?",
-      desc: "How are you?",
-    },
-    {
-      lang: "bn",
-      name: "Bengali Travel",
-      text: "আমি বাড়ি যাচ্ছি।",
-      desc: "I am going home.",
-    },
-    {
-      lang: "mr",
-      name: "Marathi Greeting",
-      text: "तुम्ही कसे आहात?",
-      desc: "How are you?",
-    },
+    // Emergency & Healthcare
+    { category: "Medical", lang: "hi", name: "Hindi Medicine", text: "मुझे तुरंत दवा चाहिए और डॉक्टर को बुलाओ।", desc: "I need medicine quickly." },
+    { category: "Medical", lang: "en", name: "English Healthcare", text: "Doctor I have stomach pain please give medicine", desc: "Healthcare request." },
+    { category: "Medical", lang: "auto", name: "Hinglish Hospital", text: "hospital kahan hai aur doctor ko phone karo", desc: "Hospital search." },
+    { category: "Medical", lang: "bn", name: "Bengali Fever", text: "আমার জ্বর হয়েছে হাসপাতাল কোথায়?", desc: "I have fever where is hospital." },
+    { category: "Medical", lang: "te", name: "Telugu Emergency", text: "నాకు జ్వరం వచ్చింది సహాయం కావాలి", desc: "I have fever I need help." },
+
+    // Travel & Navigation
+    { category: "Travel", lang: "en", name: "English Station", text: "Where is the railway station?", desc: "Navigation question." },
+    { category: "Travel", lang: "auto", name: "Hinglish Travel", text: "bus stop kahan hai aur ticket kahan milega?", desc: "Bus stop and ticket search." },
+    { category: "Travel", lang: "hi", name: "Hindi Journey", text: "हम कल दिल्ली जा रहे हैं।", desc: "We are going to Delhi tomorrow." },
+    { category: "Travel", lang: "bn", name: "Bengali Home", text: "আমি বাড়ি যাচ্ছি।", desc: "I am going home." },
+
+    // School & Education
+    { category: "School", lang: "bho", name: "Bhojpuri School", text: "हम स्कूल जा तानी।", desc: "I am going to school." },
+    { category: "School", lang: "en", name: "English College", text: "I am studying computer science in college.", desc: "Academic statement." },
+    { category: "School", lang: "hi", name: "Hindi Exam", text: "कल मेरा एग्जाम है मुझे किताब पढ़नी है।", desc: "I have exam tomorrow." },
+
+    // Daily Needs & Food
+    { category: "Needs", lang: "bho", name: "Bhojpuri Water", text: "हमरा पानी चाहीं।", desc: "I need water." },
+    { category: "Needs", lang: "te", name: "Telugu Water", text: "నాకు నీళ్లు కావాలి।", desc: "I need water." },
+    { category: "Needs", lang: "ta", name: "Tamil Water", text: "எனக்கு தண்ணீர் வேண்டும்।", desc: "I need water." },
+    { category: "Needs", lang: "hi", name: "Hindi Food", text: "मुझे बहुत भूख लगी है खाना चाहिए।", desc: "I am very hungry I need food." },
+
+    // Greetings & Social
+    { category: "Social", lang: "hi", name: "Hindi Meet", text: "आपसे मिलकर बहुत खुशी हुई।", desc: "Nice to meet you." },
+    { category: "Social", lang: "auto", name: "Hinglish Welcome", text: "Aapka swagat hai hamare ghar mein.", desc: "Welcome to our home." },
+    { category: "Social", lang: "auto", name: "Hinglish Action", text: "Aap kya kar rahe hain?", desc: "What are you doing?" },
+    { category: "Social", lang: "hi", name: "Hindi Location", text: "तुम कहाँ रहते हो?", desc: "Where do you live?" },
+    { category: "Social", lang: "ta", name: "Tamil Greeting", text: "நீங்கள் எப்படி இருக்கிறீர்கள்?", desc: "How are you?" },
+    { category: "Social", lang: "mr", name: "Marathi Greeting", text: "तुम्ही कसे आहात?", desc: "How are you?" },
+    { category: "Social", lang: "gu", name: "Gujarati Greeting", text: "તમે કેમ છો?", desc: "How are you?" },
+    { category: "Social", lang: "pa", name: "Punjabi Greeting", text: "ਤੁਸੀਂ ਕਿਵੇਂ ਹੋ?", desc: "How are you?" },
   ];
 
   const handleProcess = async (textToProcess = inputText, lang = selectedLanguage) => {

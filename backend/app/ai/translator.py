@@ -190,6 +190,8 @@ PHRASE_DICTIONARY = {
     "నాకు చాలా ఆకలిగా ఉంది": "I am very hungry",
     "పోలీస్ స్టేషన్ ఎక్కడ ఉంది": "Where is the police station",
     "రైలు ఎప్పుడు వస్తుంది": "When will the train arrive",
+    "మీ ఇల్లు ఎక్కడ ఉంది": "Where is your house",
+    "నాకు మందులు కావాలి": "I need medicine",
 
     # Tamil
     "நீங்கள் எங்கே வசிக்கிறீர்கள்": "Where do you live",
@@ -203,6 +205,8 @@ PHRASE_DICTIONARY = {
     "எனக்கு மிகவும் பசிக்கிறது": "I am very hungry",
     "காவல் நிலையம் எங்கே உள்ளது": "Where is the police station",
     "ரயில் எப்போது வரும்": "When will the train arrive",
+    "உங்கள் வீடு எங்கே உள்ளது": "Where is your house",
+    "எனக்கு மருந்து வேண்டும்": "I need medicine",
 
     # Bengali
     "তুমি কোথায় থাকো": "Where do you live",
@@ -218,6 +222,8 @@ PHRASE_DICTIONARY = {
     "আমার খুব খিদে পেয়েছে": "I am very hungry",
     "পুলিশ স্টেশন কোথায়": "Where is the police station",
     "ট্রেন কখন আসবে": "When will the train arrive",
+    "আপনার বাড়ি কোথায়": "Where is your house",
+    "আমার ওষুধ লাগবে": "I need medicine",
 
     # Marathi
     "तुम्ही कुठे राहता": "Where do you live",
@@ -232,6 +238,8 @@ PHRASE_DICTIONARY = {
     "मला खूप भूक लागली आहे": "I am very hungry",
     "पोलीस स्टेशन कुठे आहे": "Where is the police station",
     "ट्रेन कधी येणार": "When will the train arrive",
+    "तुमचे घर कुठे आहे": "Where is your house",
+    "मला औषध हवे आहे": "I need medicine",
 
     # Gujarati
     "મને પાણી જોઈએ છે": "I want water",
@@ -242,6 +250,8 @@ PHRASE_DICTIONARY = {
     "મને ખૂબ ભૂખ લાગી છે": "I am very hungry",
     "પોલીસ સ્ટેશન ક્યાં છે": "Where is the police station",
     "ટ્રેન ક્યારે આવશે": "When will the train arrive",
+    "તમારું ઘર ક્યાં છે": "Where is your house",
+    "મને દવા જોઈએ છે": "I need medicine",
 
     # Punjabi
     "ਮੈਨੂੰ ਪਾਣੀ ਚਾਹੀਦਾ ਹੈ": "I want water",
@@ -252,6 +262,8 @@ PHRASE_DICTIONARY = {
     "ਮੈਨੂੰ ਬਹੁਤ ਭੁੱਖ ਲੱਗੀ ਹੈ": "I am very hungry",
     "ਪੁਲਿਸ ਸਟੇਸ਼ਨ ਕਿੱਥੇ ਹੈ": "Where is the police station",
     "ਟ੍ਰੇਨ ਕਦੋਂ ਆਵੇਗੀ": "When will the train arrive",
+    "ਤੁਹਾਡਾ ਘਰ ਕਿੱਥੇ ਹੈ": "Where is your house",
+    "ਮੈਨੂੰ ਦਵਾਈ ਚਾਹੀਦੀ ਹੈ": "I need medicine",
 
     # Malayalam
     "നിങ്ങൾ എവിടെയാണ് താമസിക്കുന്നത്": "Where do you live",

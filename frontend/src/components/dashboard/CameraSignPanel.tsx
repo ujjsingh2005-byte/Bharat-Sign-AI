@@ -506,7 +506,57 @@ export default function CameraSignPanel() {
               <option value="JSL" className="bg-slate-900 text-white">JSL (Japanese Sign Language)</option>
               <option value="KSL" className="bg-slate-900 text-white">KSL (Korean Sign Language)</option>
               <option value="CSL" className="bg-slate-900 text-white">CSL (Chinese Sign Language)</option>
-              <option value="INT" className="bg-slate-900 text-white">International Sign Dialect</option>
+              <option value="INT" className="bg-slate-900 text-white">INT (International Sign / Gestuno)</option>
+              <option value="Libras" className="bg-slate-900 text-white">Libras (Brazilian Sign Language)</option>
+              <option value="LSFB" className="bg-slate-900 text-white">LSFB (Belgian French Sign Language)</option>
+              <option value="LSM" className="bg-slate-900 text-white">LSM (Mexican Sign Language)</option>
+              <option value="LSE" className="bg-slate-900 text-white">LSE (Spanish Sign Language)</option>
+              <option value="LIS" className="bg-slate-900 text-white">LIS (Italian Sign Language)</option>
+              <option value="NGT" className="bg-slate-900 text-white">NGT (Dutch Sign Language)</option>
+              <option value="PJM" className="bg-slate-900 text-white">PJM (Polish Sign Language)</option>
+              <option value="RSL" className="bg-slate-900 text-white">RSL (Russian Sign Language)</option>
+              <option value="SASL" className="bg-slate-900 text-white">SASL (South African Sign Language)</option>
+              <option value="ISL_IL" className="bg-slate-900 text-white">ISL (Israeli Sign Language)</option>
+              <option value="TSL" className="bg-slate-900 text-white">TSL (Taiwanese Sign Language)</option>
+              <option value="FSL" className="bg-slate-900 text-white">FSL (Filipino Sign Language)</option>
+              <option value="NZSL" className="bg-slate-900 text-white">NZSL (New Zealand Sign Language)</option>
+              <option value="HKSL" className="bg-slate-900 text-white">HKSL (Hong Kong Sign Language)</option>
+              <option value="VGT" className="bg-slate-900 text-white">VGT (Flemish Sign Language)</option>
+              <option value="MSL" className="bg-slate-900 text-white">MSL (Malaysian Sign Language)</option>
+              <option value="ÖGS" className="bg-slate-900 text-white">ÖGS (Austrian Sign Language)</option>
+              <option value="ČSJ" className="bg-slate-900 text-white">ČSJ (Czech Sign Language)</option>
+              <option value="DSL" className="bg-slate-900 text-white">DSL (Danish Sign Language)</option>
+              <option value="ETH" className="bg-slate-900 text-white">ETH (Ethiopian Sign Language)</option>
+              <option value="FSD" className="bg-slate-900 text-white">FSD (Finnish Sign Language)</option>
+              <option value="GSL" className="bg-slate-900 text-white">GSL (Greek Sign Language)</option>
+              <option value="MHJ" className="bg-slate-900 text-white">MHJ (Hungarian Sign Language)</option>
+              <option value="İSL" className="bg-slate-900 text-white">İSL (Icelandic Sign Language)</option>
+              <option value="ISL_IR" className="bg-slate-900 text-white">ISL (Irish Sign Language)</option>
+              <option value="LIU" className="bg-slate-900 text-white">LIU (Jordanian Sign Language)</option>
+              <option value="KSL_KE" className="bg-slate-900 text-white">KSL (Kenyan Sign Language)</option>
+              <option value="LGK" className="bg-slate-900 text-white">LGK (Lithuanian Sign Language)</option>
+              <option value="MSL_MY" className="bg-slate-900 text-white">MSL (Myanmar Sign Language)</option>
+              <option value="NSL" className="bg-slate-900 text-white">NSL (Norwegian Sign Language)</option>
+              <option value="LGP" className="bg-slate-900 text-white">LGP (Portuguese Sign Language)</option>
+              <option value="LSR" className="bg-slate-900 text-white">LSR (Romanian Sign Language)</option>
+              <option value="SSL" className="bg-slate-900 text-white">SSL (Swedish Sign Language)</option>
+              <option value="TSL_TH" className="bg-slate-900 text-white">TSL (Thai Sign Language)</option>
+              <option value="TİD" className="bg-slate-900 text-white">TİD (Turkish Sign Language)</option>
+              <option value="USL" className="bg-slate-900 text-white">USL (Ukrainian Sign Language)</option>
+              <option value="VSL" className="bg-slate-900 text-white">VSL (Vietnamese Sign Language)</option>
+              <option value="ASL_AR" className="bg-slate-900 text-white">Argentine Sign Language</option>
+              <option value="ASL_CL" className="bg-slate-900 text-white">Chilean Sign Language</option>
+              <option value="ASL_CO" className="bg-slate-900 text-white">Colombian Sign Language</option>
+              <option value="ASL_PE" className="bg-slate-900 text-white">Peruvian Sign Language</option>
+              <option value="ASL_VE" className="bg-slate-900 text-white">Venezuelan Sign Language</option>
+              <option value="ISL_IN" className="bg-slate-900 text-white">Indonesian Sign Language (BISINDO)</option>
+              <option value="NSL_NE" className="bg-slate-900 text-white">Nepalese Sign Language</option>
+              <option value="SSL_SL" className="bg-slate-900 text-white">Sri Lankan Sign Language</option>
+              <option value="BD_SL" className="bg-slate-900 text-white">Bengali Sign Language (BD-SL)</option>
+              <option value="PK_SL" className="bg-slate-900 text-white">Pakistani Sign Language (PSL)</option>
+              <option value="EGY_SL" className="bg-slate-900 text-white">Egyptian Sign Language</option>
+              <option value="SA_SL" className="bg-slate-900 text-white">Saudi Sign Language</option>
+              <option value="AE_SL" className="bg-slate-900 text-white">UAE Sign Language</option>
             </select>
           </div>
 

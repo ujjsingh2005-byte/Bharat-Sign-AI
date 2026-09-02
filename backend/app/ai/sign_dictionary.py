@@ -1,10 +1,10 @@
 """
 Bharat Sign AI 3 - Master Indian Sign Language (ISL) Dictionary
-Includes complete conversational vocabulary across all everyday categories,
+Includes 200+ conversational vocabulary signs across all everyday categories,
 with Hinglish & regional alias normalization eliminating unknown gesture fallbacks.
 """
 
-# Master Vocabulary signs with rich ISL definitions (150+ Gestures)
+# Master Vocabulary signs with rich ISL definitions (200+ Gestures)
 VOCABULARY_SIGNS = {
     # Greetings & Social
     "HELLO": {"word": "HELLO", "asset": "hello", "type": "sign", "category": "Greetings", "animation": "hello", "description": "Open hand raised near temple waving outward with warmth."},
@@ -44,6 +44,51 @@ VOCABULARY_SIGNS = {
     "MY": {"word": "MY", "asset": "my", "type": "sign", "category": "Pronouns", "animation": "my", "description": "Flat open palm rests firmly on the chest."},
     "NAME": {"word": "NAME", "asset": "name", "type": "sign", "category": "Basics", "animation": "name", "description": "Right index and middle fingers tap across left index and middle fingers twice."},
 
+    # Family & Relationships
+    "FATHER": {"word": "FATHER", "asset": "father", "type": "sign", "category": "Family", "animation": "father", "description": "Thumb of open hand taps forehead twice."},
+    "MOTHER": {"word": "MOTHER", "asset": "mother", "type": "sign", "category": "Family", "animation": "mother", "description": "Thumb of open hand taps chin twice."},
+    "BROTHER": {"word": "BROTHER", "asset": "brother", "type": "sign", "category": "Family", "animation": "brother", "description": "L-handshape moves from forehead down onto left index finger."},
+    "SISTER": {"word": "SISTER", "asset": "sister", "type": "sign", "category": "Family", "animation": "sister", "description": "L-handshape moves from jaw down onto left index finger."},
+    "SON": {"word": "SON", "asset": "son", "type": "sign", "category": "Family", "animation": "son", "description": "Salute handshape from forehead drops down into cradled arm."},
+    "DAUGHTER": {"word": "DAUGHTER", "asset": "daughter", "type": "sign", "category": "Family", "animation": "daughter", "description": "Hand moves from chin down into cradled arm."},
+    "BABY": {"word": "BABY", "asset": "baby", "type": "sign", "category": "Family", "animation": "baby", "description": "Both arms crossed in front rocking back and forth gently."},
+    "GRANDFATHER": {"word": "GRANDFATHER", "asset": "grandfather", "type": "sign", "category": "Family", "animation": "grandfather", "description": "Thumb taps forehead and bounces forward in two arcs."},
+    "GRANDMOTHER": {"word": "GRANDMOTHER", "asset": "grandmother", "type": "sign", "category": "Family", "animation": "grandmother", "description": "Thumb taps chin and bounces forward in two arcs."},
+
+    # Colors
+    "RED": {"word": "RED", "asset": "red", "type": "sign", "category": "Colors", "animation": "red", "description": "Index finger stroke downward over lower lip twice."},
+    "BLUE": {"word": "BLUE", "asset": "blue", "type": "sign", "category": "Colors", "animation": "blue", "description": "'B' handshape shakes side-to-side in front of shoulder."},
+    "GREEN": {"word": "GREEN", "asset": "green", "type": "sign", "category": "Colors", "animation": "green", "description": "'G' handshape twists at wrist near shoulder."},
+    "YELLOW": {"word": "YELLOW", "asset": "yellow", "type": "sign", "category": "Colors", "animation": "yellow", "description": "'Y' handshape shakes side-to-side."},
+    "BLACK": {"word": "BLACK", "asset": "black", "type": "sign", "category": "Colors", "animation": "black", "description": "Index finger slides horizontally across forehead."},
+    "WHITE": {"word": "WHITE", "asset": "white", "type": "sign", "category": "Colors", "animation": "white", "description": "Fingertips touch chest and pull outward closing into 'O' hand."},
+    "ORANGE": {"word": "ORANGE", "asset": "orange", "type": "sign", "category": "Colors", "animation": "orange", "description": "Fist squeezes near chin mimicking squeezing an orange."},
+
+    # Days of the Week
+    "MONDAY": {"word": "MONDAY", "asset": "monday", "type": "sign", "category": "Time", "animation": "monday", "description": "'M' handshape circles clockwise in front of shoulder."},
+    "TUESDAY": {"word": "TUESDAY", "asset": "tuesday", "type": "sign", "category": "Time", "animation": "tuesday", "description": "'T' handshape circles clockwise in front of shoulder."},
+    "WEDNESDAY": {"word": "WEDNESDAY", "asset": "wednesday", "type": "sign", "category": "Time", "animation": "wednesday", "description": "'W' handshape circles clockwise in front of shoulder."},
+    "THURSDAY": {"word": "THURSDAY", "asset": "thursday", "type": "sign", "category": "Time", "animation": "thursday", "description": "'H' handshape circles clockwise in front of shoulder."},
+    "FRIDAY": {"word": "FRIDAY", "asset": "friday", "type": "sign", "category": "Time", "animation": "friday", "description": "'F' handshape circles clockwise in front of shoulder."},
+    "SATURDAY": {"word": "SATURDAY", "asset": "saturday", "type": "sign", "category": "Time", "animation": "saturday", "description": "'S' handshape circles clockwise in front of shoulder."},
+    "SUNDAY": {"word": "SUNDAY", "asset": "sunday", "type": "sign", "category": "Time", "animation": "sunday", "description": "Both open palms facing forward move downward together."},
+
+    # Travel & Transport
+    "CAR": {"word": "CAR", "asset": "car", "type": "sign", "category": "Travel", "animation": "car", "description": "Both fists move up and down mimicking steering a car wheel."},
+    "BUS": {"word": "BUS", "asset": "bus", "type": "sign", "category": "Travel", "animation": "bus", "description": "Fingerspell B-U-S or large steering wheel motion."},
+    "TRAIN": {"word": "TRAIN", "asset": "train", "type": "sign", "category": "Travel", "animation": "train", "description": "Right 'H' fingers slide back and forth over left 'H' fingers."},
+    "AIRPORT": {"word": "AIRPORT", "asset": "airport", "type": "sign", "category": "Travel", "animation": "airport", "description": "'I Love You' hand shape flies upward like an airplane taking off."},
+    "FLIGHT": {"word": "FLIGHT", "asset": "flight", "type": "sign", "category": "Travel", "animation": "flight", "description": "Airplane hand shape glides horizontally through air."},
+    "TICKET": {"word": "TICKET", "asset": "ticket", "type": "sign", "category": "Travel", "animation": "ticket", "description": "Bent 'V' fingers pinch edge of flat left palm."},
+    "HOTEL": {"word": "HOTEL", "asset": "hotel", "type": "sign", "category": "Travel", "animation": "hotel", "description": "'H' handshape waves back and forth on index finger flagpole."},
+
+    # Finance & Tech
+    "MONEY": {"word": "MONEY", "asset": "money", "type": "sign", "category": "Finance", "animation": "money", "description": "Flat palm rubs thumb against fingertips mimicking counting notes."},
+    "BANK": {"word": "BANK", "asset": "bank", "type": "sign", "category": "Finance", "animation": "bank", "description": "Fingerspell B-A-N-K or tap fist onto open palm."},
+    "CARD": {"word": "CARD", "asset": "card", "type": "sign", "category": "Finance", "animation": "card", "description": "Thumbs outline rectangular credit card shape in air."},
+    "PHONE": {"word": "PHONE", "asset": "phone", "type": "sign", "category": "Communication", "animation": "phone", "description": "'Y' handshape placed against ear and mouth."},
+    "INTERNET": {"word": "INTERNET", "asset": "internet", "type": "sign", "category": "Communication", "animation": "internet", "description": "Middle fingers brush against each other repeatedly."},
+
     # Essentials & Emergency
     "HELP": {"word": "HELP", "asset": "help", "type": "sign", "category": "Emergency", "animation": "help", "description": "Closed thumbs-up fist placed on flat open palm, lifted upwards together."},
     "WATER": {"word": "WATER", "asset": "water", "type": "sign", "category": "Food & Water", "animation": "water", "description": "'W' handshape (3 fingers up) taps twice against the side of mouth/chin."},
@@ -74,7 +119,6 @@ VOCABULARY_SIGNS = {
     "HOME": {"word": "HOME", "asset": "home", "type": "sign", "category": "Daily Living", "animation": "home", "description": "Fingertips touch cheek near mouth and then move to touch near ear."},
     "OFFICE": {"word": "OFFICE", "asset": "office", "type": "sign", "category": "Daily Living", "animation": "office", "description": "'O' handshapes move inward to form walls of a room."},
     "COMPUTER": {"word": "COMPUTER", "asset": "computer", "type": "sign", "category": "Education", "animation": "computer", "description": "Fingers tap rapidly mimicking typing on keyboard."},
-    "MONEY": {"word": "MONEY", "asset": "money", "type": "sign", "category": "Daily Living", "animation": "money", "description": "Flat palm rubs thumb against fingertips mimicking counting notes."},
 
     # Movement & Actions
     "GO": {"word": "GO", "asset": "go", "type": "sign", "category": "Actions", "animation": "go", "description": "Both index fingers point forward and roll outward away from body."},

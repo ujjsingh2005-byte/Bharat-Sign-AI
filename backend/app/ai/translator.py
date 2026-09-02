@@ -347,6 +347,51 @@ def is_pure_latin_english(text: str) -> bool:
     has_indic = bool(re.search(r"[\u0900-\u0DFF]", text))
     return has_latin and not has_indic and not is_hinglish(text)
 
+# Instant English to Regional Language dictionary for Sign-to-Text & Sign-to-Voice
+ENGLISH_TO_REGIONAL = {
+    "hi": {
+        "hello": "नमस्ते", "namaste": "नमस्ते", "water": "पानी", "food": "खाना", "eat": "खाना",
+        "help": "मदद", "doctor": "डॉक्टर", "school": "स्कूल", "college": "कॉलेज", "yes": "हाँ",
+        "no": "नहीं", "thank you": "धन्यवाद", "goodbye": "अलविदा", "you": "आप", "me": "मैं",
+        "where": "कहाँ", "why": "क्यों", "live": "रहना", "want": "चाहिए", "need": "ज़रूरत",
+    },
+    "bho": {
+        "hello": "प्रणाम", "namaste": "प्रणाम", "water": "पानी", "food": "खाना", "eat": "खाना",
+        "help": "मदद", "doctor": "डॉक्टर", "school": "स्कूल", "yes": "हाँ", "no": "नाहीं",
+        "thank you": "धन्यवाद", "goodbye": "अलविदा", "you": "रउआ", "me": "हम", "where": "कहाँ",
+    },
+    "ta": {
+        "hello": "வணக்கம்", "namaste": "வணக்கம்", "water": "தண்ணீர்", "food": "உணவு",
+        "help": "உதவி", "doctor": "மருத்துவர்", "school": "பள்ளி", "yes": "ஆம்", "no": "இல்லை",
+        "thank you": "நன்றி", "goodbye": "சென்று வருகிறேன்", "you": "நீங்கள்", "me": "நான்",
+    },
+    "te": {
+        "hello": "నమస్కారం", "namaste": "నమస్కారం", "water": "నీళ్లు", "food": "అన్నం",
+        "help": "సహాయం", "doctor": "డాక్టర్", "school": "పాఠశాల", "yes": "అవును", "no": "కాదు",
+        "thank you": "ధన్యవాదాలు", "goodbye": "సెలవు", "you": "మీరు", "me": "నేను",
+    },
+    "bn": {
+        "hello": "নমস্কার", "namaste": "নমস্কার", "water": "জল", "food": "খাবার",
+        "help": "সাহায্য", "doctor": "ডাক্তার", "school": "স্কুল", "yes": "হ্যাঁ", "no": "না",
+        "thank you": "ধন্যবাদ", "goodbye": "বিদায়", "you": "আপনি", "me": "আমি",
+    },
+    "mr": {
+        "hello": "नमस्कार", "namaste": "नमस्कार", "water": "पाणी", "food": "जेवण",
+        "help": "मदत", "doctor": "डॉक्टर", "school": "शाळा", "yes": "होय", "no": "नाही",
+        "thank you": "धन्यवाद", "goodbye": "पुन्हा भेटू", "you": "तुम्ही", "me": "मी",
+    },
+    "gu": {
+        "hello": "નમસ્તે", "namaste": "નમસ્તે", "water": "પાણી", "food": "ખોરાક",
+        "help": "મદદ", "doctor": "ડૉક્ટર", "school": "શાળા", "yes": "હા", "no": "ના",
+        "thank you": "આભાર", "goodbye": "આવજો", "you": "તમે", "me": "હું",
+    },
+    "pa": {
+        "hello": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "namaste": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "water": "ਪਾਣੀ", "food": "ਖਾਣਾ",
+        "help": "ਮਦਦ", "doctor": "ਡਾਕਟਰ", "school": "ਸਕੂਲ", "yes": "ਹਾਂ", "no": "ਨਹੀਂ",
+        "thank you": "ਧੰਨਵਾਦ", "goodbye": "ਅਲਵਿਦਾ", "you": "ਤੁਸੀਂ", "me": "ਮੈਂ",
+    },
+}
+
 def translate_text(
     text: str,
     source_language: str = "auto",
@@ -370,6 +415,19 @@ def translate_text(
     clean_lower = clean_no_punct.lower()
     source_language = (source_language or "auto").lower().replace("-in", "").replace("-us", "").replace("-gb", "")
     target_language = (target_language or "en").lower().replace("-in", "").replace("-us", "").replace("-gb", "")
+
+    # Tier 0: Direct English to Regional Sign Word Dictionary
+    if source_language in ["en", "auto"] and target_language in ENGLISH_TO_REGIONAL:
+        reg_map = ENGLISH_TO_REGIONAL[target_language]
+        if clean_lower in reg_map:
+            return {
+                "success": True,
+                "message": "Instant Sign word offline regional match.",
+                "original_text": raw,
+                "translated_text": reg_map[clean_lower],
+                "source_language": source_language,
+                "target_language": target_language,
+            }
 
     # Tier 1: Offline phrase dictionary match
     for phrase, eng in PHRASE_DICTIONARY.items():

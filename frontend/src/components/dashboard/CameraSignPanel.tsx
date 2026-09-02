@@ -317,6 +317,23 @@ export default function CameraSignPanel() {
   // -------------------------------------------------------------
   // Process Recognition Results
   // -------------------------------------------------------------
+  const [signDialect, setSignDialect] = useState("ISL");
+  const [autoVoiceOutput, setAutoVoiceOutput] = useState(true);
+
+  // Play audio speech data URL from backend or Web Speech API
+  const playAudioOutput = useCallback((textToSpeak: string, audioDataUrl?: string) => {
+    if (audioDataUrl) {
+      try {
+        const audio = new Audio(audioDataUrl);
+        audio.play().catch(() => {
+          speakText(textToSpeak, targetLanguage);
+        });
+        return;
+      } catch {}
+    }
+    speakText(textToSpeak, targetLanguage);
+  }, [speakText, targetLanguage]);
+
   const handleRecognitionData = useCallback((data: any) => {
     if (data && data.success && data.sign) {
       const sign = data.sign;
@@ -339,7 +356,9 @@ export default function CameraSignPanel() {
         setSentence((prev) => {
           if (prev[prev.length - 1] !== text) {
             const updated = [...prev, text];
-            speakText(text, targetLanguage);
+            if (autoVoiceOutput) {
+              playAudioOutput(text, data.audio);
+            }
             return updated;
           }
           return prev;
@@ -348,7 +367,7 @@ export default function CameraSignPanel() {
     } else if (data && data.message) {
       setTranslatedText(data.message);
     }
-  }, [speakText, targetLanguage]);
+  }, [playAudioOutput, targetLanguage, autoVoiceOutput]);
 
   // -------------------------------------------------------------
   // Capture Frame & Send to Recognition Engine
@@ -376,6 +395,7 @@ export default function CameraSignPanel() {
         const res = await axios.post(`${API}/sign/recognize-landmarks`, {
           landmarks: landmarks,
           target_language: targetLanguage,
+          sign_language: signDialect,
         });
         handleRecognitionData(res.data);
         return;
@@ -401,6 +421,7 @@ export default function CameraSignPanel() {
       const formData = new FormData();
       formData.append("image", new File([blob], "camera_frame.jpg", { type: "image/jpeg" }));
       formData.append("target_language", targetLanguage);
+      formData.append("sign_language", signDialect);
 
       const response = await axios.post(`${API}/sign/recognize`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -464,21 +485,38 @@ export default function CameraSignPanel() {
           </p>
         </div>
 
-        {/* Target Translation Language */}
-        <div className="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
-          <Languages size={15} className="text-blue-400" />
-          <span className="text-xs text-slate-400">Translate to:</span>
-          <select
-            value={targetLanguage}
-            onChange={(e) => setTargetLanguage(e.target.value)}
-            className="bg-transparent text-xs font-semibold text-white focus:outline-none cursor-pointer"
-          >
-            {LANGUAGES.map((l) => (
-              <option key={l.code} value={l.code} className="bg-slate-900 text-white">
-                {l.name}
-              </option>
-            ))}
-          </select>
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Sign Language Dialect Selector */}
+          <div className="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
+            <span className="text-xs text-purple-400 font-bold">Sign Dialect:</span>
+            <select
+              value={signDialect}
+              onChange={(e) => setSignDialect(e.target.value)}
+              className="bg-transparent text-xs font-semibold text-white focus:outline-none cursor-pointer"
+            >
+              <option value="ISL" className="bg-slate-900 text-white">ISL (Indian Sign Language)</option>
+              <option value="ASL" className="bg-slate-900 text-white">ASL (American Sign Language)</option>
+              <option value="BSL" className="bg-slate-900 text-white">BSL (British Sign Language)</option>
+              <option value="INT" className="bg-slate-900 text-white">International Sign Dialect</option>
+            </select>
+          </div>
+
+          {/* Target Translation Regional Language Selector */}
+          <div className="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
+            <Languages size={15} className="text-blue-400" />
+            <span className="text-xs text-slate-400">Comfortable Language:</span>
+            <select
+              value={targetLanguage}
+              onChange={(e) => setTargetLanguage(e.target.value)}
+              className="bg-transparent text-xs font-semibold text-white focus:outline-none cursor-pointer"
+            >
+              {LANGUAGES.map((l) => (
+                <option key={l.code} value={l.code} className="bg-slate-900 text-white">
+                  {l.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -636,10 +674,22 @@ export default function CameraSignPanel() {
       <div className="rounded-2xl border border-slate-800 bg-slate-950 p-5 space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-            <span>📝</span> Constructed ISL Sentence:
+            <span>📝</span> Constructed Sentence Output:
           </span>
 
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setAutoVoiceOutput((prev) => !prev)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+                autoVoiceOutput
+                  ? "bg-green-600/20 text-green-400 border border-green-500/40"
+                  : "bg-slate-900 text-slate-400 border border-slate-800"
+              }`}
+              title="Toggle Auto Spoken Voice Output"
+            >
+              <Volume2 size={14} />
+              <span>{autoVoiceOutput ? "Auto Spoken Voice ON" : "Auto Spoken Voice OFF"}</span>
+            </button>
             <button
               onClick={copySentence}
               disabled={sentence.length === 0}

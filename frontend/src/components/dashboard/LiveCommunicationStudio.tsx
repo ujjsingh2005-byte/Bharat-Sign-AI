@@ -73,12 +73,15 @@ export default function LiveCommunicationStudio() {
     { code: "mr", name: "Marathi (मराठी)" },
     { code: "bn", name: "Bengali (বাংলা)" },
     { code: "gu", name: "Gujarati (ગુજરાતી)" },
+    { code: "pa", name: "Punjabi (ਪੰਜਾਬੀ)" },
     { code: "ta", name: "Tamil (தமிழ்)" },
     { code: "te", name: "Telugu (తెలుగు)" },
     { code: "ml", name: "Malayalam (മലയാളം)" },
     { code: "kn", name: "Kannada (ಕನ್ನಡ)" },
-    { code: "pa", name: "Punjabi (ਪੰਜਾਬੀ)" },
+    { code: "or", name: "Odia (ଓଡ଼ିଆ)" },
+    { code: "as", name: "Assamese (অসমীয়া)" },
     { code: "ur", name: "Urdu (اردو)" },
+    { code: "sa", name: "Sanskrit (संस्कृतम्)" },
   ];
 
   // -------------------------------------------------------------

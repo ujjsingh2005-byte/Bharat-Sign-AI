@@ -497,6 +497,12 @@ export default function CameraSignPanel() {
               <option value="ISL" className="bg-slate-900 text-white">ISL (Indian Sign Language)</option>
               <option value="ASL" className="bg-slate-900 text-white">ASL (American Sign Language)</option>
               <option value="BSL" className="bg-slate-900 text-white">BSL (British Sign Language)</option>
+              <option value="Auslan" className="bg-slate-900 text-white">Auslan (Australian Sign Language)</option>
+              <option value="LSF" className="bg-slate-900 text-white">LSF (French Sign Language)</option>
+              <option value="DGS" className="bg-slate-900 text-white">DGS (German Sign Language)</option>
+              <option value="JSL" className="bg-slate-900 text-white">JSL (Japanese Sign Language)</option>
+              <option value="KSL" className="bg-slate-900 text-white">KSL (Korean Sign Language)</option>
+              <option value="CSL" className="bg-slate-900 text-white">CSL (Chinese Sign Language)</option>
               <option value="INT" className="bg-slate-900 text-white">International Sign Dialect</option>
             </select>
           </div>

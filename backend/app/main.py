@@ -6,6 +6,7 @@ from app.routes.voice import router as voice_router
 from app.routes.translation import router as translation_router
 from app.routes.gloss import router as gloss_router
 from app.routes.sign_recognition import router as sign_recognition_router
+from app.routes.auth import router as auth_router
 
 app = FastAPI(
     title="Bharat Sign AI 3 - Universal Indian Language & Sign Language API",
@@ -29,6 +30,7 @@ app.add_middleware(
 )
 
 # Include Subrouters
+app.include_router(auth_router)
 app.include_router(voice_router)
 app.include_router(translation_router)
 app.include_router(gloss_router)

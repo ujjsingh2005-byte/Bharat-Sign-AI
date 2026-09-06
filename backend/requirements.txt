@@ -1,11 +1,15 @@
 fastapi>=0.110
 uvicorn[standard]>=0.27
 python-multipart>=0.0.9
-openai-whisper>=20231117
-torch
 python-dotenv>=1.0
 pymongo>=4.6
 passlib[bcrypt]>=1.7
 python-jose[cryptography]>=3.3
 email-validator>=2.0
 deep-translator>=1.11
+gTTS>=2.5.1
+googletrans==4.0.0-rc1
+mediapipe>=0.10.9
+opencv-python-headless>=4.9.0.80
+numpy>=1.26.0
+requests>=2.31.0

@@ -11,8 +11,9 @@ import {
   ArrowRightLeft,
 } from "lucide-react";
 import AvatarViewer, { type SignItem } from "./AvatarViewer";
+import { processLocalSemanticPipeline } from "../../utils/localSemanticPipeline";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 interface Message {
   id: string;
@@ -133,9 +134,28 @@ export default function LiveCommunicationStudio() {
         if (data.signs && data.signs.length > 0) {
           setAvatarSequence(data.signs);
         }
+      } else {
+        throw new Error(data.message || "Pipeline failed");
       }
     } catch (err) {
-      console.error("Hearing message pipeline error:", err);
+      console.warn("Backend API unreachable in Live Studio, using client fallback:", err);
+      const fallbackData = processLocalSemanticPipeline(textToSend, hearingLang);
+      const newMsg: Message = {
+        id: Date.now().toString(),
+        sender: "hearing",
+        originalText: textToSend,
+        language: hearingLang,
+        translatedText: fallbackData.english_translation,
+        islGloss: fallbackData.gloss,
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      };
+
+      setMessages((prev) => [...prev, newMsg]);
+      setHearingInput("");
+
+      if (fallbackData.signs && fallbackData.signs.length > 0) {
+        setAvatarSequence(fallbackData.signs);
+      }
     }
   };
 

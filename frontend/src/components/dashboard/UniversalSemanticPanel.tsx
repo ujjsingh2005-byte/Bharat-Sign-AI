@@ -11,8 +11,9 @@ import {
   Upload,
 } from "lucide-react";
 import type { SignItem } from "./AvatarViewer";
+import { processLocalSemanticPipeline } from "../../utils/localSemanticPipeline";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 interface UniversalSemanticPanelProps {
   onSignSequence: (sequence: SignItem[]) => void;
@@ -40,7 +41,7 @@ export default function UniversalSemanticPanel({
     { code: "te", name: "Telugu (తెలుగు)" },
     { code: "ml", name: "Malayalam (മലയാളം)" },
     { code: "kn", name: "Kannada (ಕನ್ನಡ)" },
-    { code: "or", name: "Odia (ଓଡ଼ିଆ)" },
+    { code: "or", name: "Odia (ଓਡ଼ିଆ)" },
     { code: "as", name: "Assamese (অসমীয়া)" },
     { code: "ur", name: "Urdu (اردو)" },
     { code: "sa", name: "Sanskrit (संस्कृतम्)" },
@@ -92,9 +93,16 @@ export default function UniversalSemanticPanel({
         if (data.signs && data.signs.length > 0) {
           onSignSequence(data.signs);
         }
+      } else {
+        throw new Error(data.message || "Backend return error");
       }
     } catch (e) {
-      console.error("Semantic pipeline error:", e);
+      console.warn("Backend API offline or unreachable, activating Client-Side ISL Semantic Engine fallback:", e);
+      const fallbackData = processLocalSemanticPipeline(textToProcess, lang);
+      setPipelineResult(fallbackData);
+      if (fallbackData.signs && fallbackData.signs.length > 0) {
+        onSignSequence(fallbackData.signs);
+      }
     } finally {
       setLoading(false);
     }

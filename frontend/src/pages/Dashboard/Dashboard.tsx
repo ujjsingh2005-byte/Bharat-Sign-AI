@@ -11,9 +11,7 @@ import { Sparkles, ArrowRight, ShieldCheck, Cpu, Eye, Radio } from "lucide-react
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<DashboardTab>("all");
-  const [activeSignSequence, setActiveSignSequence] = useState<SignItem[]>([
-    { word: "HELLO", animation: "hello", description: "Open hand raised near temple waving outward." },
-  ]);
+  const [activeSignSequence, setActiveSignSequence] = useState<SignItem[]>([]);
 
   const handleSetSignSequence = (signs: SignItem[]) => {
     if (signs && signs.length > 0) {

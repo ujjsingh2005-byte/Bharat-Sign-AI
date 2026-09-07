@@ -11,8 +11,9 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import type { SignItem } from "./AvatarViewer";
+import { processLocalSemanticPipeline } from "../../utils/localSemanticPipeline";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 interface VoicePanelProps {
   onSignSequence: (signs: SignItem[]) => void;
@@ -89,9 +90,14 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
       if (res.data.success) {
         liveTranscriptCapturedRef.current = true;
         processResponse(res.data);
+      } else {
+        throw new Error(res.data.message || "Pipeline error");
       }
     } catch (e) {
-      console.warn("Direct text processing error:", e);
+      console.warn("Direct API unreachable, using client-side ISL semantic fallback:", e);
+      const fallbackResult = processLocalSemanticPipeline(text, inputLanguage.split("-")[0]);
+      liveTranscriptCapturedRef.current = true;
+      processResponse(fallbackResult);
     } finally {
       setLoading(false);
     }

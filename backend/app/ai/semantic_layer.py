@@ -146,12 +146,9 @@ VERB_MAP = {
     "stand": "STAND", "standing": "STAND", "stood": "STAND", "stands": "STAND",
 }
 
-def analyze_semantics(english_text: str) -> dict:
-    """
-    Analyzes English sentence and produces Universal Semantic Representation & ISL Grammar.
-    ISL Grammar follows Time + Subject + Object + Verb + Question/Negation order.
-    """
-    if not english_text:
+def analyze_single_sentence(sentence_text: str) -> dict:
+    raw = sentence_text.strip()
+    if not raw:
         return {
             "raw": "",
             "time": None,
@@ -160,12 +157,10 @@ def analyze_semantics(english_text: str) -> dict:
             "verb": None,
             "question": None,
             "negation": False,
-            "entities": [],
             "isl_gloss": [],
             "gloss_text": "",
         }
 
-    raw = english_text.strip()
     clean = re.sub(r"[^\w\s]", "", raw).lower()
     clean_words = clean.split()
 
@@ -215,7 +210,7 @@ def analyze_semantics(english_text: str) -> dict:
         else:
             object_tokens.append(upper)
 
-    # Filter out auxiliary DO when another main action verb is present (e.g. "What do you want?" -> WANT, not DO)
+    # Filter out auxiliary DO when another main action verb is present
     if "DO" in verb_tokens and len(verb_tokens) > 1:
         verb_tokens.remove("DO")
 
@@ -249,4 +244,57 @@ def analyze_semantics(english_text: str) -> dict:
         "isl_gloss": isl_gloss,
         "gloss_text": gloss_str,
         "grammar_rule": "ISL Standard: [TIME] + [SUBJECT] + [OBJECT] + [VERB] + [NEGATION/QUESTION]",
+    }
+
+def analyze_semantics(english_text: str) -> dict:
+    """
+    Analyzes English text and produces Universal Semantic Representation & ISL Grammar.
+    Supports both single sentence & multi-sentence / paragraph inputs.
+    """
+    if not english_text or not english_text.strip():
+        return {
+            "raw": "",
+            "time": None,
+            "subject": None,
+            "object": None,
+            "verb": None,
+            "question": None,
+            "negation": False,
+            "entities": [],
+            "isl_gloss": [],
+            "gloss_text": "",
+            "sentences_breakdown": [],
+        }
+
+    raw = english_text.strip()
+    raw_sentences = [s.strip() for s in re.split(r"[.\n!?;\r]+", raw) if s.strip()]
+
+    if len(raw_sentences) <= 1:
+        res = analyze_single_sentence(raw)
+        res["sentences_breakdown"] = [res]
+        return res
+
+    all_gloss = []
+    breakdowns = []
+    for s in raw_sentences:
+        s_res = analyze_single_sentence(s)
+        if s_res.get("isl_gloss"):
+            all_gloss.extend(s_res["isl_gloss"])
+            breakdowns.append(s_res)
+
+    first_res = breakdowns[0] if breakdowns else analyze_single_sentence(raw)
+
+    return {
+        "raw": raw,
+        "time": first_res.get("time"),
+        "subject": first_res.get("subject"),
+        "object": first_res.get("object"),
+        "verb": first_res.get("verb"),
+        "question": first_res.get("question"),
+        "negation": first_res.get("negation", False),
+        "entities": all_gloss,
+        "isl_gloss": all_gloss,
+        "gloss_text": " ".join(all_gloss),
+        "grammar_rule": f"Multi-Sentence ISL Alignment ({len(breakdowns)} sentences parsed)",
+        "sentences_breakdown": breakdowns,
     }

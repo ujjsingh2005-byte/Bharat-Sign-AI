@@ -429,9 +429,9 @@ def translate_text(
                 "target_language": target_language,
             }
 
-    # Tier 1: Offline phrase dictionary match
+    # Tier 1: Offline phrase dictionary match (Exact phrase match)
     for phrase, eng in PHRASE_DICTIONARY.items():
-        if phrase == clean_lower or phrase in clean_lower or clean_lower in phrase:
+        if phrase == clean_lower:
             if target_language == "en":
                 return {
                     "success": True,

@@ -96,6 +96,31 @@ const VOCABULARY_MAP: Record<string, string> = {
   SISTER: "sister",
   WORK: "work",
   JOB: "work",
+  GREAT: "good",
+  HONORABLE: "respect",
+  RESPECT: "respect",
+  MAN: "father",
+  WOMAN: "mother",
+  BOY: "brother",
+  GIRL: "sister",
+  PERSON: "me",
+  HUMAN: "me",
+  TEACHER: "study",
+  STUDENT: "study",
+  POLICE: "help",
+  IMPORTANT: "good",
+  HONEST: "good",
+  STRONG: "work",
+  SMART: "study",
+  BEAUTIFUL: "like",
+  KIND: "love",
+  BRAVE: "help",
+  PEACE: "welcome",
+  HEALTH: "doctor",
+  CARE: "help",
+  SAFE: "welcome",
+  WORLD: "home",
+  INDIA: "home",
 };
 
 // Common Indian Language Word Mappings to English for offline translation
@@ -314,30 +339,18 @@ function parseSingleSentence(sentenceText: string): {
     finalGloss = [raw.toUpperCase()];
   }
 
-  // Map gloss to signs or fingerspelling
+  // Map gloss to whole-word ISL signs (Zero word-to-letter splitting)
   const signs: SignItem[] = [];
   for (const glossWord of finalGloss) {
-    const animationKey = VOCABULARY_MAP[glossWord];
-    if (animationKey) {
-      signs.push({
-        word: glossWord,
-        animation: animationKey,
-        type: "sign",
-        description: `ISL Gesture animation for '${glossWord}'.`,
-      });
-    } else {
-      // Fingerspelling fallback for unknown proper nouns / names
-      for (const char of glossWord) {
-        if (/[A-Z0-9]/.test(char)) {
-          signs.push({
-            word: char,
-            animation: char.toLowerCase(),
-            type: "letter",
-            description: `Fingerspelling letter '${char}'.`,
-          });
-        }
-      }
-    }
+    if (!glossWord || !glossWord.trim()) continue;
+
+    const animationKey = VOCABULARY_MAP[glossWord] || glossWord.toLowerCase();
+    signs.push({
+      word: glossWord,
+      animation: animationKey,
+      type: "sign",
+      description: `ISL Whole-Word Gesture animation for '${glossWord}'.`,
+    });
   }
 
   return {

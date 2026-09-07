@@ -271,7 +271,11 @@ def analyze_semantics(english_text: str) -> dict:
 
     if len(raw_sentences) <= 1:
         res = analyze_single_sentence(raw)
-        res["sentences_breakdown"] = [res]
+        res["sentences_breakdown"] = [{
+            "raw": res.get("raw"),
+            "isl_gloss": res.get("isl_gloss"),
+            "gloss_text": res.get("gloss_text"),
+        }]
         return res
 
     all_gloss = []

@@ -141,6 +141,12 @@ VOCABULARY_SIGNS = {
     "NOW": {"word": "NOW", "asset": "now", "type": "sign", "category": "Time", "animation": "now", "description": "Bent hands drop down firmly once in front of chest."},
     "GOOD": {"word": "GOOD", "asset": "good", "type": "sign", "category": "Basics", "animation": "good", "description": "Flat right hand touches chin and moves down onto flat left palm."},
     "BAD": {"word": "BAD", "asset": "bad", "type": "sign", "category": "Basics", "animation": "bad", "description": "Flat right hand touches chin and turns sharply downward."},
+    "GREAT": {"word": "GREAT", "asset": "good", "type": "sign", "category": "Basics", "animation": "good", "description": "Both open palms raised high signifying greatness and excellence."},
+    "HONORABLE": {"word": "HONORABLE", "asset": "please", "type": "sign", "category": "Social", "animation": "please", "description": "Flat palm over heart bowing forward with respect."},
+    "MAN": {"word": "MAN", "asset": "father", "type": "sign", "category": "Family", "animation": "father", "description": "Hand touches forehead and moves down to chest level."},
+    "RESPECT": {"word": "RESPECT", "asset": "please", "type": "sign", "category": "Social", "animation": "please", "description": "'R' handshapes move from forehead forward in respectful salute."},
+    "PERSON": {"word": "PERSON", "asset": "me", "type": "sign", "category": "Social", "animation": "me", "description": "Both 'P' handshapes move downward along sides of torso."},
+    "HUMAN": {"word": "HUMAN", "asset": "me", "type": "sign", "category": "Social", "animation": "me", "description": "Both open hands move downward outlining human figure."},
 }
 
 # Explicitly add Full Alphabet A-Z (26 Signs)

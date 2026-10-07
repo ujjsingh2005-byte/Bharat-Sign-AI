@@ -7,6 +7,7 @@ from app.routes.translation import router as translation_router
 from app.routes.gloss import router as gloss_router
 from app.routes.sign_recognition import router as sign_recognition_router
 from app.routes.auth import router as auth_router
+from app.routes.research import router as research_router
 
 app = FastAPI(
     title="Bharat Sign AI 3 - Universal Indian Language & Sign Language API",
@@ -36,6 +37,7 @@ app.include_router(translation_router)
 app.include_router(gloss_router)
 app.include_router(signs_router)
 app.include_router(sign_recognition_router)
+app.include_router(research_router)
 
 @app.get("/")
 def root():

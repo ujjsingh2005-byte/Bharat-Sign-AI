@@ -7,6 +7,7 @@ import CameraSignPanel from "../../components/dashboard/CameraSignPanel";
 import UniversalSemanticPanel from "../../components/dashboard/UniversalSemanticPanel";
 import LiveCommunicationStudio from "../../components/dashboard/LiveCommunicationStudio";
 import ISLDictionary from "../../components/dashboard/ISLDictionary";
+import ResearchStudio from "../../components/research/ResearchStudio";
 import { Sparkles, ArrowRight, ShieldCheck, Cpu, Eye, Radio } from "lucide-react";
 
 export default function Dashboard() {
@@ -164,6 +165,15 @@ export default function Dashboard() {
           {activeTab === "dictionary" && (
             <div className="max-w-7xl mx-auto">
               <ISLDictionary />
+            </div>
+          )}
+
+          {/* ========================================================= */}
+          {/* TAB 7: RESEARCH STUDIO & PAPER EVALUATION LAYER */}
+          {/* ========================================================= */}
+          {activeTab === "research" && (
+            <div className="max-w-7xl mx-auto">
+              <ResearchStudio />
             </div>
           )}
         </main>

@@ -6,6 +6,7 @@ import {
   ArrowRightLeft,
   LayoutDashboard,
   LogOut,
+  FlaskConical,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +16,8 @@ export type DashboardTab =
   | "semantic_to_sign"
   | "camera_recognition"
   | "live_studio"
-  | "dictionary";
+  | "dictionary"
+  | "research";
 
 interface SidebarProps {
   activeTab: DashboardTab;
@@ -40,6 +42,12 @@ export default function Sidebar({ activeTab, onSelectTab }: SidebarProps) {
       id: "all",
       label: "Studio Overview",
       icon: LayoutDashboard,
+    },
+    {
+      id: "research",
+      label: "Research Studio",
+      icon: FlaskConical,
+      badge: "Paper AI",
     },
     {
       id: "voice_to_sign",

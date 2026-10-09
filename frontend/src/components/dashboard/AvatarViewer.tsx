@@ -16,11 +16,13 @@ import {
 export interface SignItem {
   word: string;
   asset?: string;
-  type?: "sign" | "letter" | "number";
+  type?: "sign" | "letter" | "number" | "text_fallback";
   category?: string;
   animation?: string;
   description?: string;
   available?: boolean;
+  is_validated?: boolean;
+  validation_status?: string;
 }
 
 export interface AvatarViewerProps {
@@ -189,11 +191,26 @@ export default function AvatarViewer({
 
         {/* Current Active Sign Overlay Card */}
         {activeWord && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-slate-950/90 backdrop-blur-md border border-blue-500/40 px-6 py-2.5 rounded-2xl text-center shadow-2xl">
-            <span className="text-[10px] font-extrabold text-blue-400 uppercase tracking-widest block mb-0.5">
-              INDIAN SIGN LANGUAGE (ISL)
-            </span>
-            <span className="text-xl font-black text-white tracking-wide">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-slate-950/90 backdrop-blur-md border border-blue-500/40 px-6 py-2.5 rounded-2xl text-center shadow-2xl space-y-1">
+            <div className="flex items-center justify-center gap-1.5">
+              <span className="text-[10px] font-extrabold text-blue-400 uppercase tracking-widest block">
+                INDIAN SIGN LANGUAGE (ISL)
+              </span>
+              {activeItem?.is_validated === false || activeItem?.validation_status === "UNVALIDATED_TEXT_FALLBACK" ? (
+                <span className="text-[9px] bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded font-extrabold">
+                  ⚠️ Text Fallback Notice
+                </span>
+              ) : activeItem?.validation_status === "ISL_FINGERSPELLING_LETTER" || activeItem?.type === "letter" ? (
+                <span className="text-[9px] bg-purple-500/20 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded font-extrabold">
+                  🔤 ISL Manual Alphabet
+                </span>
+              ) : (
+                <span className="text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded font-extrabold">
+                  ✓ Validated Gesture
+                </span>
+              )}
+            </div>
+            <span className="text-xl font-black text-white tracking-wide block">
               {activeWord}
             </span>
           </div>

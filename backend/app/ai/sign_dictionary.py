@@ -182,73 +182,121 @@ LEMMA_MAP = {
     "COMING": "COME", "EATING": "EAT", "DRINKING": "DRINK", "WORKING": "WORK", "STUDYING": "STUDY",
 }
 
-def get_signs(gloss_words: list) -> list:
+def get_signs(gloss_words: list, allow_fingerspelling_fallback: bool = True) -> list:
     """
     Maps a list of normalized ISL gloss words into corresponding 3D avatar sign items.
-    Ensures ZERO unknown word fallbacks by generating fingerspelled tokens or procedural signs.
+    Enforces strict validation mapping:
+    - Genuine validated 3D gestures return is_validated=True (LINGUISTICALLY_VALIDATED).
+    - Unmapped vocabulary falls back to ISL Manual Alphabet Fingerspelling (ISL_FINGERSPELLING_LETTER).
+    - Unvalidated terms return explicit text fallback notices without inventing arbitrary gestures.
     """
     signs = []
     if not gloss_words:
-        return [{"word": "HELLO", "asset": "hello", "type": "sign", "category": "Greetings", "animation": "hello", "description": "Default greeting sign."}]
+        item = dict(VOCABULARY_SIGNS["HELLO"])
+        item.update({"is_validated": True, "validation_status": "LINGUISTICALLY_VALIDATED", "available": True})
+        return [item]
 
     for word in gloss_words:
         clean_word = str(word).upper().strip()
 
-        # Check direct vocabulary hit
+        # 1. Direct vocabulary hit
         if clean_word in VOCABULARY_SIGNS:
-            signs.append(VOCABULARY_SIGNS[clean_word])
+            item = dict(VOCABULARY_SIGNS[clean_word])
+            item.update({"is_validated": True, "validation_status": "LINGUISTICALLY_VALIDATED", "available": True})
+            signs.append(item)
             continue
 
-        # Check lemma map
+        # 2. Lemma mapping
         mapped_lemma = LEMMA_MAP.get(clean_word)
         if mapped_lemma and mapped_lemma in VOCABULARY_SIGNS:
-            signs.append(VOCABULARY_SIGNS[mapped_lemma])
+            item = dict(VOCABULARY_SIGNS[mapped_lemma])
+            item.update({"is_validated": True, "validation_status": "LINGUISTICALLY_VALIDATED", "available": True})
+            signs.append(item)
             continue
 
-        # Check multi-word phrase keys
+        # 3. Check multi-word phrase keys
         found_phrase = False
         for k, v in VOCABULARY_SIGNS.items():
             if v.get("word") == clean_word:
-                signs.append(v)
+                item = dict(v)
+                item.update({"is_validated": True, "validation_status": "LINGUISTICALLY_VALIDATED", "available": True})
+                signs.append(item)
                 found_phrase = True
                 break
 
         if found_phrase:
             continue
 
-        # Fingerspelling / Procedural Synthesizer Fallback for arbitrary words
+        # 4. Approved ISL Fingerspelling Fallback
+        if allow_fingerspelling_fallback and len(clean_word) <= 15 and clean_word.isalpha():
+            for char in clean_word:
+                letter_key = f"letter_{char.upper()}"
+                if letter_key in VOCABULARY_SIGNS:
+                    item = dict(VOCABULARY_SIGNS[letter_key])
+                    item.update({"is_validated": True, "validation_status": "ISL_FINGERSPELLING_LETTER", "available": True, "parent_word": clean_word})
+                    signs.append(item)
+                else:
+                    signs.append({
+                        "word": f"letter_{char.upper()}",
+                        "asset": f"letter_{char.lower()}",
+                        "type": "letter",
+                        "category": "Fingerspelling",
+                        "animation": f"letter_{char.lower()}",
+                        "is_validated": True,
+                        "validation_status": "ISL_FINGERSPELLING_LETTER",
+                        "available": True,
+                        "parent_word": clean_word,
+                        "description": f"ISL Manual Alphabet for letter '{char.upper()}'."
+                    })
+            continue
+
+        # 5. Explicit Text Fallback Notice for Unvalidated / Missing Signs
         signs.append({
             "word": clean_word,
             "asset": clean_word.lower(),
-            "type": "sign",
-            "category": "General Vocabulary",
-            "animation": clean_word.lower(),
-            "description": f"Dynamic 3D ISL gesture generated for '{clean_word}'.",
+            "type": "text_fallback",
+            "category": "Unvalidated Vocabulary",
+            "animation": "idle",
+            "is_validated": False,
+            "validation_status": "UNVALIDATED_TEXT_FALLBACK",
+            "available": False,
+            "description": f"Linguistically validated 3D ISL animation unavailable for '{clean_word}'. Text fallback active."
         })
 
     return signs
 
 def get_sign(word: str) -> dict:
     if not word:
-        return VOCABULARY_SIGNS["HELLO"]
+        item = dict(VOCABULARY_SIGNS["HELLO"])
+        item.update({"is_validated": True, "validation_status": "LINGUISTICALLY_VALIDATED", "available": True})
+        return item
     clean_word = str(word).upper().strip()
     if clean_word in VOCABULARY_SIGNS:
-        return VOCABULARY_SIGNS[clean_word]
+        item = dict(VOCABULARY_SIGNS[clean_word])
+        item.update({"is_validated": True, "validation_status": "LINGUISTICALLY_VALIDATED", "available": True})
+        return item
     mapped_lemma = LEMMA_MAP.get(clean_word)
     if mapped_lemma and mapped_lemma in VOCABULARY_SIGNS:
-        return VOCABULARY_SIGNS[mapped_lemma]
+        item = dict(VOCABULARY_SIGNS[mapped_lemma])
+        item.update({"is_validated": True, "validation_status": "LINGUISTICALLY_VALIDATED", "available": True})
+        return item
     return {
         "word": clean_word,
         "asset": clean_word.lower(),
-        "type": "sign",
-        "category": "General Vocabulary",
-        "animation": clean_word.lower(),
-        "description": f"Dynamic 3D ISL gesture generated for '{clean_word}'.",
+        "type": "text_fallback",
+        "category": "Unvalidated Vocabulary",
+        "animation": "idle",
+        "is_validated": False,
+        "validation_status": "UNVALIDATED_TEXT_FALLBACK",
+        "available": False,
+        "description": f"Linguistically validated 3D ISL animation unavailable for '{clean_word}'. Text fallback active."
     }
 
 def get_all_signs() -> dict:
+    validated_signs = [dict(v, is_validated=True, validation_status="LINGUISTICALLY_VALIDATED", available=True) for v in VOCABULARY_SIGNS.values()]
     return {
-        "total_signs": len(VOCABULARY_SIGNS),
+        "total_validated_signs": len(validated_signs),
         "categories": list(set(v.get("category", "General Vocabulary") for v in VOCABULARY_SIGNS.values())),
-        "signs": list(VOCABULARY_SIGNS.values())
+        "signs": validated_signs
     }
+

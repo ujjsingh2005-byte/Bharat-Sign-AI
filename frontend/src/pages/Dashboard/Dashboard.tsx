@@ -10,6 +10,16 @@ import ISLDictionary from "../../components/dashboard/ISLDictionary";
 import ResearchStudio from "../../components/research/ResearchStudio";
 import { Sparkles, ArrowRight, ShieldCheck, Cpu, Eye, Radio } from "lucide-react";
 
+const TAB_BACKGROUNDS: Record<DashboardTab, string> = {
+  all: "bg-[#050816]",
+  research: "bg-[#090D18]",
+  voice_to_sign: "bg-[#061225]",
+  semantic_to_sign: "bg-[#120A22]",
+  camera_recognition: "bg-[#04171D]",
+  live_studio: "bg-[#100B22]",
+  dictionary: "bg-[#071A17]",
+};
+
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<DashboardTab>("all");
   const [activeSignSequence, setActiveSignSequence] = useState<SignItem[]>([]);
@@ -20,8 +30,10 @@ export default function Dashboard() {
     }
   };
 
+  const bgClass = TAB_BACKGROUNDS[activeTab] || "bg-[#050816]";
+
   return (
-    <div className="flex min-h-screen bg-slate-950 text-white selection:bg-blue-600 selection:text-white">
+    <div className={`flex min-h-screen ${bgClass} text-white selection:bg-blue-600 selection:text-white transition-colors duration-500`}>
       {/* Dynamic Sidebar */}
       <Sidebar activeTab={activeTab} onSelectTab={setActiveTab} />
 

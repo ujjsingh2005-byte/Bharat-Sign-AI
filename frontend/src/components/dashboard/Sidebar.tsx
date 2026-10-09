@@ -37,52 +37,68 @@ export default function Sidebar({ activeTab, onSelectTab }: SidebarProps) {
     label: string;
     icon: any;
     badge?: string;
+    activeBg: string;
+    iconColor: string;
   }> = [
     {
       id: "all",
       label: "Studio Overview",
       icon: LayoutDashboard,
+      activeBg: "bg-gradient-to-r from-indigo-600 to-purple-600 shadow-indigo-600/30",
+      iconColor: "text-indigo-400",
     },
     {
       id: "research",
       label: "Research Studio",
       icon: FlaskConical,
       badge: "Paper AI",
+      activeBg: "bg-gradient-to-r from-amber-600 to-orange-600 shadow-amber-600/30",
+      iconColor: "text-amber-400",
     },
     {
       id: "voice_to_sign",
       label: "Voice / Audio → Sign",
       icon: Mic,
       badge: "Mode 1 & 2",
+      activeBg: "bg-gradient-to-r from-blue-600 to-cyan-600 shadow-blue-600/30",
+      iconColor: "text-blue-400",
     },
     {
       id: "semantic_to_sign",
       label: "Regional Languages (14+)",
       icon: Globe2,
       badge: "Mode 3",
+      activeBg: "bg-gradient-to-r from-pink-600 to-rose-600 shadow-pink-600/30",
+      iconColor: "text-pink-400",
     },
     {
       id: "camera_recognition",
       label: "Camera Sign Recognition",
       icon: Camera,
       badge: "Mode 4 & 5",
+      activeBg: "bg-gradient-to-r from-cyan-600 to-teal-600 shadow-cyan-600/30",
+      iconColor: "text-cyan-400",
     },
     {
       id: "live_studio",
       label: "Live 2-Way Studio",
       icon: ArrowRightLeft,
       badge: "Mode 6",
+      activeBg: "bg-gradient-to-r from-purple-600 to-indigo-600 shadow-purple-600/30",
+      iconColor: "text-purple-400",
     },
     {
       id: "dictionary",
       label: "ISL Dictionary & Learning",
       icon: BookOpen,
       badge: "100+ Signs",
+      activeBg: "bg-gradient-to-r from-emerald-600 to-teal-600 shadow-emerald-600/30",
+      iconColor: "text-emerald-400",
     },
   ];
 
   return (
-    <aside className="w-72 bg-slate-950 border-r border-slate-800 p-6 flex flex-col justify-between shrink-0 min-h-screen">
+    <aside className="w-72 bg-[#060A18] border-r border-[#1E293B] p-6 flex flex-col justify-between shrink-0 min-h-screen">
       <div>
         {/* Brand */}
         <div
@@ -111,12 +127,12 @@ export default function Sidebar({ activeTab, onSelectTab }: SidebarProps) {
                 onClick={() => onSelectTab(item.id)}
                 className={`w-full flex items-center justify-between p-3 rounded-2xl text-xs font-semibold transition text-left ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
+                    ? `${item.activeBg} text-white shadow-lg`
                     : "text-slate-400 hover:text-white hover:bg-slate-900"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon size={18} className={isActive ? "text-white" : "text-slate-400"} />
+                  <Icon size={18} className={isActive ? "text-white" : item.iconColor} />
                   <span>{item.label}</span>
                 </div>
 

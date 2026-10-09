@@ -1,10 +1,12 @@
 import React from "react";
 
 export type CardVariant =
+  | "cosmic"
   | "indigo"
   | "violet"
   | "emerald"
   | "ocean"
+  | "cyan"
   | "sunset"
   | "coral"
   | "pink"
@@ -38,6 +40,26 @@ const VARIANT_STYLES: Record<
     hoverShadow: string;
   }
 > = {
+  cosmic: {
+    cardBg: "bg-[#171A3A]",
+    border: "border-[#3730A3]",
+    iconBg: "bg-[#2B2B68]",
+    iconColor: "text-[#A5B4FC]",
+    titleColor: "text-[#E0E7FF]",
+    textColor: "text-[#C7D2FE]",
+    badgeStyle: "bg-[#3730A3]/40 text-[#A5B4FC] border-[#3730A3]",
+    hoverShadow: "hover:shadow-indigo-900/50",
+  },
+  cyan: {
+    cardBg: "bg-[#083344]",
+    border: "border-[#0E7490]",
+    iconBg: "bg-[#154E63]",
+    iconColor: "text-[#67E8F9]",
+    titleColor: "text-[#ECFEFF]",
+    textColor: "text-[#A5F3FC]",
+    badgeStyle: "bg-[#0E7490]/40 text-[#67E8F9] border-[#0E7490]",
+    hoverShadow: "hover:shadow-cyan-900/50",
+  },
   ocean: {
     cardBg: "bg-[#E0F2FE]",
     border: "border-[#BAE6FD]",

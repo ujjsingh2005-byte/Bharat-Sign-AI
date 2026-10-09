@@ -198,6 +198,29 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
       mediaRecorder.onstop = async () => {
         stream.getTracks().forEach((track) => track.stop());
         streamRef.current = null;
+
+        if (audioChunksRef.current.length > 0 && !liveTranscriptCapturedRef.current) {
+          try {
+            setLoading(true);
+            const audioBlob = new Blob(audioChunksRef.current, { type: options.mimeType || "audio/webm" });
+            const formData = new FormData();
+            formData.append("audio", audioBlob, "recording.webm");
+            formData.append("target_language", inputLanguage.split("-")[0]);
+
+            const res = await axios.post(`${API}/voice/speech-to-text`, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            });
+
+            if (res.data.success) {
+              setTranscript(res.data.text || "");
+              processResponse(res.data);
+            }
+          } catch (err) {
+            console.warn("Backend audio ASR endpoint unreachable, using WebSpeech API transcript fallback:", err);
+          } finally {
+            setLoading(false);
+          }
+        }
       };
 
       mediaRecorderRef.current = mediaRecorder;

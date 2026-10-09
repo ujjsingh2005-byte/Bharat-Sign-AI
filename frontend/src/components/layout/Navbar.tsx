@@ -10,8 +10,11 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Master Studio", path: "/dashboard" },
-    { name: "ISL Learning", path: "/dashboard" },
-    { name: "Research Studio", path: "/dashboard" },
+    { name: "Voice → Sign", path: "/voice-to-sign" },
+    { name: "Sign → Text", path: "/sign-to-text" },
+    { name: "History Logs", path: "/history" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
   ];
 
   return (

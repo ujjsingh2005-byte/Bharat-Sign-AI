@@ -155,7 +155,10 @@ export default function AvatarViewer({
       </div>
 
       {/* 3D WebGL Canvas Viewport */}
-      <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-gradient-to-b from-slate-900 to-slate-950 rounded-2xl border border-slate-800 overflow-hidden flex items-center justify-center">
+      <div 
+        style={{ background: "radial-gradient(circle at 50% 25%, #26365B 0%, #131B31 45%, #090D1B 100%)" }}
+        className="relative w-full aspect-[4/3] sm:aspect-[16/10] rounded-2xl border border-[#334155] overflow-hidden flex items-center justify-center shadow-2xl"
+      >
         {/* Playback State Overlay */}
         <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
           {isPlaying ? (

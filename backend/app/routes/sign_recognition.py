@@ -89,124 +89,39 @@ def recognize_landmarks(request: LandmarkRecognitionRequest):
     """
     pts = request.landmarks
     if len(pts) < 21:
-        return {"success": False, "sign": None, "confidence": 0.0, "message": "Incomplete hand landmarks."}
-
-    wrist = pts[0]
-    thumb_mcp = pts[2]
-    thumb_tip = pts[4]
-    index_pip = pts[6]
-    index_tip = pts[8]
-    middle_pip = pts[10]
-    middle_tip = pts[12]
-    ring_pip = pts[14]
-    ring_tip = pts[16]
-    pinky_pip = pts[18]
-    pinky_tip = pts[20]
-
-    # Finger extensions: y is smaller when finger is pointing UP on screen
-    index_up = index_tip.y < index_pip.y
-    middle_up = middle_tip.y < middle_pip.y
-    ring_up = ring_tip.y < ring_pip.y
-    pinky_up = pinky_tip.y < pinky_pip.y
-
-    # Thumb extension: check distance from wrist/palm
-    thumb_dist = abs(thumb_tip.x - wrist.x) + abs(thumb_tip.y - wrist.y)
-    mcp_dist = abs(thumb_mcp.x - wrist.x) + abs(thumb_mcp.y - wrist.y)
-    thumb_extended = thumb_dist > (mcp_dist * 1.2) or thumb_tip.y < thumb_mcp.y
-
-    # Check pinched morsel shape (all tips clustered together)
-    tip_spread = (
-        abs(index_tip.x - thumb_tip.x) + abs(index_tip.y - thumb_tip.y) +
-        abs(middle_tip.x - thumb_tip.x) + abs(middle_tip.y - thumb_tip.y)
-    )
-    is_pinched = tip_spread < 0.12
-
-    up_count = sum([1 for f in [index_up, middle_up, ring_up, pinky_up] if f])
-
-    # Check hand activity: if hand landmarks are in rest/idle posture
-    hand_span = abs(index_tip.x - wrist.x) + abs(index_tip.y - wrist.y)
-    if hand_span < 0.08:
         return {
-            "success": True,
+            "success": False,
             "sign": None,
-            "text": "Place hand inside scanner frame",
-            "english_sign": None,
             "confidence": 0.0,
+            "shouldAbstain": True,
+            "message": "Incomplete hand landmarks (expected 21 points)."
+        }
+
+    from app.ai.sign_recognition_engine import sign_recognition_engine
+    result = sign_recognition_engine.classify_landmarks(pts)
+
+    if not result.get("detected") or result.get("shouldAbstain"):
+        return {
+            "success": False,
+            "sign": None,
+            "text": "Place hand inside active scanner frame",
+            "english_sign": None,
+            "confidence": result.get("confidence", 0.0),
+            "shouldAbstain": True,
             "target_language": request.target_language or "en",
             "sign_language": request.sign_language or "ISL",
             "audio": None,
-            "alternatives": [],
-            "message": "Waiting for active hand gesture...",
+            "alternatives": result.get("alternatives", []),
+            "message": result.get("message", "Low confidence gesture or unaligned hand."),
         }
 
-    # Distinct Sign Decision Logic across Dialects
-    if is_pinched:
-        sign = "FOOD"
-        confidence = 0.96
-        alternatives = [{"sign": "WATER", "confidence": 0.70}, {"sign": "EAT", "confidence": 0.85}]
-    elif index_up and middle_up and ring_up and pinky_up and thumb_extended:
-        sign = "HELLO"
-        confidence = 0.98
-        alternatives = [{"sign": "GOODBYE", "confidence": 0.88}, {"sign": "NAMASTE", "confidence": 0.82}]
-    elif index_up and middle_up and ring_up and pinky_up and not thumb_extended:
-        sign = "THANK YOU"
-        confidence = 0.95
-        alternatives = [{"sign": "HELLO", "confidence": 0.80}, {"sign": "PLEASE", "confidence": 0.75}]
-    elif index_up and middle_up and ring_up and not pinky_up:
-        sign = "WATER"
-        confidence = 0.96
-        alternatives = [{"sign": "YOU", "confidence": 0.65}]
-    elif index_up and middle_up and not ring_up and not pinky_up:
-        sign = "WATER"
-        confidence = 0.95
-        alternatives = [{"sign": "YOU", "confidence": 0.70}]
-    elif index_up and not middle_up and not ring_up and not pinky_up:
-        sign = "YOU"
-        confidence = 0.97
-        alternatives = [{"sign": "POINTING", "confidence": 0.85}]
-    elif thumb_extended and pinky_up and index_up and not middle_up and not ring_up:
-        sign = "LOVE"  # I Love You gesture
-        confidence = 0.97
-        alternatives = [{"sign": "LIKE", "confidence": 0.80}]
-    elif thumb_extended and pinky_up and not index_up and not middle_up and not ring_up:
-        sign = "WHY"
-        confidence = 0.95
-        alternatives = [{"sign": "CALL", "confidence": 0.75}]
-    elif up_count == 0 and thumb_extended and thumb_tip.y < thumb_mcp.y:
-        sign = "YES"  # Thumbs Up
-        confidence = 0.96
-        alternatives = [{"sign": "GOOD", "confidence": 0.80}]
-    elif up_count == 0 and thumb_extended and thumb_tip.y > wrist.y:
-        sign = "NO"   # Thumbs Down / No
-        confidence = 0.95
-        alternatives = [{"sign": "BAD", "confidence": 0.75}]
-    elif up_count == 0 and not thumb_extended:
-        sign = "STOP" # Fist
-        confidence = 0.94
-        alternatives = [{"sign": "NO", "confidence": 0.70}]
-    else:
-        sign = "HELLO"
-        confidence = 0.90
-        alternatives = [{"sign": "THANK YOU", "confidence": 0.75}]
-
-    display_names = {
-        "HELLO": "Hello / Namaste",
-        "THANK YOU": "Thank You",
-        "GOODBYE": "Goodbye",
-        "YES": "Yes / Thumbs Up",
-        "NO": "No / Stop",
-        "HELP": "Help / Emergency",
-        "WATER": "Water",
-        "YOU": "You / Pointing",
-        "WHY": "Why",
-        "FOOD": "Food / Eat",
-    }
-
+    sign = result["sign"]
+    raw_name = result.get("label", sign)
+    confidence = result["confidence"]
     target_lang = request.target_language or "en"
     sign_lang = request.sign_language or "ISL"
-    raw_name = display_names.get(sign, sign)
-    regional_text = raw_name
 
+    regional_text = raw_name
     if sign and target_lang != "en":
         trans_res = translate_text(text=raw_name.lower(), source_language="en", target_language=target_lang)
         regional_text = trans_res.get("translated_text", raw_name)
@@ -220,11 +135,12 @@ def recognize_landmarks(request: LandmarkRecognitionRequest):
         "text": regional_text,
         "english_sign": raw_name,
         "confidence": confidence,
+        "shouldAbstain": False,
         "target_language": target_lang,
         "sign_language": sign_lang,
         "audio": audio_data_url,
-        "alternatives": alternatives,
-        "message": f"Recognized {sign_lang} Sign: {sign} -> Spoken {target_lang.upper()} ({int(confidence * 100)}% confidence)",
+        "alternatives": result.get("alternatives", []),
+        "message": f"Recognized {sign_lang} Sign: '{sign}' -> Spoken {target_lang.upper()} ({int(confidence * 100)}% confidence)",
     }
 
 @router.post("/sign-to-speech")

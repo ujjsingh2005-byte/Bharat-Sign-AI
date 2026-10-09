@@ -1,4 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;600;700;800&display=swap');
 @import "tailwindcss";
+
+/* =========================================================
+   THEME DESIGN SYSTEM TOKENS
+   ========================================================= */
+
+:root, html[data-theme="aurora"] {
+  --bg-main: #0B1020;
+  --bg-surface: #0F172A;
+  --bg-card: #1E293B;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --accent-primary: #635BFF;
+  --accent-secondary: #A855F7;
+  --accent-glow: #22D3EE;
+  --border-color: rgba(99, 91, 255, 0.25);
+  --card-border: rgba(148, 163, 184, 0.15);
+  --badge-bg: rgba(99, 91, 255, 0.15);
+  --badge-text: #A78BFA;
+}
+
+html[data-theme="emerald"] {
+  --bg-main: #064E3B;
+  --bg-surface: #065F46;
+  --bg-card: #047857;
+  --text-primary: #F0FDF4;
+  --text-secondary: #A7F3D0;
+  --accent-primary: #10B981;
+  --accent-secondary: #6EE7B7;
+  --accent-glow: #34D399;
+  --border-color: rgba(16, 185, 129, 0.3);
+  --card-border: rgba(110, 231, 183, 0.2);
+  --badge-bg: rgba(16, 185, 129, 0.2);
+  --badge-text: #6EE7B7;
+}
+
+html[data-theme="ocean"] {
+  --bg-main: #0F172A;
+  --bg-surface: #1E293B;
+  --bg-card: #334155;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --accent-primary: #2563EB;
+  --accent-secondary: #38BDF8;
+  --accent-glow: #60A5FA;
+  --border-color: rgba(37, 99, 235, 0.3);
+  --card-border: rgba(56, 189, 248, 0.2);
+  --badge-bg: rgba(37, 99, 235, 0.2);
+  --badge-text: #38BDF8;
+}
+
+html[data-theme="sunset"] {
+  --bg-main: #1C0A15;
+  --bg-surface: #2D1222;
+  --bg-card: #4A1D38;
+  --text-primary: #FFF1F2;
+  --text-secondary: #FECDD3;
+  --accent-primary: #F43F5E;
+  --accent-secondary: #FB923C;
+  --accent-glow: #FBBF24;
+  --border-color: rgba(244, 63, 94, 0.3);
+  --card-border: rgba(251, 146, 60, 0.2);
+  --badge-bg: rgba(244, 63, 94, 0.2);
+  --badge-text: #FB923C;
+}
+
+html[data-theme="violet"] {
+  --bg-main: #180B2B;
+  --bg-surface: #2E1065;
+  --bg-card: #4C1D95;
+  --text-primary: #F5F3FF;
+  --text-secondary: #DDD6FE;
+  --accent-primary: #8B5CF6;
+  --accent-secondary: #C4B5FD;
+  --accent-glow: #A78BFA;
+  --border-color: rgba(139, 92, 246, 0.3);
+  --card-border: rgba(196, 181, 253, 0.2);
+  --badge-bg: rgba(139, 92, 246, 0.2);
+  --badge-text: #C4B5FD;
+}
+
+html[data-theme="light"] {
+  --bg-main: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-card: #F1F5F9;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --accent-primary: #4F46E5;
+  --accent-secondary: #7C3AED;
+  --accent-glow: #0284C7;
+  --border-color: #E2E8F0;
+  --card-border: #CBD5E1;
+  --badge-bg: rgba(79, 70, 229, 0.1);
+  --badge-text: #4F46E5;
+}
+
+html[data-theme="high-contrast"] {
+  --bg-main: #000000;
+  --bg-surface: #0D0D0D;
+  --bg-card: #1A1A1A;
+  --text-primary: #FFFFFF;
+  --text-secondary: #F0F0F0;
+  --accent-primary: #FFFF00;
+  --accent-secondary: #00FFFF;
+  --accent-glow: #FF00FF;
+  --border-color: #FFFFFF;
+  --card-border: #FFFFFF;
+  --badge-bg: #FFFF00;
+  --badge-text: #000000;
+}
 
 html,
 body,
@@ -9,40 +119,56 @@ body,
 
 body {
   margin: 0;
-  background: #020617;
-  color: white;
-  font-family: Inter, Arial, Helvetica, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
-/* Chrome Autofill Fix */
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Manrope', 'Inter', sans-serif;
+}
+
+/* Chrome Autofill Fix */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #0f172a inset !important;
-  -webkit-text-fill-color: white !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg-surface) inset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
   transition: background-color 9999s ease-in-out 0s;
 }
 
-/* =========================================
-   GLOBAL UI CARET / TEXT SELECTION FIX
-   ========================================= */
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
-/* Remove text caret from the entire application */
-html,
-body,
-#root {
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Global Caret & Text Selection */
+html, body, #root {
   caret-color: transparent;
 }
 
-/* Prevent accidental text selection/caret on normal UI */
 body {
   user-select: none;
   -webkit-user-select: none;
 }
 
-/* Keep form fields usable */
 input,
 textarea,
 select,
@@ -52,7 +178,6 @@ select,
   -webkit-user-select: text;
 }
 
-/* Clickable elements */
 button,
 a,
 label,
@@ -62,7 +187,6 @@ label,
   -webkit-user-select: none;
 }
 
-/* Remove focus outline from mouse-clicked UI */
 button:focus,
 a:focus,
 label:focus,
@@ -70,10 +194,21 @@ label:focus,
   outline: none;
 }
 
-/* Keep keyboard focus visible when navigating with keyboard */
 button:focus-visible,
 a:focus-visible,
 [role="button"]:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

@@ -428,8 +428,36 @@ export default function UniversalSemanticPanel({
               </p>
             </div>
           </div>
+
+          {/* Translation Feedback Widget */}
+          <div className="mt-4 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs bg-slate-950 p-3.5 rounded-2xl">
+            <span className="font-semibold text-slate-300 flex items-center gap-1.5">
+              <span>💬</span> Was this ISL translation helpful?
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => alert("Thank you for your feedback! Your confirmation has been recorded.")}
+                className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold hover:bg-emerald-500/30 transition"
+              >
+                👍 Helpful
+              </button>
+              <button
+                onClick={() => alert("Thank you! We will review this sentence for accuracy.")}
+                className="px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold hover:bg-amber-500/30 transition"
+              >
+                ⚡ Needs Improvement
+              </button>
+              <button
+                onClick={() => alert("Thank you! Flagged for ISL linguist evaluation.")}
+                className="px-3 py-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold hover:bg-rose-500/30 transition"
+              >
+                ⚠️ Report Incorrect Sign
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 }
+

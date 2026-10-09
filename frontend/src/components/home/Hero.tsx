@@ -1,123 +1,161 @@
-import { ArrowRight, PlayCircle, Mic, Languages } from "lucide-react";
+import { ArrowRight, Mic, Sparkles, BookOpen, Volume2, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-slate-950">
-      {/* Background Glow */}
-      <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl"></div>
-      <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-purple-600/20 blur-3xl"></div>
+    <section className="relative overflow-hidden bg-slate-950 py-20 lg:py-28">
+      {/* Background Orbs & Gradients */}
+      <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-indigo-600/20 blur-3xl animate-pulse"></div>
+      <div className="absolute top-1/2 right-0 h-96 w-96 rounded-full bg-purple-600/20 blur-3xl"></div>
+      <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl"></div>
 
-      <div className="relative max-w-7xl mx-auto px-8 py-24">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* LEFT SIDE */}
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-blue-600/20 border border-blue-500/30 px-4 py-2 text-sm text-blue-300">
-              <Languages size={16} />
-              AI Powered Communication
-            </span>
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* LEFT CONTENT COLUMN */}
+          <div className="lg:col-span-7 space-y-8">
+            {/* Small Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 border border-indigo-500/30 px-4 py-2 text-xs font-bold text-indigo-300 backdrop-blur-md">
+              <Sparkles size={14} className="text-cyan-400" />
+              <span>Built for More Inclusive Communication</span>
+            </div>
 
-            <h1 className="mt-8 text-5xl md:text-6xl font-bold leading-tight">
-              Breaking
-              <span className="text-blue-500"> Communication Barriers</span>
-              <br />
-              with Bharat Sign AI 3
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
+              Every Voice Deserves to <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                Be Understood.
+              </span>
             </h1>
 
-            <p className="mt-8 text-slate-400 text-lg leading-8">
-              Universal Indian Language & Sign Language Translation Platform.
-              Translate Voice, Speech & 14+ Regional Languages to Indian Sign Language (ISL),
-              and recognize Sign Language gestures via Camera in real time.
+            {/* Supporting Text */}
+            <p className="text-slate-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl font-normal">
+              Experience a smarter way to bridge communication with AI-powered tools designed around Indian Sign Language.
+              Seamlessly translate spoken speech and 14+ Indian regional languages into accurate ISL gestures, 3D skeletal avatars, and accessible learning modules.
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 to="/dashboard"
-                className="flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/30"
+                className="flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-[1.02] transition-all duration-200"
               >
-                <Mic size={20} />
-                Launch Bharat Sign AI Studio
+                <Mic size={18} />
+                <span>Start Translating</span>
                 <ArrowRight size={18} />
               </Link>
 
               <Link
                 to="/dashboard"
-                className="flex items-center gap-2 rounded-xl border border-slate-700 px-8 py-4 hover:bg-slate-900 transition text-slate-200"
+                className="flex items-center gap-2.5 rounded-2xl border border-slate-700/80 bg-slate-900/80 px-8 py-4 text-sm font-bold text-slate-200 hover:bg-slate-800 hover:text-white transition-all duration-200 backdrop-blur-md"
               >
-                <PlayCircle size={20} />
-                Live 2-Way Demo
+                <BookOpen size={18} className="text-purple-400" />
+                <span>Explore ISL Learning</span>
               </Link>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-2">
-              {[
-                "Hindi",
-                "English",
-                "Bhojpuri",
-                "Tamil",
-                "Telugu",
-                "Bengali",
-                "Marathi",
-                "Gujarati",
-                "Punjabi",
-                "Malayalam",
-                "Kannada",
-                "Odia",
-                "Assamese",
-                "Urdu",
-                "Sanskrit",
-              ].map((lang) => (
-                <span
-                  key={lang}
-                  className="rounded-full border border-slate-800 bg-slate-900/80 px-3 py-1 text-xs text-slate-300"
-                >
-                  {lang}
-                </span>
-              ))}
+            {/* Regional Language Badges */}
+            <div className="pt-4 border-t border-slate-800/80">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                Supported Indian Languages & Dialects (14+)
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  "Hindi",
+                  "English",
+                  "Bhojpuri",
+                  "Tamil",
+                  "Telugu",
+                  "Bengali",
+                  "Marathi",
+                  "Gujarati",
+                  "Punjabi",
+                  "Malayalam",
+                  "Kannada",
+                  "Odia",
+                  "Assamese",
+                  "Urdu",
+                ].map((lang) => (
+                  <span
+                    key={lang}
+                    className="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-1 text-xs text-slate-300 font-medium"
+                  >
+                    {lang}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* RIGHT SIDE */}
-          <div>
-            <div className="rounded-3xl border border-slate-800 bg-slate-900/80 backdrop-blur-xl p-8 shadow-2xl">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold">3D ISL Avatar System</h2>
+          {/* RIGHT PREVIEW COLUMN */}
+          <div className="lg:col-span-5">
+            <div className="relative rounded-3xl border border-slate-800/80 bg-slate-900/90 p-6 sm:p-8 shadow-2xl backdrop-blur-2xl overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl"></div>
 
-                <span className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                  <span className="h-3 w-3 rounded-full bg-green-500 animate-pulse"></span>
-                  AI Engine Online
+              {/* Preview Header */}
+              <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="h-3 w-3 rounded-full bg-emerald-500 animate-ping"></div>
+                  <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    Interactive Translation Preview (Demo)
+                  </span>
+                </div>
+                <span className="text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-1 rounded-full">
+                  AI Pipeline Active
                 </span>
               </div>
 
-              <div className="mt-8 h-72 rounded-2xl border border-slate-800 bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
-                <div className="text-6xl mb-3 animate-bounce">🤟</div>
-                <h3 className="text-xl font-bold text-blue-400">Bidirectional ISL Bridge</h3>
-                <p className="mt-2 text-slate-400 text-sm max-w-sm">
-                  Voice ⇄ Text ⇄ Indian Sign Language ⇄ 14+ Regional Indian Languages
-                </p>
-                <div className="mt-4 flex gap-2">
-                  <span className="bg-blue-900/40 text-blue-300 border border-blue-800 text-xs px-3 py-1 rounded-full">
-                    Skeletal Mixamo Rig
-                  </span>
-                  <span className="bg-purple-900/40 text-purple-300 border border-purple-800 text-xs px-3 py-1 rounded-full">
-                    A-Z Fingerspelling
-                  </span>
+              {/* Simulated Waveform & Speech Card */}
+              <div className="space-y-4">
+                <div className="rounded-2xl bg-slate-950/80 border border-slate-800 p-4">
+                  <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+                    <span className="flex items-center gap-1.5 text-indigo-400 font-bold">
+                      <Volume2 size={14} /> Speech Input
+                    </span>
+                    <span>English / Hindi</span>
+                  </div>
+                  <p className="text-sm font-semibold text-white">
+                    "Namaste! Welcome to Bharat Sign AI platform."
+                  </p>
+                  {/* Simulated Waveform Bars */}
+                  <div className="mt-3 flex items-center gap-1 h-6">
+                    {[40, 75, 30, 90, 60, 100, 45, 80, 55, 35, 70, 95, 40, 65, 85].map((h, idx) => (
+                      <div
+                        key={idx}
+                        className="w-1 rounded-full bg-gradient-to-t from-indigo-500 to-cyan-400 animate-pulse"
+                        style={{ height: `${h}%`, animationDelay: `${idx * 0.1}s` }}
+                      ></div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Translation Output Card */}
+                <div className="rounded-2xl bg-gradient-to-br from-slate-950 to-indigo-950/40 border border-indigo-500/30 p-5 shadow-lg">
+                  <div className="flex items-center justify-between text-xs mb-3">
+                    <span className="font-bold text-cyan-300 uppercase tracking-wide">
+                      ISL Gloss Syntax (SOV)
+                    </span>
+                    <span className="text-[11px] font-semibold text-purple-300 bg-purple-900/40 px-2.5 py-0.5 rounded-full border border-purple-700/50">
+                      Grammar Reordered
+                    </span>
+                  </div>
+                  <p className="text-base font-extrabold text-white tracking-wide">
+                    WELCOME BHARAT SIGN AI NAMASTE 🤟
+                  </p>
+
+                  <div className="mt-4 pt-3 border-t border-indigo-900/40 flex items-center justify-between text-xs text-slate-400">
+                    <span className="flex items-center gap-1 text-emerald-400 font-medium">
+                      <CheckCircle2 size={14} /> Contextual Disambiguation
+                    </span>
+                    <span className="text-indigo-300 font-bold">3D Skeletal Avatar Ready</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-6 space-y-3">
-                <div className="flex justify-between text-sm">
-                  <span className="text-slate-400">Universal Semantic Layer</span>
-                  <span className="text-green-400 font-medium">Active (15 Languages)</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-slate-400">ISL Grammar Engine</span>
-                  <span className="text-blue-400 font-medium">SOV & Topic-Comment</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-slate-400">Camera Computer Vision</span>
-                  <span className="text-purple-400 font-medium">MediaPipe & Heuristics</span>
-                </div>
+              {/* Status Footer */}
+              <div className="mt-6 text-center">
+                <span className="text-[11px] text-slate-400 font-medium">
+                  Demonstration layout. Connect microphone in the Master Studio to translate live speech.
+                </span>
               </div>
             </div>
           </div>
@@ -126,3 +164,4 @@ export default function Hero() {
     </section>
   );
 }
+

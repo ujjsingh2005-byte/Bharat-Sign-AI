@@ -35,22 +35,22 @@ export default function UniversalSemanticPanel({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const LANGUAGES = [
-    { code: "auto", name: "Auto Detect" },
-    { code: "bho", name: "Bhojpuri (भोजपुरी)" },
-    { code: "hi", name: "Hindi (हिन्दी)" },
-    { code: "en", name: "English" },
-    { code: "mr", name: "Marathi (मराठी)" },
-    { code: "bn", name: "Bengali (বাংলা)" },
-    { code: "gu", name: "Gujarati (ગુજરાતી)" },
-    { code: "pa", name: "Punjabi (ਪੰਜਾਬੀ)" },
-    { code: "ta", name: "Tamil (தமிழ்)" },
-    { code: "te", name: "Telugu (తెలుగు)" },
-    { code: "ml", name: "Malayalam (മലയാളം)" },
-    { code: "kn", name: "Kannada (ಕನ್ನಡ)" },
-    { code: "or", name: "Odia (ଓଡ଼ିଆ)" },
-    { code: "as", name: "Assamese (অসমীয়া)" },
-    { code: "ur", name: "Urdu (اردو)" },
-    { code: "sa", name: "Sanskrit (संस्कृतम्)" },
+    { code: "auto", name: "Auto Detect (Hinglish)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "hi", name: "Hindi (हिन्दी)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "en", name: "English", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "bho", name: "Bhojpuri (भोजपुरी)", badge: "🤟 Sign Only" },
+    { code: "mr", name: "Marathi (मराठी)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "bn", name: "Bengali (বাংলা)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "gu", name: "Gujarati (ગુજરાતી)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "pa", name: "Punjabi (ਪੰਜਾਬੀ)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "ta", name: "Tamil (தமிழ்)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "te", name: "Telugu (తెలుగు)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "ml", name: "Malayalam (മലയാളം)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "kn", name: "Kannada (ಕನ್ನಡ)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "or", name: "Odia (ଓଡ଼ିଆ)", badge: "🤟 Sign Only" },
+    { code: "as", name: "Assamese (অসমীয়া)", badge: "🤟 Sign Only" },
+    { code: "ur", name: "Urdu (اردو)", badge: "🎤 Speech + 🤟 Sign" },
+    { code: "sa", name: "Sanskrit (संस्कृतम्)", badge: "🤟 Sign Only" },
   ];
 
   const SAMPLE_PRESETS = [
@@ -225,10 +225,13 @@ export default function UniversalSemanticPanel({
             >
               {LANGUAGES.map((l) => (
                 <option key={l.code} value={l.code}>
-                  {l.name}
+                  {l.name} ({l.badge})
                 </option>
               ))}
             </select>
+            <span className="text-[10px] bg-slate-800 text-slate-300 px-2 py-1 rounded-lg border border-slate-700 font-bold">
+              {LANGUAGES.find((l) => l.code === selectedLanguage)?.badge || "🤟 Sign Only"}
+            </span>
           </div>
 
           <div className="flex items-center gap-2">

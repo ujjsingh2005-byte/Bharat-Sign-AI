@@ -4,11 +4,14 @@ import {
   Send,
   Loader2,
   Sparkles,
-  ArrowRight,
   Workflow,
-  CheckCircle2,
-  FileText,
   Upload,
+  AlertTriangle,
+  HelpCircle,
+  Zap,
+  Brain,
+  ShieldAlert,
+  Edit3,
 } from "lucide-react";
 import type { SignItem } from "./AvatarViewer";
 import { processLocalSemanticPipeline } from "../../utils/localSemanticPipeline";
@@ -24,8 +27,11 @@ export default function UniversalSemanticPanel({
 }: UniversalSemanticPanelProps) {
   const [inputText, setInputText] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("auto");
+  const [activeMode, setActiveMode] = useState<"quick" | "contextual" | "fallback">("contextual");
   const [loading, setLoading] = useState(false);
   const [pipelineResult, setPipelineResult] = useState<any>(null);
+  const [isEditingTranscript, setIsEditingTranscript] = useState(false);
+  const [editedText, setEditedText] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const LANGUAGES = [
@@ -41,7 +47,7 @@ export default function UniversalSemanticPanel({
     { code: "te", name: "Telugu (తెలుగు)" },
     { code: "ml", name: "Malayalam (മലയാളം)" },
     { code: "kn", name: "Kannada (ಕನ್ನಡ)" },
-    { code: "or", name: "Odia (ଓਡ଼ିଆ)" },
+    { code: "or", name: "Odia (ଓଡ଼ିଆ)" },
     { code: "as", name: "Assamese (অসমীয়া)" },
     { code: "ur", name: "Urdu (اردو)" },
     { code: "sa", name: "Sanskrit (संस्कृतम्)" },
@@ -49,29 +55,21 @@ export default function UniversalSemanticPanel({
 
   const SAMPLE_PRESETS = [
     {
-      category: "Multi-Sentence",
-      lang: "en",
-      name: "Multi-Sentence Story",
-      text: "Hello! My name is John. I am going to school. Where is the hospital? Thank you.",
-      desc: "4 uploaded sentences sequence.",
+      name: "Ambiguous Context (Bank)",
+      text: "I am going to the bank to deposit money tomorrow.",
+      desc: "Context-sensitive disambiguation test.",
     },
     {
-      category: "Medical",
-      lang: "hi",
+      name: "Multi-Sentence Story",
+      text: "Hello! My name is John. I am going to school. Where is the hospital? Thank you.",
+      desc: "Multi-sentence sequence.",
+    },
+    {
       name: "Hindi Healthcare",
       text: "मुझे तुरंत दवा चाहिए। डॉक्टर कहाँ हैं? कृपया मेरी मदद करें।",
       desc: "3 healthcare sentences.",
     },
     {
-      category: "Travel",
-      lang: "auto",
-      name: "Hinglish Travel",
-      text: "bus stop kahan hai? ticket kahan milega? hum kal delhi ja rahe hain.",
-      desc: "Multi-sentence travel query.",
-    },
-    {
-      category: "Needs",
-      lang: "bho",
       name: "Bhojpuri Request",
       text: "हमरा पानी चाहीं। हमका खाना चाहीं। हम स्कूल जा तानी।",
       desc: "3 regional sentences.",
@@ -97,7 +95,7 @@ export default function UniversalSemanticPanel({
         throw new Error(data.message || "Backend return error");
       }
     } catch (e) {
-      console.warn("Backend API offline or unreachable, activating Client-Side ISL Semantic Engine fallback:", e);
+      console.warn("Backend API offline, using Client-Side ISL Semantic Engine fallback:", e);
       const fallbackData = processLocalSemanticPipeline(textToProcess, lang);
       setPipelineResult(fallbackData);
       if (fallbackData.signs && fallbackData.signs.length > 0) {
@@ -110,8 +108,19 @@ export default function UniversalSemanticPanel({
 
   const applyPreset = (preset: typeof SAMPLE_PRESETS[0]) => {
     setInputText(preset.text);
-    setSelectedLanguage(preset.lang);
-    handleProcess(preset.text, preset.lang);
+    handleProcess(preset.text, selectedLanguage);
+  };
+
+  const handleDisambiguationOption = (glossChoice: string) => {
+    if (!inputText) return;
+    const resolvedText = `${inputText} (${glossChoice})`;
+    handleProcess(resolvedText, selectedLanguage);
+  };
+
+  const handleSaveEditedTranscript = () => {
+    setInputText(editedText);
+    setIsEditingTranscript(false);
+    handleProcess(editedText, selectedLanguage);
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,27 +141,64 @@ export default function UniversalSemanticPanel({
 
   return (
     <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 shadow-2xl space-y-6">
-      {/* Header */}
-      <div>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-3xl font-bold flex items-center gap-2">
-            <span>🌐</span>
-            <span>Universal Semantic Layer</span>
-          </h2>
-          <div className="flex items-center gap-2">
-            <span className="bg-purple-600/20 text-purple-300 text-xs px-3 py-1.5 rounded-full border border-purple-500/30 font-semibold">
-              Multi-Sentence & File Upload Engine
+      {/* Target Language & Header */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[10px] bg-blue-600/20 text-blue-300 px-2.5 py-0.5 rounded-full border border-blue-500/30 font-extrabold">
+              TARGET SIGN LANGUAGE: INDIAN SIGN LANGUAGE (ISL)
             </span>
           </div>
+          <h2 className="text-3xl font-bold flex items-center gap-2">
+            <span>🌐</span>
+            <span>Universal Context & ISL Semantic Studio</span>
+          </h2>
+          <p className="mt-1 text-xs text-slate-400">
+            Multi-sentence context disambiguation, missing-sign recovery, and adaptive translation mode selection.
+          </p>
         </div>
-        <p className="mt-1 text-xs text-slate-400">
-          Upload or type multiple sentences across 14+ Indian languages. Each sentence is parsed into grammatically ordered ISL signs for seamless 3D avatar execution.
-        </p>
+
+        {/* Adaptive Communication Mode Selector */}
+        <div className="flex items-center gap-1 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 text-xs">
+          <button
+            onClick={() => setActiveMode("quick")}
+            className={`px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 ${
+              activeMode === "quick"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <Zap size={13} />
+            <span>Mode A: Quick</span>
+          </button>
+          <button
+            onClick={() => setActiveMode("contextual")}
+            className={`px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 ${
+              activeMode === "contextual"
+                ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/30"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <Brain size={13} />
+            <span>Mode B: Contextual</span>
+          </button>
+          <button
+            onClick={() => setActiveMode("fallback")}
+            className={`px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 ${
+              activeMode === "fallback"
+                ? "bg-purple-600 text-white shadow-md shadow-purple-600/30"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <ShieldAlert size={13} />
+            <span>Mode C: Fallback</span>
+          </button>
+        </div>
       </div>
 
       {/* Presets */}
       <div>
-        <span className="text-xs text-slate-400 font-semibold">Try Multi-Sentence Examples:</span>
+        <span className="text-xs text-slate-400 font-semibold">Try Test Examples & Context Disambiguation:</span>
         <div className="mt-2 flex flex-wrap gap-2">
           {SAMPLE_PRESETS.map((preset, idx) => (
             <button
@@ -160,14 +206,14 @@ export default function UniversalSemanticPanel({
               onClick={() => applyPreset(preset)}
               className="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 px-3 py-1.5 rounded-xl text-xs font-medium transition flex items-center gap-1.5"
             >
-              <span className="text-purple-400 font-bold">{preset.name}:</span>
+              <span className="text-amber-400 font-bold">{preset.name}:</span>
               <span className="truncate max-w-[220px]">"{preset.text}"</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Input Textarea & File Upload Controls */}
+      {/* Input Textarea & Transcript Controls */}
       <div className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -185,7 +231,6 @@ export default function UniversalSemanticPanel({
             </select>
           </div>
 
-          {/* File Upload Button */}
           <div className="flex items-center gap-2">
             <input
               type="file"
@@ -197,41 +242,75 @@ export default function UniversalSemanticPanel({
             <button
               onClick={() => fileInputRef.current?.click()}
               className="bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition"
-              title="Upload text file with multiple sentences"
             >
               <Upload size={13} className="text-purple-400" />
-              <span>Upload Sentences File (.txt)</span>
+              <span>Upload (.txt)</span>
             </button>
           </div>
         </div>
 
-        {/* Multi-line Text Area */}
-        <div className="relative">
-          <textarea
-            rows={3}
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            placeholder="Type or paste multiple sentences here... (e.g. 'Hello. My name is John. I live in Delhi. Where is the hospital?')"
-            className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 resize-y"
-          />
-        </div>
+        {/* Multi-line Text Area or Editable Transcript Mode */}
+        {isEditingTranscript ? (
+          <div className="space-y-2 bg-slate-950 p-4 rounded-2xl border border-amber-500/40">
+            <label className="text-xs text-amber-300 font-bold flex items-center gap-1.5">
+              <Edit3 size={14} /> Edit Transcript Before Translation:
+            </label>
+            <textarea
+              rows={3}
+              value={editedText}
+              onChange={(e) => setEditedText(e.target.value)}
+              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none"
+            />
+            <div className="flex gap-2 justify-end">
+              <button
+                onClick={() => setIsEditingTranscript(false)}
+                className="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveEditedTranscript}
+                className="px-4 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950"
+              >
+                Save & Translate
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="relative">
+            <textarea
+              rows={3}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Type or paste text here... (e.g., 'I am going to the bank to deposit money tomorrow.')"
+              className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 resize-y"
+            />
+          </div>
+        )}
 
         <div className="flex items-center justify-between">
-          <span className="text-[11px] text-slate-500 flex items-center gap-1">
-            <FileText size={12} />
-            {inputText.trim() ? `${inputText.trim().split(/[.!?\n]+/).filter(Boolean).length} sentence(s) entered` : "Enter single or multiple sentences"}
-          </span>
+          <button
+            onClick={() => {
+              setEditedText(inputText);
+              setIsEditingTranscript(true);
+            }}
+            disabled={!inputText.trim()}
+            className="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-bold disabled:opacity-40"
+          >
+            <Edit3 size={13} />
+            <span>Edit Transcript</span>
+          </button>
 
           <button
             onClick={() => handleProcess()}
             disabled={loading || !inputText.trim()}
-            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-blue-600/20"
+            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition disabled:opacity-40 shadow-lg shadow-blue-600/20"
           >
             {loading ? (
               <Loader2 size={16} className="animate-spin" />
             ) : (
               <>
-                <span>Analyze & Translate All Sentences</span>
+                <span>Process ISL Translation</span>
                 <Send size={14} />
               </>
             )}
@@ -239,13 +318,72 @@ export default function UniversalSemanticPanel({
         </div>
       </div>
 
+      {/* Context Ambiguity Clarification Banner */}
+      {pipelineResult?.disambiguationNeeded && (
+        <div className="rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-950/30 to-slate-950 p-4 space-y-3">
+          <div className="flex items-center gap-2 text-amber-300 text-xs font-bold">
+            <HelpCircle size={16} />
+            <span>Context Ambiguity Detected: Insufficient Context Clues</span>
+          </div>
+          <p className="text-xs text-slate-300">
+            {pipelineResult.disambiguationPrompt || "A word in your sentence has multiple distinct meanings. Please select the intended meaning:"}
+          </p>
+
+          <div className="flex flex-wrap gap-2">
+            {pipelineResult.disambiguationOptions?.map((opt: any, idx: number) => (
+              <button
+                key={idx}
+                onClick={() => handleDisambiguationOption(opt.gloss)}
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs transition shadow-md shadow-amber-500/20"
+              >
+                {opt.sense} ({opt.gloss})
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Missing Sign Recovery Panel */}
+      {pipelineResult?.missing_words?.length > 0 && (
+        <div className="rounded-2xl border border-purple-500/30 bg-purple-950/20 p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+              <AlertTriangle size={15} className="text-purple-400" />
+              Missing Sign & Vocabulary Recovery ({pipelineResult.missing_words.length} Word(s) Unsupported)
+            </span>
+            <span className="text-[10px] bg-purple-950 border border-purple-800 text-purple-300 px-2 py-0.5 rounded font-mono">
+              Vocabulary Coverage: {pipelineResult.vocabularyCoverageRate}%
+            </span>
+          </div>
+
+          <p className="text-xs text-slate-300">
+            The expression(s) <strong className="text-purple-300">{pipelineResult.missing_words.join(", ")}</strong> are not yet present in the validated ISL dictionary. Select a recovery option:
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 pt-1 text-xs font-bold">
+            <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-slate-300 hover:border-purple-500 cursor-pointer">
+              💡 A. Rephrase Sentence
+            </div>
+            <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-slate-300 hover:border-purple-500 cursor-pointer">
+              📄 B. Text Fallback Display
+            </div>
+            <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-slate-300 hover:border-purple-500 cursor-pointer">
+              🔤 C. Approved Fingerspelling
+            </div>
+            <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-slate-300 hover:border-purple-500 cursor-pointer">
+              ⚠️ D. Unsupported Notice
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Semantic Pipeline Step-by-Step Visualization */}
       {pipelineResult && (
         <div className="space-y-4 pt-2 border-t border-slate-800/80">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
               <Workflow size={15} className="text-blue-400" />
-              <span>UNIVERSAL SEMANTIC PIPELINE EXECUTION</span>
+              <span>ISL LINGUISTIC PIPELINE EXECUTION</span>
             </div>
             <span className="text-[11px] bg-green-950 border border-green-800 text-green-400 px-2.5 py-0.5 rounded-full font-semibold">
               {pipelineResult.signs?.length || 0} Total Signs Generated
@@ -253,7 +391,6 @@ export default function UniversalSemanticPanel({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-            {/* Step 1: Raw Input */}
             <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                 1. Input ({pipelineResult.source_language})
@@ -263,7 +400,6 @@ export default function UniversalSemanticPanel({
               </p>
             </div>
 
-            {/* Step 2: Meaning Extraction */}
             <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                 2. Semantic English
@@ -273,7 +409,6 @@ export default function UniversalSemanticPanel({
               </p>
             </div>
 
-            {/* Step 3: Grammar Rule */}
             <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                 3. ISL Syntax Rule
@@ -283,7 +418,6 @@ export default function UniversalSemanticPanel({
               </p>
             </div>
 
-            {/* Step 4: ISL Gloss */}
             <div className="bg-slate-950 p-3.5 rounded-2xl border border-purple-500/40 shadow-sm shadow-purple-500/10">
               <span className="text-[10px] font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1">
                 <Sparkles size={11} />
@@ -293,38 +427,6 @@ export default function UniversalSemanticPanel({
                 {pipelineResult.gloss_text}
               </p>
             </div>
-          </div>
-
-          {/* Detailed Sentence-by-Sentence Breakdown if available */}
-          {pipelineResult.semantics?.sentences_breakdown?.length > 1 && (
-            <div className="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-2">
-              <span className="text-xs font-bold text-slate-300 block">
-                Multi-Sentence Grammar Breakdown ({pipelineResult.semantics.sentences_breakdown.length} Sentences):
-              </span>
-              <div className="space-y-2">
-                {pipelineResult.semantics.sentences_breakdown.map((sb: any, i: number) => (
-                  <div key={i} className="flex flex-wrap items-center justify-between p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs">
-                    <span className="font-semibold text-slate-200">
-                      S{i + 1}: "{sb.raw}"
-                    </span>
-                    <span className="font-mono text-purple-300 font-bold bg-purple-950/60 px-2 py-0.5 rounded border border-purple-800">
-                      ISL Gloss: {sb.gloss_text || sb.isl_gloss?.join(" ")}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="mt-2 flex items-center justify-between pt-2 border-t border-slate-800 text-slate-400">
-            <span className="flex items-center gap-1.5 text-green-400 font-medium text-xs">
-              <CheckCircle2 size={14} />
-              Full multi-sentence sequence sent to 3D Avatar Engine
-            </span>
-            <span className="text-xs text-blue-400 flex items-center gap-1 font-semibold">
-              Playing {pipelineResult.signs?.length || 0} Signs on Avatar
-              <ArrowRight size={13} />
-            </span>
           </div>
         </div>
       )}

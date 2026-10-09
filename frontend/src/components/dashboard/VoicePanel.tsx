@@ -3,11 +3,14 @@ import {
   Mic,
   Square,
   Languages,
-  FileAudio,
   Loader2,
   Volume2,
   Sparkles,
-  ArrowRight,
+  Edit3,
+  AlertTriangle,
+  Zap,
+  Brain,
+  ShieldAlert,
 } from "lucide-react";
 import axios from "axios";
 import type { SignItem } from "./AvatarViewer";
@@ -21,7 +24,10 @@ interface VoicePanelProps {
 
 export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
   const [transcript, setTranscript] = useState("");
+  const [isEditingTranscript, setIsEditingTranscript] = useState(false);
+  const [editedTranscript, setEditedTranscript] = useState("");
   const [inputLanguage, setInputLanguage] = useState("en-IN");
+  const [activeMode, setActiveMode] = useState<"quick" | "contextual" | "fallback">("contextual");
 
   const [backendText, setBackendText] = useState("");
   const [backendLanguage, setBackendLanguage] = useState("Detected");
@@ -29,6 +35,8 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
   const [glossText, setGlossText] = useState("");
   const [activeSigns, setActiveSigns] = useState<SignItem[]>([]);
   const [ruleApplied, setRuleApplied] = useState("");
+  const [confidenceScore, setConfidenceScore] = useState<number | null>(null);
+  const [lowConfidence, setLowConfidence] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [recording, setRecording] = useState(false);
@@ -53,7 +61,6 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
     { code: "ur-IN", name: "Urdu (اردو)" },
   ];
 
-  // Process pipeline response into UI and Avatar sequence
   const processResponse = useCallback((data: any) => {
     if (!data?.success) {
       setBackendText(data?.message || "Speech Recognition Failed");
@@ -61,6 +68,7 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
       setTranslatedText("");
       setGlossText("");
       setActiveSigns([]);
+      setLowConfidence(true);
       return;
     }
 
@@ -73,12 +81,15 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
     const returnedSigns: SignItem[] = Array.isArray(data.signs) ? data.signs : [];
     setActiveSigns(returnedSigns);
 
+    const conf = data.confidence || 0.92;
+    setConfidenceScore(conf);
+    setLowConfidence(Boolean(data.lowConfidenceWarning || conf < 0.70));
+
     if (returnedSigns.length > 0) {
       onSignSequence(returnedSigns);
     }
   }, [onSignSequence]);
 
-  // Process speech transcript directly through the semantic pipeline
   const processTextDirectly = useCallback(async (text: string) => {
     if (!text.trim()) return;
     try {
@@ -103,7 +114,6 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
     }
   }, [inputLanguage, processResponse]);
 
-  // Initialize Web Speech Recognition
   useEffect(() => {
     const SpeechRecognition =
       (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -153,34 +163,6 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
     };
   }, [inputLanguage, processTextDirectly]);
 
-  // Send Recorded Audio to Backend Whisper (Only as fallback if no live transcript)
-  const sendRecordedAudio = async (audioBlob: Blob) => {
-    // If live transcript was already captured accurately from browser speech, DO NOT overwrite with audio noise
-    if (liveTranscriptCapturedRef.current && transcript.trim()) {
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      const audioFile = new File([audioBlob], "recording.webm", {
-        type: audioBlob.type || "audio/webm",
-      });
-      formData.append("audio", audioFile);
-
-      const response = await axios.post(`${API}/voice/speech-to-text`, formData);
-      if (response.data?.success && response.data?.text) {
-        setTranscript(response.data.text);
-        processResponse(response.data);
-      }
-    } catch (error) {
-      console.error("Backend speech upload error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Start Live Microphone
   const handleStart = async () => {
     try {
       setTranscript("");
@@ -188,6 +170,7 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
       setTranslatedText("");
       setGlossText("");
       setActiveSigns([]);
+      setLowConfidence(false);
       liveTranscriptCapturedRef.current = false;
 
       if (!navigator.mediaDevices?.getUserMedia) {
@@ -213,15 +196,8 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
       };
 
       mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunksRef.current, {
-          type: mediaRecorder.mimeType || "audio/webm",
-        });
         stream.getTracks().forEach((track) => track.stop());
         streamRef.current = null;
-
-        if (audioBlob.size > 0) {
-          await sendRecordedAudio(audioBlob);
-        }
       };
 
       mediaRecorderRef.current = mediaRecorder;
@@ -241,7 +217,6 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
     }
   };
 
-  // Stop Live Microphone
   const handleStop = () => {
     try {
       if (recognitionRef.current) {
@@ -252,7 +227,6 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
       }
       setRecording(false);
 
-      // If transcript was spoken, ensure it gets processed
       if (transcript.trim() && !glossText) {
         processTextDirectly(transcript);
       }
@@ -262,32 +236,10 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
     }
   };
 
-  // Upload Audio File (MP3, WAV, M4A)
-  const uploadAudio = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    try {
-      setLoading(true);
-      liveTranscriptCapturedRef.current = false;
-      const formData = new FormData();
-      formData.append("audio", file);
-
-      const response = await axios.post(`${API}/voice/speech-to-text`, formData);
-      const data = response.data;
-      if (data?.success) {
-        setTranscript(data.text || "");
-        processResponse(data);
-      } else {
-        setBackendText("No speech detected in uploaded audio file.");
-      }
-    } catch (error) {
-      console.error("Audio upload error:", error);
-      setBackendText("Speech Recognition Failed for uploaded audio.");
-    } finally {
-      setLoading(false);
-      event.target.value = "";
-    }
+  const handleSaveEditedTranscript = () => {
+    setTranscript(editedTranscript);
+    setIsEditingTranscript(false);
+    processTextDirectly(editedTranscript);
   };
 
   return (
@@ -295,16 +247,21 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[10px] bg-blue-600/20 text-blue-300 px-2.5 py-0.5 rounded-full border border-blue-500/30 font-extrabold">
+              TARGET SIGN LANGUAGE: INDIAN SIGN LANGUAGE (ISL)
+            </span>
+          </div>
           <h2 className="text-3xl font-bold flex items-center gap-2">
             <span>🎤</span>
-            <span>Voice & Audio → Indian Sign Language</span>
+            <span>Voice & Speech → ISL Translation</span>
           </h2>
           <p className="mt-1 text-xs text-slate-400">
-            Real-time microphone speech recognition and audio file translation with Whisper AI & ISL Grammar Engine
+            Microphone speech recognition with confidence scoring, editable transcript, and ISL Time-Subject-Object-Verb reordering.
           </p>
         </div>
 
-        {/* Input Voice Language Selector */}
+        {/* Language Selector */}
         <div className="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
           <Languages size={15} className="text-blue-400" />
           <span className="text-xs text-slate-400">Voice Language:</span>
@@ -322,152 +279,198 @@ export default function VoicePanel({ onSignSequence }: VoicePanelProps) {
         </div>
       </div>
 
-      {/* Grid: Live Mic and Audio Upload */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Live Microphone Box */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-950 p-5 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="p-2 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30">
-                  <Mic size={18} />
-                </span>
-                <span className="font-bold text-sm text-white">Live Microphone</span>
-              </div>
+      {/* Mode Selector */}
+      <div className="flex items-center gap-1 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 text-xs w-fit">
+        <button
+          onClick={() => setActiveMode("quick")}
+          className={`px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 ${
+            activeMode === "quick" ? "bg-blue-600 text-white" : "text-slate-400"
+          }`}
+        >
+          <Zap size={13} />
+          <span>Mode A: Quick</span>
+        </button>
+        <button
+          onClick={() => setActiveMode("contextual")}
+          className={`px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 ${
+            activeMode === "contextual" ? "bg-amber-500 text-slate-950" : "text-slate-400"
+          }`}
+        >
+          <Brain size={13} />
+          <span>Mode B: Contextual</span>
+        </button>
+        <button
+          onClick={() => setActiveMode("fallback")}
+          className={`px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 ${
+            activeMode === "fallback" ? "bg-purple-600 text-white" : "text-slate-400"
+          }`}
+        >
+          <ShieldAlert size={13} />
+          <span>Mode C: Fallback</span>
+        </button>
+      </div>
 
-              <div className="flex items-center gap-1.5 text-xs">
-                {loading ? (
-                  <span className="text-yellow-400 flex items-center gap-1">
-                    <Loader2 size={13} className="animate-spin" /> Processing
-                  </span>
-                ) : recording ? (
-                  <span className="text-green-400 flex items-center gap-1 font-semibold">
-                    <Volume2 size={14} className="animate-pulse" /> Listening...
-                  </span>
-                ) : (
-                  <span className="text-slate-500">Idle</span>
-                )}
-              </div>
-            </div>
-            <p className="text-xs text-slate-400 mb-4">
-              Speak in English, Hindi, or regional languages to generate sign language.
-            </p>
+      {/* Mic Controls */}
+      <div className="rounded-2xl border border-slate-800 bg-slate-950 p-5 flex flex-col justify-between space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="p-2 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30">
+              <Mic size={18} />
+            </span>
+            <span className="font-bold text-sm text-white">Live Microphone Speech Capture</span>
           </div>
 
-          <div className="flex gap-2">
-            <button
-              onClick={handleStart}
-              disabled={recording || loading}
-              className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 font-bold text-xs transition disabled:opacity-50 shadow-lg shadow-blue-600/20 text-white"
-            >
-              <Mic size={15} />
-              Start Listening
-            </button>
-
-            <button
-              onClick={handleStop}
-              disabled={!recording}
-              className="flex items-center justify-center gap-1.5 rounded-xl bg-red-600 hover:bg-red-500 px-4 py-2.5 font-bold text-xs transition disabled:opacity-50 text-white"
-            >
-              <Square size={15} />
-              Stop
-            </button>
+          <div className="flex items-center gap-1.5 text-xs">
+            {loading ? (
+              <span className="text-yellow-400 flex items-center gap-1 font-semibold">
+                <Loader2 size={13} className="animate-spin" /> Processing
+              </span>
+            ) : recording ? (
+              <span className="text-green-400 flex items-center gap-1 font-semibold">
+                <Volume2 size={14} className="animate-pulse" /> Listening...
+              </span>
+            ) : (
+              <span className="text-slate-500">Idle</span>
+            )}
           </div>
         </div>
 
-        {/* Audio File Upload Box */}
-        <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-950 p-5 flex flex-col items-center justify-center text-center">
-          <FileAudio size={36} className="text-purple-400 mb-2" />
-          <h4 className="text-sm font-bold text-white">Upload Audio File</h4>
-          <p className="text-[11px] text-slate-400 mb-3">MP3, WAV, M4A, WEBM audio recordings</p>
-
-          <input
-            id="voice-audio-upload"
-            type="file"
-            accept=".wav,.mp3,.m4a,.webm,audio/*"
-            className="hidden"
-            onChange={uploadAudio}
-          />
-          <label
-            htmlFor="voice-audio-upload"
-            className="cursor-pointer rounded-xl bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 text-xs font-bold transition shadow-lg shadow-purple-600/20"
+        <div className="flex gap-2">
+          <button
+            onClick={handleStart}
+            disabled={recording || loading}
+            className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 font-bold text-xs transition disabled:opacity-50 text-white"
           >
-            Choose Audio File
-          </label>
+            <Mic size={15} />
+            Start Listening
+          </button>
+
+          <button
+            onClick={handleStop}
+            disabled={!recording}
+            className="flex items-center justify-center gap-1.5 rounded-xl bg-red-600 hover:bg-red-500 px-4 py-2.5 font-bold text-xs transition disabled:opacity-50 text-white"
+          >
+            <Square size={15} />
+            Stop
+          </button>
         </div>
       </div>
 
-      {/* Voice Recognition Pipeline Output */}
-      <div className="space-y-3">
-        {/* Recognized Transcript */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-            <span className="font-semibold">Recognized Speech:</span>
-            <span className="text-blue-400 font-mono text-[11px]">
-              Lang: {backendLanguage || "Auto"}
-            </span>
+      {/* Low Confidence Warning Alert Banner */}
+      {lowConfidence && (
+        <div className="rounded-2xl border border-amber-500/40 bg-amber-950/30 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-start gap-2 text-amber-300">
+            <AlertTriangle size={18} className="shrink-0 mt-0.5" />
+            <div>
+              <span className="font-bold block">Low Speech-Recognition Confidence Triggered</span>
+              <span className="text-slate-300 text-[11px]">We detected uncertainty in the recognized speech. You can edit the transcript or try repeating your sentence.</span>
+            </div>
           </div>
-          <p className="text-sm font-medium text-white min-h-[24px]">
-            {transcript || backendText || (
-              <span className="text-slate-500 italic text-xs">
-                Speak into the microphone or upload an audio file...
-              </span>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => {
+                setEditedTranscript(transcript || backendText);
+                setIsEditingTranscript(true);
+              }}
+              className="bg-amber-500 text-slate-950 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1"
+            >
+              <Edit3 size={13} /> Edit Transcript
+            </button>
+            <button
+              onClick={handleStart}
+              className="bg-slate-800 text-slate-200 px-3 py-1.5 rounded-xl font-bold"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Transcript & Inline Edit */}
+      <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4 space-y-2">
+        <div className="flex items-center justify-between text-xs text-slate-400">
+          <span className="font-semibold">Recognized Speech Transcript:</span>
+          {confidenceScore !== null && (
+            <span className="text-emerald-400 font-mono text-[11px] font-bold">
+              Confidence: {(confidenceScore * 100).toFixed(1)}%
+            </span>
+          )}
+        </div>
+
+        {isEditingTranscript ? (
+          <div className="space-y-2">
+            <textarea
+              rows={2}
+              value={editedTranscript}
+              onChange={(e) => setEditedTranscript(e.target.value)}
+              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"
+            />
+            <div className="flex gap-2 justify-end text-xs">
+              <button
+                onClick={() => setIsEditingTranscript(false)}
+                className="px-3 py-1 rounded-xl font-bold bg-slate-800 text-slate-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveEditedTranscript}
+                className="px-4 py-1 rounded-xl font-bold bg-amber-500 text-slate-950"
+              >
+                Save & Re-translate
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-white">
+              {transcript || backendText || (
+                <span className="text-slate-500 italic text-xs">Speak into the microphone...</span>
+              )}
+            </p>
+            {transcript && (
+              <button
+                onClick={() => {
+                  setEditedTranscript(transcript);
+                  setIsEditingTranscript(true);
+                }}
+                className="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-bold shrink-0 ml-2"
+              >
+                <Edit3 size={13} /> Edit
+              </button>
             )}
-          </p>
-        </div>
-
-        {/* Semantic English & ISL Gloss */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {/* Translated English */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-              <span className="font-semibold">Semantic English:</span>
-            </div>
-            <p className="text-xs font-semibold text-blue-300 min-h-[20px]">
-              {translatedText || transcript || (
-                <span className="text-slate-600 italic">Translation will appear here...</span>
-              )}
-            </p>
-          </div>
-
-          {/* ISL Gloss */}
-          <div className="rounded-2xl border border-purple-500/30 bg-slate-950 p-4">
-            <div className="flex items-center justify-between text-xs text-purple-400 mb-1.5">
-              <span className="font-bold flex items-center gap-1">
-                <Sparkles size={12} />
-                ISL Gloss Sequence:
-              </span>
-              {ruleApplied && (
-                <span className="text-[10px] text-slate-400 truncate max-w-[50%]">
-                  {ruleApplied}
-                </span>
-              )}
-            </div>
-            <p className="text-xs font-extrabold text-purple-300 min-h-[20px] tracking-wide">
-              {glossText || (
-                <span className="text-slate-600 font-normal italic">
-                  ISL Gloss tokens will appear here...
-                </span>
-              )}
-            </p>
-          </div>
-        </div>
-
-        {/* Active Animated Signs List */}
-        {activeSigns.length > 0 && (
-          <div className="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="text-green-400 font-bold">● Animation Active:</span>
-              <span className="text-slate-300">
-                {activeSigns.map((s) => s.word).join(" → ")}
-              </span>
-            </div>
-            <span className="text-blue-400 flex items-center gap-1">
-              Playing on 3D Avatar <ArrowRight size={13} />
-            </span>
           </div>
         )}
       </div>
+
+      {/* Output ISL Sequence & Semantic English */}
+      {glossText && (
+        <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+              <span className="text-[10px] text-slate-500 font-bold uppercase block mb-1">Semantic English ({backendLanguage})</span>
+              <p className="text-xs font-semibold text-blue-300">{translatedText || transcript}</p>
+            </div>
+            <div className="rounded-2xl border border-purple-500/40 bg-slate-950 p-4">
+              <div className="flex items-center justify-between text-xs text-purple-400 mb-1">
+                <span className="font-bold flex items-center gap-1">
+                  <Sparkles size={13} /> ISL Gloss Sequence:
+                </span>
+                <span className="text-[10px] text-slate-400">{ruleApplied}</span>
+              </div>
+              <p className="text-sm font-extrabold text-purple-300 tracking-wide font-mono">
+                {glossText}
+              </p>
+            </div>
+          </div>
+
+          {activeSigns.length > 0 && (
+            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 flex items-center justify-between">
+              <span>Playing <strong className="text-emerald-400">{activeSigns.length}</strong> signs on 3D Avatar</span>
+              <span className="text-blue-400 font-bold">{activeSigns.map((s) => s.word).join(" → ")}</span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

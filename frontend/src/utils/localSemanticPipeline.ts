@@ -1,7 +1,7 @@
 import type { SignItem } from "../components/dashboard/AvatarViewer";
 
 // Core ISL Vocabulary Dictionary Map
-const VOCABULARY_MAP: Record<string, string> = {
+export const VOCABULARY_MAP: Record<string, string> = {
   HELLO: "hello",
   NAMASTE: "hello",
   WELCOME: "welcome",
@@ -123,15 +123,47 @@ const VOCABULARY_MAP: Record<string, string> = {
   INDIA: "home",
 };
 
-// Common Indian Language Word Mappings to English for offline translation
+// Polysemous Words Context-Disambiguation Clues
+const POLYSEMOUS_WORDS: Record<string, {
+  senses: Array<{ sense: string; gloss: string; keywords: string[] }>;
+  ambiguousPrompt: string;
+}> = {
+  bank: {
+    senses: [
+      { sense: "Financial Institution", gloss: "MONEY", keywords: ["money", "account", "pay", "deposit", "cash", "withdraw", "rupee", "financial", "loan", "vault", "card", "check"] },
+      { sense: "River Bank", gloss: "WATER", keywords: ["river", "water", "stream", "shore", "lake", "boat", "flow", "riverbank", "sea"] }
+    ],
+    ambiguousPrompt: "Did you mean Financial Institution (Money) or River Bank (Water)?"
+  },
+  train: {
+    senses: [
+      { sense: "Railway Vehicle", gloss: "TRAIN", keywords: ["ticket", "station", "railway", "go", "travel", "platform", "ride", "express", "track"] },
+      { sense: "Practice / Exercise", gloss: "WORK", keywords: ["gym", "exercise", "workout", "practice", "athlete", "sports", "coach", "train"] }
+    ],
+    ambiguousPrompt: "Did you mean Railway Train or Physical Exercise Training?"
+  },
+  light: {
+    senses: [
+      { sense: "Illumination / Brightness", gloss: "LIGHT", keywords: ["lamp", "dark", "sun", "bright", "color", "room", "switch", "on", "off", "bulb"] },
+      { sense: "Low Weight", gloss: "GOOD", keywords: ["heavy", "weight", "bag", "carry", "feather", "box", "easy"] }
+    ],
+    ambiguousPrompt: "Did you mean Illumination (Light) or Low Weight (Not heavy)?"
+  },
+  right: {
+    senses: [
+      { sense: "Direction (Right Turn)", gloss: "RIGHT", keywords: ["left", "turn", "direction", "side", "road", "street", "way"] },
+      { sense: "Correct / True", gloss: "YES", keywords: ["correct", "wrong", "true", "yes", "answer", "good"] }
+    ],
+    ambiguousPrompt: "Did you mean Direction (Right Turn) or Correct/True?"
+  }
+};
+
 const OFFLINE_TRANSLATION_MAP: Record<string, string> = {
-  // Hindi & Hinglish
   namaste: "hello",
   mera: "my",
   meri: "my",
   mere: "my",
   naam: "name",
-  naam_hai: "name is",
   kya: "what",
   kahan: "where",
   kab: "when",
@@ -165,8 +197,6 @@ const OFFLINE_TRANSLATION_MAP: Record<string, string> = {
   aaj: "today",
   dilli: "delhi",
   bhookh: "hungry",
-
-  // Bhojpuri
   hamar: "my",
   hamra: "me",
   tohar: "your",
@@ -175,8 +205,6 @@ const OFFLINE_TRANSLATION_MAP: Record<string, string> = {
   pani_chahi: "need water",
   ja_tani: "going",
   rahal: "being",
-
-  // Bengali
   amar: "my",
   tomar: "your",
   ki: "what",
@@ -187,8 +215,6 @@ const OFFLINE_TRANSLATION_MAP: Record<string, string> = {
   hoyeche: "happened",
   jabo: "will go",
   bari: "home",
-
-  // Tamil & Telugu & Kannada & Marathi
   kaha: "where",
   kuthe: "where",
   aahet: "are",
@@ -258,6 +284,7 @@ const PRONOUN_MAP: Record<string, string> = {
 
 export interface LocalSemanticPipelineResult {
   success: boolean;
+  targetLanguage: string;
   original_text: string;
   source_language: string;
   english_translation: string;
@@ -265,6 +292,13 @@ export interface LocalSemanticPipelineResult {
   gloss_text: string;
   signs: SignItem[];
   rule_applied: string;
+  confidence: number;
+  lowConfidenceWarning: boolean;
+  disambiguationNeeded: boolean;
+  disambiguationPrompt?: string;
+  disambiguationOptions?: Array<{ sense: string; gloss: string }>;
+  missing_words: string[];
+  vocabularyCoverageRate: number;
   semantics: {
     time?: string | null;
     subject?: string | null;
@@ -281,15 +315,43 @@ function translateWordOffline(word: string): string {
   return OFFLINE_TRANSLATION_MAP[clean] || clean;
 }
 
+// Disambiguate context for polysemous words
+function disambiguateWord(word: string, contextWords: string[]): {
+  resolvedGloss: string | null;
+  ambiguous: boolean;
+  prompt?: string;
+  options?: Array<{ sense: string; gloss: string }>;
+} {
+  const poly = POLYSEMOUS_WORDS[word.toLowerCase()];
+  if (!poly) return { resolvedGloss: null, ambiguous: false };
+
+  for (const s of poly.senses) {
+    for (const kw of s.keywords) {
+      if (contextWords.includes(kw)) {
+        return { resolvedGloss: s.gloss, ambiguous: false };
+      }
+    }
+  }
+
+  return {
+    resolvedGloss: poly.senses[0].gloss,
+    ambiguous: true,
+    prompt: poly.ambiguousPrompt,
+    options: poly.senses.map((s) => ({ sense: s.sense, gloss: s.gloss })),
+  };
+}
+
 function parseSingleSentence(sentenceText: string): {
   gloss: string[];
   signs: SignItem[];
   semantics: any;
   english: string;
+  missing: string[];
+  ambiguousInfo?: any;
 } {
   const raw = (sentenceText || "").trim();
   if (!raw) {
-    return { gloss: [], signs: [], semantics: {}, english: "" };
+    return { gloss: [], signs: [], semantics: {}, english: "", missing: [] };
   }
 
   const rawWords = raw.toLowerCase().replace(/[^\w\s]/g, "").split(/\s+/).filter(Boolean);
@@ -301,10 +363,24 @@ function parseSingleSentence(sentenceText: string): {
   const questionTokens: string[] = [];
   const verbTokens: string[] = [];
   const objectTokens: string[] = [];
+  const missingWords: string[] = [];
   let negation = false;
+  let ambiguousInfo: any = null;
 
-  for (const w of engWords) {
+  for (let i = 0; i < engWords.length; i++) {
+    const w = engWords[i];
     const upper = w.toUpperCase();
+
+    // Check Polysemy Context Disambiguation
+    const disRes = disambiguateWord(w, engWords);
+    if (disRes.ambiguous && !ambiguousInfo) {
+      ambiguousInfo = {
+        word: w,
+        prompt: disRes.prompt,
+        options: disRes.options,
+      };
+    }
+
     if (["not", "no", "never", "dont", "don't", "cant", "can't", "nahi", "nahin"].includes(w)) {
       negation = true;
       continue;
@@ -315,14 +391,18 @@ function parseSingleSentence(sentenceText: string): {
       questionTokens.push(QUESTION_WORDS[w]);
     } else if (PRONOUN_MAP[w]) {
       subjectTokens.push(PRONOUN_MAP[w]);
-    } else if (VOCABULARY_MAP[upper]) {
-      verbTokens.push(upper);
+    } else if (VOCABULARY_MAP[upper] || disRes.resolvedGloss) {
+      const glossToUse = disRes.resolvedGloss || VOCABULARY_MAP[upper];
+      verbTokens.push(glossToUse);
     } else if (!STOP_WORDS.has(w)) {
       objectTokens.push(upper);
+      if (!VOCABULARY_MAP[upper]) {
+        missingWords.push(upper);
+      }
     }
   }
 
-  // Construct standard ISL Sentence Order: Time -> Subject -> Object -> Verb -> Negation -> Question
+  // Construct ISL Sentence Order: Time -> Subject -> Object -> Verb -> Negation -> Question
   const islGloss: string[] = [];
   islGloss.push(...timeTokens);
   islGloss.push(...subjectTokens);
@@ -339,17 +419,21 @@ function parseSingleSentence(sentenceText: string): {
     finalGloss = [raw.toUpperCase()];
   }
 
-  // Map gloss to whole-word ISL signs (Zero word-to-letter splitting)
   const signs: SignItem[] = [];
   for (const glossWord of finalGloss) {
     if (!glossWord || !glossWord.trim()) continue;
 
     const animationKey = VOCABULARY_MAP[glossWord] || glossWord.toLowerCase();
+    const isAvailable = Boolean(VOCABULARY_MAP[glossWord]);
+
     signs.push({
       word: glossWord,
       animation: animationKey,
       type: "sign",
-      description: `ISL Whole-Word Gesture animation for '${glossWord}'.`,
+      available: isAvailable,
+      description: isAvailable
+        ? `Validated ISL Whole-Word Gesture for '${glossWord}'.`
+        : `Procedural Sign Item for '${glossWord}'.`,
     });
   }
 
@@ -367,6 +451,8 @@ function parseSingleSentence(sentenceText: string): {
       gloss_text: finalGloss.join(" "),
     },
     english: engSentence,
+    missing: missingWords,
+    ambiguousInfo,
   };
 }
 
@@ -378,6 +464,7 @@ export function processLocalSemanticPipeline(
   if (!raw) {
     return {
       success: false,
+      targetLanguage: "Indian Sign Language (ISL)",
       original_text: "",
       source_language: sourceLanguage,
       english_translation: "",
@@ -385,17 +472,23 @@ export function processLocalSemanticPipeline(
       gloss_text: "",
       signs: [],
       rule_applied: "None",
+      confidence: 1.0,
+      lowConfidenceWarning: false,
+      disambiguationNeeded: false,
+      missing_words: [],
+      vocabularyCoverageRate: 100,
       semantics: {},
     };
   }
 
-  // Split into sentence chunks
   const sentenceStrings = raw.split(/[.\n!?;\r]+/).map((s) => s.trim()).filter(Boolean);
 
   const allGloss: string[] = [];
   const allSigns: SignItem[] = [];
   const breakdowns: any[] = [];
   const engTranslations: string[] = [];
+  const allMissing: string[] = [];
+  let detectedAmbiguous: any = null;
 
   for (const sentence of sentenceStrings) {
     const res = parseSingleSentence(sentence);
@@ -404,18 +497,34 @@ export function processLocalSemanticPipeline(
       allSigns.push(...res.signs);
       breakdowns.push(res.semantics);
       engTranslations.push(res.english);
+      allMissing.push(...res.missing);
+      if (res.ambiguousInfo && !detectedAmbiguous) {
+        detectedAmbiguous = res.ambiguousInfo;
+      }
     }
   }
 
+  const totalTokens = allGloss.length || 1;
+  const coverageRate = roundNum(((totalTokens - allMissing.length) / totalTokens) * 100, 2);
+  const confidenceScore = coverageRate > 80 ? 0.95 : 0.65;
+
   return {
     success: true,
+    targetLanguage: "Indian Sign Language (ISL)",
     original_text: raw,
     source_language: sourceLanguage,
     english_translation: engTranslations.join(". "),
     gloss: allGloss,
     gloss_text: allGloss.join(" "),
     signs: allSigns,
-    rule_applied: `Client & ISL Semantic Alignment (${sentenceStrings.length} Sentence(s))`,
+    rule_applied: `Context-Sensitive ISL Grammar Alignment (${sentenceStrings.length} Sentence(s))`,
+    confidence: confidenceScore,
+    lowConfidenceWarning: confidenceScore < 0.70,
+    disambiguationNeeded: Boolean(detectedAmbiguous),
+    disambiguationPrompt: detectedAmbiguous?.prompt,
+    disambiguationOptions: detectedAmbiguous?.options,
+    missing_words: allMissing,
+    vocabularyCoverageRate: Math.max(coverageRate, 0),
     semantics: {
       sentences_breakdown: breakdowns,
       time: breakdowns[0]?.time || null,
@@ -426,4 +535,8 @@ export function processLocalSemanticPipeline(
       negation: breakdowns[0]?.negation || false,
     },
   };
+}
+
+function roundNum(val: number, decimals: number): number {
+  return Number(Math.round(Number(val + "e" + decimals)) + "e-" + decimals);
 }

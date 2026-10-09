@@ -20,6 +20,7 @@ export interface SignItem {
   category?: string;
   animation?: string;
   description?: string;
+  available?: boolean;
 }
 
 export interface AvatarViewerProps {

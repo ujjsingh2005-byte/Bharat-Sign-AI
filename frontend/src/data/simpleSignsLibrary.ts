@@ -1610,6 +1610,83 @@ export const SIMPLE_SIGNS_LIBRARY: SignGestureItem[] = [
     animationKey: "dead",
   },
 
+  // -------------------------------------------------------------
+  // 59. HIGH
+  // -------------------------------------------------------------
+  {
+    id: "high",
+    word: "High",
+    meaningHindi: "ऊँचा / उच्च",
+    signLanguage: "ISL",
+    category: "Descriptors",
+    type: "individual",
+    handConfiguration: "Right hand in open flat B-handshape moves straight upward from chest to above head",
+    leftHandPose: "Resting down naturally at side doing nothing (neutral rest pose)",
+    rightHandPose: "Starts at upper chest level with flat palm facing downward, moves steadily straight upward above head level",
+    fingerPositions: "All five fingers extended straight and held together in flat B-handshape (PRESET_OPEN_FLAT_B)",
+    palmOrientation: "Palm facing downward toward floor, elevating smoothly upward",
+    wristOrientation: "Right wrist aligned horizontal with palm facing down",
+    armPosition: "Right arm elevates steadily upward from chest height to high above crown",
+    movementSequence: "Right flat hand rises smoothly straight upward from chest height to well above the head to demonstrate high height",
+    animationDuration: 2.2,
+    facialExpression: "Attentive, upward-tilted gaze indicating elevated height",
+    animationVerified: true,
+    description: "Right flat hand held horizontally with palm facing downward moves steadily upward from chest level to high above the head, indicating High in Indian Sign Language (AI4Bharat INCLUDE Adjective).",
+    supported: true,
+    animationKey: "high",
+  },
+
+  // -------------------------------------------------------------
+  // 60. LOW
+  // -------------------------------------------------------------
+  {
+    id: "low",
+    word: "Low",
+    meaningHindi: "नीचा / कम",
+    signLanguage: "ISL",
+    category: "Descriptors",
+    type: "individual",
+    handConfiguration: "Right hand in open flat B-handshape moves downward from chest toward waist",
+    leftHandPose: "Resting down naturally at side doing nothing (neutral rest pose)",
+    rightHandPose: "Starts at mid-chest level with flat palm facing downward, presses steadily downward toward waist level",
+    fingerPositions: "All five fingers extended straight and held together in flat B-handshape (PRESET_OPEN_FLAT_B)",
+    palmOrientation: "Palm facing downward toward floor",
+    wristOrientation: "Right wrist aligned straight with downward-pressing forearm",
+    armPosition: "Right arm lowers deliberately from chest level toward waist/hip level",
+    movementSequence: "Right flat hand lowers deliberately from mid-chest height toward waist level with controlled deceleration",
+    animationDuration: 2.0,
+    facialExpression: "Slight downward head nod acknowledging low level",
+    animationVerified: true,
+    description: "Right flat hand held horizontally with palm facing downward moves steadily downward from chest level toward the waist, indicating Low in Indian Sign Language.",
+    supported: true,
+    animationKey: "low",
+  },
+
+  // -------------------------------------------------------------
+  // 61. NARROW
+  // -------------------------------------------------------------
+  {
+    id: "narrow",
+    word: "Narrow",
+    meaningHindi: "संकरा / पतला / संकीर्ण",
+    signLanguage: "ISL",
+    category: "Descriptors",
+    type: "individual",
+    handConfiguration: "Both open flat B-hands held vertically facing each other move inward until closely spaced",
+    leftHandPose: "Left flat hand starts wide at left chest, moves inward toward center",
+    rightHandPose: "Right flat hand starts wide at right chest, moves inward toward center",
+    fingerPositions: "All fingers extended straight together with thumbs pointing upward in flat B-handshapes (PRESET_OPEN_FLAT_B)",
+    palmOrientation: "Both palms vertical facing directly inward toward each other across chest width",
+    wristOrientation: "Both wrists aligned straight with forearms in vertical plane",
+    armPosition: "Both forearms held horizontal at chest level, moving inward toward each other symmetrically",
+    movementSequence: "Both flat vertical palms held ~35cm apart move smoothly inward toward each other until palms are closely spaced (~6cm apart)",
+    animationDuration: 2.4,
+    facialExpression: "Focused, attentive expression with slightly squinted eyes indicating spatial narrowness",
+    animationVerified: true,
+    description: "Both open flat hands with vertical palms facing inward move symmetrically closer together until only a few centimeters apart, expressing Narrow in Indian Sign Language (AI4Bharat INCLUDE Adjective).",
+    supported: true,
+    animationKey: "narrow",
+  },
 ];
 
 

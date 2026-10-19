@@ -1473,9 +1473,13 @@ function Avatar({
         resolvedKey === "sad" ||
         resolvedKey === "beautiful" ||
         resolvedKey === "ugly" ||
-        resolvedKey === "deaf" ||
-        resolvedKey === "blind" ||
-        hasWord("hello", "hi", "hey", "goodbye", "bye", "alvida", "tata", "drink", "drinking", "peena", "peeyo", "yes", "haan", "no", "nahi", "nahin", "thank", "thanks", "thank_you", "dhanyawad", "shukriya", "please", "kripya", "krpya", "climb", "run", "fall", "give", "push", "cry", "sleep", "sit_down", "kick", "wait", "walk", "wash", "look", "jump", "quiet", "shhh", "shh", "shaant", "shant", "silence", "chup", "loud", "shor", "awaaz", "chillana", "hungama", "awaz", "happy", "khush", "khushi", "prasann", "anand", "sad", "dukhi", "dukh", "udaas", "udas", "sorrow", "beautiful", "sundar", "khoobsurat", "khubsurat", "pretty", "ugly", "kurup", "bhadha", "bhadda", "badsurat", "deaf", "badhir", "bahra", "behra", "blind", "andha", "andhaa", "drishtihin", "netrahin");
+        resolvedKey === "angry" ||
+        resolvedKey === "go" ||
+        resolvedKey === "dead" ||
+        resolvedKey === "high" ||
+        resolvedKey === "low" ||
+        resolvedKey === "narrow" ||
+        hasWord("hello", "hi", "hey", "goodbye", "bye", "alvida", "tata", "drink", "drinking", "peena", "peeyo", "yes", "haan", "no", "nahi", "nahin", "thank", "thanks", "thank_you", "dhanyawad", "shukriya", "please", "kripya", "krpya", "climb", "run", "fall", "give", "push", "cry", "sleep", "sit_down", "kick", "wait", "walk", "wash", "look", "jump", "quiet", "shhh", "shh", "shaant", "shant", "silence", "chup", "loud", "shor", "awaaz", "chillana", "hungama", "awaz", "happy", "khush", "khushi", "prasann", "anand", "sad", "dukhi", "dukh", "udaas", "udas", "sorrow", "beautiful", "sundar", "khoobsurat", "khubsurat", "pretty", "ugly", "kurup", "bhadha", "bhadda", "badsurat", "deaf", "badhir", "bahra", "behra", "blind", "andha", "andhaa", "drishtihin", "netrahin", "angry", "gussa", "krodh", "go", "jao", "jana", "dead", "mar", "high", "uncha", "low", "nicha", "narrow", "sankra");
       if (t > duration && !signDoneTriggered.current && poseStep === "dynamic") {
         if (!isLooping) {
           signDoneTriggered.current = true;

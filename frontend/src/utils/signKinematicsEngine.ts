@@ -2974,6 +2974,165 @@ export const PRECISE_GESTURES_MAP: Record<string, PreciseGestureDefinition> = {
     facialExpression: "Solemn, respectful facial expression.",
     verifiedStatus: "LINGUISTICALLY_VERIFIED",
   },
+
+  // --------------------------------------------------------------------------
+  // HIGH (Right flat B-hand moves upward from chest level to high above head)
+  // Corresponds to AI4Bharat INCLUDE Adjective "high" class 50
+  // --------------------------------------------------------------------------
+  high: {
+    id: "high",
+    name: "High",
+    meaningHindi: "ऊँचा / उच्च",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "right",
+    durationSeconds: 2.2,
+    motionType: "linear",
+    measurements: {
+      initialWristHeight: -0.10,
+      finalWristHeight: 0.38,
+      verticalDisplacement: 0.48,
+      horizontalDisplacement: 0.05,
+      depthDisplacement: 0.05,
+      totalMovementDistance: 0.48,
+      palmOrientationStart: "Right open flat palm held at chest level facing downward toward floor",
+      palmOrientationEnd: "Right open flat palm elevated smoothly straight upward above head level",
+      wristRotationDegrees: [0.0, 0.0, 0.0],
+      trajectoryType: "linear",
+      anatomicalFeatures: [
+        "Right hand in open flat B-handshape (PRESET_OPEN_FLAT_B) with palm facing down",
+        "Starts in front of upper chest at Y = -0.10m",
+        "Moves steadily upward in smooth vertical ascent to Y = +0.38m above head level",
+        "Left arm remains in relaxed neutral standby at side",
+        "Attentive gaze tracking upward toward elevated hand",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm: { arm: [-0.35, 0.15, -0.65], forearm: [-1.20, 0.15, 0.25], wrist: [0.25, 0.0, 0.10] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_OPEN_FLAT_B,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm: { arm: [-0.95, -0.10, -0.60], forearm: [-0.75, 0.10, 0.20], wrist: [0.20, 0.0, 0.10] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_OPEN_FLAT_B,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [-0.10, 0.0, 0.0],
+    },
+    description: "Right flat hand held horizontally with palm facing downward moves steadily upward from chest level to high above the head, indicating High in Indian Sign Language.",
+    facialExpression: "Attentive, upward-tilted head gaze indicating elevated height.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
+
+  // --------------------------------------------------------------------------
+  // LOW (Right flat B-hand moves downward from chest level toward waist)
+  // Corresponds to AI4Bharat INCLUDE Adjective "low"
+  // --------------------------------------------------------------------------
+  low: {
+    id: "low",
+    name: "Low",
+    meaningHindi: "नीचा / कम",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "right",
+    durationSeconds: 2.0,
+    motionType: "linear",
+    measurements: {
+      initialWristHeight: 0.05,
+      finalWristHeight: -0.32,
+      verticalDisplacement: -0.37,
+      horizontalDisplacement: 0.02,
+      depthDisplacement: 0.05,
+      totalMovementDistance: 0.37,
+      palmOrientationStart: "Right open flat palm held horizontal at mid-chest level facing down",
+      palmOrientationEnd: "Right open flat palm lowered deliberately toward waist level",
+      wristRotationDegrees: [0.0, 0.0, 0.0],
+      trajectoryType: "linear",
+      anatomicalFeatures: [
+        "Right hand in flat B-handshape (PRESET_OPEN_FLAT_B) with palm facing downward",
+        "Starts at mid-chest height (Y = +0.05m)",
+        "Lowers smoothly and firmly straight downward toward waist (Y = -0.32m)",
+        "Left hand remains in relaxed neutral standby at side",
+        "Head tilts slightly downward acknowledging low level",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm: { arm: [-0.45, 0.10, -0.60], forearm: [-1.30, 0.15, 0.25], wrist: [0.20, 0.0, 0.10] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_OPEN_FLAT_B,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm: { arm: [-0.15, 0.05, -0.40], forearm: [-0.85, 0.10, 0.15], wrist: [0.15, 0.0, 0.10] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_OPEN_FLAT_B,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.08, 0.0, 0.0],
+    },
+    description: "Right flat hand held horizontally with palm facing downward moves steadily downward from chest level toward the waist, indicating Low in Indian Sign Language.",
+    facialExpression: "Slight downward head nod acknowledging low level.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
+
+  // --------------------------------------------------------------------------
+  // NARROW (Both open flat hands held vertically move inward toward each other)
+  // Corresponds to AI4Bharat INCLUDE Adjective "narrow" class 57
+  // --------------------------------------------------------------------------
+  narrow: {
+    id: "narrow",
+    name: "Narrow",
+    meaningHindi: "संकरा / पतला / संकीर्ण",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "both",
+    durationSeconds: 2.4,
+    motionType: "linear",
+    measurements: {
+      initialWristHeight: -0.10,
+      finalWristHeight: -0.10,
+      verticalDisplacement: 0.0,
+      horizontalDisplacement: -0.26,
+      depthDisplacement: 0.0,
+      totalMovementDistance: 0.26,
+      palmOrientationStart: "Both flat palms vertical facing each other ~35cm apart in front of chest",
+      palmOrientationEnd: "Both flat palms brought close together (~6cm apart) indicating narrow corridor/width",
+      wristRotationDegrees: [0.0, 0.0, 0.0],
+      trajectoryType: "linear",
+      anatomicalFeatures: [
+        "Both hands in flat B-handshapes with fingers together and thumbs extended upward",
+        "Palms held vertically facing inward toward each other at mid-chest level",
+        "Hands move horizontally inward toward the midline in symmetric motion",
+        "Demonstrates a confined, narrow width or spatial restriction",
+        "Focused squinting facial expression indicating tightness/narrowness",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm: { arm: [-0.30, 0.20, -0.75], forearm: [-1.20, 0.35, 0.30], wrist: [0.05, -0.30, 0.0] },
+      leftArm: { arm: [0.30, 0.20, -0.75], forearm: [1.20, 0.35, -0.30], wrist: [-0.05, 0.30, 0.0] },
+      rightHand: PRESET_OPEN_FLAT_B,
+      leftHand: PRESET_OPEN_FLAT_B,
+      head: [0.02, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm: { arm: [-0.20, 0.05, -0.80], forearm: [-1.35, 0.10, 0.45], wrist: [0.05, -0.15, 0.0] },
+      leftArm: { arm: [0.20, 0.05, -0.80], forearm: [1.35, 0.10, -0.45], wrist: [-0.05, 0.15, 0.0] },
+      rightHand: PRESET_OPEN_FLAT_B,
+      leftHand: PRESET_OPEN_FLAT_B,
+      head: [0.04, 0.0, 0.0],
+    },
+    description: "Both open flat hands with vertical palms facing inward move symmetrically closer together until only a few centimeters apart, expressing Narrow in Indian Sign Language.",
+    facialExpression: "Focused, attentive expression with slightly squinted eyes indicating narrowness.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
 };
 
 // ============================================================================
@@ -3037,6 +3196,9 @@ export function resolveKinematicKey(rawKey: string): string {
   if (clean === "angry" || clean === "gussa" || clean === "krodh" || clean === "krodhi") return "angry";
   if (clean === "go" || clean === "jao" || clean === "jana" || clean === "chalo") return "go";
   if (clean === "dead" || clean === "mar" || clean === "mrit" || clean === "death" || clean === "deceased") return "dead";
+  if (clean === "high" || clean === "uncha" || clean === "ooncha" || clean === "uccha") return "high";
+  if (clean === "low" || clean === "neecha" || clean === "nicha") return "low";
+  if (clean === "narrow" || clean === "sankra" || clean === "patla" || clean === "sankeern") return "narrow";
 
   return clean;
 }

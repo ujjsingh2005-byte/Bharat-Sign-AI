@@ -17,6 +17,7 @@ import {
   Video,
 } from "lucide-react";
 import AvatarViewer, { type SignItem } from "./AvatarViewer";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 // Base dictionary items
 const LOCAL_DICTIONARY_DATA: SignItem[] = [
@@ -155,7 +156,7 @@ export default function ISLDictionary() {
   useEffect(() => {
     async function loadBackendSigns() {
       try {
-        const res = await fetch("http://127.0.0.1:8000/signs/all").catch(() => fetch("/signs/all"));
+        const res = await fetch(`${API_BASE_URL}/signs/all`).catch(() => fetch("/signs/all"));
         if (res && res.ok) {
           const data = await res.json();
           if (data.success && Array.isArray(data.signs) && data.signs.length > 0) {

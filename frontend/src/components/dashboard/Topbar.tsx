@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Sparkles, Radio } from "lucide-react";
-
-const API = "http://127.0.0.1:8000";
+import { API_BASE_URL as API } from "../../utils/apiConfig";
 
 export default function Topbar() {
   const [backendOnline, setBackendOnline] = useState(false);

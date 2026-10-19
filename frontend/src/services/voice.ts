@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://127.0.0.1:8000";
+import { API_BASE_URL as API } from "../utils/apiConfig";
 
 export async function speechToText(audio: Blob) {
   const formData = new FormData();

@@ -16,7 +16,7 @@ import {
 import type { SignItem } from "./AvatarViewer";
 import { processLocalSemanticPipeline } from "../../utils/localSemanticPipeline";
 
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+import { API_BASE_URL as API } from "../../utils/apiConfig";
 
 interface UniversalSemanticPanelProps {
   onSignSequence: (sequence: SignItem[]) => void;

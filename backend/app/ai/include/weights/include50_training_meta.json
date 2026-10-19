@@ -1,0 +1,608 @@
+{
+  "timestamp": 1792441756.7568603,
+  "video_dir": "C:\\Users\\UJJWAL SINGH\\Downloads\\adjective 1file",
+  "models_trained": [
+    "lstm",
+    "cnn"
+  ],
+  "epochs": 15,
+  "batch_size": 32,
+  "training_results": {
+    "lstm": {
+      "success": true,
+      "model_type": "lstm",
+      "best_val_acc": 0.8508064516129032,
+      "checkpoint_path": "C:\\Users\\UJJWAL SINGH\\OneDrive\\Desktop\\Bharat-Sign-AI-3-Sign-Working\\zip\\backend\\app\\ai\\include\\weights\\include50_lstm.pth",
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 3.5016,
+          "train_acc": 0.1049,
+          "val_acc": 0.2056,
+          "top5_acc": 0.5685
+        },
+        {
+          "epoch": 2,
+          "train_loss": 2.4669,
+          "train_acc": 0.3211,
+          "val_acc": 0.4274,
+          "top5_acc": 0.7903
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.6766,
+          "train_acc": 0.5538,
+          "val_acc": 0.5847,
+          "top5_acc": 0.9032
+        },
+        {
+          "epoch": 4,
+          "train_loss": 1.2028,
+          "train_acc": 0.6998,
+          "val_acc": 0.6653,
+          "top5_acc": 0.9153
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.8517,
+          "train_acc": 0.8264,
+          "val_acc": 0.746,
+          "top5_acc": 0.9758
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.6352,
+          "train_acc": 0.9042,
+          "val_acc": 0.8387,
+          "top5_acc": 0.9839
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.4992,
+          "train_acc": 0.9477,
+          "val_acc": 0.7863,
+          "top5_acc": 0.9879
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.419,
+          "train_acc": 0.9751,
+          "val_acc": 0.8185,
+          "top5_acc": 0.9879
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.3845,
+          "train_acc": 0.9807,
+          "val_acc": 0.8185,
+          "top5_acc": 0.9758
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.3778,
+          "train_acc": 0.9823,
+          "val_acc": 0.8468,
+          "top5_acc": 0.9798
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.3797,
+          "train_acc": 0.9826,
+          "val_acc": 0.8427,
+          "top5_acc": 0.9798
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.3368,
+          "train_acc": 0.9928,
+          "val_acc": 0.8508,
+          "top5_acc": 0.9919
+        }
+      ],
+      "training_time_seconds": 95.11
+    },
+    "cnn": {
+      "success": true,
+      "model_type": "cnn",
+      "best_val_acc": 0.9596774193548387,
+      "checkpoint_path": "C:\\Users\\UJJWAL SINGH\\OneDrive\\Desktop\\Bharat-Sign-AI-3-Sign-Working\\zip\\backend\\app\\ai\\include\\weights\\include50_cnn.pth",
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 2.8918,
+          "train_acc": 0.3528,
+          "val_acc": 0.3992,
+          "top5_acc": 0.7056
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.5356,
+          "train_acc": 0.7169,
+          "val_acc": 0.5121,
+          "top5_acc": 0.8831
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.8769,
+          "train_acc": 0.9082,
+          "val_acc": 0.7581,
+          "top5_acc": 0.9839
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.5841,
+          "train_acc": 0.9602,
+          "val_acc": 0.9113,
+          "top5_acc": 0.9758
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.4284,
+          "train_acc": 0.9894,
+          "val_acc": 0.7863,
+          "top5_acc": 0.9758
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.3781,
+          "train_acc": 0.995,
+          "val_acc": 0.9032,
+          "top5_acc": 0.9879
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.3648,
+          "train_acc": 0.9928,
+          "val_acc": 0.8992,
+          "top5_acc": 0.9919
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.3357,
+          "train_acc": 0.9972,
+          "val_acc": 0.9274,
+          "top5_acc": 0.996
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.3213,
+          "train_acc": 0.9978,
+          "val_acc": 0.8911,
+          "top5_acc": 0.9839
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.3138,
+          "train_acc": 0.9991,
+          "val_acc": 0.9597,
+          "top5_acc": 0.996
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.3111,
+          "train_acc": 0.9969,
+          "val_acc": 0.9234,
+          "top5_acc": 0.9919
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.305,
+          "train_acc": 0.9991,
+          "val_acc": 0.9315,
+          "top5_acc": 0.9919
+        }
+      ],
+      "training_time_seconds": 20.5
+    }
+  },
+  "evaluation": [
+    {
+      "video_name": "MVI_9699.MOV",
+      "target_class": "dead",
+      "target_id": 66,
+      "display": "Dead / Deceased",
+      "hi": "मृत / मरा हुआ",
+      "lstm": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9537304043769836,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "dead",
+            "confidence": 0.9537304043769836,
+            "display": "Dead / Deceased",
+            "hi": "मृत / मरा हुआ"
+          },
+          {
+            "class": "dirty",
+            "confidence": 0.01900131069123745,
+            "display": "Dirty / Unclean",
+            "hi": "गंदा / मैला"
+          },
+          {
+            "class": "red",
+            "confidence": 0.0063032228499650955,
+            "display": "Red",
+            "hi": "लाल"
+          },
+          {
+            "class": "colour",
+            "confidence": 0.004710902459919453,
+            "display": "Colour / Color",
+            "hi": "रंग"
+          },
+          {
+            "class": "white",
+            "confidence": 0.004135412164032459,
+            "display": "White",
+            "hi": "सफ़ेद"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9767042398452759,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9700.MOV",
+      "target_class": "dead",
+      "target_id": 66,
+      "display": "Dead / Deceased",
+      "hi": "मृत / मरा हुआ",
+      "lstm": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9684991836547852,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "dead",
+            "confidence": 0.9684991836547852,
+            "display": "Dead / Deceased",
+            "hi": "मृत / मरा हुआ"
+          },
+          {
+            "class": "colour",
+            "confidence": 0.01125915627926588,
+            "display": "Colour / Color",
+            "hi": "रंग"
+          },
+          {
+            "class": "dirty",
+            "confidence": 0.005040719639509916,
+            "display": "Dirty / Unclean",
+            "hi": "गंदा / मैला"
+          },
+          {
+            "class": "ugly",
+            "confidence": 0.004195401445031166,
+            "display": "Ugly",
+            "hi": "कुरूप / भद्दा"
+          },
+          {
+            "class": "red",
+            "confidence": 0.003017209470272064,
+            "display": "Red",
+            "hi": "लाल"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9560177326202393,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9701.MOV",
+      "target_class": "dead",
+      "target_id": 66,
+      "display": "Dead / Deceased",
+      "hi": "मृत / मरा हुआ",
+      "lstm": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9685386419296265,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "dead",
+            "confidence": 0.9685386419296265,
+            "display": "Dead / Deceased",
+            "hi": "मृत / मरा हुआ"
+          },
+          {
+            "class": "dirty",
+            "confidence": 0.009521516039967537,
+            "display": "Dirty / Unclean",
+            "hi": "गंदा / मैला"
+          },
+          {
+            "class": "colour",
+            "confidence": 0.005809832364320755,
+            "display": "Colour / Color",
+            "hi": "रंग"
+          },
+          {
+            "class": "ugly",
+            "confidence": 0.0038408630061894655,
+            "display": "Ugly",
+            "hi": "कुरूप / भद्दा"
+          },
+          {
+            "class": "young",
+            "confidence": 0.001584214041940868,
+            "display": "Young / Youth",
+            "hi": "युवा / जवान"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9430719614028931,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9702.MOV",
+      "target_class": "dead",
+      "target_id": 66,
+      "display": "Dead / Deceased",
+      "hi": "मृत / मरा हुआ",
+      "lstm": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.8745394945144653,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "dead",
+            "confidence": 0.8745394945144653,
+            "display": "Dead / Deceased",
+            "hi": "मृत / मरा हुआ"
+          },
+          {
+            "class": "colour",
+            "confidence": 0.059354256838560104,
+            "display": "Colour / Color",
+            "hi": "रंग"
+          },
+          {
+            "class": "dirty",
+            "confidence": 0.027330324053764343,
+            "display": "Dirty / Unclean",
+            "hi": "गंदा / मैला"
+          },
+          {
+            "class": "white",
+            "confidence": 0.010395143181085587,
+            "display": "White",
+            "hi": "सफ़ेद"
+          },
+          {
+            "class": "ugly",
+            "confidence": 0.008849802426993847,
+            "display": "Ugly",
+            "hi": "कुरूप / भद्दा"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.7263091206550598,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9823.MOV",
+      "target_class": "dead",
+      "target_id": 66,
+      "display": "Dead / Deceased",
+      "hi": "मृत / मरा हुआ",
+      "lstm": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9612732529640198,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "dead",
+            "confidence": 0.9612732529640198,
+            "display": "Dead / Deceased",
+            "hi": "मृत / मरा हुआ"
+          },
+          {
+            "class": "red",
+            "confidence": 0.009716540575027466,
+            "display": "Red",
+            "hi": "लाल"
+          },
+          {
+            "class": "female",
+            "confidence": 0.006072048097848892,
+            "display": "Female / Woman",
+            "hi": "महिला / स्त्री"
+          },
+          {
+            "class": "colour",
+            "confidence": 0.004426535684615374,
+            "display": "Colour / Color",
+            "hi": "रंग"
+          },
+          {
+            "class": "young",
+            "confidence": 0.0035389172844588757,
+            "display": "Young / Youth",
+            "hi": "युवा / जवान"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9832518100738525,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9824.MOV",
+      "target_class": "dead",
+      "target_id": 66,
+      "display": "Dead / Deceased",
+      "hi": "मृत / मरा हुआ",
+      "lstm": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.976378858089447,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "dead",
+            "confidence": 0.976378858089447,
+            "display": "Dead / Deceased",
+            "hi": "मृत / मरा हुआ"
+          },
+          {
+            "class": "red",
+            "confidence": 0.006114679854363203,
+            "display": "Red",
+            "hi": "लाल"
+          },
+          {
+            "class": "female",
+            "confidence": 0.0059660254046320915,
+            "display": "Female / Woman",
+            "hi": "महिला / स्त्री"
+          },
+          {
+            "class": "expensive",
+            "confidence": 0.0026240963488817215,
+            "display": "Expensive / Costly",
+            "hi": "महंगा"
+          },
+          {
+            "class": "young",
+            "confidence": 0.0013315659016370773,
+            "display": "Young / Youth",
+            "hi": "युवा / जवान"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9781898856163025,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9825.MOV",
+      "target_class": "dead",
+      "target_id": 66,
+      "display": "Dead / Deceased",
+      "hi": "मृत / मरा हुआ",
+      "lstm": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9642263054847717,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "dead",
+            "confidence": 0.9642263054847717,
+            "display": "Dead / Deceased",
+            "hi": "मृत / मरा हुआ"
+          },
+          {
+            "class": "female",
+            "confidence": 0.008071639575064182,
+            "display": "Female / Woman",
+            "hi": "महिला / स्त्री"
+          },
+          {
+            "class": "white",
+            "confidence": 0.004063911270350218,
+            "display": "White",
+            "hi": "सफ़ेद"
+          },
+          {
+            "class": "thin",
+            "confidence": 0.002651318907737732,
+            "display": "Thin / Slender",
+            "hi": "पतला"
+          },
+          {
+            "class": "young",
+            "confidence": 0.0025091422721743584,
+            "display": "Young / Youth",
+            "hi": "युवा / जवान"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.989837110042572,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9826.MOV",
+      "target_class": "dead",
+      "target_id": 66,
+      "display": "Dead / Deceased",
+      "hi": "मृत / मरा हुआ",
+      "lstm": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.7035127282142639,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "dead",
+            "confidence": 0.7035127282142639,
+            "display": "Dead / Deceased",
+            "hi": "मृत / मरा हुआ"
+          },
+          {
+            "class": "young",
+            "confidence": 0.19070088863372803,
+            "display": "Young / Youth",
+            "hi": "युवा / जवान"
+          },
+          {
+            "class": "howareyou",
+            "confidence": 0.026879549026489258,
+            "display": "How Are You",
+            "hi": "आप कैसे हैं?"
+          },
+          {
+            "class": "red",
+            "confidence": 0.020056676119565964,
+            "display": "Red",
+            "hi": "लाल"
+          },
+          {
+            "class": "expensive",
+            "confidence": 0.016469065099954605,
+            "display": "Expensive / Costly",
+            "hi": "महंगा"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "dead",
+        "predicted_id": 66,
+        "confidence": 0.9579824805259705,
+        "is_correct": true
+      }
+    }
+  ]
+}

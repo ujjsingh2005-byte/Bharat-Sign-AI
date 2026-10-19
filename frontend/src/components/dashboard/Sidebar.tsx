@@ -7,11 +7,15 @@ import {
   LayoutDashboard,
   LogOut,
   FlaskConical,
+  GraduationCap,
+  Video,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export type DashboardTab =
   | "all"
+  | "learn_sign_language"
+  | "motion_validation"
   | "voice_to_sign"
   | "semantic_to_sign"
   | "camera_recognition"
@@ -46,6 +50,22 @@ export default function Sidebar({ activeTab, onSelectTab }: SidebarProps) {
       icon: LayoutDashboard,
       activeBg: "bg-gradient-to-r from-indigo-600 to-purple-600 shadow-indigo-600/30",
       iconColor: "text-indigo-400",
+    },
+    {
+      id: "learn_sign_language",
+      label: "Learn Sign Language",
+      icon: GraduationCap,
+      badge: "Video + 3D",
+      activeBg: "bg-gradient-to-r from-blue-600 to-indigo-600 shadow-blue-600/30",
+      iconColor: "text-blue-400",
+    },
+    {
+      id: "motion_validation",
+      label: "Video Motion Lab",
+      icon: Video,
+      badge: "Side-by-Side",
+      activeBg: "bg-gradient-to-r from-violet-600 to-indigo-600 shadow-violet-600/30",
+      iconColor: "text-violet-400",
     },
     {
       id: "research",

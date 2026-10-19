@@ -596,7 +596,7 @@ export default function LiveCommunicationStudio() {
               {/* Quick Gesture Simulator for instant testing */}
               <div className="flex items-center gap-1 text-xs">
                 <span className="text-slate-500 text-[10px]">Test Sign:</span>
-                {["HELLO", "THANK YOU", "WATER", "HELP", "YES"].map((sign) => (
+                {["HELLO", "BYE", "THANK YOU", "WATER", "HELP", "YES"].map((sign) => (
                   <button
                     key={sign}
                     onClick={() => simulateDeafSign(sign)}

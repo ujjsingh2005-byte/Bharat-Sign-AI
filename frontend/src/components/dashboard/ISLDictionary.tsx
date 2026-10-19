@@ -14,16 +14,16 @@ import {
   CheckCircle2,
   XCircle,
   Zap,
+  Video,
 } from "lucide-react";
 import AvatarViewer, { type SignItem } from "./AvatarViewer";
 
 // Base dictionary items
 const LOCAL_DICTIONARY_DATA: SignItem[] = [
   // Greetings
-  { word: "HELLO", animation: "hello", category: "Greetings", description: "Open hand raised near temple waving outward with warmth.", is_validated: true },
-  { word: "NAMASTE", animation: "namaste", category: "Greetings", description: "Both palms joined in front of chest with gentle head nod.", is_validated: true },
-  { word: "THANK YOU", animation: "thank_you", category: "Greetings", description: "Fingertips touch chin and move forward towards the listener.", is_validated: true },
-  { word: "GOODBYE", animation: "goodbye", category: "Greetings", description: "Open hand raised high waving gently side-to-side.", is_validated: true },
+  { word: "HELLO", animation: "hello", category: "Greetings", description: "Right hand raised above shoulder with palm facing front side, waving continuously left-to-right; left hand down relaxed.", is_validated: true },
+  { word: "BYE", animation: "bye", category: "Greetings", description: "Both hands raised above shoulders with palms facing front side, waving side-to-side continuously in farewell.", is_validated: true },
+  { word: "GOODBYE", animation: "bye", category: "Greetings", description: "Both hands raised above shoulders with palms facing front side, waving side-to-side continuously in farewell.", is_validated: true },
   { word: "PLEASE", animation: "please", category: "Greetings", description: "Flat palm rubs chest in a circular clockwise motion.", is_validated: true },
   { word: "WELCOME", animation: "welcome", category: "Greetings", description: "Open palm sweeps inward toward the body.", is_validated: true },
   { word: "SORRY", animation: "sorry", category: "Greetings", description: "Closed fist makes a circular motion over heart.", is_validated: true },
@@ -55,14 +55,55 @@ const LOCAL_DICTIONARY_DATA: SignItem[] = [
   // Basics & Pronouns
   { word: "YES", animation: "yes", category: "Basics", description: "Closed fist nods up and down like head nodding.", is_validated: true },
   { word: "NO", animation: "no", category: "Basics", description: "Index and middle fingers snap down against thumb.", is_validated: true },
+  { word: "I", animation: "me", category: "Basics", description: "Index finger points directly to one's own chest.", is_validated: true },
   { word: "ME", animation: "me", category: "Basics", description: "Index finger points directly to one's own chest.", is_validated: true },
   { word: "YOU", animation: "you", category: "Basics", description: "Index finger points outward toward conversational partner.", is_validated: true },
+  { word: "YOUR", animation: "your", category: "Basics", description: "Flat open hand facing forward pushed gently toward partner.", is_validated: true },
   { word: "MY", animation: "my", category: "Basics", description: "Flat open palm rests firmly on the chest.", is_validated: true },
+  { word: "NAME", animation: "name", category: "Basics", description: "Right index and middle fingers tap across left index and middle fingers twice.", is_validated: true },
+  { word: "FINE", animation: "fine", category: "Basics", description: "Open 5-hand with thumb touching center of chest.", is_validated: true },
+  { word: "ARE", animation: "are", category: "Basics", description: "Right index finger moves forward from chin/lips.", is_validated: true },
+  { word: "IS", animation: "is", category: "Basics", description: "Right index finger moves forward from chin/lips.", is_validated: true },
+  { word: "AM", animation: "am", category: "Basics", description: "Right index finger moves forward from chin/lips.", is_validated: true },
+  { word: "WHAT", animation: "what", category: "Questions", description: "Left horizontal open palm at chest, right index finger sweeping across.", is_validated: true },
+  { word: "WHERE", animation: "where", category: "Questions", description: "Right hand raised with upright index finger waving side-to-side.", is_validated: true },
+  { word: "HOW", animation: "how", category: "Questions", description: "Curved hands roll outward until palms face up.", is_validated: true },
+  { word: "LIVE", animation: "live", category: "Daily Living", description: "Both hands in 'L' shape moving upward along torso.", is_validated: true },
+  { word: "DO", animation: "do", category: "Daily Living", description: "Both flat hands move side-to-side in front of waist.", is_validated: true },
   { word: "GO", animation: "go", category: "Basics", description: "Both index fingers point forward and roll outward.", is_validated: true },
   { word: "COME", animation: "come", category: "Basics", description: "Both hands beckon inward toward the body.", is_validated: true },
+  // Family & Social
+  { word: "FRIEND", animation: "friend", category: "Family & Social", description: "Both hooked index fingers link together twice with friendly expression.", is_validated: true },
+  { word: "FAMILY", animation: "family", category: "Family & Social", description: "Both 'F' hands circle outward meeting at pinky fingers.", is_validated: true },
+  { word: "FATHER", animation: "father", category: "Family & Social", description: "Thumb of open hand taps forehead twice.", is_validated: true },
+  { word: "MOTHER", animation: "mother", category: "Family & Social", description: "Thumb of open hand taps chin twice.", is_validated: true },
+  { word: "TEACHER", animation: "teacher", category: "Education", description: "Flattened 'O' hands move from temples forward.", is_validated: true },
+  { word: "STUDENT", animation: "student", category: "Education", description: "Right hand takes information from left palm to forehead.", is_validated: true },
+
+  // Pronouns & Places
+  { word: "HE", animation: "he", category: "Basics", description: "Index finger points outward toward a third person.", is_validated: true },
+  { word: "SHE", animation: "she", category: "Basics", description: "Index finger points outward toward a female person.", is_validated: true },
+  { word: "WE", animation: "we", category: "Basics", description: "Index finger touches right shoulder and arcs to left shoulder.", is_validated: true },
+  { word: "THEY", animation: "they", category: "Basics", description: "Index finger sweeps across pointing toward a group.", is_validated: true },
+  { word: "INDIA", animation: "india", category: "Places", description: "Thumb of 'A' handshape presses gently onto center of forehead.", is_validated: true },
+
+  { word: "HAPPY", animation: "happy", category: "Emotions", description: "Right elbow turned 90° right-to-left and left elbow turned 90° left-to-right across lower chest with wrists turned 180°; after that wrists turn slowly from DOWN to UP to brush upward along the chest with a warm, joyful radiant smile on the face (Verified from AI4Bharat INCLUDE Dataset).", is_validated: true, referenceVideo: "/videos/happy_reference.mov" },
+  { word: "SAD", animation: "sad", category: "Emotions", description: "In SAD, except the index finger all the fingers are closed with the thumb also closed in a fist on BOTH hands. Both index fingers are placed at the eyes and move simultaneously from UP to DOWN along the cheeks tracing falling tears with a sorrowful expression.", is_validated: true },
+  { word: "BEAUTIFUL", animation: "beautiful", category: "Descriptors", description: "In beautiful, turn the elbow 180 degrees towards the mouth and wrist also 180 degrees towards the mouth with all fingers closed except index finger and thumb, round with index finger on the circle of their own face, then close index finger and thumb and open another three fingers pointing towards the user with wrist at 90 degrees of the elbow.", is_validated: true },
+  { word: "UGLY", animation: "ugly", category: "Descriptors", description: "Right claw hand rises in front of the face, sweeps horizontally across from left to right and pulls away sharply, while the avatar turns head slightly aside with a distasteful facial expression; left hand rests at side (Verified from AI4Bharat INCLUDE Dataset).", is_validated: true },
+  { word: "DEAF", animation: "deaf", category: "Descriptors", description: "Right hand with index finger extended touches the right ear, then moves forward in a smooth arc to touch near the lips/chin, expressing Deaf in Indian Sign Language; left hand rests at side (Verified from AI4Bharat INCLUDE Dataset).", is_validated: true },
+  { word: "BLIND", animation: "blind", category: "Descriptors", description: "Right hand in V-handshape points index and middle fingers toward the eyes at eye level, then sweeps horizontally across the sightline to convey Blind in Indian Sign Language; left hand rests at side (Verified from AI4Bharat INCLUDE Dataset).", is_validated: true },
+  { word: "LOVE", animation: "love", category: "Emotions", description: "Both arms cross over chest in tight embrace.", is_validated: true },
+  { word: "CAR", animation: "car", category: "Travel", description: "Hands mimic holding and steering a steering wheel.", is_validated: true },
+  { word: "TRAIN", animation: "train", category: "Travel", description: "Right 'H' fingers slide back and forth over left 'H' fingers.", is_validated: true },
+  { word: "MONEY", animation: "money", category: "Finance", description: "Thumb rubs fingertips mimicking counting currency notes.", is_validated: true },
+  { word: "TIME", animation: "time", category: "Time", description: "Right index finger taps wrist twice mimicking a wristwatch.", is_validated: true },
   { word: "TODAY", animation: "today", category: "Time", description: "'Y' handshapes dropped down sharply twice.", is_validated: true },
   { word: "TOMORROW", animation: "tomorrow", category: "Time", description: "Thumbs-up hand touches cheek and arcs forward.", is_validated: true },
   { word: "YESTERDAY", animation: "yesterday", category: "Time", description: "Thumbs-up hand touches chin and moves backward to ear.", is_validated: true },
+  { word: "QUIET", animation: "quiet", category: "Descriptors", description: "Single right index finger extended vertically upright placed directly on the mouth with the wrist turned 45 degrees up and elbow turned 180 degrees towards the mouth; all remaining fingers and thumb tightly closed into a firm fist; left hand rests relaxed at side.", is_validated: true },
+  { word: "LOUD", animation: "loud", category: "Descriptors", description: "Both hands brought up to cup both sides of the mouth like a megaphone when calling out, then thrusting forward and flaring outward with spread fingers as shouting loudly into the distance.", is_validated: true, referenceVideo: "/videos/loud_reference.mov" },
+  { word: "RUN", animation: "run", category: "Actions", description: "In RUN sign language: close all fingers except index finger and thumb on both hands (forming modified L-handshapes with middle, ring, pinky in closed fists). The left elbow is turned 90 degrees from left to right across the torso so the left index finger touches the right thumb from the back. The right hand index finger points directly forward towards the user. Both hands perform rhythmic forward running strides in unison.", is_validated: true },
 ];
 
 // Add A-Z Fingerspelling
@@ -114,8 +155,8 @@ export default function ISLDictionary() {
   useEffect(() => {
     async function loadBackendSigns() {
       try {
-        const res = await fetch("/api/signs/all");
-        if (res.ok) {
+        const res = await fetch("http://127.0.0.1:8000/signs/all").catch(() => fetch("/signs/all"));
+        if (res && res.ok) {
           const data = await res.json();
           if (data.success && Array.isArray(data.signs) && data.signs.length > 0) {
             setDictionary(data.signs);
@@ -298,6 +339,33 @@ export default function ISLDictionary() {
                 {activeSign.description}
               </p>
             </div>
+
+            {/* Ground Truth Reference Video Comparison (if available) */}
+            {activeSign.referenceVideo && (
+              <div className="rounded-2xl border border-blue-500/30 bg-blue-950/20 p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-blue-400 font-bold flex items-center gap-1.5">
+                    <Video size={14} className="text-blue-400" />
+                    GROUND TRUTH REFERENCE VIDEO
+                  </span>
+                  <span className="text-[10px] bg-blue-500/20 text-blue-300 font-semibold px-2 py-0.5 rounded border border-blue-500/30">
+                    AI4Bharat INCLUDE
+                  </span>
+                </div>
+                <video
+                  src={activeSign.referenceVideo}
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full rounded-xl border border-slate-800 bg-black aspect-video object-cover shadow-lg"
+                />
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  Extracted with 3D landmark tracking pipeline & retargeted directly to avatar armature rig.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* RIGHT COLUMN: Interactive Catalog & Search */}

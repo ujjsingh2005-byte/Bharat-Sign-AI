@@ -54,9 +54,11 @@ class ISLMappingEngine:
         for word in isl_gloss:
             upper_word = word.upper()
             if upper_word in VOCABULARY_SIGNS:
+                v_entry = VOCABULARY_SIGNS[upper_word]
+                anim_key = v_entry.get("animation", upper_word.lower()) if isinstance(v_entry, dict) else str(v_entry)
                 mapped_signs.append({
                     "word": upper_word,
-                    "animation": VOCABULARY_SIGNS[upper_word],
+                    "animation": anim_key,
                     "type": "sign",
                     "available": True,
                     "description": f"Validated ISL gesture for '{upper_word}'"

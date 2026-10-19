@@ -96,9 +96,39 @@ export default function ISLLearningSection() {
               description={card.description}
               footerText={card.footerText}
               actionText="Start Lesson"
-              onAction={() => window.location.href = "/dashboard"}
+              onAction={() => (window.location.href = "/learn")}
             />
           ))}
+        </div>
+
+        {/* Featured YouTube Playlist Banner */}
+        <div className="mt-12 bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 text-white shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 bg-red-600/30 text-red-300 border border-red-500/50 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                Official YouTube Course
+              </span>
+              <span className="text-xs text-slate-400 font-semibold">
+                13 Structured Video Lessons • 77 Mins
+              </span>
+            </div>
+            <h3 className="text-2xl font-bold text-white">
+              Indian Sign Language 101 — Complete Video Playlist
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Watch the full structured course series covering the complete alphabet, numbers 0-9, daily vocabulary, questions, colors, family relations, and ISLRTC standards.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              onClick={() => (window.location.href = "/learn")}
+              className="px-5 py-3 rounded-2xl bg-gradient-to-r from-red-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white text-xs font-extrabold shadow-xl shadow-red-600/30 transition flex items-center gap-2"
+            >
+              <span>Watch Video Lessons</span>
+              <Award size={14} />
+            </button>
+          </div>
         </div>
       </div>
     </section>

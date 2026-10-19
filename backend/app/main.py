@@ -39,6 +39,10 @@ app.include_router(signs_router)
 app.include_router(sign_recognition_router)
 app.include_router(research_router)
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 @app.get("/")
 def root():
     return {

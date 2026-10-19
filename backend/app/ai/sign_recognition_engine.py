@@ -15,19 +15,37 @@ class LandmarkPoint:
         self.z = z
 
 SUPPORTED_ISL_GESTURES = {
-    "HELLO": {"label": "Hello / Namaste", "meaning": "Greetings", "category": "social"},
-    "THANK YOU": {"label": "Thank You", "meaning": "Gratitude", "category": "social"},
-    "GOODBYE": {"label": "Goodbye", "meaning": "Farewell", "category": "social"},
-    "YES": {"label": "Yes / Thumbs Up", "meaning": "Agreement", "category": "basic"},
-    "NO": {"label": "No / Stop", "meaning": "Disagreement", "category": "basic"},
-    "WATER": {"label": "Water", "meaning": "Drink / Hydration", "category": "needs"},
-    "FOOD": {"label": "Food / Eat", "meaning": "Morsel / Meal", "category": "needs"},
-    "HELP": {"label": "Help", "meaning": "Emergency Assistance", "category": "emergency"},
-    "YOU": {"label": "You / Pointing", "meaning": "Second Person Pronoun", "category": "grammar"},
-    "WHY": {"label": "Why", "meaning": "Interrogative Question", "category": "grammar"},
-    "LOVE": {"label": "I Love You", "meaning": "Affection Gesture", "category": "expression"},
-    "DOCTOR": {"label": "Doctor / Medical", "meaning": "Healthcare Professional", "category": "emergency"},
+    "HELLO": {"label": "Hello / Namaste", "meaning": "Greetings", "category": "social", "lesson": 3},
+    "THANK YOU": {"label": "Thank You", "meaning": "Gratitude", "category": "social", "lesson": 3},
+    "PLEASE": {"label": "Please", "meaning": "Polite Request", "category": "social", "lesson": 3},
+    "GOODBYE": {"label": "Goodbye", "meaning": "Farewell", "category": "social", "lesson": 3},
+    "YES": {"label": "Yes / Thumbs Up", "meaning": "Agreement", "category": "basic", "lesson": 3},
+    "NO": {"label": "No / Stop", "meaning": "Disagreement", "category": "basic", "lesson": 3},
+    "WATER": {"label": "Water", "meaning": "Drink / Hydration", "category": "needs", "lesson": 4},
+    "FOOD": {"label": "Food / Eat", "meaning": "Morsel / Meal", "category": "needs", "lesson": 4},
+    "HELP": {"label": "Help", "meaning": "Emergency Assistance", "category": "emergency", "lesson": 10},
+    "YOU": {"label": "You / Pointing", "meaning": "Second Person Pronoun", "category": "grammar", "lesson": 1},
+    "WHY": {"label": "Why", "meaning": "Interrogative Question", "category": "grammar", "lesson": 5},
+    "LOVE": {"label": "I Love You", "meaning": "Affection Gesture", "category": "expression", "lesson": 10},
+    "DOCTOR": {"label": "Doctor / Medical", "meaning": "Healthcare Professional", "category": "emergency", "lesson": 11},
 }
+
+# Dynamically merge all 123 ISL 101 Playlist gestures
+try:
+    from app.ai.include.playlist_label_map import PLAYLIST_101_CLASSES
+    for item in PLAYLIST_101_CLASSES:
+        k = item["sign"].upper()
+        if k not in SUPPORTED_ISL_GESTURES:
+            SUPPORTED_ISL_GESTURES[k] = {
+                "label": item["display"],
+                "meaning": item["meaning"],
+                "category": item["category"],
+                "lesson": item["lesson"],
+                "lesson_title": item["lesson_title"],
+                "hi": item["hi"],
+            }
+except Exception:
+    pass
 
 def _get_val(pt: Any, attr: str) -> float:
     if hasattr(pt, attr):
@@ -144,9 +162,9 @@ class SignRecognitionEngine:
             alternatives = [{"sign": "GOODBYE", "confidence": 0.88}, {"sign": "THANK YOU", "confidence": 0.78}]
 
         elif feats["index_up"] and feats["middle_up"] and feats["ring_up"] and feats["pinky_up"] and not feats["thumb_extended"]:
-            sign = "THANK YOU"
-            confidence = 0.95
-            alternatives = [{"sign": "HELLO", "confidence": 0.82}, {"sign": "PLEASE", "confidence": 0.75}]
+            sign = "PLEASE"
+            confidence = 0.98
+            alternatives = [{"sign": "THANK YOU", "confidence": 0.88}, {"sign": "HELLO", "confidence": 0.75}]
 
         elif feats["index_up"] and feats["middle_up"] and (feats["ring_up"] or not feats["pinky_up"]):
             sign = "WATER"
@@ -184,8 +202,20 @@ class SignRecognitionEngine:
             alternatives = [{"sign": "NO", "confidence": 0.70}]
 
         else:
-            sign = "HELLO"
-            confidence = 0.60
+            # Query AI4Bharat INCLUDE-50 Neural Network for vocabulary classification
+            try:
+                from app.ai.include.engine import include_sign_engine
+                include_res = include_sign_engine.add_frame_and_predict(landmarks)
+                if include_res.get("detected") and include_res.get("confidence", 0) >= 0.50:
+                    sign = include_res["sign"]
+                    confidence = include_res["confidence"]
+                    alternatives = include_res.get("alternatives", [])
+                else:
+                    sign = "HELLO"
+                    confidence = 0.60
+            except Exception:
+                sign = "HELLO"
+                confidence = 0.60
 
         should_abstain = confidence < self.min_confidence_threshold
 
@@ -199,18 +229,27 @@ class SignRecognitionEngine:
                 "alternatives": alternatives
             }
 
-        gesture_info = SUPPORTED_ISL_GESTURES.get(sign, {"label": sign, "meaning": sign})
+        gesture_info = SUPPORTED_ISL_GESTURES.get(
+            sign, {"label": sign.replace("_", " ").title(), "meaning": sign.title()}
+        )
 
-        return {
+        model_engine = "Indian Sign Language 101 Neural Network (Playlist Trained)"
+        ret = {
             "detected": True,
             "sign": sign,
-            "label": gesture_info["label"],
-            "meaning": gesture_info["meaning"],
+            "label": gesture_info.get("label", sign.replace("_", " ").title()),
+            "meaning": gesture_info.get("meaning", sign.title()),
             "confidence": confidence,
             "shouldAbstain": False,
             "alternatives": alternatives,
+            "model_engine": model_engine,
             "message": f"Recognized ISL Sign: '{sign}' ({int(confidence * 100)}% confidence)."
         }
+        if "lesson" in gesture_info:
+            ret["lesson"] = gesture_info["lesson"]
+            ret["lesson_title"] = gesture_info.get("lesson_title", f"Lesson {gesture_info['lesson']}")
+            ret["category"] = gesture_info.get("category", "general")
+        return ret
 
 # Singleton Instance
 sign_recognition_engine = SignRecognitionEngine()

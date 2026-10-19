@@ -1,0 +1,668 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 1360" width="1260" height="1360">
+    <defs>
+        <linearGradient id="posterBg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0F172A"/>
+            <stop offset="50%" stop-color="#1E1B4B"/>
+            <stop offset="100%" stop-color="#090D18"/>
+        </linearGradient>
+        <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#60A5FA"/>
+            <stop offset="50%" stop-color="#A78BFA"/>
+            <stop offset="100%" stop-color="#F472B6"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Poster Canvas Background -->
+    <rect width="1260" height="1360" fill="url(#posterBg)"/>
+    
+    <!-- Top Header Banner -->
+    <rect x="40" y="25" width="1180" height="75" rx="18" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+    <text x="630.0" y="60" font-family="'Nunito', 'Segoe UI', sans-serif" font-size="28" font-weight="900" fill="url(#headerGrad)" text-anchor="middle" letter-spacing="2">
+        EARLY YEARS - EVERYDAY THINGS WE DO
+    </text>
+    <text x="630.0" y="85" font-family="'Nunito', 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#94A3B8" text-anchor="middle">
+        16 FOUNDATIONAL EVERYDAY ACTION SIGNS • BSL / EYFS REFERENCE CHART WITH HINDI TRANSLATIONS
+    </text>
+
+    <!-- 16 Action Sign Grid -->
+    
+        <!-- Sign 1: Drink -->
+        <g transform="translate(40, 120)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#3B82F6"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Head & Face -->
+            <circle cx="150" cy="90" r="32" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <path d="M 138 85 Q 142 88 146 85" fill="none" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="140" cy="82" r="3" fill="#1E293B"/>
+            <circle cx="160" cy="82" r="3" fill="#1E293B"/>
+            <!-- Open smiling mouth ready to drink -->
+            <path d="M 144 100 Q 150 106 156 100 Z" fill="#EF4444" stroke="#1E293B" stroke-width="1.5"/>
+            <!-- Body -->
+            <path d="M 120 160 Q 150 135 180 160 L 175 220 L 125 220 Z" fill="#60A5FA" stroke="#1E293B" stroke-width="3"/>
+            <!-- Left arm resting -->
+            <path d="M 125 155 Q 110 185 115 210" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Right arm lifting cup to mouth -->
+            <path d="M 175 155 Q 200 170 180 120 Q 170 105 160 105" fill="none" stroke="#1E293B" stroke-width="8" stroke-linecap="round"/>
+            <!-- Cup / Tumbler in hand -->
+            <path d="M 158 96 L 172 96 L 168 116 L 162 116 Z" fill="#38BDF8" stroke="#0369A1" stroke-width="2.5"/>
+            <!-- Curved Movement Arrow lifting cup to mouth -->
+            <path d="M 195 145 C 205 125 185 110 172 102" fill="none" stroke="#2563EB" stroke-width="3" stroke-dasharray="4,2"/>
+            <polygon points="168,100 178,102 173,109" fill="#2563EB"/>
+            <circle cx="178" cy="95" r="4" fill="#3B82F6"/>
+            <!-- Water drop icon -->
+            <path d="M 195 90 C 195 85 190 80 190 77 C 190 80 185 85 185 90 C 185 93 187 95 190 95 C 193 95 195 93 195 90 Z" fill="#0EA5E9"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Drink</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#3B82F6" text-anchor="end">पीना</text>
+        </g>
+        
+
+        <!-- Sign 2: Eat -->
+        <g transform="translate(340, 120)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#10B981"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Head & Face -->
+            <circle cx="150" cy="90" r="32" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <path d="M 138 85 Q 142 88 146 85" fill="none" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="140" cy="82" r="3" fill="#1E293B"/>
+            <circle cx="160" cy="82" r="3" fill="#1E293B"/>
+            <path d="M 145 102 Q 150 108 155 102" fill="none" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Body -->
+            <path d="M 120 160 Q 150 135 180 160 L 175 220 L 125 220 Z" fill="#34D399" stroke="#1E293B" stroke-width="3"/>
+            <!-- Left hand holding small plate -->
+            <path d="M 125 155 Q 110 180 130 195" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <ellipse cx="135" cy="195" rx="16" ry="5" fill="#E2E8F0" stroke="#475569" stroke-width="2"/>
+            <!-- Right hand pinched fingers moving to mouth -->
+            <path d="M 175 155 Q 195 175 170 135 Q 160 115 154 106" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="152" cy="104" r="6" fill="#FBBF24" stroke="#1E293B" stroke-width="2"/>
+            <!-- Repeated tap motion arrow -->
+            <path d="M 175 130 Q 165 115 156 108" fill="none" stroke="#059669" stroke-width="3" stroke-dasharray="3,2"/>
+            <polygon points="152,106 158,113 162,106" fill="#059669"/>
+            <circle cx="168" cy="120" r="2.5" fill="#10B981"/>
+            <circle cx="162" cy="112" r="2.5" fill="#10B981"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Eat</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#10B981" text-anchor="end">खाना</text>
+        </g>
+        
+
+        <!-- Sign 3: Climb -->
+        <g transform="translate(640, 120)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#F59E0B"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Ladder rungs background -->
+            <line x1="85" y1="50" x2="85" y2="230" stroke="#CBD5E1" stroke-width="4"/>
+            <line x1="215" y1="50" x2="215" y2="230" stroke="#CBD5E1" stroke-width="4"/>
+            <line x1="85" y1="75" x2="215" y2="75" stroke="#94A3B8" stroke-width="3"/>
+            <line x1="85" y1="120" x2="215" y2="120" stroke="#94A3B8" stroke-width="3"/>
+            <line x1="85" y1="165" x2="215" y2="165" stroke="#94A3B8" stroke-width="3"/>
+            <line x1="85" y1="210" x2="215" y2="210" stroke="#94A3B8" stroke-width="3"/>
+            <!-- Character Head looking up -->
+            <circle cx="150" cy="100" r="28" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <circle cx="143" cy="94" r="3" fill="#1E293B"/>
+            <circle cx="157" cy="94" r="3" fill="#1E293B"/>
+            <path d="M 145 108 Q 150 114 155 108" fill="none" stroke="#1E293B" stroke-width="2.5"/>
+            <!-- Body tilted forward -->
+            <path d="M 130 145 L 170 145 L 160 200 L 140 200 Z" fill="#FBBF24" stroke="#1E293B" stroke-width="3"/>
+            <!-- Left hand reaching high to grasp rung -->
+            <path d="M 135 145 Q 115 110 110 75" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="110" cy="75" r="7" fill="#FCD34D" stroke="#1E293B" stroke-width="2"/>
+            <!-- Right hand lower grip -->
+            <path d="M 165 145 Q 185 135 190 120" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="190" cy="120" r="7" fill="#FCD34D" stroke="#1E293B" stroke-width="2"/>
+            <!-- Climbing upward motion arrows -->
+            <path d="M 100 110 L 100 85" fill="none" stroke="#D97706" stroke-width="3.5"/>
+            <polygon points="100,78 95,88 105,88" fill="#D97706"/>
+            <path d="M 200 150 L 200 128" fill="none" stroke="#D97706" stroke-width="3.5"/>
+            <polygon points="200,122 195,132 205,132" fill="#D97706"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Climb</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#F59E0B" text-anchor="end">चढ़ना</text>
+        </g>
+        
+
+        <!-- Sign 4: Run -->
+        <g transform="translate(940, 120)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#FEF2F2" stroke="#EF4444" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#EF4444"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">4</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Motion speed lines -->
+            <line x1="60" y1="120" x2="95" y2="120" stroke="#FCA5A5" stroke-width="3" stroke-linecap="round"/>
+            <line x1="50" y1="140" x2="100" y2="140" stroke="#F87171" stroke-width="4" stroke-linecap="round"/>
+            <line x1="65" y1="160" x2="90" y2="160" stroke="#FCA5A5" stroke-width="3" stroke-linecap="round"/>
+            <!-- Head leaning forward -->
+            <circle cx="165" cy="85" r="28" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <circle cx="172" cy="80" r="3" fill="#1E293B"/>
+            <path d="M 168 94 Q 175 97 180 93" fill="none" stroke="#1E293B" stroke-width="2.5"/>
+            <!-- Body leaning dynamically forward -->
+            <path d="M 140 125 L 180 115 L 165 175 L 130 170 Z" fill="#F87171" stroke="#1E293B" stroke-width="3"/>
+            <!-- Left arm back -->
+            <path d="M 145 125 Q 120 120 115 145" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="115" cy="145" r="6" fill="#FCD34D" stroke="#1E293B" stroke-width="2"/>
+            <!-- Right arm forward bent 90 deg -->
+            <path d="M 175 120 Q 200 135 210 115" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="210" cy="115" r="6" fill="#FCD34D" stroke="#1E293B" stroke-width="2"/>
+            <!-- Legs running -->
+            <path d="M 140 170 Q 120 190 100 215" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 160 175 Q 190 195 205 220" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Fast alternating arrows -->
+            <path d="M 185 100 Q 205 95 215 105" fill="none" stroke="#DC2626" stroke-width="2.5"/>
+            <polygon points="217,108 214,101 220,103" fill="#DC2626"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Run</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#EF4444" text-anchor="end">दौड़ना</text>
+        </g>
+        
+
+        <!-- Sign 5: Fall -->
+        <g transform="translate(40, 420)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#8B5CF6"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">5</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Ground baseline -->
+            <line x1="70" y1="215" x2="230" y2="215" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
+            <!-- Character tilting back/falling -->
+            <circle cx="120" cy="95" r="28" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <!-- Surprised eyes 'O' -->
+            <circle cx="115" cy="90" r="3.5" fill="#1E293B"/>
+            <circle cx="128" cy="90" r="3.5" fill="#1E293B"/>
+            <circle cx="122" cy="103" r="5" fill="#EF4444" stroke="#1E293B" stroke-width="1.5"/>
+            <!-- Body toppling backward -->
+            <path d="M 130 120 L 165 145 L 140 190 L 110 160 Z" fill="#A78BFA" stroke="#1E293B" stroke-width="3"/>
+            <!-- Arms flailing in air -->
+            <path d="M 125 130 Q 95 110 90 90" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 150 140 Q 180 115 190 95" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Legs slipping forward -->
+            <path d="M 140 190 Q 170 205 200 205" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Tumbling downward arc arrow -->
+            <path d="M 165 80 C 195 85 210 130 195 170" fill="none" stroke="#7C3AED" stroke-width="3.5" stroke-dasharray="4,2"/>
+            <polygon points="190,175 198,168 202,174" fill="#7C3AED"/>
+            <circle cx="160" cy="78" r="4" fill="#8B5CF6"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Fall</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#8B5CF6" text-anchor="end">गिरना</text>
+        </g>
+        
+
+        <!-- Sign 6: Give -->
+        <g transform="translate(340, 420)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#ECFEFF" stroke="#06B6D4" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#06B6D4"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">6</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Head & Smile -->
+            <circle cx="150" cy="85" r="30" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <circle cx="142" cy="78" r="3" fill="#1E293B"/>
+            <circle cx="158" cy="78" r="3" fill="#1E293B"/>
+            <path d="M 144 95 Q 150 102 156 95" fill="none" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Body -->
+            <path d="M 125 145 Q 150 130 175 145 L 170 215 L 130 215 Z" fill="#22D3EE" stroke="#1E293B" stroke-width="3"/>
+            <!-- Both hands extending outward with open cupped palms -->
+            <path d="M 130 150 Q 140 175 175 175" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 170 150 Q 180 175 215 175" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Cupped flat hands -->
+            <path d="M 175 175 Q 190 172 192 165" fill="none" stroke="#FCD34D" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 215 175 Q 230 172 232 165" fill="none" stroke="#FCD34D" stroke-width="6" stroke-linecap="round"/>
+            <!-- Gift / object being given -->
+            <rect x="188" y="145" width="24" height="20" rx="3" fill="#F43F5E" stroke="#1E293B" stroke-width="2"/>
+            <line x1="200" y1="145" x2="200" y2="165" stroke="#FEF08A" stroke-width="2.5"/>
+            <!-- Outward presenting arrows -->
+            <path d="M 145 130 L 195 130" fill="none" stroke="#0891B2" stroke-width="3.5"/>
+            <polygon points="202,130 192,125 192,135" fill="#0891B2"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Give</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#06B6D4" text-anchor="end">देना</text>
+        </g>
+        
+
+        <!-- Sign 7: Push -->
+        <g transform="translate(640, 420)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#FDF2F8" stroke="#EC4899" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#EC4899"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">7</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Heavy box / barrier being pushed -->
+            <rect x="205" y="90" width="35" height="110" rx="4" fill="#CBD5E1" stroke="#475569" stroke-width="3"/>
+            <line x1="205" y1="125" x2="240" y2="125" stroke="#94A3B8" stroke-width="2"/>
+            <line x1="205" y1="165" x2="240" y2="165" stroke="#94A3B8" stroke-width="2"/>
+            <!-- Head bracing forward -->
+            <circle cx="120" cy="90" r="28" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <path d="M 112 85 L 118 85" stroke="#1E293B" stroke-width="2.5"/>
+            <path d="M 124 85 L 130 85" stroke="#1E293B" stroke-width="2.5"/>
+            <path d="M 115 100 Q 122 96 128 100" fill="none" stroke="#1E293B" stroke-width="2.5"/>
+            <!-- Torso leaning forward with strength -->
+            <path d="M 100 135 L 140 120 L 130 185 L 90 175 Z" fill="#F472B6" stroke="#1E293B" stroke-width="3"/>
+            <!-- Both arms extended straight with flat vertical palms pressing wall -->
+            <path d="M 115 130 L 205 130" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 125 145 L 205 145" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Flat palm vertical stops -->
+            <line x1="205" y1="122" x2="205" y2="138" stroke="#FCD34D" stroke-width="6" stroke-linecap="round"/>
+            <line x1="205" y1="137" x2="205" y2="153" stroke="#FCD34D" stroke-width="6" stroke-linecap="round"/>
+            <!-- Bold force arrows pushing forward -->
+            <path d="M 135 105 L 175 105" fill="none" stroke="#DB2777" stroke-width="4"/>
+            <polygon points="183,105 173,100 173,110" fill="#DB2777"/>
+            <path d="M 135 168 L 175 168" fill="none" stroke="#DB2777" stroke-width="4"/>
+            <polygon points="183,168 173,163 173,173" fill="#DB2777"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Push</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#EC4899" text-anchor="end">धकेलना</text>
+        </g>
+        
+
+        <!-- Sign 8: Cry -->
+        <g transform="translate(940, 420)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#3B82F6"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">8</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Head & Sad Expression -->
+            <circle cx="150" cy="95" r="34" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <!-- Sad downturned eyebrows -->
+            <path d="M 136 78 Q 142 84 146 86" fill="none" stroke="#1E293B" stroke-width="2.5"/>
+            <path d="M 164 78 Q 158 84 154 86" fill="none" stroke="#1E293B" stroke-width="2.5"/>
+            <!-- Closed crying eyes -->
+            <path d="M 135 88 Q 142 84 147 88" fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+            <path d="M 153 88 Q 158 84 165 88" fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+            <!-- Open sad mouth -->
+            <path d="M 142 112 Q 150 104 158 112 Z" fill="#EF4444" stroke="#1E293B" stroke-width="2"/>
+            <!-- Body -->
+            <path d="M 125 165 Q 150 145 175 165 L 170 220 L 130 220 Z" fill="#93C5FD" stroke="#1E293B" stroke-width="3"/>
+            <!-- Both hands raised with index fingers tracing tears down cheeks -->
+            <path d="M 125 165 Q 110 140 136 102" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 175 165 Q 190 140 164 102" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Index fingers on cheeks -->
+            <circle cx="137" cy="100" r="4.5" fill="#FCD34D" stroke="#1E293B" stroke-width="1.5"/>
+            <circle cx="163" cy="100" r="4.5" fill="#FCD34D" stroke="#1E293B" stroke-width="1.5"/>
+            <!-- Falling teardrops and downward path arrows -->
+            <path d="M 137 104 L 137 130" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-dasharray="3,2"/>
+            <polygon points="137,135 133,127 141,127" fill="#2563EB"/>
+            <path d="M 163 104 L 163 130" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-dasharray="3,2"/>
+            <polygon points="163,135 159,127 167,127" fill="#2563EB"/>
+            <!-- Teardrops -->
+            <ellipse cx="137" cy="122" rx="3" ry="5" fill="#60A5FA"/>
+            <ellipse cx="163" cy="122" rx="3" ry="5" fill="#60A5FA"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Cry</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#3B82F6" text-anchor="end">रोना</text>
+        </g>
+        
+
+        <!-- Sign 9: Sleep -->
+        <g transform="translate(40, 720)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#EEF2FF" stroke="#6366F1" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#6366F1"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">9</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Tilted sleeping head resting on hands -->
+            <g transform="rotate(18, 145, 95)">
+                <circle cx="145" cy="95" r="32" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+                <!-- Peaceful closed curved eyes -->
+                <path d="M 133 93 Q 140 98 147 93" fill="none" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 153 93 Q 160 98 167 93" fill="none" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 145 108 Q 150 113 155 108" fill="none" stroke="#1E293B" stroke-width="2" stroke-linecap="round"/>
+            </g>
+            <!-- Body relaxed -->
+            <path d="M 115 165 Q 145 145 175 165 L 170 220 L 120 220 Z" fill="#818CF8" stroke="#1E293B" stroke-width="3"/>
+            <!-- Both hands pressed together flat under tilted right cheek -->
+            <path d="M 165 170 Q 185 150 185 125" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 135 170 Q 170 155 180 130" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Hands pillow shape -->
+            <ellipse cx="188" cy="120" rx="14" ry="7" transform="rotate(30, 188, 120)" fill="#FDE68A" stroke="#1E293B" stroke-width="2"/>
+            <!-- Floating Zzz -->
+            <text x="70" y="80" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#6366F1">Z</text>
+            <text x="88" y="65" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#818CF8">z</text>
+            <text x="102" y="52" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#A5B4FC">z</text>
+            <!-- Gentle head tilt arrow -->
+            <path d="M 125 55 Q 150 48 165 62" fill="none" stroke="#4F46E5" stroke-width="2.5"/>
+            <polygon points="168,66 165,58 159,63" fill="#4F46E5"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Sleep</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#6366F1" text-anchor="end">सोना</text>
+        </g>
+        
+
+        <!-- Sign 10: Sit Down -->
+        <g transform="translate(340, 720)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#F0FDFA" stroke="#14B8A6" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#14B8A6"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">10</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Chair outline -->
+            <path d="M 180 130 L 180 195 L 205 195 M 180 170 L 155 170 L 155 220 M 180 195 L 180 220" fill="none" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
+            <!-- Head -->
+            <circle cx="140" cy="85" r="26" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <circle cx="134" cy="80" r="2.5" fill="#1E293B"/>
+            <circle cx="146" cy="80" r="2.5" fill="#1E293B"/>
+            <path d="M 136 94 Q 140 98 144 94" fill="none" stroke="#1E293B" stroke-width="2"/>
+            <!-- Body seated at right angle -->
+            <path d="M 130 120 L 155 120 L 155 170 L 125 170 Z" fill="#2DD4BF" stroke="#1E293B" stroke-width="3"/>
+            <!-- Legs bent at 90 deg sitting on chair seat -->
+            <path d="M 140 170 L 175 170 L 175 215" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Both hands palms down moving downward into lap -->
+            <path d="M 130 125 Q 115 145 120 165" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <line x1="110" y1="165" x2="130" y2="165" stroke="#FCD34D" stroke-width="5" stroke-linecap="round"/>
+            <!-- Two bold downward settling arrows -->
+            <path d="M 95 105 L 95 145" fill="none" stroke="#0D9488" stroke-width="3.5"/>
+            <polygon points="95,153 90,143 100,143" fill="#0D9488"/>
+            <path d="M 80 115 L 80 145" fill="none" stroke="#0D9488" stroke-width="2.5" stroke-dasharray="3,2"/>
+            <polygon points="80,150 77,143 83,143" fill="#0D9488"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Sit Down</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#14B8A6" text-anchor="end">बैठना</text>
+        </g>
+        
+
+        <!-- Sign 11: Kick -->
+        <g transform="translate(640, 720)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#FFF7ED" stroke="#F97316" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#F97316"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">11</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Soccer ball flying -->
+            <circle cx="215" cy="130" r="14" fill="#FFFFFF" stroke="#1E293B" stroke-width="2.5"/>
+            <polygon points="215,124 220,128 218,134 212,134 210,128" fill="#1E293B"/>
+            <line x1="225" y1="120" x2="235" y2="115" stroke="#FB923C" stroke-width="2.5"/>
+            <line x1="225" y1="135" x2="238" y2="135" stroke="#FB923C" stroke-width="2.5"/>
+            <!-- Head & determined look -->
+            <circle cx="125" cy="80" r="26" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <circle cx="132" cy="76" r="2.5" fill="#1E293B"/>
+            <path d="M 126 88 Q 132 92 138 88" fill="none" stroke="#1E293B" stroke-width="2"/>
+            <!-- Body balanced backward on left standing leg -->
+            <path d="M 110 115 L 145 110 L 135 165 L 105 165 Z" fill="#FB923C" stroke="#1E293B" stroke-width="3"/>
+            <!-- Arms balancing -->
+            <path d="M 115 120 Q 95 125 85 140" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 140 115 Q 165 110 175 125" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Left standing leg firmly on ground -->
+            <path d="M 115 165 L 115 215" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Right leg extended straight up kicking ball -->
+            <path d="M 135 165 Q 165 155 200 140" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Arc arrow showing kicking foot trajectory -->
+            <path d="M 145 195 C 180 195 195 170 200 150" fill="none" stroke="#EA580C" stroke-width="3.5"/>
+            <polygon points="202,143 194,150 203,153" fill="#EA580C"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Kick</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#F97316" text-anchor="end">लात मारना</text>
+        </g>
+        
+
+        <!-- Sign 12: Wait -->
+        <g transform="translate(940, 720)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#F8FAFC" stroke="#64748B" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#64748B"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">12</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Wall clock icon in corner showing passage of time -->
+            <circle cx="65" cy="65" r="16" fill="#F1F5F9" stroke="#64748B" stroke-width="2.5"/>
+            <line x1="65" y1="65" x2="65" y2="55" stroke="#1E293B" stroke-width="2"/>
+            <line x1="65" y1="65" x2="73" y2="65" stroke="#1E293B" stroke-width="2"/>
+            <!-- Head in calm patient expression -->
+            <circle cx="150" cy="85" r="30" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <circle cx="143" cy="78" r="2.5" fill="#1E293B"/>
+            <circle cx="157" cy="78" r="2.5" fill="#1E293B"/>
+            <line x1="145" y1="94" x2="155" y2="94" stroke="#1E293B" stroke-width="2" stroke-linecap="round"/>
+            <!-- Body upright and still -->
+            <path d="M 125 140 Q 150 130 175 140 L 170 215 L 130 215 Z" fill="#94A3B8" stroke="#1E293B" stroke-width="3"/>
+            <!-- Both hands held out at chest level, palms facing downward / slightly up, patient hold -->
+            <path d="M 130 145 Q 120 175 140 180" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 170 145 Q 180 175 160 180" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Hands held stationary -->
+            <line x1="130" y1="180" x2="150" y2="180" stroke="#FCD34D" stroke-width="6" stroke-linecap="round"/>
+            <line x1="150" y1="180" x2="170" y2="180" stroke="#FCD34D" stroke-width="6" stroke-linecap="round"/>
+            <!-- Gentle hold / pause bars -->
+            <line x1="195" y1="160" x2="195" y2="185" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+            <line x1="205" y1="160" x2="205" y2="185" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+            <text x="190" y="202" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#475569">PAUSE</text>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Wait</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#64748B" text-anchor="end">इंतज़ार करना</text>
+        </g>
+        
+
+        <!-- Sign 13: Walk -->
+        <g transform="translate(40, 1020)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#10B981"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">13</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Footprint dots along path -->
+            <ellipse cx="75" cy="215" rx="5" ry="3" fill="#A7F3D0"/>
+            <ellipse cx="105" cy="210" rx="5" ry="3" fill="#A7F3D0"/>
+            <ellipse cx="135" cy="215" rx="5" ry="3" fill="#6EE7B7"/>
+            <ellipse cx="165" cy="210" rx="5" ry="3" fill="#34D399"/>
+            <ellipse cx="195" cy="215" rx="5" ry="3" fill="#10B981"/>
+            <!-- Head upright -->
+            <circle cx="140" cy="80" r="28" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <circle cx="148" cy="75" r="3" fill="#1E293B"/>
+            <path d="M 144 88 Q 150 92 155 88" fill="none" stroke="#1E293B" stroke-width="2"/>
+            <!-- Body upright walking posture -->
+            <path d="M 125 120 L 160 115 L 150 170 L 120 170 Z" fill="#34D399" stroke="#1E293B" stroke-width="3"/>
+            <!-- Arms swinging gently in natural gait -->
+            <path d="M 128 122 Q 115 140 108 155" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 155 118 Q 170 135 180 150" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Legs in split stride -->
+            <path d="M 130 170 L 115 215" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 145 170 L 175 210" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Steady forward walking arrow -->
+            <path d="M 175 160 L 210 160" fill="none" stroke="#059669" stroke-width="3.5"/>
+            <polygon points="217,160 207,155 207,165" fill="#059669"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Walk</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#10B981" text-anchor="end">चलना</text>
+        </g>
+        
+
+        <!-- Sign 14: Wash -->
+        <g transform="translate(340, 1020)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#F0F9FF" stroke="#0284C7" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#0284C7"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">14</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Water tap / bubbles -->
+            <circle cx="180" cy="130" r="6" fill="#BAE6FD" stroke="#0284C7" stroke-width="1.5"/>
+            <circle cx="195" cy="145" r="4" fill="#BAE6FD" stroke="#0284C7" stroke-width="1.5"/>
+            <circle cx="110" cy="140" r="5" fill="#BAE6FD" stroke="#0284C7" stroke-width="1.5"/>
+            <circle cx="105" cy="160" r="7" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.5"/>
+            <!-- Head looking down at hands with smile -->
+            <circle cx="150" cy="85" r="30" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <path d="M 142 80 Q 146 84 150 84" fill="none" stroke="#1E293B" stroke-width="2"/>
+            <path d="M 154 80 Q 158 84 162 84" fill="none" stroke="#1E293B" stroke-width="2"/>
+            <path d="M 146 96 Q 152 102 158 96" fill="none" stroke="#1E293B" stroke-width="2"/>
+            <!-- Body -->
+            <path d="M 125 140 Q 150 130 175 140 L 170 215 L 130 215 Z" fill="#38BDF8" stroke="#1E293B" stroke-width="3"/>
+            <!-- Arms brought together in front of chest -->
+            <path d="M 128 142 Q 135 170 145 170" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 172 142 Q 165 170 155 170" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Hands rubbing together in center -->
+            <ellipse cx="145" cy="170" rx="9" ry="7" fill="#FCD34D" stroke="#1E293B" stroke-width="2"/>
+            <ellipse cx="155" cy="170" rx="9" ry="7" fill="#FCD34D" stroke="#1E293B" stroke-width="2"/>
+            <!-- Circular circular rubbing arrows -->
+            <path d="M 140 155 C 130 162 132 178 142 182" fill="none" stroke="#0369A1" stroke-width="3"/>
+            <polygon points="144,183 138,177 136,185" fill="#0369A1"/>
+            <path d="M 160 185 C 170 178 168 162 158 158" fill="none" stroke="#0369A1" stroke-width="3"/>
+            <polygon points="156,157 162,163 164,155" fill="#0369A1"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Wash</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#0284C7" text-anchor="end">धोना</text>
+        </g>
+        
+
+        <!-- Sign 15: Look -->
+        <g transform="translate(640, 1020)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#8B5CF6"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">15</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Big attentive eye in corner -->
+            <path d="M 200 70 Q 215 58 230 70 Q 215 82 200 70 Z" fill="#FFFFFF" stroke="#6D28D9" stroke-width="2"/>
+            <circle cx="215" cy="70" r="5" fill="#6D28D9"/>
+            <circle cx="216" cy="69" r="1.5" fill="#FFFFFF"/>
+            <!-- Head facing right attentively -->
+            <circle cx="140" cy="85" r="30" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <!-- Wide open looking eyes -->
+            <circle cx="142" cy="78" r="4" fill="#1E293B"/>
+            <circle cx="156" cy="78" r="4" fill="#1E293B"/>
+            <circle cx="143" cy="76" r="1.5" fill="#FFFFFF"/>
+            <circle cx="157" cy="76" r="1.5" fill="#FFFFFF"/>
+            <path d="M 144 95 Q 150 100 156 95" fill="none" stroke="#1E293B" stroke-width="2"/>
+            <!-- Body -->
+            <path d="M 120 145 Q 145 135 170 145 L 165 215 L 125 215 Z" fill="#A78BFA" stroke="#1E293B" stroke-width="3"/>
+            <!-- Left arm resting -->
+            <path d="M 125 150 Q 110 180 115 205" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Right hand raised: 'V' handshape (index & middle) pointing from eyes outward -->
+            <path d="M 165 145 Q 185 130 175 95" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Two fingers pointing straight forward from eye level -->
+            <line x1="172" y1="90" x2="200" y2="85" stroke="#FCD34D" stroke-width="5" stroke-linecap="round"/>
+            <line x1="172" y1="96" x2="200" y2="93" stroke="#FCD34D" stroke-width="5" stroke-linecap="round"/>
+            <!-- Sight lines beaming outward -->
+            <line x1="205" y1="88" x2="235" y2="88" stroke="#7C3AED" stroke-width="3" stroke-dasharray="4,3"/>
+            <polygon points="242,88 232,83 232,93" fill="#7C3AED"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Look</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#8B5CF6" text-anchor="end">देखना</text>
+        </g>
+        
+
+        <!-- Sign 16: Jump -->
+        <g transform="translate(940, 1020)">
+            <rect x="0" y="0" width="280" height="280" rx="18" fill="#FDF2F8" stroke="#EC4899" stroke-width="2.5"/>
+            <!-- Number badge -->
+            <circle cx="28" cy="28" r="15" fill="#EC4899"/>
+            <text x="28" y="33" font-family="'Nunito', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF" text-anchor="middle">16</text>
+            <!-- Illustration -->
+            <g transform="translate(-10.0, 0)">
+                
+            <!-- Ground baseline -->
+            <line x1="60" y1="220" x2="240" y2="220" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
+            <!-- Spring / dust puffs on ground -->
+            <path d="M 130 220 Q 135 210 140 220 Q 145 210 150 220 Q 155 210 160 220" fill="none" stroke="#F472B6" stroke-width="3"/>
+            <!-- Character leaping high in the air! -->
+            <circle cx="150" cy="65" r="28" fill="#FCD34D" stroke="#1E293B" stroke-width="3"/>
+            <!-- Excited laughing expression -->
+            <path d="M 140 58 Q 145 54 150 58" fill="none" stroke="#1E293B" stroke-width="2.5"/>
+            <path d="M 152 58 Q 157 54 162 58" fill="none" stroke="#1E293B" stroke-width="2.5"/>
+            <path d="M 144 72 Q 151 82 158 72 Z" fill="#EF4444" stroke="#1E293B" stroke-width="1.5"/>
+            <!-- Body high off ground -->
+            <path d="M 130 100 Q 150 90 170 100 L 165 150 L 135 150 Z" fill="#F472B6" stroke="#1E293B" stroke-width="3"/>
+            <!-- Arms thrown up joyfully -->
+            <path d="M 135 105 Q 110 85 105 60" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 165 105 Q 190 85 195 60" fill="none" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+            <!-- Legs tucked up in bent jumping pose -->
+            <path d="M 140 150 Q 120 165 130 185" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 160 150 Q 180 165 170 185" fill="none" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/>
+            <!-- Bold upward jumping spring arrow -->
+            <path d="M 80 180 L 80 120" fill="none" stroke="#DB2777" stroke-width="4"/>
+            <polygon points="80,110 73,123 87,123" fill="#DB2777"/>
+            <path d="M 220 180 L 220 120" fill="none" stroke="#DB2777" stroke-width="4"/>
+            <polygon points="220,110 213,123 227,123" fill="#DB2777"/>
+        
+            </g>
+            <!-- Text bar -->
+            <rect x="12" y="230" width="256" height="40" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+            <text x="24" y="256" font-family="'Nunito', sans-serif" font-size="17" font-weight="900" fill="#0F172A">Jump</text>
+            <text x="256" y="256" font-family="'Nunito', sans-serif" font-size="15" font-weight="700" fill="#EC4899" text-anchor="end">कूदना</text>
+        </g>
+        
+
+    <!-- Footer Banner -->
+    <text x="630.0" y="1338" font-family="'Nunito', 'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#64748B" text-anchor="middle">
+        Bharat Sign AI Interactive Early Years Education • Verified BSL / EYFS Action Verbs with ISL &amp; ASL Cross-References
+    </text>
+</svg>

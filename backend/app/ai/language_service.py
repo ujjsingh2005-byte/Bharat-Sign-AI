@@ -274,9 +274,9 @@ class LanguageProcessingService:
         missing_words = vocab_recovery.get("unsupported_tokens", [])
         vocabulary_coverage_rate = int(vocab_recovery.get("coverage_ratio", 1.0) * 100)
 
-        # Step 6: Map Gloss to Verified 3D Signs & Fingerspelling sequence
-        # Note: We DO NOT translate directly to arbitrary avatar movements. We map via verified ISL Gloss dictionary.
-        signs = get_signs(gloss_tokens)
+        # Step 6: Map Gloss to Verified 3D Signs & Whole-Word Sequence (strictly word-by-word)
+        # Note: We maintain strict word-by-word sentence integrity without splitting words into characters.
+        signs = get_signs(gloss_tokens, allow_fingerspelling_fallback=False)
 
         # Step 7: Construct response preserving selected language context
         return {

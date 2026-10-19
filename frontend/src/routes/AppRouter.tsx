@@ -9,6 +9,7 @@ import Contact from "../pages/Contact/Contact";
 import History from "../pages/History/History";
 import VoiceToSign from "../pages/VoiceToSign/VoiceToSign";
 import SignToText from "../pages/SignToText/SignToText";
+import SignLanguageLearningPage from "../pages/Learn/SignLanguageLearningPage";
 
 export default function AppRouter() {
   return (
@@ -20,6 +21,7 @@ export default function AppRouter() {
       <Route path="/history" element={<History />} />
       <Route path="/voice-to-sign" element={<VoiceToSign />} />
       <Route path="/sign-to-text" element={<SignToText />} />
+      <Route path="/learn" element={<SignLanguageLearningPage />} />
 
       {/* Authentication */}
       <Route path="/login" element={<Login />} />

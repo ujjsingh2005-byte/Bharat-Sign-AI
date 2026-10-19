@@ -8,10 +8,27 @@ import UniversalSemanticPanel from "../../components/dashboard/UniversalSemantic
 import LiveCommunicationStudio from "../../components/dashboard/LiveCommunicationStudio";
 import ISLDictionary from "../../components/dashboard/ISLDictionary";
 import ResearchStudio from "../../components/research/ResearchStudio";
-import { Sparkles, ArrowRight, ShieldCheck, Cpu, Eye, Radio } from "lucide-react";
+import LearnSignLanguage from "../../components/dashboard/LearnSignLanguage";
+import MotionValidationStudio from "../../components/dashboard/MotionValidationStudio";
+import { processLocalSemanticPipeline } from "../../utils/localSemanticPipeline";
+import {
+  Sparkles,
+  ArrowRight,
+  ShieldCheck,
+  Cpu,
+  Eye,
+  Radio,
+  Search,
+  Zap,
+  CheckCircle2,
+  Activity,
+  GraduationCap,
+} from "lucide-react";
 
 const TAB_BACKGROUNDS: Record<DashboardTab, string> = {
   all: "bg-[#050816]",
+  learn_sign_language: "bg-[#070D1F]",
+  motion_validation: "bg-[#0A071E]",
   research: "bg-[#090D18]",
   voice_to_sign: "bg-[#061225]",
   semantic_to_sign: "bg-[#120A22]",
@@ -23,10 +40,27 @@ const TAB_BACKGROUNDS: Record<DashboardTab, string> = {
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<DashboardTab>("all");
   const [activeSignSequence, setActiveSignSequence] = useState<SignItem[]>([]);
+  const [quickSearchWord, setQuickSearchWord] = useState("");
 
   const handleSetSignSequence = (signs: SignItem[]) => {
     if (signs && signs.length > 0) {
       setActiveSignSequence(signs);
+    }
+  };
+
+  const handleRunSampleSentence = (sample: string) => {
+    const res = processLocalSemanticPipeline(sample);
+    if (res && res.signs && res.signs.length > 0) {
+      handleSetSignSequence(res.signs);
+    }
+  };
+
+  const handleQuickPreviewSign = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!quickSearchWord.trim()) return;
+    const res = processLocalSemanticPipeline(quickSearchWord);
+    if (res && res.signs && res.signs.length > 0) {
+      handleSetSignSequence(res.signs);
     }
   };
 
@@ -66,6 +100,13 @@ export default function Dashboard() {
 
                   <div className="mt-5 flex flex-wrap gap-2">
                     <button
+                      onClick={() => setActiveTab("learn_sign_language")}
+                      className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center gap-1.5"
+                    >
+                      <GraduationCap size={14} />
+                      <span>Learn Sign Language (Chart Signs)</span>
+                    </button>
+                    <button
                       onClick={() => setActiveTab("live_studio")}
                       className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/30 flex items-center gap-1.5"
                     >
@@ -79,6 +120,132 @@ export default function Dashboard() {
                       Try Bhojpuri & Regional Translation
                     </button>
                   </div>
+                </div>
+              </div>
+
+              {/* Module 0: Real-Time System Innovation & Engine Telemetry */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+                <div className="p-4 rounded-2xl bg-slate-900/90 border border-blue-500/30 flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-blue-500/20 text-blue-400">
+                    <Cpu size={20} />
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">
+                      VISION ENGINE
+                    </span>
+                    <span className="text-xs font-extrabold text-white">AI4Bharat INCLUDE</span>
+                    <span className="text-[10px] text-blue-400 block font-mono">104 Videos • Bi-LSTM</span>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/30 flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
+                    <CheckCircle2 size={20} />
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">
+                      SENTENCE PARSER
+                    </span>
+                    <span className="text-xs font-extrabold text-white">Word-by-Word</span>
+                    <span className="text-[10px] text-emerald-400 block font-mono">0% Letter Fragmentation</span>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-900/90 border border-purple-500/30 flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-purple-500/20 text-purple-400">
+                    <Sparkles size={20} />
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">
+                      3D SKELETAL RIG
+                    </span>
+                    <span className="text-xs font-extrabold text-white">67-Joint Avatar</span>
+                    <span className="text-[10px] text-purple-400 block font-mono">Three.js / WebGL</span>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-900/90 border border-amber-500/30 flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400">
+                    <Activity size={20} />
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">
+                      LINGUISTICS
+                    </span>
+                    <span className="text-xs font-extrabold text-white">14+ Languages</span>
+                    <span className="text-[10px] text-amber-400 block font-mono">SOV Grammar + Hinglish</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Module 0.5: Quick Sentence Showcase & Sign Inspector Bar */}
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-5 space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <Zap size={18} className="text-amber-400" />
+                    <h3 className="text-sm font-extrabold text-white">
+                      Instant Sentence Showcase (Word-by-Word ISL Demonstration)
+                    </h3>
+                  </div>
+
+                  {/* Quick Search / Sign Preview Form */}
+                  <form onSubmit={handleQuickPreviewSign} className="flex items-center gap-2">
+                    <div className="relative">
+                      <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                      <input
+                        type="text"
+                        value={quickSearchWord}
+                        onChange={(e) => setQuickSearchWord(e.target.value)}
+                        placeholder="Inspect any word or letter..."
+                        className="pl-8 pr-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 w-44 sm:w-56"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition flex items-center gap-1"
+                    >
+                      <span>Preview</span>
+                    </button>
+                  </form>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs text-slate-400 font-medium mr-1">Try Preset Sentences:</span>
+                  <button
+                    onClick={() => handleRunSampleSentence("Where is the hospital?")}
+                    className="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold transition hover:border-blue-500 flex items-center gap-1.5"
+                  >
+                    <span>🏥</span>
+                    <span>"Where is the hospital?"</span>
+                  </button>
+                  <button
+                    onClick={() => handleRunSampleSentence("My friend is going to school in India")}
+                    className="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold transition hover:border-emerald-500 flex items-center gap-1.5"
+                  >
+                    <span>🎓</span>
+                    <span>"My friend is going to school in India"</span>
+                  </button>
+                  <button
+                    onClick={() => handleRunSampleSentence("I want to learn Indian Sign Language")}
+                    className="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold transition hover:border-purple-500 flex items-center gap-1.5"
+                  >
+                    <span>🌟</span>
+                    <span>"I want to learn sign language"</span>
+                  </button>
+                  <button
+                    onClick={() => handleRunSampleSentence("Mujhe paani aur khana chahiye")}
+                    className="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold transition hover:border-amber-500 flex items-center gap-1.5"
+                  >
+                    <span>🇮🇳</span>
+                    <span>"Mujhe paani chahiye" (Hinglish)</span>
+                  </button>
+                  <button
+                    onClick={() => handleRunSampleSentence("A B C D E")}
+                    className="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold transition hover:border-cyan-500 flex items-center gap-1.5"
+                  >
+                    <span>🔤</span>
+                    <span>"A B C D E" (Fingerspelling)</span>
+                  </button>
                 </div>
               </div>
 
@@ -230,6 +397,24 @@ export default function Dashboard() {
               <div className="pt-4">
                 <CameraSignPanel />
               </div>
+            </div>
+          )}
+
+          {/* ========================================================= */}
+          {/* TAB: LEARN SIGN LANGUAGE (VISUAL REFERENCE GESTURE SYSTEM) */}
+          {/* ========================================================= */}
+          {activeTab === "learn_sign_language" && (
+            <div className="max-w-7xl mx-auto">
+              <LearnSignLanguage onSwitchToCamera={() => setActiveTab("camera_recognition")} />
+            </div>
+          )}
+
+          {/* ========================================================= */}
+          {/* TAB: MOTION VALIDATION STUDIO (PHASE 6 GROUND TRUTH) */}
+          {/* ========================================================= */}
+          {activeTab === "motion_validation" && (
+            <div className="max-w-7xl mx-auto">
+              <MotionValidationStudio />
             </div>
           )}
 

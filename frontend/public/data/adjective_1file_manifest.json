@@ -1,0 +1,1025 @@
+[
+  {
+    "video": "MVI_5177.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 56,
+    "duration": 2.24,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_5177.MOV",
+      "duration_seconds": 2.24,
+      "is_two_handed": true,
+      "peak_timestamp": 1.2,
+      "peak_phase": 0.536,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_5178.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 64,
+    "duration": 2.56,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_5178.MOV",
+      "duration_seconds": 2.56,
+      "is_two_handed": true,
+      "peak_timestamp": 1.2,
+      "peak_phase": 0.469,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_5179.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 66,
+    "duration": 2.64,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_5179.MOV",
+      "duration_seconds": 2.64,
+      "is_two_handed": true,
+      "peak_timestamp": 1.32,
+      "peak_phase": 0.5,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_5257.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 52,
+    "duration": 2.08,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_5257.MOV",
+      "duration_seconds": 2.08,
+      "is_two_handed": true,
+      "peak_timestamp": 0.8,
+      "peak_phase": 0.385,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_5258.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 76,
+    "duration": 3.04,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_5258.MOV",
+      "duration_seconds": 3.04,
+      "is_two_handed": false,
+      "peak_timestamp": 1.32,
+      "peak_phase": 0.434,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_5259.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 64,
+    "duration": 2.56,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_5259.MOV",
+      "duration_seconds": 2.56,
+      "is_two_handed": false,
+      "peak_timestamp": 1.2,
+      "peak_phase": 0.469,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_5335.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 45,
+    "duration": 1.8,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_5335.MOV",
+      "duration_seconds": 1.8,
+      "is_two_handed": true,
+      "peak_timestamp": 0.64,
+      "peak_phase": 0.356,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_5336.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 42,
+    "duration": 1.68,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_5336.MOV",
+      "duration_seconds": 1.68,
+      "is_two_handed": true,
+      "peak_timestamp": 0.48,
+      "peak_phase": 0.286,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_5337.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 48,
+    "duration": 1.92,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_5337.MOV",
+      "duration_seconds": 1.92,
+      "is_two_handed": true,
+      "peak_timestamp": 0.8,
+      "peak_phase": 0.417,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_9289.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 55,
+    "duration": 2.2,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_9289.MOV",
+      "duration_seconds": 2.2,
+      "is_two_handed": true,
+      "peak_timestamp": 0.92,
+      "peak_phase": 0.418,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  },
+  {
+    "video": "MVI_9290.MOV",
+    "resolution": "1920x1080",
+    "fps": 25.0,
+    "frames": 64,
+    "duration": 2.56,
+    "status": "VALIDATED_MAPPED",
+    "retargeted": {
+      "sign": "LOUD",
+      "source_video": "MVI_9290.MOV",
+      "duration_seconds": 2.56,
+      "is_two_handed": true,
+      "peak_timestamp": 1.24,
+      "peak_phase": 0.484,
+      "start_pose": {
+        "rightArm": {
+          "arm": [
+            -0.15,
+            0.1,
+            -1.15
+          ],
+          "forearm": [
+            -0.6,
+            0.2,
+            0.1
+          ],
+          "wrist": [
+            0.1,
+            0.05,
+            0.05
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            0.15,
+            -0.1,
+            1.15
+          ],
+          "forearm": [
+            -0.6,
+            -0.2,
+            -0.1
+          ],
+          "wrist": [
+            0.1,
+            -0.05,
+            -0.05
+          ]
+        }
+      },
+      "peak_pose": {
+        "rightArm": {
+          "arm": [
+            -0.75,
+            0.15,
+            -1.35
+          ],
+          "forearm": [
+            -1.75,
+            0.35,
+            0.25
+          ],
+          "wrist": [
+            0.15,
+            -0.2,
+            -0.2
+          ]
+        },
+        "leftArm": {
+          "arm": [
+            -0.75,
+            -0.15,
+            1.35
+          ],
+          "forearm": [
+            -1.75,
+            -0.35,
+            -0.25
+          ],
+          "wrist": [
+            0.15,
+            0.2,
+            0.2
+          ]
+        },
+        "handshape": "PRESET_OPEN_SPREAD_5"
+      },
+      "motion_type": "pulse_shake",
+      "vibration_frequency": 6.5,
+      "vibration_amplitude": 0.08,
+      "facial_expression": "Intense expression with open mouth and squinted eyes reacting to loud volume."
+    }
+  }
+]

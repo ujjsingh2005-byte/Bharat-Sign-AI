@@ -2,12 +2,25 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import List
 
-from app.ai.sign_dictionary import get_sign, get_signs, get_all_signs, VOCABULARY_SIGNS
+from app.ai.sign_dictionary import get_sign, get_signs, get_all_signs, get_learning_library, VOCABULARY_SIGNS
 
 router = APIRouter(prefix="/signs", tags=["Sign Dictionary & Mapping"])
 
 class SignMappingRequest(BaseModel):
     gloss: List[str]
+
+@router.get("/learning-library")
+def learning_library():
+    """
+    Returns the master learning library containing all verified gestures and
+    conversational phrases from the visual reference chart.
+    """
+    items = get_learning_library()
+    return {
+        "success": True,
+        "total": len(items),
+        "library": items
+    }
 
 @router.get("/all")
 def all_signs():

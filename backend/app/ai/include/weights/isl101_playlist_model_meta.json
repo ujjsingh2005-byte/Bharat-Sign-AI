@@ -1,0 +1,15 @@
+{
+  "model_name": "Indian Sign Language 101 (YouTube Playlist)",
+  "model_type": "cnn",
+  "playlist_id": "PLxYMaKXKMMcMgg4f47WkG7AM0bb3AyjTi",
+  "num_classes": 123,
+  "best_val_acc": 1.0,
+  "best_val_acc_percent": "100.0%",
+  "final_top5_acc": 1.0,
+  "epochs_trained": 15,
+  "weights_file": "isl101_playlist_cnn.pth",
+  "weights_size_mb": 1.46,
+  "training_time_seconds": 18.38,
+  "lessons_covered": 13,
+  "timestamp": "2026-10-18 14:19:50"
+}

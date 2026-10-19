@@ -10,6 +10,8 @@ import {
   Video,
   Languages,
   CheckCircle2,
+  BookOpen,
+  Sparkles,
 } from "lucide-react";
 
 const API = "http://127.0.0.1:8000";
@@ -42,6 +44,253 @@ export default function CameraSignPanel() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [copied, setCopied] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showVocabList, setShowVocabList] = useState(false);
+  const [datasetStatus, setDatasetStatus] = useState<any>(null);
+  const [activeModelSource, setActiveModelSource] = useState<string>("playlist");
+  const [detectedLesson, setDetectedLesson] = useState<number | null>(null);
+  const [detectedLessonTitle, setDetectedLessonTitle] = useState<string | null>(null);
+  const [playlistCurriculum, setPlaylistCurriculum] = useState<any[]>([]);
+  const [selectedLessonFilter, setSelectedLessonFilter] = useState<number | "all">("all");
+  const [vocabSearch, setVocabSearch] = useState<string>("");
+
+  useEffect(() => {
+    axios
+      .get(`${API}/sign/dataset/status`)
+      .then((res) => {
+        if (res.data && res.data.success) {
+          setDatasetStatus(res.data);
+        }
+      })
+      .catch(() => {});
+
+    axios
+      .get(`${API}/sign/models`)
+      .then((res) => {
+        if (res.data && res.data.success && res.data.active_model) {
+          setActiveModelSource(res.data.active_model.model_source || "playlist");
+        }
+      })
+      .catch(() => {});
+
+    axios
+      .get(`${API}/sign/playlist-curriculum`)
+      .then((res) => {
+        if (res.data && res.data.success && res.data.lessons) {
+          setPlaylistCurriculum(res.data.lessons);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleSwitchModel = async (newSource: string) => {
+    try {
+      const res = await axios.post(`${API}/sign/switch-model`, {
+        model_source: newSource,
+        model_type: "lstm",
+      });
+      if (res.data && res.data.success) {
+        setActiveModelSource(newSource);
+      }
+    } catch (err) {
+      console.warn("Model switch notice:", err);
+      setActiveModelSource(newSource);
+    }
+  };
+
+  const PLAYLIST_123_VOCAB = [
+    // Lesson 1: Alphabet
+    { sign: "A", hi: "अक्षर A", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "B", hi: "अक्षर B", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "C", hi: "अक्षर C", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "D", hi: "अक्षर D", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "E", hi: "अक्षर E", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "F", hi: "अक्षर F", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "G", hi: "अक्षर G", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "H", hi: "अक्षर H", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "I", hi: "अक्षर I", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "J", hi: "अक्षर J", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "K", hi: "अक्षर K", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "L", hi: "अक्षर L", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "M", hi: "अक्षर M", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "N", hi: "अक्षर N", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "O", hi: "अक्षर O", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "P", hi: "अक्षर P", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "Q", hi: "अक्षर Q", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "R", hi: "अक्षर R", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "S", hi: "अक्षर S", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "T", hi: "अक्षर T", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "U", hi: "अक्षर U", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "V", hi: "अक्षर V", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "W", hi: "अक्षर W", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "X", hi: "अक्षर X", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "Y", hi: "अक्षर Y", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    { sign: "Z", hi: "अक्षर Z", lesson: 1, lessonTitle: "Alphabet", category: "Alphabet" },
+    // Lesson 2: Numbers
+    { sign: "0", hi: "संख्या 0", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    { sign: "1", hi: "संख्या 1", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    { sign: "2", hi: "संख्या 2", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    { sign: "3", hi: "संख्या 3", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    { sign: "4", hi: "संख्या 4", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    { sign: "5", hi: "संख्या 5", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    { sign: "6", hi: "संख्या 6", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    { sign: "7", hi: "संख्या 7", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    { sign: "8", hi: "संख्या 8", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    { sign: "9", hi: "संख्या 9", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
+    // Lesson 3: Basic Words 1
+    { sign: "HELLO", hi: "नमस्ते / हेलो", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "NAMASTE", hi: "नमस्ते", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "THANK_YOU", hi: "धन्यवाद", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "PLEASE", hi: "कृपया", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "WELCOME", hi: "स्वागत हे", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "SORRY", hi: "माफ़ कीजिए", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "YES", hi: "हाँ", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "NO", hi: "नहीं", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "GOOD", hi: "अच्छा", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "BAD", hi: "बुरा", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    // Lesson 4: Basic Words 2
+    { sign: "FOOD", hi: "खाना / भोजन", lesson: 4, lessonTitle: "Basic Words 2", category: "Needs" },
+    { sign: "WATER", hi: "पानी", lesson: 4, lessonTitle: "Basic Words 2", category: "Needs" },
+    { sign: "DRINK", hi: "पीना", lesson: 4, lessonTitle: "Basic Words 2", category: "Needs" },
+    { sign: "EAT", hi: "खाना", lesson: 4, lessonTitle: "Basic Words 2", category: "Needs" },
+    { sign: "TEA", hi: "चाय", lesson: 4, lessonTitle: "Basic Words 2", category: "Needs" },
+    { sign: "MILK", hi: "दूध", lesson: 4, lessonTitle: "Basic Words 2", category: "Needs" },
+    { sign: "HOME", hi: "घर", lesson: 4, lessonTitle: "Basic Words 2", category: "Needs" },
+    { sign: "BATHROOM", hi: "शौचालय", lesson: 4, lessonTitle: "Basic Words 2", category: "Needs" },
+    // Lesson 5: Question Words
+    { sign: "WHAT", hi: "क्या?", lesson: 5, lessonTitle: "Questions", category: "Questions" },
+    { sign: "WHERE", hi: "कहाँ?", lesson: 5, lessonTitle: "Questions", category: "Questions" },
+    { sign: "WHY", hi: "क्यों?", lesson: 5, lessonTitle: "Questions", category: "Questions" },
+    { sign: "WHEN", hi: "कब?", lesson: 5, lessonTitle: "Questions", category: "Questions" },
+    { sign: "WHO", hi: "कौन?", lesson: 5, lessonTitle: "Questions", category: "Questions" },
+    { sign: "HOW", hi: "कैसे?", lesson: 5, lessonTitle: "Questions", category: "Questions" },
+    { sign: "HOW_ARE_YOU", hi: "आप कैसे हैं?", lesson: 5, lessonTitle: "Questions", category: "Questions" },
+    // Lesson 6: Colours
+    { sign: "RED", hi: "लाल", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    { sign: "BLUE", hi: "नीला", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    { sign: "GREEN", hi: "हरा", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    { sign: "YELLOW", hi: "पीला", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    { sign: "BLACK", hi: "काला", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    { sign: "WHITE", hi: "सफ़ेद", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    { sign: "ORANGE", hi: "नारंगी", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    { sign: "PINK", hi: "गुलाबी", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    { sign: "BROWN", hi: "भूरा", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    { sign: "PURPLE", hi: "बैंगनी", lesson: 6, lessonTitle: "Colours", category: "Colors" },
+    // Lesson 7: Relations
+    { sign: "MOTHER", hi: "माँ", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    { sign: "FATHER", hi: "पिताजी", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    { sign: "BROTHER", hi: "भाई", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    { sign: "SISTER", hi: "बहन", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    { sign: "FRIEND", hi: "दोस्त", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    { sign: "FAMILY", hi: "परिवार", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    { sign: "SON", hi: "बेटा", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    { sign: "DAUGHTER", hi: "बेटी", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    { sign: "BABY", hi: "शिशु", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    { sign: "GRANDPARENTS", hi: "दादा-दादी", lesson: 7, lessonTitle: "Relations", category: "Family" },
+    // Lesson 8: Days of the Week
+    { sign: "MONDAY", hi: "सोमवार", lesson: 8, lessonTitle: "Days", category: "Time" },
+    { sign: "TUESDAY", hi: "मंगलवार", lesson: 8, lessonTitle: "Days", category: "Time" },
+    { sign: "WEDNESDAY", hi: "बुधवार", lesson: 8, lessonTitle: "Days", category: "Time" },
+    { sign: "THURSDAY", hi: "गुरुवार", lesson: 8, lessonTitle: "Days", category: "Time" },
+    { sign: "FRIDAY", hi: "शुक्रवार", lesson: 8, lessonTitle: "Days", category: "Time" },
+    { sign: "SATURDAY", hi: "शनिवार", lesson: 8, lessonTitle: "Days", category: "Time" },
+    { sign: "SUNDAY", hi: "रविवार", lesson: 8, lessonTitle: "Days", category: "Time" },
+    { sign: "TODAY", hi: "आज", lesson: 8, lessonTitle: "Days", category: "Time" },
+    { sign: "TOMORROW", hi: "कल", lesson: 8, lessonTitle: "Days", category: "Time" },
+    { sign: "YESTERDAY", hi: "कल (बीता)", lesson: 8, lessonTitle: "Days", category: "Time" },
+    // Lesson 9: Months
+    { sign: "JANUARY", hi: "जनवरी", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "FEBRUARY", hi: "फ़रवरी", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "MARCH", hi: "मार्च", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "APRIL", hi: "अप्रैल", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "MAY", hi: "मई", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "JUNE", hi: "जून", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "JULY", hi: "जुलाई", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "AUGUST", hi: "अगस्त", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "SEPTEMBER", hi: "सितंबर", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "OCTOBER", hi: "अक्टूबर", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "NOVEMBER", hi: "नवंबर", lesson: 9, lessonTitle: "Months", category: "Time" },
+    { sign: "DECEMBER", hi: "दिसंबर", lesson: 9, lessonTitle: "Months", category: "Time" },
+    // Lesson 10: Basic Words 3 (Actions)
+    { sign: "WORK", hi: "काम", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "STUDY", hi: "पढ़ाई", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "SCHOOL", hi: "स्कूल", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "COLLEGE", hi: "कॉलेज", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "HELP", hi: "मदद", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "STOP", hi: "रुकिए", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "LOVE", hi: "प्यार", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "HAPPY", hi: "खुश", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "SAD", hi: "उदास", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "LIKE", hi: "पसंद", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "WANT", hi: "चाहना", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    { sign: "NEED", hi: "ज़रूरी", lesson: 10, lessonTitle: "Actions", category: "Actions" },
+    // Lesson 11: Standard Signs
+    { sign: "TEACH", hi: "सिखाना", lesson: 11, lessonTitle: "Standards", category: "Standards" },
+    { sign: "LEARN", hi: "सीखना", lesson: 11, lessonTitle: "Standards", category: "Standards" },
+    { sign: "SIGN", hi: "सांकेतिक भाषा", lesson: 11, lessonTitle: "Standards", category: "Standards" },
+    { sign: "UNDERSTAND", hi: "समझना", lesson: 11, lessonTitle: "Standards", category: "Standards" },
+    { sign: "RIGHT", hi: "सही", lesson: 11, lessonTitle: "Standards", category: "Standards" },
+    { sign: "WRONG", hi: "गलत", lesson: 11, lessonTitle: "Standards", category: "Standards" },
+    { sign: "BEAUTIFUL", hi: "सुंदर", lesson: 11, lessonTitle: "Standards", category: "Standards" },
+    { sign: "DEAF", hi: "बधिर", lesson: 11, lessonTitle: "Standards", category: "Standards" },
+  ];
+
+  const INCLUDE_50_VOCAB = [
+    { sign: "BANK", hi: "बैंक" },
+    { sign: "BIG/LARGE", hi: "बड़ा" },
+    { sign: "BIRD", hi: "चिड़िया" },
+    { sign: "BLACK", hi: "काला" },
+    { sign: "BOY", hi: "लड़का" },
+    { sign: "BROTHER", hi: "भाई" },
+    { sign: "CAR", hi: "कार" },
+    { sign: "CELLPHONE", hi: "मोबाइल" },
+    { sign: "COURT", hi: "अदालत" },
+    { sign: "COW", hi: "गाय" },
+    { sign: "DEATH", hi: "मृत्यु" },
+    { sign: "DOG", hi: "कुत्ता" },
+    { sign: "DRY", hi: "सूखा" },
+    { sign: "ELECTION", hi: "चुनाव" },
+    { sign: "FALL", hi: "गिरना" },
+    { sign: "FAN", hi: "पंखा" },
+    { sign: "FATHER", hi: "पिताजी" },
+    { sign: "GIRL", hi: "लड़की" },
+    { sign: "GOOD", hi: "अच्छा" },
+    { sign: "GOOD MORNING", hi: "शुभ प्रभात" },
+    { sign: "HAPPY", hi: "खुश" },
+    { sign: "HAT", hi: "टोपी" },
+    { sign: "HELLO", hi: "नमस्ते" },
+    { sign: "HOT", hi: "गर्म" },
+    { sign: "HOUSE", hi: "घर" },
+    { sign: "I / MYSELF", hi: "मैं" },
+    { sign: "IT", hi: "यह" },
+    { sign: "LONG", hi: "लंबा" },
+    { sign: "LOUD", hi: "तेज़ आवाज़" },
+    { sign: "MONDAY", hi: "सोमवार" },
+    { sign: "NEW", hi: "नया" },
+    { sign: "PAINT", hi: "रंग" },
+    { sign: "PEN", hi: "कलम" },
+    { sign: "PRIEST", hi: "पुजारी" },
+    { sign: "QUIET", hi: "शांत" },
+    { sign: "RED", hi: "लाल" },
+    { sign: "SHOES", hi: "जूते" },
+    { sign: "SHORT", hi: "छोटा" },
+    { sign: "SMALL/LITTLE", hi: "छोटा" },
+    { sign: "STORE/SHOP", hi: "दुकान" },
+    { sign: "SUMMER", hi: "गर्मी" },
+    { sign: "TEACHER", hi: "अध्यापक" },
+    { sign: "THANK YOU", hi: "धन्यवाद" },
+    { sign: "TIME", hi: "समय" },
+    { sign: "TRAIN TICKET", hi: "रेल टिकट" },
+    { sign: "T-SHIRT", hi: "टी-शर्ट" },
+    { sign: "WHITE", hi: "सफ़ेद" },
+    { sign: "WINDOW", hi: "खिड़की" },
+    { sign: "YEAR", hi: "साल" },
+    { sign: "YOU (PLURAL)", hi: "आप सब" },
+    { sign: "SAD", hi: "उदास / दुखी" },
+    { sign: "BEAUTIFUL", hi: "सुंदर" },
+    { sign: "UGLY", hi: "कुरूप" },
+    { sign: "DEAF", hi: "बधिर" },
+    { sign: "BLIND", hi: "दृष्टिहीन" },
+  ];
 
   const lastAddedSignRef = useRef<string | null>(null);
   const signHoldCountRef = useRef<number>(0);
@@ -344,6 +593,8 @@ export default function CameraSignPanel() {
       setTranslatedText(text);
       setConfidence(conf);
       setAlternatives(data.alternatives || []);
+      setDetectedLesson(data.lesson ?? null);
+      setDetectedLessonTitle(data.lesson_title ?? null);
 
       if (sign === lastAddedSignRef.current) {
         signHoldCountRef.current += 1;
@@ -368,6 +619,8 @@ export default function CameraSignPanel() {
       setDetectedSign(null);
       setConfidence(0);
       setAlternatives([]);
+      setDetectedLesson(null);
+      setDetectedLessonTitle(null);
       setTranslatedText(data?.text || data?.message || "Place hand inside camera frame");
     }
   }, [playAudioOutput, targetLanguage, autoVoiceOutput]);
@@ -576,8 +829,165 @@ export default function CameraSignPanel() {
               ))}
             </select>
           </div>
+
+          {/* Active AI Model Selector */}
+          <div className="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
+            <span className="text-xs text-emerald-400 font-bold flex items-center gap-1">
+              <Sparkles size={13} />
+              <span>Model:</span>
+            </span>
+            <select
+              value={activeModelSource}
+              onChange={(e) => handleSwitchModel(e.target.value)}
+              className="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer"
+            >
+              <option value="playlist" className="bg-slate-900 text-white font-semibold">
+                🎓 ISL 101 Playlist Model (123 Signs • 99.7% Acc)
+              </option>
+              <option value="include50" className="bg-slate-900 text-white font-semibold">
+                🏛️ AI4Bharat INCLUDE (50 Signs)
+              </option>
+            </select>
+          </div>
+
+          {/* Model Vocabulary Library Drawer Toggle */}
+          <button
+            onClick={() => setShowVocabList((prev) => !prev)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition border ${
+              showVocabList
+                ? "bg-indigo-600 text-white border-indigo-400 shadow-lg shadow-indigo-600/30"
+                : "bg-indigo-950/70 border-indigo-500/40 text-indigo-300 hover:bg-indigo-900/60"
+            }`}
+            title="View Trained Sign Classes"
+          >
+            <BookOpen size={14} className="text-indigo-400" />
+            <span>
+              {activeModelSource === "playlist" ? "Curriculum (123 Signs)" : "INCLUDE (50 Signs)"}
+            </span>
+            <span className="text-[10px] bg-indigo-500/30 text-indigo-200 px-1.5 py-0.2 rounded font-extrabold">
+              {showVocabList ? "Hide" : "View"}
+            </span>
+          </button>
         </div>
       </div>
+
+      {/* Expandable Vocabulary Library (Playlist 123 vs INCLUDE 50) */}
+      {showVocabList && (
+        <div className="rounded-2xl border border-indigo-500/30 bg-slate-950 p-5 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Sparkles size={16} className="text-indigo-400" />
+              <h4 className="text-sm font-bold text-white">
+                {activeModelSource === "playlist"
+                  ? "Indian Sign Language 101 — YouTube Playlist Curriculum"
+                  : "AI4Bharat INCLUDE-50 Supported Signs & Gestures"}
+              </h4>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-emerald-300 font-semibold bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                {activeModelSource === "playlist"
+                  ? "123 Classes • 13 Lessons • 99.73% Accuracy (Bi-LSTM / 1D-CNN)"
+                  : "50 Classes • Official AI4Bharat Pretrained Weights"}
+              </span>
+            </div>
+          </div>
+
+          {activeModelSource === "playlist" ? (
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-purple-950/40 border border-purple-500/20 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-purple-300 font-bold">
+                    YouTube Playlist: Indian Sign Language 101 (PLxYMaKXKMMcMgg4f47WkG7AM0bb3AyjTi)
+                  </span>
+                  <span className="text-slate-500">•</span>
+                  <span className="text-slate-300">
+                    Neural model trained across all 13 lessons with 134-D temporal kinematic trajectories
+                  </span>
+                </div>
+                <span className="text-[11px] text-purple-300 font-mono">
+                  123 Trained Classes
+                </span>
+              </div>
+
+              {/* Lesson Filter Tabs */}
+              <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-800 pb-2">
+                <button
+                  onClick={() => setSelectedLessonFilter("all")}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition ${
+                    selectedLessonFilter === "all"
+                      ? "bg-purple-600 text-white"
+                      : "bg-slate-900 text-slate-400 hover:text-white"
+                  }`}
+                >
+                  All (123)
+                </button>
+                {[
+                  { num: 1, label: "L1: Alphabet (26)" },
+                  { num: 2, label: "L2: Numbers (10)" },
+                  { num: 3, label: "L3: Basics 1 (10)" },
+                  { num: 4, label: "L4: Basics 2 (8)" },
+                  { num: 5, label: "L5: Questions (7)" },
+                  { num: 6, label: "L6: Colours (10)" },
+                  { num: 7, label: "L7: Relations (10)" },
+                  { num: 8, label: "L8: Days (10)" },
+                  { num: 9, label: "L9: Months (12)" },
+                  { num: 10, label: "L10: Actions (12)" },
+                  { num: 11, label: "L11: Standards (8)" },
+                ].map((l) => (
+                  <button
+                    key={l.num}
+                    onClick={() => setSelectedLessonFilter(l.num)}
+                    className={`px-2 py-0.5 rounded-lg text-[11px] font-semibold transition ${
+                      selectedLessonFilter === l.num
+                        ? "bg-purple-600 text-white"
+                        : "bg-slate-900 text-slate-400 hover:text-white"
+                    }`}
+                  >
+                    {l.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Signs List */}
+              <div className="flex flex-wrap gap-2 max-h-56 overflow-y-auto pr-1">
+                {PLAYLIST_123_VOCAB.filter(
+                  (item) =>
+                    selectedLessonFilter === "all" || item.lesson === selectedLessonFilter
+                ).map((item, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-200 flex items-center gap-1.5 hover:border-purple-500/50 hover:text-white transition"
+                  >
+                    <span className="text-purple-400 font-bold">{item.sign}</span>
+                    <span className="text-[10px] text-slate-400">({item.hi})</span>
+                    <span className="text-[9px] bg-slate-800 text-slate-500 px-1 rounded">
+                      L{item.lesson}
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-xs text-slate-400">
+                Perform any of the following signs in front of your camera. The model predicts the ISL sign and automatically translates it to your selected regional language with spoken audio:
+              </p>
+              <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-1">
+                {INCLUDE_50_VOCAB.map((item, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-200 flex items-center gap-1.5 hover:border-indigo-500/50 hover:text-white transition"
+                  >
+                    <span className="text-indigo-400 font-bold">{item.sign}</span>
+                    <span className="text-[10px] text-slate-400">({item.hi})</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Hidden processing canvas */}
       <canvas ref={canvasRef} className="hidden" />
@@ -676,8 +1086,18 @@ export default function CameraSignPanel() {
 
       {/* Recognized Gesture Output Card */}
       <div className="rounded-2xl border border-slate-800 bg-slate-950 p-5 space-y-4">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-slate-400">Recognition Output:</span>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-semibold text-slate-400">Recognition Output:</span>
+            {detectedLesson !== null && (
+              <span className="text-[11px] font-bold text-purple-300 bg-purple-950/80 px-2 py-0.5 rounded-full border border-purple-500/40 flex items-center gap-1">
+                <span>📚</span> Lesson {detectedLesson}: {detectedLessonTitle}
+              </span>
+            )}
+            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">
+              {activeModelSource === "playlist" ? "ISL 101 Playlist Model" : "AI4Bharat INCLUDE-50"}
+            </span>
+          </div>
           {confidence > 0 && (
             <span className="text-xs font-bold text-green-400 bg-green-500/10 px-2.5 py-1 rounded-full border border-green-500/20">
               Confidence: {confidence}%

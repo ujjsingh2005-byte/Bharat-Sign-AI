@@ -41,7 +41,9 @@ PHRASE_DICTIONARY = {
     "tera naam kya hai": "What is your name",
     "dhanyawad": "Thank you",
     "shukriya": "Thank you",
-    "namaste": "Hello",
+    "namaste": "Namaste",
+    "namaskar": "Namaste",
+    "pranam": "Namaste",
 
     # Healthcare & Emergency
     "kya aap meri madad kar sakte hain": "Can you help me",
@@ -114,8 +116,8 @@ PHRASE_DICTIONARY = {
     "पुलिस को बुलाओ": "Call the police",
 
     # Greetings & Social
-    "नमस्ते": "Hello",
-    "नमस्कार": "Hello",
+    "नमस्ते": "Namaste",
+    "नमस्कार": "Namaste",
     "धन्यवाद": "Thank you",
     "अलविदा": "Goodbye",
     "आप कैसे हैं": "How are you",
@@ -163,7 +165,7 @@ PHRASE_DICTIONARY = {
     "का हाल बा": "How are you",
     "का समाचार बा": "How are you",
     "रउआ कइसन बानी": "How are you",
-    "प्रणाम": "Hello",
+    "प्रणाम": "Namaste",
     "हमरा खाना चाहीं": "I want food",
     "तोहार नाम का बा": "What is your name",
     "हमरा मदद चाहीं": "I need help",
@@ -318,10 +320,12 @@ WORD_LEXICON = {
     "bulao": "CALL", "bachao": "SAVE", "padhni": "READ", "kharidna": "BUY",
     "रहते": "LIVE", "रहती": "LIVE", "रहना": "LIVE", "चाहिए": "WANT", "जाना": "GO", "जा": "GO", "पढ़ना": "READ",
 
-    # Questions & Modifiers
+    # Questions & Modifiers & Emotions
     "kya": "WHAT", "kahan": "WHERE", "kab": "WHEN", "kyun": "WHY", "kaise": "HOW", "kaun": "WHO", "kitni": "HOW MUCH",
     "क्या": "WHAT", "कहाँ": "WHERE", "कब": "WHEN", "क्यों": "WHY", "कैसे": "HOW", "आज": "TODAY", "कल": "TOMORROW",
     "turant": "QUICKLY", "shubh": "GOOD", "prabhat": "MORNING", "ratri": "NIGHT",
+    "udaas": "SAD", "udas": "SAD", "dukhi": "SAD", "dukh": "SAD", "khush": "HAPPY", "khushi": "HAPPY",
+    "उदास": "SAD", "दुखी": "SAD", "दुःख": "SAD", "खुश": "HAPPY", "खुशी": "HAPPY",
 }
 
 HINGLISH_KEYWORDS = {
@@ -330,7 +334,7 @@ HINGLISH_KEYWORDS = {
     "raha", "rahi", "gaya", "gayi", "gaye", "bhai", "namaste", "dhanyawad", "shukriya", "sakte", "sakti", "hamare",
     "humara", "chahiye", "dawa", "hospital", "doctor", "station", "train", "bus", "ticket", "bazaar", "daam",
     "turant", "bhook", "pyaas", "tabiyat", "kripya", "bulao", "bachao", "aapse", "milkar", "khushi", "prabhat",
-    "bukhar", "bank", "atm", "police", "ambulance", "ratri"
+    "bukhar", "bank", "atm", "police", "ambulance", "ratri", "udaas", "udas", "dukhi", "dukh", "khush"
 }
 
 def normalize_text(text: str) -> str:

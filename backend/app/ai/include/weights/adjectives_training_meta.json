@@ -1,0 +1,1402 @@
+{
+  "pipeline": "all_adjectives",
+  "timestamp": "2026-10-19T02:22:57Z",
+  "classes_trained": [
+    "loud",
+    "quiet",
+    "happy",
+    "sad",
+    "beautiful",
+    "ugly",
+    "deaf",
+    "blind"
+  ],
+  "lstm": {
+    "best_val_acc": 0.9399,
+    "epochs": 15,
+    "evaluation": [
+      {
+        "class": "loud",
+        "correct": 21,
+        "total": 21,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_5177.npy",
+            "pred": "loud",
+            "conf": 0.977,
+            "ok": true
+          },
+          {
+            "file": "MVI_5178.npy",
+            "pred": "loud",
+            "conf": 0.9731,
+            "ok": true
+          },
+          {
+            "file": "MVI_5179.npy",
+            "pred": "loud",
+            "conf": 0.9675,
+            "ok": true
+          },
+          {
+            "file": "MVI_5257.npy",
+            "pred": "loud",
+            "conf": 0.9805,
+            "ok": true
+          },
+          {
+            "file": "MVI_5258.npy",
+            "pred": "loud",
+            "conf": 0.9656,
+            "ok": true
+          },
+          {
+            "file": "MVI_5259.npy",
+            "pred": "loud",
+            "conf": 0.9772,
+            "ok": true
+          },
+          {
+            "file": "MVI_5335.npy",
+            "pred": "loud",
+            "conf": 0.9794,
+            "ok": true
+          },
+          {
+            "file": "MVI_5336.npy",
+            "pred": "loud",
+            "conf": 0.9813,
+            "ok": true
+          },
+          {
+            "file": "MVI_5337.npy",
+            "pred": "loud",
+            "conf": 0.9823,
+            "ok": true
+          },
+          {
+            "file": "MVI_9289.npy",
+            "pred": "loud",
+            "conf": 0.9752,
+            "ok": true
+          },
+          {
+            "file": "MVI_9290.npy",
+            "pred": "loud",
+            "conf": 0.9757,
+            "ok": true
+          },
+          {
+            "file": "MVI_9291.npy",
+            "pred": "loud",
+            "conf": 0.9304,
+            "ok": true
+          },
+          {
+            "file": "MVI_9368.npy",
+            "pred": "loud",
+            "conf": 0.9687,
+            "ok": true
+          },
+          {
+            "file": "MVI_9369.npy",
+            "pred": "loud",
+            "conf": 0.969,
+            "ok": true
+          },
+          {
+            "file": "MVI_9370.npy",
+            "pred": "loud",
+            "conf": 0.9702,
+            "ok": true
+          },
+          {
+            "file": "MVI_9448.npy",
+            "pred": "loud",
+            "conf": 0.9523,
+            "ok": true
+          },
+          {
+            "file": "MVI_9449.npy",
+            "pred": "loud",
+            "conf": 0.9679,
+            "ok": true
+          },
+          {
+            "file": "MVI_9450.npy",
+            "pred": "loud",
+            "conf": 0.975,
+            "ok": true
+          },
+          {
+            "file": "MVI_9534.npy",
+            "pred": "loud",
+            "conf": 0.981,
+            "ok": true
+          },
+          {
+            "file": "MVI_9535.npy",
+            "pred": "loud",
+            "conf": 0.9796,
+            "ok": true
+          },
+          {
+            "file": "MVI_9536.npy",
+            "pred": "loud",
+            "conf": 0.9733,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "quiet",
+        "correct": 20,
+        "total": 21,
+        "accuracy": 0.9524,
+        "results": [
+          {
+            "file": "MVI_5180.npy",
+            "pred": "quiet",
+            "conf": 0.9922,
+            "ok": true
+          },
+          {
+            "file": "MVI_5181.npy",
+            "pred": "quiet",
+            "conf": 0.989,
+            "ok": true
+          },
+          {
+            "file": "MVI_5182.npy",
+            "pred": "quiet",
+            "conf": 0.9815,
+            "ok": true
+          },
+          {
+            "file": "MVI_5260.npy",
+            "pred": "quiet",
+            "conf": 0.9936,
+            "ok": true
+          },
+          {
+            "file": "MVI_5261.npy",
+            "pred": "quiet",
+            "conf": 0.982,
+            "ok": true
+          },
+          {
+            "file": "MVI_5262.npy",
+            "pred": "quiet",
+            "conf": 0.9908,
+            "ok": true
+          },
+          {
+            "file": "MVI_5338.npy",
+            "pred": "quiet",
+            "conf": 0.9859,
+            "ok": true
+          },
+          {
+            "file": "MVI_5339.npy",
+            "pred": "quiet",
+            "conf": 0.972,
+            "ok": true
+          },
+          {
+            "file": "MVI_5340.npy",
+            "pred": "quiet",
+            "conf": 0.9598,
+            "ok": true
+          },
+          {
+            "file": "MVI_9292.npy",
+            "pred": "quiet",
+            "conf": 0.9861,
+            "ok": true
+          },
+          {
+            "file": "MVI_9293.npy",
+            "pred": "quiet",
+            "conf": 0.8803,
+            "ok": true
+          },
+          {
+            "file": "MVI_9294.npy",
+            "pred": "green",
+            "conf": 0.4863,
+            "ok": false
+          },
+          {
+            "file": "MVI_9371.npy",
+            "pred": "quiet",
+            "conf": 0.9836,
+            "ok": true
+          },
+          {
+            "file": "MVI_9372.npy",
+            "pred": "quiet",
+            "conf": 0.982,
+            "ok": true
+          },
+          {
+            "file": "MVI_9373.npy",
+            "pred": "quiet",
+            "conf": 0.9381,
+            "ok": true
+          },
+          {
+            "file": "MVI_9451.npy",
+            "pred": "quiet",
+            "conf": 0.9448,
+            "ok": true
+          },
+          {
+            "file": "MVI_9452.npy",
+            "pred": "quiet",
+            "conf": 0.9856,
+            "ok": true
+          },
+          {
+            "file": "MVI_9453.npy",
+            "pred": "quiet",
+            "conf": 0.9825,
+            "ok": true
+          },
+          {
+            "file": "MVI_9537.npy",
+            "pred": "quiet",
+            "conf": 0.9892,
+            "ok": true
+          },
+          {
+            "file": "MVI_9538.npy",
+            "pred": "quiet",
+            "conf": 0.9935,
+            "ok": true
+          },
+          {
+            "file": "MVI_9539.npy",
+            "pred": "quiet",
+            "conf": 0.9906,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "happy",
+        "correct": 21,
+        "total": 21,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_5183.npy",
+            "pred": "happy",
+            "conf": 0.9763,
+            "ok": true
+          },
+          {
+            "file": "MVI_5184.npy",
+            "pred": "happy",
+            "conf": 0.9807,
+            "ok": true
+          },
+          {
+            "file": "MVI_5185.npy",
+            "pred": "happy",
+            "conf": 0.9726,
+            "ok": true
+          },
+          {
+            "file": "MVI_5263.npy",
+            "pred": "happy",
+            "conf": 0.9864,
+            "ok": true
+          },
+          {
+            "file": "MVI_5264.npy",
+            "pred": "happy",
+            "conf": 0.9807,
+            "ok": true
+          },
+          {
+            "file": "MVI_5265.npy",
+            "pred": "happy",
+            "conf": 0.985,
+            "ok": true
+          },
+          {
+            "file": "MVI_5341.npy",
+            "pred": "happy",
+            "conf": 0.9838,
+            "ok": true
+          },
+          {
+            "file": "MVI_5342.npy",
+            "pred": "happy",
+            "conf": 0.9694,
+            "ok": true
+          },
+          {
+            "file": "MVI_5343.npy",
+            "pred": "happy",
+            "conf": 0.9565,
+            "ok": true
+          },
+          {
+            "file": "MVI_9295.npy",
+            "pred": "happy",
+            "conf": 0.9824,
+            "ok": true
+          },
+          {
+            "file": "MVI_9296.npy",
+            "pred": "happy",
+            "conf": 0.9797,
+            "ok": true
+          },
+          {
+            "file": "MVI_9297.npy",
+            "pred": "happy",
+            "conf": 0.9768,
+            "ok": true
+          },
+          {
+            "file": "MVI_9374.npy",
+            "pred": "happy",
+            "conf": 0.9807,
+            "ok": true
+          },
+          {
+            "file": "MVI_9375.npy",
+            "pred": "happy",
+            "conf": 0.9838,
+            "ok": true
+          },
+          {
+            "file": "MVI_9376.npy",
+            "pred": "happy",
+            "conf": 0.9754,
+            "ok": true
+          },
+          {
+            "file": "MVI_9454.npy",
+            "pred": "happy",
+            "conf": 0.7527,
+            "ok": true
+          },
+          {
+            "file": "MVI_9455.npy",
+            "pred": "happy",
+            "conf": 0.9831,
+            "ok": true
+          },
+          {
+            "file": "MVI_9456.npy",
+            "pred": "happy",
+            "conf": 0.7257,
+            "ok": true
+          },
+          {
+            "file": "MVI_9540.npy",
+            "pred": "happy",
+            "conf": 0.9735,
+            "ok": true
+          },
+          {
+            "file": "MVI_9541.npy",
+            "pred": "happy",
+            "conf": 0.9758,
+            "ok": true
+          },
+          {
+            "file": "MVI_9542.npy",
+            "pred": "happy",
+            "conf": 0.9785,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "sad",
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_9565.npy",
+            "pred": "sad",
+            "conf": 0.9646,
+            "ok": true
+          },
+          {
+            "file": "MVI_9566.npy",
+            "pred": "sad",
+            "conf": 0.9685,
+            "ok": true
+          },
+          {
+            "file": "MVI_9567.npy",
+            "pred": "sad",
+            "conf": 0.9547,
+            "ok": true
+          },
+          {
+            "file": "MVI_9568.npy",
+            "pred": "sad",
+            "conf": 0.97,
+            "ok": true
+          },
+          {
+            "file": "MVI_9719.npy",
+            "pred": "sad",
+            "conf": 0.9392,
+            "ok": true
+          },
+          {
+            "file": "MVI_9720.npy",
+            "pred": "sad",
+            "conf": 0.9228,
+            "ok": true
+          },
+          {
+            "file": "MVI_9721.npy",
+            "pred": "sad",
+            "conf": 0.9073,
+            "ok": true
+          },
+          {
+            "file": "MVI_9722.npy",
+            "pred": "sad",
+            "conf": 0.9258,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "beautiful",
+        "correct": 9,
+        "total": 9,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_9569.npy",
+            "pred": "beautiful",
+            "conf": 0.9609,
+            "ok": true
+          },
+          {
+            "file": "MVI_9570.npy",
+            "pred": "beautiful",
+            "conf": 0.9897,
+            "ok": true
+          },
+          {
+            "file": "MVI_9571.npy",
+            "pred": "beautiful",
+            "conf": 0.9887,
+            "ok": true
+          },
+          {
+            "file": "MVI_9572.npy",
+            "pred": "beautiful",
+            "conf": 0.9855,
+            "ok": true
+          },
+          {
+            "file": "MVI_9573.npy",
+            "pred": "beautiful",
+            "conf": 0.7541,
+            "ok": true
+          },
+          {
+            "file": "MVI_9723.npy",
+            "pred": "beautiful",
+            "conf": 0.9865,
+            "ok": true
+          },
+          {
+            "file": "MVI_9724.npy",
+            "pred": "beautiful",
+            "conf": 0.9701,
+            "ok": true
+          },
+          {
+            "file": "MVI_9725.npy",
+            "pred": "beautiful",
+            "conf": 0.9542,
+            "ok": true
+          },
+          {
+            "file": "MVI_9726.npy",
+            "pred": "beautiful",
+            "conf": 0.9481,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "ugly",
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_9576.npy",
+            "pred": "ugly",
+            "conf": 0.6202,
+            "ok": true
+          },
+          {
+            "file": "MVI_9577.npy",
+            "pred": "ugly",
+            "conf": 0.9858,
+            "ok": true
+          },
+          {
+            "file": "MVI_9578.npy",
+            "pred": "ugly",
+            "conf": 0.9808,
+            "ok": true
+          },
+          {
+            "file": "MVI_9579.npy",
+            "pred": "ugly",
+            "conf": 0.9599,
+            "ok": true
+          },
+          {
+            "file": "MVI_9844.npy",
+            "pred": "ugly",
+            "conf": 0.9871,
+            "ok": true
+          },
+          {
+            "file": "MVI_9845.npy",
+            "pred": "ugly",
+            "conf": 0.9755,
+            "ok": true
+          },
+          {
+            "file": "MVI_9846.npy",
+            "pred": "ugly",
+            "conf": 0.9889,
+            "ok": true
+          },
+          {
+            "file": "MVI_9847.npy",
+            "pred": "ugly",
+            "conf": 0.5158,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "deaf",
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_9580.npy",
+            "pred": "deaf",
+            "conf": 0.8763,
+            "ok": true
+          },
+          {
+            "file": "MVI_9581.npy",
+            "pred": "deaf",
+            "conf": 0.953,
+            "ok": true
+          },
+          {
+            "file": "MVI_9582.npy",
+            "pred": "deaf",
+            "conf": 0.9438,
+            "ok": true
+          },
+          {
+            "file": "MVI_9583.npy",
+            "pred": "deaf",
+            "conf": 0.9751,
+            "ok": true
+          },
+          {
+            "file": "MVI_9848.npy",
+            "pred": "deaf",
+            "conf": 0.9868,
+            "ok": true
+          },
+          {
+            "file": "MVI_9849.npy",
+            "pred": "deaf",
+            "conf": 0.9893,
+            "ok": true
+          },
+          {
+            "file": "MVI_9850.npy",
+            "pred": "deaf",
+            "conf": 0.9805,
+            "ok": true
+          },
+          {
+            "file": "MVI_9851.npy",
+            "pred": "deaf",
+            "conf": 0.9529,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "blind",
+        "correct": 7,
+        "total": 8,
+        "accuracy": 0.875,
+        "results": [
+          {
+            "file": "MVI_9584.npy",
+            "pred": "blind",
+            "conf": 0.5457,
+            "ok": true
+          },
+          {
+            "file": "MVI_9585.npy",
+            "pred": "blind",
+            "conf": 0.8522,
+            "ok": true
+          },
+          {
+            "file": "MVI_9586.npy",
+            "pred": "deaf",
+            "conf": 0.6619,
+            "ok": false
+          },
+          {
+            "file": "MVI_9587.npy",
+            "pred": "blind",
+            "conf": 0.9363,
+            "ok": true
+          },
+          {
+            "file": "MVI_9852.npy",
+            "pred": "blind",
+            "conf": 0.9481,
+            "ok": true
+          },
+          {
+            "file": "MVI_9853.npy",
+            "pred": "blind",
+            "conf": 0.9571,
+            "ok": true
+          },
+          {
+            "file": "MVI_9854.npy",
+            "pred": "blind",
+            "conf": 0.8895,
+            "ok": true
+          },
+          {
+            "file": "MVI_9855.npy",
+            "pred": "blind",
+            "conf": 0.9079,
+            "ok": true
+          }
+        ]
+      }
+    ]
+  },
+  "cnn": {
+    "best_val_acc": 0.9781,
+    "epochs": 15,
+    "evaluation": [
+      {
+        "class": "loud",
+        "correct": 21,
+        "total": 21,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_5177.npy",
+            "pred": "loud",
+            "conf": 0.9733,
+            "ok": true
+          },
+          {
+            "file": "MVI_5178.npy",
+            "pred": "loud",
+            "conf": 0.9646,
+            "ok": true
+          },
+          {
+            "file": "MVI_5179.npy",
+            "pred": "loud",
+            "conf": 0.973,
+            "ok": true
+          },
+          {
+            "file": "MVI_5257.npy",
+            "pred": "loud",
+            "conf": 0.9918,
+            "ok": true
+          },
+          {
+            "file": "MVI_5258.npy",
+            "pred": "loud",
+            "conf": 0.9775,
+            "ok": true
+          },
+          {
+            "file": "MVI_5259.npy",
+            "pred": "loud",
+            "conf": 0.9889,
+            "ok": true
+          },
+          {
+            "file": "MVI_5335.npy",
+            "pred": "loud",
+            "conf": 0.9863,
+            "ok": true
+          },
+          {
+            "file": "MVI_5336.npy",
+            "pred": "loud",
+            "conf": 0.9864,
+            "ok": true
+          },
+          {
+            "file": "MVI_5337.npy",
+            "pred": "loud",
+            "conf": 0.9701,
+            "ok": true
+          },
+          {
+            "file": "MVI_9289.npy",
+            "pred": "loud",
+            "conf": 0.9907,
+            "ok": true
+          },
+          {
+            "file": "MVI_9290.npy",
+            "pred": "loud",
+            "conf": 0.9766,
+            "ok": true
+          },
+          {
+            "file": "MVI_9291.npy",
+            "pred": "loud",
+            "conf": 0.9577,
+            "ok": true
+          },
+          {
+            "file": "MVI_9368.npy",
+            "pred": "loud",
+            "conf": 0.9873,
+            "ok": true
+          },
+          {
+            "file": "MVI_9369.npy",
+            "pred": "loud",
+            "conf": 0.9896,
+            "ok": true
+          },
+          {
+            "file": "MVI_9370.npy",
+            "pred": "loud",
+            "conf": 0.9866,
+            "ok": true
+          },
+          {
+            "file": "MVI_9448.npy",
+            "pred": "loud",
+            "conf": 0.9057,
+            "ok": true
+          },
+          {
+            "file": "MVI_9449.npy",
+            "pred": "loud",
+            "conf": 0.9866,
+            "ok": true
+          },
+          {
+            "file": "MVI_9450.npy",
+            "pred": "loud",
+            "conf": 0.9847,
+            "ok": true
+          },
+          {
+            "file": "MVI_9534.npy",
+            "pred": "loud",
+            "conf": 0.9848,
+            "ok": true
+          },
+          {
+            "file": "MVI_9535.npy",
+            "pred": "loud",
+            "conf": 0.986,
+            "ok": true
+          },
+          {
+            "file": "MVI_9536.npy",
+            "pred": "loud",
+            "conf": 0.9876,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "quiet",
+        "correct": 21,
+        "total": 21,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_5180.npy",
+            "pred": "quiet",
+            "conf": 0.9908,
+            "ok": true
+          },
+          {
+            "file": "MVI_5181.npy",
+            "pred": "quiet",
+            "conf": 0.9932,
+            "ok": true
+          },
+          {
+            "file": "MVI_5182.npy",
+            "pred": "quiet",
+            "conf": 0.9878,
+            "ok": true
+          },
+          {
+            "file": "MVI_5260.npy",
+            "pred": "quiet",
+            "conf": 0.9846,
+            "ok": true
+          },
+          {
+            "file": "MVI_5261.npy",
+            "pred": "quiet",
+            "conf": 0.9916,
+            "ok": true
+          },
+          {
+            "file": "MVI_5262.npy",
+            "pred": "quiet",
+            "conf": 0.9757,
+            "ok": true
+          },
+          {
+            "file": "MVI_5338.npy",
+            "pred": "quiet",
+            "conf": 0.991,
+            "ok": true
+          },
+          {
+            "file": "MVI_5339.npy",
+            "pred": "quiet",
+            "conf": 0.9858,
+            "ok": true
+          },
+          {
+            "file": "MVI_5340.npy",
+            "pred": "quiet",
+            "conf": 0.9735,
+            "ok": true
+          },
+          {
+            "file": "MVI_9292.npy",
+            "pred": "quiet",
+            "conf": 0.9734,
+            "ok": true
+          },
+          {
+            "file": "MVI_9293.npy",
+            "pred": "quiet",
+            "conf": 0.9358,
+            "ok": true
+          },
+          {
+            "file": "MVI_9294.npy",
+            "pred": "quiet",
+            "conf": 0.8897,
+            "ok": true
+          },
+          {
+            "file": "MVI_9371.npy",
+            "pred": "quiet",
+            "conf": 0.9904,
+            "ok": true
+          },
+          {
+            "file": "MVI_9372.npy",
+            "pred": "quiet",
+            "conf": 0.988,
+            "ok": true
+          },
+          {
+            "file": "MVI_9373.npy",
+            "pred": "quiet",
+            "conf": 0.9699,
+            "ok": true
+          },
+          {
+            "file": "MVI_9451.npy",
+            "pred": "quiet",
+            "conf": 0.9754,
+            "ok": true
+          },
+          {
+            "file": "MVI_9452.npy",
+            "pred": "quiet",
+            "conf": 0.9874,
+            "ok": true
+          },
+          {
+            "file": "MVI_9453.npy",
+            "pred": "quiet",
+            "conf": 0.9871,
+            "ok": true
+          },
+          {
+            "file": "MVI_9537.npy",
+            "pred": "quiet",
+            "conf": 0.9928,
+            "ok": true
+          },
+          {
+            "file": "MVI_9538.npy",
+            "pred": "quiet",
+            "conf": 0.9969,
+            "ok": true
+          },
+          {
+            "file": "MVI_9539.npy",
+            "pred": "quiet",
+            "conf": 0.9968,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "happy",
+        "correct": 21,
+        "total": 21,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_5183.npy",
+            "pred": "happy",
+            "conf": 0.9003,
+            "ok": true
+          },
+          {
+            "file": "MVI_5184.npy",
+            "pred": "happy",
+            "conf": 0.9743,
+            "ok": true
+          },
+          {
+            "file": "MVI_5185.npy",
+            "pred": "happy",
+            "conf": 0.8691,
+            "ok": true
+          },
+          {
+            "file": "MVI_5263.npy",
+            "pred": "happy",
+            "conf": 0.985,
+            "ok": true
+          },
+          {
+            "file": "MVI_5264.npy",
+            "pred": "happy",
+            "conf": 0.9789,
+            "ok": true
+          },
+          {
+            "file": "MVI_5265.npy",
+            "pred": "happy",
+            "conf": 0.9867,
+            "ok": true
+          },
+          {
+            "file": "MVI_5341.npy",
+            "pred": "happy",
+            "conf": 0.9659,
+            "ok": true
+          },
+          {
+            "file": "MVI_5342.npy",
+            "pred": "happy",
+            "conf": 0.9566,
+            "ok": true
+          },
+          {
+            "file": "MVI_5343.npy",
+            "pred": "happy",
+            "conf": 0.9633,
+            "ok": true
+          },
+          {
+            "file": "MVI_9295.npy",
+            "pred": "happy",
+            "conf": 0.9867,
+            "ok": true
+          },
+          {
+            "file": "MVI_9296.npy",
+            "pred": "happy",
+            "conf": 0.9841,
+            "ok": true
+          },
+          {
+            "file": "MVI_9297.npy",
+            "pred": "happy",
+            "conf": 0.994,
+            "ok": true
+          },
+          {
+            "file": "MVI_9374.npy",
+            "pred": "happy",
+            "conf": 0.9758,
+            "ok": true
+          },
+          {
+            "file": "MVI_9375.npy",
+            "pred": "happy",
+            "conf": 0.9789,
+            "ok": true
+          },
+          {
+            "file": "MVI_9376.npy",
+            "pred": "happy",
+            "conf": 0.9852,
+            "ok": true
+          },
+          {
+            "file": "MVI_9454.npy",
+            "pred": "happy",
+            "conf": 0.9181,
+            "ok": true
+          },
+          {
+            "file": "MVI_9455.npy",
+            "pred": "happy",
+            "conf": 0.9804,
+            "ok": true
+          },
+          {
+            "file": "MVI_9456.npy",
+            "pred": "happy",
+            "conf": 0.8762,
+            "ok": true
+          },
+          {
+            "file": "MVI_9540.npy",
+            "pred": "happy",
+            "conf": 0.9782,
+            "ok": true
+          },
+          {
+            "file": "MVI_9541.npy",
+            "pred": "happy",
+            "conf": 0.9687,
+            "ok": true
+          },
+          {
+            "file": "MVI_9542.npy",
+            "pred": "happy",
+            "conf": 0.986,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "sad",
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_9565.npy",
+            "pred": "sad",
+            "conf": 0.9744,
+            "ok": true
+          },
+          {
+            "file": "MVI_9566.npy",
+            "pred": "sad",
+            "conf": 0.9843,
+            "ok": true
+          },
+          {
+            "file": "MVI_9567.npy",
+            "pred": "sad",
+            "conf": 0.9871,
+            "ok": true
+          },
+          {
+            "file": "MVI_9568.npy",
+            "pred": "sad",
+            "conf": 0.9762,
+            "ok": true
+          },
+          {
+            "file": "MVI_9719.npy",
+            "pred": "sad",
+            "conf": 0.9719,
+            "ok": true
+          },
+          {
+            "file": "MVI_9720.npy",
+            "pred": "sad",
+            "conf": 0.958,
+            "ok": true
+          },
+          {
+            "file": "MVI_9721.npy",
+            "pred": "sad",
+            "conf": 0.9683,
+            "ok": true
+          },
+          {
+            "file": "MVI_9722.npy",
+            "pred": "sad",
+            "conf": 0.952,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "beautiful",
+        "correct": 9,
+        "total": 9,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_9569.npy",
+            "pred": "beautiful",
+            "conf": 0.9803,
+            "ok": true
+          },
+          {
+            "file": "MVI_9570.npy",
+            "pred": "beautiful",
+            "conf": 0.9753,
+            "ok": true
+          },
+          {
+            "file": "MVI_9571.npy",
+            "pred": "beautiful",
+            "conf": 0.9804,
+            "ok": true
+          },
+          {
+            "file": "MVI_9572.npy",
+            "pred": "beautiful",
+            "conf": 0.9865,
+            "ok": true
+          },
+          {
+            "file": "MVI_9573.npy",
+            "pred": "beautiful",
+            "conf": 0.8564,
+            "ok": true
+          },
+          {
+            "file": "MVI_9723.npy",
+            "pred": "beautiful",
+            "conf": 0.9698,
+            "ok": true
+          },
+          {
+            "file": "MVI_9724.npy",
+            "pred": "beautiful",
+            "conf": 0.9681,
+            "ok": true
+          },
+          {
+            "file": "MVI_9725.npy",
+            "pred": "beautiful",
+            "conf": 0.9798,
+            "ok": true
+          },
+          {
+            "file": "MVI_9726.npy",
+            "pred": "beautiful",
+            "conf": 0.9148,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "ugly",
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_9576.npy",
+            "pred": "ugly",
+            "conf": 0.9526,
+            "ok": true
+          },
+          {
+            "file": "MVI_9577.npy",
+            "pred": "ugly",
+            "conf": 0.9666,
+            "ok": true
+          },
+          {
+            "file": "MVI_9578.npy",
+            "pred": "ugly",
+            "conf": 0.9797,
+            "ok": true
+          },
+          {
+            "file": "MVI_9579.npy",
+            "pred": "ugly",
+            "conf": 0.9875,
+            "ok": true
+          },
+          {
+            "file": "MVI_9844.npy",
+            "pred": "ugly",
+            "conf": 0.9855,
+            "ok": true
+          },
+          {
+            "file": "MVI_9845.npy",
+            "pred": "ugly",
+            "conf": 0.9874,
+            "ok": true
+          },
+          {
+            "file": "MVI_9846.npy",
+            "pred": "ugly",
+            "conf": 0.9819,
+            "ok": true
+          },
+          {
+            "file": "MVI_9847.npy",
+            "pred": "ugly",
+            "conf": 0.9922,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "deaf",
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_9580.npy",
+            "pred": "deaf",
+            "conf": 0.8595,
+            "ok": true
+          },
+          {
+            "file": "MVI_9581.npy",
+            "pred": "deaf",
+            "conf": 0.7617,
+            "ok": true
+          },
+          {
+            "file": "MVI_9582.npy",
+            "pred": "deaf",
+            "conf": 0.9329,
+            "ok": true
+          },
+          {
+            "file": "MVI_9583.npy",
+            "pred": "deaf",
+            "conf": 0.9298,
+            "ok": true
+          },
+          {
+            "file": "MVI_9848.npy",
+            "pred": "deaf",
+            "conf": 0.958,
+            "ok": true
+          },
+          {
+            "file": "MVI_9849.npy",
+            "pred": "deaf",
+            "conf": 0.9744,
+            "ok": true
+          },
+          {
+            "file": "MVI_9850.npy",
+            "pred": "deaf",
+            "conf": 0.9806,
+            "ok": true
+          },
+          {
+            "file": "MVI_9851.npy",
+            "pred": "deaf",
+            "conf": 0.9772,
+            "ok": true
+          }
+        ]
+      },
+      {
+        "class": "blind",
+        "correct": 8,
+        "total": 8,
+        "accuracy": 1.0,
+        "results": [
+          {
+            "file": "MVI_9584.npy",
+            "pred": "blind",
+            "conf": 0.9857,
+            "ok": true
+          },
+          {
+            "file": "MVI_9585.npy",
+            "pred": "blind",
+            "conf": 0.9856,
+            "ok": true
+          },
+          {
+            "file": "MVI_9586.npy",
+            "pred": "blind",
+            "conf": 0.9798,
+            "ok": true
+          },
+          {
+            "file": "MVI_9587.npy",
+            "pred": "blind",
+            "conf": 0.9698,
+            "ok": true
+          },
+          {
+            "file": "MVI_9852.npy",
+            "pred": "blind",
+            "conf": 0.9815,
+            "ok": true
+          },
+          {
+            "file": "MVI_9853.npy",
+            "pred": "blind",
+            "conf": 0.993,
+            "ok": true
+          },
+          {
+            "file": "MVI_9854.npy",
+            "pred": "blind",
+            "conf": 0.984,
+            "ok": true
+          },
+          {
+            "file": "MVI_9855.npy",
+            "pred": "blind",
+            "conf": 0.979,
+            "ok": true
+          }
+        ]
+      }
+    ]
+  }
+}

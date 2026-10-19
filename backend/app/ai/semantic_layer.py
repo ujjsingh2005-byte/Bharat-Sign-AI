@@ -71,6 +71,12 @@ QUESTION_WORDS = {
 
 # Key conversational phrases mapping to single compound ISL signs
 PHRASE_MAPPINGS = {
+    "namaste": "NAMASTE",
+    "namaskar": "NAMASTE",
+    "pranam": "NAMASTE",
+    "hello": "HELLO",
+    "hi": "HELLO",
+    "hey": "HELLO",
     "how are you": "HOW ARE YOU",
     "how are u": "HOW ARE YOU",
     "thank you": "THANK YOU",

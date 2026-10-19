@@ -427,7 +427,11 @@ function Avatar({
       const mappedKey = BONE_MAP[nameKey] ?? nameKey;
       const bone = currentBones[mappedKey];
       const original = base.current[mappedKey];
-      if (!bone || !original) return;
+      if (!bone || !original) {
+        // Bone not present in the current avatar; log a warning for debugging.
+        console.warn(`rotateBone: bone "${mappedKey}" not found in model; skipping rotation.`);
+        return;
+      }
 
       const rot = new THREE.Quaternion();
       rot.setFromEuler(new THREE.Euler(eulerX, eulerY, eulerZ, "XYZ"));

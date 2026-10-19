@@ -2,16 +2,8 @@ import { useEffect, useRef, useMemo, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-import {
-  Gauge,
-  Sparkles,
-  ZoomIn,
-  Play,
-  Pause,
-  SkipBack,
-  SkipForward,
-  RotateCcw,
-} from "lucide-react";
+import { BONE_MAP } from "../../utils/boneMapping";
+import { Gauge, Sparkles, ZoomIn, Play, Pause, SkipBack, SkipForward, RotateCcw } from "lucide-react";
 
 export interface SignItem {
   word: string;
@@ -377,7 +369,7 @@ function Avatar({
   animationKey,
   onSignDone,
 }: AvatarSubProps) {
-  const { scene } = useGLTF("/models/isl-avatar.glb");
+  const { scene } = useGLTF("/models/blue-jacket-avatar.glb");
 
   const clone = useMemo(() => {
     return skeletonClone(scene);
@@ -432,8 +424,9 @@ function Avatar({
       eulerZ: number,
       smooth = 0.16
     ) => {
-      const bone = currentBones[nameKey];
-      const original = base.current[nameKey];
+      const mappedKey = BONE_MAP[nameKey] ?? nameKey;
+      const bone = currentBones[mappedKey];
+      const original = base.current[mappedKey];
       if (!bone || !original) return;
 
       const rot = new THREE.Quaternion();

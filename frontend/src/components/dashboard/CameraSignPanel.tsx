@@ -143,7 +143,7 @@ export default function CameraSignPanel() {
     { sign: "8", hi: "संख्या 8", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
     { sign: "9", hi: "संख्या 9", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
     // Lesson 3: Basic Words 1
-    { sign: "HELLO", hi: "हेलो", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "HELLO", hi: "हैलो", desc: "Single open hand wave greeting beside head (100% Conf)" },
     { sign: "NAMASTE", hi: "नमस्ते", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
     { sign: "THANK_YOU", hi: "धन्यवाद", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
     { sign: "PLEASE", hi: "कृपया", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },

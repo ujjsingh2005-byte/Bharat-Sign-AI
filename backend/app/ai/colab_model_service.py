@@ -160,7 +160,7 @@ class ColabModelService:
 
             # Display labels and translation helper across all 18 ISL signs (Greetings + Adjectives)
             label_map = {
-                "HELLO": {"display": "Hello (नमस्ते / हेलो)", "hi": "नमस्ते", "meaning": "Greeting Wave"},
+                "HELLO": {"display": "Hello (हैलो)", "hi": "हैलो", "meaning": "Single Hand Greeting Wave (एक हाथ से हैलो)"},
                 "NAMASTE": {"display": "Namaste (नमस्ते)", "hi": "नमस्ते", "meaning": "Traditional Indian Greeting (Both Hands Joined)"},
                 "LOUD": {"display": "Loud (तेज़ / ज़ोरदार)", "hi": "तेज़", "meaning": "High Volume / Loud Noise"},
                 "QUIET": {"display": "Quiet (शांत)", "hi": "शांत", "meaning": "Silence / Quietness"},

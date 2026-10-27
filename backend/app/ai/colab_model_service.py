@@ -131,7 +131,7 @@ class ColabModelService:
 
             # 2. Strict Confidence Threshold (>= 0.65) and Margin (>= 0.20)
             # Unknown gestures only reach diffuse probabilities (0.15 - 0.35 with margin < 0.08)
-            is_known_sign = (top_prob >= 0.55) and (margin >= 0.15) and (not is_idle_or_resting)
+            is_known_sign = (top_prob >= 0.48) and (margin >= 0.12) and (not is_idle_or_resting)
 
             if not is_known_sign:
                 # STRICT REJECTION: Do NOT output ANY of the 10 target sign words!

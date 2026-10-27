@@ -1,0 +1,203 @@
+{
+  "model_name": "ISL 10+ Signs Expanded Model",
+  "classes": [
+    "BEAUTIFUL",
+    "BLIND",
+    "DEAF",
+    "HAPPY",
+    "HELLO",
+    "LOUD",
+    "NAMASTE",
+    "QUIET",
+    "SAD",
+    "UGLY"
+  ],
+  "num_classes": 10,
+  "total_training_frames": 872,
+  "total_test_frames": 218,
+  "overall_accuracy": 94.5,
+  "per_class": {
+    "BEAUTIFUL": {
+      "precision": 100.0,
+      "recall": 87.5,
+      "f1_score": 93.33,
+      "support": 16
+    },
+    "BLIND": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "support": 16
+    },
+    "DEAF": {
+      "precision": 100.0,
+      "recall": 81.25,
+      "f1_score": 89.66,
+      "support": 16
+    },
+    "HAPPY": {
+      "precision": 95.12,
+      "recall": 92.86,
+      "f1_score": 93.98,
+      "support": 42
+    },
+    "HELLO": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "support": 6
+    },
+    "LOUD": {
+      "precision": 90.48,
+      "recall": 90.48,
+      "f1_score": 90.48,
+      "support": 42
+    },
+    "NAMASTE": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "support": 6
+    },
+    "QUIET": {
+      "precision": 91.3,
+      "recall": 100.0,
+      "f1_score": 95.45,
+      "support": 42
+    },
+    "SAD": {
+      "precision": 88.89,
+      "recall": 100.0,
+      "f1_score": 94.12,
+      "support": 16
+    },
+    "UGLY": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "support": 16
+    }
+  },
+  "confusion_matrix": [
+    [
+      14,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      16,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      13,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      39,
+      0,
+      1,
+      0,
+      2,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      6,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      2,
+      0,
+      38,
+      0,
+      2,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      42,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      16,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      16
+    ]
+  ]
+}

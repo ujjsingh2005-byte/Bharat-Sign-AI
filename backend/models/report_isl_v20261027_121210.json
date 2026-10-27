@@ -1,0 +1,42 @@
+{
+  "success": true,
+  "version": "isl_v20261027_121210",
+  "model_path": "C:\\Users\\UJJWAL SINGH\\OneDrive\\Desktop\\Bharat-Sign-AI-3-Sign-Working\\backend\\models\\isl_model_isl_v20261027_121210.pkl",
+  "total_samples": 6,
+  "train_samples": 2,
+  "test_samples": 4,
+  "trained_classes_count": 2,
+  "overall_accuracy": 1.0,
+  "overall_accuracy_pct": "100%",
+  "per_class_metrics": {
+    "HELLO": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "test_samples": 2
+    },
+    "NAMASTE": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "test_samples": 2
+    }
+  },
+  "confusion_matrix": {
+    "classes": [
+      "HELLO",
+      "NAMASTE"
+    ],
+    "matrix": [
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        2
+      ]
+    ]
+  },
+  "timestamp": "2026-10-27T12:12:10.102014"
+}

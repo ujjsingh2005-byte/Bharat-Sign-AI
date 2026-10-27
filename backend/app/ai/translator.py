@@ -354,43 +354,43 @@ def is_pure_latin_english(text: str) -> bool:
 # Instant English to Regional Language dictionary for Sign-to-Text & Sign-to-Voice
 ENGLISH_TO_REGIONAL = {
     "hi": {
-        "hello": "नमस्ते", "namaste": "नमस्ते", "water": "पानी", "food": "खाना", "eat": "खाना",
+        "hello": "हेलो", "namaste": "नमस्ते", "water": "पानी", "food": "खाना", "eat": "खाना", "drink": "पीना",
         "help": "मदद", "doctor": "डॉक्टर", "school": "स्कूल", "college": "कॉलेज", "yes": "हाँ",
-        "no": "नहीं", "thank you": "धन्यवाद", "goodbye": "अलविदा", "you": "आप", "me": "मैं",
+        "no": "नहीं", "thank you": "धन्यवाद", "thank_you": "धन्यवाद", "goodbye": "अलविदा", "you": "आप", "me": "मैं",
         "where": "कहाँ", "why": "क्यों", "live": "रहना", "want": "चाहिए", "need": "ज़रूरत",
     },
     "bho": {
-        "hello": "प्रणाम", "namaste": "प्रणाम", "water": "पानी", "food": "खाना", "eat": "खाना",
+        "hello": "हेलो", "namaste": "प्रणाम", "water": "पानी", "food": "खाना", "eat": "खाना",
         "help": "मदद", "doctor": "डॉक्टर", "school": "स्कूल", "yes": "हाँ", "no": "नाहीं",
         "thank you": "धन्यवाद", "goodbye": "अलविदा", "you": "रउआ", "me": "हम", "where": "कहाँ",
     },
     "ta": {
-        "hello": "வணக்கம்", "namaste": "வணக்கம்", "water": "தண்ணீர்", "food": "உணவு",
+        "hello": "ஹலோ", "namaste": "வணக்கம்", "water": "தண்ணீர்", "food": "உணவு",
         "help": "உதவி", "doctor": "மருத்துவர்", "school": "பள்ளி", "yes": "ஆம்", "no": "இல்லை",
         "thank you": "நன்றி", "goodbye": "சென்று வருகிறேன்", "you": "நீங்கள்", "me": "நான்",
     },
     "te": {
-        "hello": "నమస్కారం", "namaste": "నమస్కారం", "water": "నీళ్లు", "food": "అన్నం",
+        "hello": "హలో", "namaste": "నమస్కారం", "water": "నీళ్లు", "food": "అన్నం",
         "help": "సహాయం", "doctor": "డాక్టర్", "school": "పాఠశాల", "yes": "అవును", "no": "కాదు",
         "thank you": "ధన్యవాదాలు", "goodbye": "సెలవు", "you": "మీరు", "me": "నేను",
     },
     "bn": {
-        "hello": "নমস্কার", "namaste": "নমস্কার", "water": "জল", "food": "খাবার",
+        "hello": "হ্যালো", "namaste": "নমস্কার", "water": "জল", "food": "খাবার",
         "help": "সাহায্য", "doctor": "ডাক্তার", "school": "স্কুল", "yes": "হ্যাঁ", "no": "না",
         "thank you": "ধন্যবাদ", "goodbye": "বিদায়", "you": "আপনি", "me": "আমি",
     },
     "mr": {
-        "hello": "नमस्कार", "namaste": "नमस्कार", "water": "पाणी", "food": "जेवण",
+        "hello": "हॅलो", "namaste": "नमस्कार", "water": "पाणी", "food": "जेवण",
         "help": "मदत", "doctor": "डॉक्टर", "school": "शाळा", "yes": "होय", "no": "नाही",
         "thank you": "धन्यवाद", "goodbye": "पुन्हा भेटू", "you": "तुम्ही", "me": "मी",
     },
     "gu": {
-        "hello": "નમસ્તે", "namaste": "નમસ્તે", "water": "પાણી", "food": "ખોરાક",
+        "hello": "હેલો", "namaste": "નમસ્તે", "water": "પાણી", "food": "ખોરાક",
         "help": "મદદ", "doctor": "ડૉક્ટર", "school": "શાળા", "yes": "હા", "no": "ના",
         "thank you": "આભાર", "goodbye": "આવજો", "you": "તમે", "me": "હું",
     },
     "pa": {
-        "hello": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "namaste": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "water": "ਪਾਣੀ", "food": "ਖਾਣਾ",
+        "hello": "ਹੈਲੋ", "namaste": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "water": "ਪਾਣੀ", "food": "ਖਾਣਾ",
         "help": "ਮਦਦ", "doctor": "ਡਾਕਟਰ", "school": "ਸਕੂਲ", "yes": "ਹਾਂ", "no": "ਨਹੀਂ",
         "thank you": "ਧੰਨਵਾਦ", "goodbye": "ਅਲਵਿਦਾ", "you": "ਤੁਸੀਂ", "me": "ਮੈਂ",
     },

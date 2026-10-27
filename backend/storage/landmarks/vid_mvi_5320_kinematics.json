@@ -1,0 +1,49 @@
+{
+  "sign_id": "UNKNOWN_SIGN_005",
+  "video_id": "vid_mvi_5320",
+  "duration": 2.0,
+  "status": "PENDING",
+  "meaning": "UNVERIFIED",
+  "gesture": {
+    "performing_hand": "right",
+    "initial_pose": "Both hands resting near the sides of the body at hip level",
+    "movement_sequence": [
+      {
+        "phase": 1,
+        "interval_sec": [
+          0.0,
+          0.4
+        ],
+        "action": "Raise the right hand from the side of the body toward the upper chest and face."
+      },
+      {
+        "phase": 2,
+        "interval_sec": [
+          0.4,
+          0.76
+        ],
+        "action": "Position the raised hand in front of the lower face/chin with upright fingers and forward-facing palm."
+      },
+      {
+        "phase": 3,
+        "interval_sec": [
+          0.76,
+          1.1
+        ],
+        "action": "Lower the right hand smoothly back toward the hip."
+      },
+      {
+        "phase": 4,
+        "interval_sec": [
+          1.1,
+          2.0
+        ],
+        "action": "Rest beside the body in neutral standby posture."
+      }
+    ],
+    "left_hand_behavior": "Stationary beside body throughout",
+    "finger_configuration": "Fingers extended upright, thumb slightly abducted laterally forming open B/L posture",
+    "palm_orientation": "Forward toward user/camera with slight inward tilt",
+    "facial_expression": "Neutral attentive expression with subtle nod"
+  }
+}

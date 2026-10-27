@@ -26,3 +26,8 @@ Thumbs.db
 zip/
 scratch/
 scripts/
+backend/storage/videos/
+backend/storage/previews/
+old_avatar_viewer_precise.txt
+old_sorry_map.txt
+benchmarks/

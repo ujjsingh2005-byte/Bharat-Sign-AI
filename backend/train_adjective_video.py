@@ -39,16 +39,24 @@ def run_pipeline():
     )
     print("Extraction Summary:", extract_res)
 
-    # Copy freshly extracted .npy files to dataset/include_extracted/<class>/
+    # Copy freshly extracted .npy files to dataset/include_extracted/<class>/ using KNOWN_VIDEO_STEM_MAP
+    # Clean previous destination directories to avoid stale mappings
+    for d in [dataset_dir / "old", dataset_dir / "young"]:
+        if d.exists():
+            for f in d.glob("*.npy"):
+                f.unlink()
+
     for cls_name, cls_info in extract_res.get("classes", {}).items():
-        dest_dir = dataset_dir / cls_name
-        dest_dir.mkdir(parents=True, exist_ok=True)
         for saved_path in cls_info.get("saved_files", []):
             p = Path(saved_path)
+            stem = p.stem
+            target_cls = KNOWN_VIDEO_STEM_MAP.get(stem, "old")
+            dest_dir = dataset_dir / target_cls
+            dest_dir.mkdir(parents=True, exist_ok=True)
             dest_file = dest_dir / p.name
             arr = np.load(p)
             np.save(dest_file, arr)
-            print(f"  [+] Placed {dest_file.name} in {dest_dir} (shape: {arr.shape})")
+            print(f"  [+] Placed {dest_file.name} in {dest_dir} (class: {target_cls}, shape: {arr.shape})")
 
     print("\n==================================================================")
     print("Step 2: Training LSTM Model on INCLUDE-50 Dataset (with real videos)")
@@ -56,7 +64,7 @@ def run_pipeline():
     
     lstm_res = train_model(
         model_type="lstm",
-        epochs=12,
+        epochs=14,
         batch_size=48,
         lr=1e-3,
         save_name="include50_lstm",
@@ -70,7 +78,7 @@ def run_pipeline():
     
     cnn_res = train_model(
         model_type="cnn",
-        epochs=12,
+        epochs=14,
         batch_size=48,
         lr=1e-3,
         save_name="include50_cnn",

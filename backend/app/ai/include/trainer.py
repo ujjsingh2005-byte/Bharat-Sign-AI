@@ -147,22 +147,25 @@ def load_dataset_from_directory(
         tr_indices = indices[:split_point]
         val_indices = indices[split_point:] if split_point < len(indices) else indices[-1:]
 
-        for i in tr_indices:
-            s = real_samples[i]
-            X_real_tr.append(s)
-            y_real_tr.append(class_id)
-            # Augmentation 1: slight jitter
-            jitter = np.random.normal(0, 0.01, size=s.shape).astype(np.float32)
-            X_real_tr.append(s + jitter)
-            y_real_tr.append(class_id)
-            # Augmentation 2: slight scaling
-            scale = np.random.uniform(0.97, 1.03)
-            X_real_tr.append(s * scale)
-            y_real_tr.append(class_id)
-            # Augmentation 3: slight spatial translation shift
-            shift = np.random.uniform(-0.015, 0.015, size=(1, s.shape[1])).astype(np.float32)
-            X_real_tr.append(s + shift)
-            y_real_tr.append(class_id)
+        # Balanced class oversampling: guarantee at least 48 samples per real class
+        reps = max(1, 48 // max(1, len(tr_indices) * 4))
+        for _ in range(reps):
+            for i in tr_indices:
+                s = real_samples[i]
+                X_real_tr.append(s)
+                y_real_tr.append(class_id)
+                # Augmentation 1: slight jitter
+                jitter = np.random.normal(0, 0.01, size=s.shape).astype(np.float32)
+                X_real_tr.append(s + jitter)
+                y_real_tr.append(class_id)
+                # Augmentation 2: slight scaling
+                scale = np.random.uniform(0.97, 1.03)
+                X_real_tr.append(s * scale)
+                y_real_tr.append(class_id)
+                # Augmentation 3: slight spatial translation shift
+                shift = np.random.uniform(-0.015, 0.015, size=(1, s.shape[1])).astype(np.float32)
+                X_real_tr.append(s + shift)
+                y_real_tr.append(class_id)
 
         for i in val_indices:
             s = real_samples[i]

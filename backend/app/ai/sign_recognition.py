@@ -2,7 +2,8 @@ import cv2
 import numpy as np
 
 SUPPORTED_CAMERA_SIGNS = [
-    {"sign": "HELLO", "label": "Hello / Namaste", "meaning": "Greetings"},
+    {"sign": "HELLO", "label": "Hello", "meaning": "Greetings / Wave"},
+    {"sign": "NAMASTE", "label": "Namaste", "meaning": "Traditional Two-Hand Greeting"},
     {"sign": "THANK YOU", "label": "Thank You", "meaning": "Gratitude"},
     {"sign": "GOODBYE", "label": "Goodbye", "meaning": "Farewell"},
     {"sign": "YES", "label": "Yes / Thumbs Up", "meaning": "Agreement"},
@@ -60,8 +61,10 @@ def analyze_hand_frame(frame: np.ndarray) -> dict:
             "message": "No hand detected. Position hand clearly in front of camera.",
         }
 
-    # Filter valid hand candidate contours
-    valid_contours = [c for c in contours if cv2.contourArea(c) > (w * h * 0.012)]
+    # Filter valid hand candidate contours (adaptive area threshold)
+    valid_contours = [c for c in contours if cv2.contourArea(c) > (w * h * 0.003)]
+    if not valid_contours:
+        valid_contours = [c for c in contours if cv2.contourArea(c) > (w * h * 0.001)]
     if not valid_contours:
         return {
             "detected": False,

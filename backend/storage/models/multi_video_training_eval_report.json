@@ -1,0 +1,188 @@
+{
+  "timestamp": 1792846924.6578226,
+  "total_classes": 67,
+  "models": {
+    "bi_lstm": {
+      "best_val_accuracy": 0.9356435643564357,
+      "epochs_trained": 15,
+      "training_time_sec": 41.25,
+      "checkpoint": "C:\\Users\\UJJWAL SINGH\\OneDrive\\Desktop\\Bharat-Sign-AI-3-Sign-Working\\backend\\app\\ai\\include\\weights\\include50_lstm.pth"
+    },
+    "fast_cnn": {
+      "best_val_accuracy": 0.594059405940594,
+      "epochs_trained": 15,
+      "training_time_sec": 8852.5,
+      "checkpoint": "C:\\Users\\UJJWAL SINGH\\OneDrive\\Desktop\\Bharat-Sign-AI-3-Sign-Working\\backend\\app\\ai\\include\\weights\\include50_cnn.pth"
+    }
+  },
+  "video_evaluations": [
+    {
+      "video_id": "SIGN_VIDEO_001",
+      "filename": "MVI_9431.MOV",
+      "assigned_label": "UNVERIFIED_001",
+      "verification_status": "PENDING",
+      "lstm_prediction": [
+        {
+          "class_id": 54,
+          "label": "good",
+          "confidence": 0.9771
+        },
+        {
+          "class_id": 51,
+          "label": "old",
+          "confidence": 0.0048
+        },
+        {
+          "class_id": 42,
+          "label": "thankyou",
+          "confidence": 0.0007
+        }
+      ],
+      "lstm_latency_ms": 20.16,
+      "cnn_prediction": [
+        {
+          "class_id": 54,
+          "label": "good",
+          "confidence": 0.936
+        },
+        {
+          "class_id": 51,
+          "label": "old",
+          "confidence": 0.0149
+        },
+        {
+          "class_id": 52,
+          "label": "young",
+          "confidence": 0.0027
+        }
+      ],
+      "cnn_latency_ms": 5.66
+    },
+    {
+      "video_id": "SIGN_VIDEO_002",
+      "filename": "MVI_9432.MOV",
+      "assigned_label": "UNVERIFIED_002",
+      "verification_status": "PENDING",
+      "lstm_prediction": [
+        {
+          "class_id": 54,
+          "label": "good",
+          "confidence": 0.9779
+        },
+        {
+          "class_id": 51,
+          "label": "old",
+          "confidence": 0.0046
+        },
+        {
+          "class_id": 42,
+          "label": "thankyou",
+          "confidence": 0.0007
+        }
+      ],
+      "lstm_latency_ms": 543.31,
+      "cnn_prediction": [
+        {
+          "class_id": 54,
+          "label": "good",
+          "confidence": 0.9477
+        },
+        {
+          "class_id": 51,
+          "label": "old",
+          "confidence": 0.0124
+        },
+        {
+          "class_id": 52,
+          "label": "young",
+          "confidence": 0.0019
+        }
+      ],
+      "cnn_latency_ms": 1.66
+    },
+    {
+      "video_id": "SIGN_VIDEO_003",
+      "filename": "MVI_9510.MOV",
+      "assigned_label": "UNVERIFIED_003",
+      "verification_status": "PENDING",
+      "lstm_prediction": [
+        {
+          "class_id": 54,
+          "label": "good",
+          "confidence": 0.9685
+        },
+        {
+          "class_id": 51,
+          "label": "old",
+          "confidence": 0.0053
+        },
+        {
+          "class_id": 42,
+          "label": "thankyou",
+          "confidence": 0.0011
+        }
+      ],
+      "lstm_latency_ms": 118.36,
+      "cnn_prediction": [
+        {
+          "class_id": 54,
+          "label": "good",
+          "confidence": 0.9808
+        },
+        {
+          "class_id": 51,
+          "label": "old",
+          "confidence": 0.0033
+        },
+        {
+          "class_id": 52,
+          "label": "young",
+          "confidence": 0.0006
+        }
+      ],
+      "cnn_latency_ms": 1.41
+    },
+    {
+      "video_id": "SIGN_VIDEO_004",
+      "filename": "MVI_9511.MOV",
+      "assigned_label": "UNVERIFIED_004",
+      "verification_status": "PENDING",
+      "lstm_prediction": [
+        {
+          "class_id": 54,
+          "label": "good",
+          "confidence": 0.968
+        },
+        {
+          "class_id": 51,
+          "label": "old",
+          "confidence": 0.0086
+        },
+        {
+          "class_id": 42,
+          "label": "thankyou",
+          "confidence": 0.001
+        }
+      ],
+      "lstm_latency_ms": 228.17,
+      "cnn_prediction": [
+        {
+          "class_id": 54,
+          "label": "good",
+          "confidence": 0.9449
+        },
+        {
+          "class_id": 51,
+          "label": "old",
+          "confidence": 0.0102
+        },
+        {
+          "class_id": 52,
+          "label": "young",
+          "confidence": 0.0027
+        }
+      ],
+      "cnn_latency_ms": 2.24
+    }
+  ]
+}

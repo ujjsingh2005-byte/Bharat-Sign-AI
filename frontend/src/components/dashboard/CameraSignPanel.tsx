@@ -14,6 +14,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { API_BASE_URL as API } from "../../utils/apiConfig";
+import SignTrainingStudio from "./SignTrainingStudio";
 
 interface AlternativePrediction {
   sign: string;
@@ -28,11 +29,17 @@ export default function CameraSignPanel() {
   const intervalRef = useRef<number | null>(null);
   const animFrameRef = useRef<number | null>(null);
   const sendingFrameRef = useRef(false);
+  const isProcessingHandRef = useRef(false);
+  const allHandsLandmarksRef = useRef<any[][]>([]);
   const mediaPipeHandsRef = useRef<any>(null);
 
   const [cameraOn, setCameraOn] = useState(false);
   const [detecting, setDetecting] = useState(false);
+  const [handDetected, setHandDetected] = useState(false);
+  const [handCount, setHandCount] = useState(0);
   const [targetLanguage, setTargetLanguage] = useState("en");
+  const [panelMode, setPanelMode] = useState<"recognition" | "training">("recognition");
+  const allHandsHandednessRef = useRef<string[]>(["Right"]);
 
   // Recognition Results
   const [detectedSign, setDetectedSign] = useState<string | null>(null);
@@ -45,7 +52,7 @@ export default function CameraSignPanel() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showVocabList, setShowVocabList] = useState(false);
   const [datasetStatus, setDatasetStatus] = useState<any>(null);
-  const [activeModelSource, setActiveModelSource] = useState<string>("playlist");
+  const [activeModelSource, setActiveModelSource] = useState<string>("colab");
   const [detectedLesson, setDetectedLesson] = useState<number | null>(null);
   const [detectedLessonTitle, setDetectedLessonTitle] = useState<string | null>(null);
   const [playlistCurriculum, setPlaylistCurriculum] = useState<any[]>([]);
@@ -136,7 +143,7 @@ export default function CameraSignPanel() {
     { sign: "8", hi: "संख्या 8", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
     { sign: "9", hi: "संख्या 9", lesson: 2, lessonTitle: "Numbers", category: "Numbers" },
     // Lesson 3: Basic Words 1
-    { sign: "HELLO", hi: "नमस्ते / हेलो", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
+    { sign: "HELLO", hi: "हेलो", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
     { sign: "NAMASTE", hi: "नमस्ते", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
     { sign: "THANK_YOU", hi: "धन्यवाद", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
     { sign: "PLEASE", hi: "कृपया", lesson: 3, lessonTitle: "Basic Words 1", category: "Greetings" },
@@ -291,6 +298,27 @@ export default function CameraSignPanel() {
     { sign: "BLIND", hi: "दृष्टिहीन" },
   ];
 
+  const COLAB_10_VOCAB = [
+    { sign: "HELLO", hi: "नमस्ते / हेलो", desc: "Open hand wave greeting beside head (100% Conf)" },
+    { sign: "NAMASTE", hi: "नमस्ते", desc: "Both palms joined in front of chest (Anjali mudra) (100% Conf)" },
+    { sign: "LOUD", hi: "तेज़ / ज़ोरदार", desc: "Hands radiating out indicating loud sound (93% Conf)" },
+    { sign: "QUIET", hi: "शांत", desc: "Index finger placed vertically against lips for silence (97% Conf)" },
+    { sign: "HAPPY", hi: "खुश", desc: "Both palms brushing upward repeatedly over chest (91% Conf)" },
+    { sign: "SAD", hi: "उदास / दुखी", desc: "Hand dropping down in front of face with sorrowful expression (95% Conf)" },
+    { sign: "BEAUTIFUL", hi: "सुंदर", desc: "Fingers opening gracefully in circular contour around face (87% Conf)" },
+    { sign: "UGLY", hi: "कुरूप / भद्दा", desc: "Hooked finger crossing across face in front of nose (91% Conf)" },
+    { sign: "DEAF", hi: "बधिर / बहरा", desc: "Index finger pointing to ear then touching closed mouth (96% Conf)" },
+    { sign: "BLIND", hi: "दृष्टिहीन / अंधा", desc: "Inverted V-hand pointing towards eyes then folding closed (98% Conf)" },
+    { sign: "SHALLOW", hi: "उथला / कम गहरा", desc: "Flat palm indicating shallow depth or low water level (91% Conf)" },
+    { sign: "CLEAN", hi: "साफ़ / स्वच्छ", desc: "Palms wiping outward cleanly across flat surface (88% Conf)" },
+    { sign: "DIRTY", hi: "गंदा / मैला", desc: "Hand moving under chin with fluttering fingers indicating stain (88% Conf)" },
+    { sign: "STRONG", hi: "मजबूत / बलवान", desc: "Both fists clenching firmly downward showing strength (98% Conf)" },
+    { sign: "WEAK", hi: "कमज़ोर", desc: "Fingers bent downward trembling softly showing weakness (88% Conf)" },
+    { sign: "DEAD", hi: "मृत / मरा हुआ", desc: "Both hands flipping palms from up to limp down (88% Conf)" },
+    { sign: "ALIVE", hi: "जीवित / ज़िंदा", desc: "Hands rising upward with index and thumb pointing to chest (91% Conf)" },
+    { sign: "HEAVY", hi: "भारी / वज़नदार", desc: "Both cupped hands dropping down under heavy weight (91% Conf)" },
+  ];
+
   const lastAddedSignRef = useRef<string | null>(null);
   const signHoldCountRef = useRef<number>(0);
   const liveLandmarksRef = useRef<any[] | null>(null);
@@ -364,27 +392,94 @@ export default function CameraSignPanel() {
 
     overlay.width = video.videoWidth || 640;
     overlay.height = video.videoHeight || 480;
+    const w = overlay.width;
+    const h = overlay.height;
 
-    ctx.clearRect(0, 0, overlay.width, overlay.height);
+    ctx.clearRect(0, 0, w, h);
 
+    // Trigger continuous real-time 30-60 FPS hand tracking
+    if (mediaPipeHandsRef.current && video.readyState >= 2 && !isProcessingHandRef.current) {
+      isProcessingHandRef.current = true;
+      mediaPipeHandsRef.current.send({ image: video })
+        .catch(() => {})
+        .finally(() => {
+          isProcessingHandRef.current = false;
+        });
+    }
+
+    // 1. ALWAYS draw all 21 (or 42) MediaPipe hand landmarks with glowing bones
+    const handsToDraw = allHandsLandmarksRef.current.length > 0 
+      ? allHandsLandmarksRef.current 
+      : (liveLandmarksRef.current ? [liveLandmarksRef.current] : []);
+
+    if (handsToDraw.length > 0) {
+      const HAND_CONNECTIONS = [
+        [0,1],[1,2],[2,3],[3,4], // Thumb
+        [0,5],[5,6],[6,7],[7,8], // Index
+        [5,9],[9,10],[10,11],[11,12], // Middle
+        [9,13],[13,14],[14,15],[15,16], // Ring
+        [13,17],[17,18],[18,19],[19,20],[0,17] // Pinky & Palm
+      ];
+
+      handsToDraw.forEach((landmarks, handIdx) => {
+        if (!landmarks || landmarks.length < 21) return;
+        const mainColor = handIdx === 0 ? "#22c55e" : "#06b6d4"; // Hand 1: Bright Green, Hand 2: Vivid Cyan
+        const tipColor = handIdx === 0 ? "#ef4444" : "#f59e0b";
+        const wristColor = handIdx === 0 ? "#3b82f6" : "#8b5cf6";
+
+        // Draw glowing skeleton bone connections
+        ctx.shadowColor = mainColor;
+        ctx.shadowBlur = 10;
+        ctx.strokeStyle = mainColor;
+        ctx.lineWidth = 4;
+        HAND_CONNECTIONS.forEach(([i, j]) => {
+          const p1 = landmarks[i];
+          const p2 = landmarks[j];
+          if (p1 && p2) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x * w, p1.y * h);
+            ctx.lineTo(p2.x * w, p2.y * h);
+            ctx.stroke();
+          }
+        });
+        ctx.shadowBlur = 0;
+
+        // Draw all 21 landmark nodes with high-contrast outlines & fingertip highlights
+        landmarks.forEach((pt: any, idx: number) => {
+          const px = pt.x * w;
+          const py = pt.y * h;
+          const isTip = idx === 4 || idx === 8 || idx === 12 || idx === 16 || idx === 20;
+          const isWrist = idx === 0;
+
+          // Outer halo
+          ctx.beginPath();
+          ctx.arc(px, py, isTip ? 8 : isWrist ? 7 : 5, 0, Math.PI * 2);
+          ctx.fillStyle = isWrist ? wristColor : isTip ? tipColor : mainColor;
+          ctx.fill();
+
+          // Inner white center
+          ctx.beginPath();
+          ctx.arc(px, py, isTip ? 4 : isWrist ? 3.5 : 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = "#ffffff";
+          ctx.fill();
+        });
+      });
+    }
+
+    // 2. If actively detecting, draw scanning laser and guide box
     if (detecting) {
-      const w = overlay.width;
-      const h = overlay.height;
       const time = performance.now() * 0.003;
-
-      // Draw bounding guide box
       const boxX = w * 0.2;
       const boxY = h * 0.1;
       const boxW = w * 0.6;
       const boxH = h * 0.8;
 
-      ctx.strokeStyle = "rgba(59, 130, 246, 0.5)";
+      ctx.strokeStyle = "rgba(59, 130, 246, 0.4)";
       ctx.lineWidth = 2;
       ctx.setLineDash([6, 6]);
       ctx.strokeRect(boxX, boxY, boxW, boxH);
       ctx.setLineDash([]);
 
-      // Draw active scanner laser line
       const scanY = boxY + ((Math.sin(time * 2.5) + 1) / 2) * boxH;
       const grad = ctx.createLinearGradient(boxX, scanY, boxX + boxW, scanY);
       grad.addColorStop(0, "rgba(59, 130, 246, 0)");
@@ -396,46 +491,17 @@ export default function CameraSignPanel() {
       ctx.moveTo(boxX, scanY);
       ctx.lineTo(boxX + boxW, scanY);
       ctx.stroke();
+    }
 
-      // If MediaPipe hand landmarks are detected, draw directly over actual hand
-      const landmarks = liveLandmarksRef.current;
-      if (landmarks && landmarks.length >= 21) {
-        // MediaPipe connections for hand skeleton
-        const HAND_CONNECTIONS = [
-          [0,1],[1,2],[2,3],[3,4], // Thumb
-          [0,5],[5,6],[6,7],[7,8], // Index
-          [5,9],[9,10],[10,11],[11,12], // Middle
-          [9,13],[13,14],[14,15],[15,16], // Ring
-          [13,17],[17,18],[18,19],[19,20],[0,17] // Pinky & Palm
-        ];
-
-        // Draw bone connection lines
-        ctx.strokeStyle = "#22c55e";
-        ctx.lineWidth = 3;
-        HAND_CONNECTIONS.forEach(([i, j]) => {
-          const p1 = landmarks[i];
-          const p2 = landmarks[j];
-          if (p1 && p2) {
-            ctx.beginPath();
-            ctx.moveTo(p1.x * w, p1.y * h);
-            ctx.lineTo(p2.x * w, p2.y * h);
-            ctx.stroke();
-          }
+    // 3. Real-time continuous MediaPipe tracking pump
+    if (cameraOn && video && video.readyState >= 2 && !isProcessingHandRef.current && mediaPipeHandsRef.current) {
+      isProcessingHandRef.current = true;
+      mediaPipeHandsRef.current
+        .send({ image: video })
+        .catch(() => {})
+        .finally(() => {
+          isProcessingHandRef.current = false;
         });
-
-        // Draw 21 landmark nodes
-        landmarks.forEach((pt: any, idx: number) => {
-          const px = pt.x * w;
-          const py = pt.y * h;
-          ctx.fillStyle = idx === 0 ? "#3b82f6" : idx % 4 === 0 ? "#ef4444" : "#22c55e";
-          ctx.beginPath();
-          ctx.arc(px, py, idx % 4 === 0 ? 6 : 4, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.strokeStyle = "#ffffff";
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-        });
-      }
     }
 
     animFrameRef.current = requestAnimationFrame(drawOverlay);
@@ -453,34 +519,68 @@ export default function CameraSignPanel() {
   }, [cameraOn, drawOverlay]);
 
   // -------------------------------------------------------------
-  // Initialize MediaPipe Hands client-side if available
+  // Initialize MediaPipe Hands client-side with Local High-Performance Assets
   // -------------------------------------------------------------
   useEffect(() => {
-    if ((window as any).Hands) {
+    let handsInstance: any = null;
+    let cancelled = false;
+
+    const initHands = () => {
+      if (cancelled) return;
+      if (!(window as any).Hands) {
+        setTimeout(initHands, 100);
+        return;
+      }
       try {
-        const hands = new (window as any).Hands({
-          locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
+        handsInstance = new (window as any).Hands({
+          locateFile: (file: string) => `/mediapipe/${file}`,
         });
-        hands.setOptions({
+        handsInstance.setOptions({
           maxNumHands: 2,
           modelComplexity: 1,
-          minDetectionConfidence: 0.5,
-          minTrackingConfidence: 0.5,
+          minDetectionConfidence: 0.4,
+          minTrackingConfidence: 0.4,
         });
 
-        hands.onResults((results: any) => {
+        handsInstance.onResults((results: any) => {
+          if (cancelled) return;
           if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+            allHandsLandmarksRef.current = results.multiHandLandmarks;
             liveLandmarksRef.current = results.multiHandLandmarks[0];
+            if (results.multiHandedness && results.multiHandedness.length > 0) {
+              allHandsHandednessRef.current = results.multiHandedness.map((h: any) => h.label || "Right");
+            } else {
+              allHandsHandednessRef.current = ["Right"];
+            }
+            setHandDetected(true);
+            setHandCount(results.multiHandLandmarks.length);
           } else {
+            allHandsHandednessRef.current = ["Right"];
+            allHandsLandmarksRef.current = [];
             liveLandmarksRef.current = null;
+            setHandDetected(false);
+    setHandCount(0);
+            setHandCount(0);
           }
         });
 
-        mediaPipeHandsRef.current = hands;
+        mediaPipeHandsRef.current = handsInstance;
+        console.log("MediaPipe Hands loaded successfully from official CDN!");
       } catch (e) {
-        console.warn("MediaPipe Hands setup note:", e);
+        console.warn("MediaPipe Hands setup error:", e);
       }
-    }
+    };
+
+    initHands();
+
+    return () => {
+      cancelled = true;
+      if (handsInstance && typeof handsInstance.close === "function") {
+        try {
+          handsInstance.close();
+        } catch {}
+      }
+    };
   }, []);
 
   // -------------------------------------------------------------
@@ -494,6 +594,8 @@ export default function CameraSignPanel() {
     sendingFrameRef.current = false;
     liveLandmarksRef.current = null;
     setDetecting(false);
+    setHandDetected(false);
+    setHandCount(0);
   };
 
   const stopCamera = () => {
@@ -553,7 +655,9 @@ export default function CameraSignPanel() {
 
       await video.play();
       setCameraOn(true);
-      setTranslatedText("Camera ready. Click 'Start Detection' to begin recognizing gestures.");
+      setDetecting(true);
+      setTranslatedText("Camera & 21-Landmark Vision Active. Detecting signs...");
+      startDetectionLoop();
     } catch (err: any) {
       console.error("Camera access error:", err);
       setCameraOn(false);
@@ -620,6 +724,8 @@ export default function CameraSignPanel() {
       setAlternatives([]);
       setDetectedLesson(null);
       setDetectedLessonTitle(null);
+      lastAddedSignRef.current = null;
+      signHoldCountRef.current = 0;
       setTranslatedText(data?.text || data?.message || "Place hand inside camera frame");
     }
   }, [playAudioOutput, targetLanguage, autoVoiceOutput]);
@@ -645,12 +751,14 @@ export default function CameraSignPanel() {
 
     try {
       // 1. If MediaPipe landmarks are available, send high-precision landmarks
-      const landmarks = liveLandmarksRef.current;
+      const landmarks = liveLandmarksRef.current || (allHandsLandmarksRef.current.length > 0 ? allHandsLandmarksRef.current[0] : null);
       if (landmarks && landmarks.length >= 21) {
         const res = await axios.post(`${API}/sign/recognize-landmarks`, {
           landmarks: landmarks,
+          all_hands: allHandsLandmarksRef.current,
           target_language: targetLanguage,
           sign_language: signDialect,
+          model_source: activeModelSource,
         });
         handleRecognitionData(res.data);
         return;
@@ -694,7 +802,23 @@ export default function CameraSignPanel() {
   // -------------------------------------------------------------
   // Start Gesture Detection Loop
   // -------------------------------------------------------------
+  const startDetectionLoop = () => {
+    captureAndSendFrame();
+    if (intervalRef.current !== null) {
+      window.clearInterval(intervalRef.current);
+    }
+    intervalRef.current = window.setInterval(() => {
+      captureAndSendFrame();
+    }, 500);
+  };
+
   const startDetection = () => {
+    setDetecting(true);
+    setTranslatedText("Scanning camera for sign language gestures...");
+    startDetectionLoop();
+  };
+
+  const _oldStartDetection = () => {
     if (!cameraOn) {
       alert("Please start the camera first.");
       return;
@@ -728,6 +852,43 @@ export default function CameraSignPanel() {
 
   return (
     <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 shadow-2xl space-y-6">
+      {/* Mode Switcher: Live Recognition vs Train Signs Studio */}
+      <div className="flex flex-wrap items-center justify-between gap-3 p-2 rounded-2xl bg-slate-950 border border-slate-800">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setPanelMode("recognition")}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition ${
+              panelMode === "recognition"
+                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
+                : "text-slate-400 hover:text-white hover:bg-slate-900"
+            }`}
+          >
+            <Camera size={15} />
+            <span>Live Camera Recognition</span>
+          </button>
+
+          <button
+            onClick={() => setPanelMode("training")}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition ${
+              panelMode === "training"
+                ? "bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg shadow-amber-500/25"
+                : "text-slate-400 hover:text-white hover:bg-slate-900"
+            }`}
+          >
+            <BookOpen size={15} />
+            <span>Train Signs Studio</span>
+            <span className="bg-amber-500/20 text-amber-300 text-[10px] px-2 py-0.5 rounded-full border border-amber-500/30 font-bold">
+              80 ISL Signs
+            </span>
+          </button>
+        </div>
+
+        <div className="flex items-center gap-2 text-xs text-slate-400 px-2 font-mono">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span>21 Landmarks Vision Engine Active</span>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
@@ -840,6 +1001,12 @@ export default function CameraSignPanel() {
               onChange={(e) => handleSwitchModel(e.target.value)}
               className="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer"
             >
+              <option value="expanded_80" className="bg-slate-900 text-amber-300 font-bold">
+                🎯 Bharat 80-Sign Trained Model (Custom ISL Studio)
+              </option>
+              <option value="colab" className="bg-slate-900 text-white font-semibold">
+                ⚡ ISL 18-Sign Model (Hello • Namaste • 16 Adjectives)
+              </option>
               <option value="playlist" className="bg-slate-900 text-white font-semibold">
                 🎓 ISL 101 Playlist Model (123 Signs • 99.7% Acc)
               </option>
@@ -861,7 +1028,11 @@ export default function CameraSignPanel() {
           >
             <BookOpen size={14} className="text-indigo-400" />
             <span>
-              {activeModelSource === "playlist" ? "Curriculum (123 Signs)" : "INCLUDE (50 Signs)"}
+              {activeModelSource === "colab"
+                ? "ISL 18-Sign Model (18 Signs)"
+                : activeModelSource === "playlist"
+                ? "Curriculum (123 Signs)"
+                : "INCLUDE (50 Signs)"}
             </span>
             <span className="text-[10px] bg-indigo-500/30 text-indigo-200 px-1.5 py-0.2 rounded font-extrabold">
               {showVocabList ? "Hide" : "View"}
@@ -877,7 +1048,9 @@ export default function CameraSignPanel() {
             <div className="flex items-center gap-2">
               <Sparkles size={16} className="text-indigo-400" />
               <h4 className="text-sm font-bold text-white">
-                {activeModelSource === "playlist"
+                {activeModelSource === "colab"
+                  ? "18 Classes • ISL Real-Video Trained (92.0% Accuracy)"
+                  : activeModelSource === "playlist"
                   ? "Indian Sign Language 101 — YouTube Playlist Curriculum"
                   : "AI4Bharat INCLUDE-50 Supported Signs & Gestures"}
               </h4>
@@ -885,14 +1058,46 @@ export default function CameraSignPanel() {
             <div className="flex items-center gap-2">
               <span className="text-xs text-emerald-300 font-semibold bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                {activeModelSource === "playlist"
+                {activeModelSource === "colab"
+                  ? "18 Classes • ISL Real-Video Trained (92.0% Accuracy)"
+                  : activeModelSource === "playlist"
                   ? "123 Classes • 13 Lessons • 99.73% Accuracy (Bi-LSTM / 1D-CNN)"
                   : "50 Classes • Official AI4Bharat Pretrained Weights"}
               </span>
             </div>
           </div>
 
-          {activeModelSource === "playlist" ? (
+          {activeModelSource === "colab" ? (
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/20 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-emerald-300 font-bold">
+                    Google Colab Trained Model (RandomForest):
+                  </span>
+                  <span className="text-slate-300">
+                    Trained on 167 real ISL video sequences (2,076 MediaPipe frames) across Hello, Namaste, and 16 distinct Adjectives
+                  </span>
+                </div>
+                <span className="text-[11px] text-emerald-300 font-mono">
+                  18 Trained Signs (92.0% Acc)
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {COLAB_10_VOCAB.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition flex flex-col justify-between shadow"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-black text-emerald-400">{item.sign}</span>
+                      <span className="text-xs text-slate-300 font-semibold">{item.hi}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400 mt-2">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : activeModelSource === "playlist" ? (
             <div className="space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-purple-950/40 border border-purple-500/20 text-xs">
                 <div className="flex items-center gap-2">
@@ -1009,6 +1214,21 @@ export default function CameraSignPanel() {
           }`}
         />
 
+        {/* Live HUD Floating Recognition Banner */}
+        {cameraOn && detectedSign && (
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-950/85 backdrop-blur-md border border-emerald-500/70 px-6 py-2.5 rounded-2xl shadow-2xl flex items-center gap-3 z-30 animate-in fade-in duration-200">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            <span className="text-emerald-400 font-black text-xl tracking-wider">{detectedSign}</span>
+            <span className="text-slate-100 text-lg font-bold">({translatedText})</span>
+            <span className="text-xs bg-emerald-950 text-emerald-300 font-mono font-bold px-2.5 py-1 rounded-full border border-emerald-600/50">
+              {confidence}%
+            </span>
+          </div>
+        )}
+
         {/* Camera Off Placeholder */}
         {!cameraOn && (
           <div className="text-center p-6">
@@ -1017,6 +1237,22 @@ export default function CameraSignPanel() {
             <p className="text-xs text-slate-500 mt-1">
               Click 'Start Camera' below to launch real-time ISL recognition.
             </p>
+          </div>
+        )}
+
+        {/* Live Hand Tracking HUD Badge */}
+        {cameraOn && (
+          <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+            {handDetected ? (
+              <span className="bg-emerald-600/95 text-white font-mono text-[11px] px-3 py-1 rounded-full shadow-lg border border-emerald-400 flex items-center gap-1.5 font-bold animate-pulse">
+                <span className="w-2 h-2 rounded-full bg-white" />
+                {handCount >= 2 ? "42 Landmarks Active (Both Hands)" : "21 Landmarks Active (Single Hand)"} • {activeModelSource === "colab" ? "Colab Model" : "ISL Model"}
+              </span>
+            ) : (
+              <span className="bg-slate-900/80 text-slate-300 font-mono text-[11px] px-3 py-1 rounded-full shadow border border-slate-700 flex items-center gap-1.5 font-semibold">
+                Bring hand into frame...
+              </span>
+            )}
           </div>
         )}
 
@@ -1083,6 +1319,23 @@ export default function CameraSignPanel() {
         )}
       </div>
 
+      {/* Mode Specific Body: Recognition Output vs Training Studio */}
+      {panelMode === "training" ? (
+        <SignTrainingStudio
+          cameraOn={cameraOn}
+          startCamera={startCamera}
+          stopCamera={stopCamera}
+          handDetected={handDetected}
+          handCount={handCount}
+          allHandsLandmarksRef={allHandsLandmarksRef}
+          liveLandmarksRef={liveLandmarksRef}
+          allHandsHandednessRef={allHandsHandednessRef}
+          onModelTrained={() => {
+            setActiveModelSource("expanded_80");
+          }}
+        />
+      ) : (
+        <>
       {/* Recognized Gesture Output Card */}
       <div className="rounded-2xl border border-slate-800 bg-slate-950 p-5 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -1094,7 +1347,7 @@ export default function CameraSignPanel() {
               </span>
             )}
             <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">
-              {activeModelSource === "playlist" ? "ISL 101 Playlist Model" : "AI4Bharat INCLUDE-50"}
+              {activeModelSource === "colab" ? "⚡ Google Colab Model" : activeModelSource === "playlist" ? "ISL 101 Playlist Model" : "AI4Bharat INCLUDE-50"}
             </span>
           </div>
           {confidence > 0 && (
@@ -1205,6 +1458,8 @@ export default function CameraSignPanel() {
           )}
         </div>
       </div>
+        </>
+      )}
     </div>
   );
 }

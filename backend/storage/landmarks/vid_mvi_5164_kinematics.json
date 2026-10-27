@@ -1,0 +1,55 @@
+{
+  "sign_id": "UNKNOWN_SIGN_006",
+  "video_id": "vid_mvi_5164",
+  "duration": 3.32,
+  "status": "PENDING",
+  "meaning": "UNVERIFIED",
+  "gesture": {
+    "gesture_type": "two_hand_dynamic_gesture",
+    "initial_pose": "Both hands resting near the sides of the body at hip level",
+    "movement_sequence": [
+      {
+        "phase": 1,
+        "interval_sec": [
+          0.0,
+          0.83
+        ],
+        "action": "Right hand begins elevating toward upper chest first, followed by left hand rising from hip."
+      },
+      {
+        "phase": 2,
+        "interval_sec": [
+          0.83,
+          1.33
+        ],
+        "action": "Both hands enter the signing space in front of the center chest, palms facing each other/forward with fingers upright."
+      },
+      {
+        "phase": 3,
+        "interval_sec": [
+          1.33,
+          2.16
+        ],
+        "action": "Both hands interact in front of chest with slight downward wringing/compression pulse and attentive head nod."
+      },
+      {
+        "phase": 4,
+        "interval_sec": [
+          2.16,
+          2.82
+        ],
+        "action": "Both hands descend smoothly along the front torso back toward the hips."
+      },
+      {
+        "phase": 5,
+        "interval_sec": [
+          2.82,
+          3.32
+        ],
+        "action": "Both hands return to bilateral neutral standby rest beside the hips."
+      }
+    ],
+    "finger_configuration": "Fingers extended upright in flat B configuration on both hands, palms oriented inward/forward",
+    "facial_expression": "Attentive, focused facial expression with subtle affirmative nod during chest interaction"
+  }
+}

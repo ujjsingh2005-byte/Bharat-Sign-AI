@@ -1,5 +1,5 @@
 {
-  "timestamp": 1792441756.7568603,
+  "timestamp": 1792829377.462014,
   "video_dir": "C:\\Users\\UJJWAL SINGH\\Downloads\\adjective 1file",
   "models_trained": [
     "lstm",
@@ -11,596 +11,1287 @@
     "lstm": {
       "success": true,
       "model_type": "lstm",
-      "best_val_acc": 0.8508064516129032,
-      "checkpoint_path": "C:\\Users\\UJJWAL SINGH\\OneDrive\\Desktop\\Bharat-Sign-AI-3-Sign-Working\\zip\\backend\\app\\ai\\include\\weights\\include50_lstm.pth",
+      "best_val_acc": 0.7536945812807881,
+      "checkpoint_path": "C:\\Users\\UJJWAL SINGH\\OneDrive\\Desktop\\Bharat-Sign-AI-3-Sign-Working\\backend\\app\\ai\\include\\weights\\include50_lstm.pth",
       "history": [
         {
           "epoch": 1,
-          "train_loss": 3.5016,
-          "train_acc": 0.1049,
-          "val_acc": 0.2056,
-          "top5_acc": 0.5685
+          "train_loss": 3.7927,
+          "train_acc": 0.1322,
+          "val_acc": 0.1823,
+          "top5_acc": 0.5074
         },
         {
           "epoch": 2,
-          "train_loss": 2.4669,
-          "train_acc": 0.3211,
-          "val_acc": 0.4274,
-          "top5_acc": 0.7903
+          "train_loss": 3.0083,
+          "train_acc": 0.19,
+          "val_acc": 0.2069,
+          "top5_acc": 0.7685
         },
         {
           "epoch": 3,
-          "train_loss": 1.6766,
-          "train_acc": 0.5538,
-          "val_acc": 0.5847,
-          "top5_acc": 0.9032
+          "train_loss": 2.475,
+          "train_acc": 0.2538,
+          "val_acc": 0.3399,
+          "top5_acc": 0.9015
         },
         {
           "epoch": 4,
-          "train_loss": 1.2028,
-          "train_acc": 0.6998,
-          "val_acc": 0.6653,
-          "top5_acc": 0.9153
+          "train_loss": 2.1919,
+          "train_acc": 0.3146,
+          "val_acc": 0.4483,
+          "top5_acc": 0.9704
         },
         {
           "epoch": 5,
-          "train_loss": 0.8517,
-          "train_acc": 0.8264,
-          "val_acc": 0.746,
-          "top5_acc": 0.9758
+          "train_loss": 1.948,
+          "train_acc": 0.3845,
+          "val_acc": 0.5025,
+          "top5_acc": 1.0
         },
         {
           "epoch": 6,
-          "train_loss": 0.6352,
-          "train_acc": 0.9042,
-          "val_acc": 0.8387,
-          "top5_acc": 0.9839
+          "train_loss": 1.7948,
+          "train_acc": 0.4225,
+          "val_acc": 0.5665,
+          "top5_acc": 1.0
         },
         {
           "epoch": 7,
-          "train_loss": 0.4992,
-          "train_acc": 0.9477,
-          "val_acc": 0.7863,
-          "top5_acc": 0.9879
+          "train_loss": 1.6813,
+          "train_acc": 0.4635,
+          "val_acc": 0.5567,
+          "top5_acc": 1.0
         },
         {
           "epoch": 8,
-          "train_loss": 0.419,
-          "train_acc": 0.9751,
-          "val_acc": 0.8185,
-          "top5_acc": 0.9879
+          "train_loss": 1.5998,
+          "train_acc": 0.4894,
+          "val_acc": 0.5911,
+          "top5_acc": 1.0
         },
         {
           "epoch": 9,
-          "train_loss": 0.3845,
-          "train_acc": 0.9807,
-          "val_acc": 0.8185,
-          "top5_acc": 0.9758
+          "train_loss": 1.5004,
+          "train_acc": 0.5228,
+          "val_acc": 0.6995,
+          "top5_acc": 1.0
         },
         {
           "epoch": 10,
-          "train_loss": 0.3778,
-          "train_acc": 0.9823,
-          "val_acc": 0.8468,
-          "top5_acc": 0.9798
+          "train_loss": 1.4301,
+          "train_acc": 0.5669,
+          "val_acc": 0.7291,
+          "top5_acc": 1.0
         },
         {
           "epoch": 11,
-          "train_loss": 0.3797,
-          "train_acc": 0.9826,
-          "val_acc": 0.8427,
-          "top5_acc": 0.9798
+          "train_loss": 1.3623,
+          "train_acc": 0.5897,
+          "val_acc": 0.7537,
+          "top5_acc": 1.0
         },
         {
           "epoch": 12,
-          "train_loss": 0.3368,
-          "train_acc": 0.9928,
-          "val_acc": 0.8508,
-          "top5_acc": 0.9919
+          "train_loss": 1.3773,
+          "train_acc": 0.5441,
+          "val_acc": 0.6995,
+          "top5_acc": 1.0
+        },
+        {
+          "epoch": 13,
+          "train_loss": 1.3577,
+          "train_acc": 0.579,
+          "val_acc": 0.6847,
+          "top5_acc": 1.0
+        },
+        {
+          "epoch": 14,
+          "train_loss": 1.2849,
+          "train_acc": 0.5912,
+          "val_acc": 0.7389,
+          "top5_acc": 1.0
         }
       ],
-      "training_time_seconds": 95.11
+      "training_time_seconds": 42.51
     },
     "cnn": {
       "success": true,
       "model_type": "cnn",
-      "best_val_acc": 0.9596774193548387,
-      "checkpoint_path": "C:\\Users\\UJJWAL SINGH\\OneDrive\\Desktop\\Bharat-Sign-AI-3-Sign-Working\\zip\\backend\\app\\ai\\include\\weights\\include50_cnn.pth",
+      "best_val_acc": 0.4236453201970443,
+      "checkpoint_path": "C:\\Users\\UJJWAL SINGH\\OneDrive\\Desktop\\Bharat-Sign-AI-3-Sign-Working\\backend\\app\\ai\\include\\weights\\include50_cnn.pth",
       "history": [
         {
           "epoch": 1,
-          "train_loss": 2.8918,
-          "train_acc": 0.3528,
-          "val_acc": 0.3992,
-          "top5_acc": 0.7056
+          "train_loss": 3.5526,
+          "train_acc": 0.1246,
+          "val_acc": 0.0887,
+          "top5_acc": 0.3202
         },
         {
           "epoch": 2,
-          "train_loss": 1.5356,
-          "train_acc": 0.7169,
-          "val_acc": 0.5121,
-          "top5_acc": 0.8831
+          "train_loss": 2.9812,
+          "train_acc": 0.1778,
+          "val_acc": 0.1281,
+          "top5_acc": 0.6305
         },
         {
           "epoch": 3,
-          "train_loss": 0.8769,
-          "train_acc": 0.9082,
-          "val_acc": 0.7581,
-          "top5_acc": 0.9839
+          "train_loss": 2.6797,
+          "train_acc": 0.2067,
+          "val_acc": 0.2463,
+          "top5_acc": 0.7931
         },
         {
           "epoch": 4,
-          "train_loss": 0.5841,
-          "train_acc": 0.9602,
-          "val_acc": 0.9113,
-          "top5_acc": 0.9758
+          "train_loss": 2.5101,
+          "train_acc": 0.2264,
+          "val_acc": 0.2463,
+          "top5_acc": 0.8571
         },
         {
           "epoch": 5,
-          "train_loss": 0.4284,
-          "train_acc": 0.9894,
-          "val_acc": 0.7863,
-          "top5_acc": 0.9758
+          "train_loss": 2.4228,
+          "train_acc": 0.2356,
+          "val_acc": 0.266,
+          "top5_acc": 0.8966
         },
         {
           "epoch": 6,
-          "train_loss": 0.3781,
-          "train_acc": 0.995,
-          "val_acc": 0.9032,
-          "top5_acc": 0.9879
+          "train_loss": 2.3081,
+          "train_acc": 0.2462,
+          "val_acc": 0.335,
+          "top5_acc": 0.9409
         },
         {
           "epoch": 7,
-          "train_loss": 0.3648,
-          "train_acc": 0.9928,
-          "val_acc": 0.8992,
-          "top5_acc": 0.9919
+          "train_loss": 2.2239,
+          "train_acc": 0.2964,
+          "val_acc": 0.2562,
+          "top5_acc": 0.9557
         },
         {
           "epoch": 8,
-          "train_loss": 0.3357,
-          "train_acc": 0.9972,
-          "val_acc": 0.9274,
-          "top5_acc": 0.996
+          "train_loss": 2.2288,
+          "train_acc": 0.2705,
+          "val_acc": 0.266,
+          "top5_acc": 0.8916
         },
         {
           "epoch": 9,
-          "train_loss": 0.3213,
-          "train_acc": 0.9978,
-          "val_acc": 0.8911,
-          "top5_acc": 0.9839
+          "train_loss": 2.1573,
+          "train_acc": 0.2842,
+          "val_acc": 0.2463,
+          "top5_acc": 0.9064
         },
         {
           "epoch": 10,
-          "train_loss": 0.3138,
-          "train_acc": 0.9991,
-          "val_acc": 0.9597,
-          "top5_acc": 0.996
+          "train_loss": 2.1231,
+          "train_acc": 0.2857,
+          "val_acc": 0.3744,
+          "top5_acc": 0.9803
         },
         {
           "epoch": 11,
-          "train_loss": 0.3111,
-          "train_acc": 0.9969,
-          "val_acc": 0.9234,
-          "top5_acc": 0.9919
+          "train_loss": 2.09,
+          "train_acc": 0.2918,
+          "val_acc": 0.3399,
+          "top5_acc": 0.9704
         },
         {
           "epoch": 12,
-          "train_loss": 0.305,
-          "train_acc": 0.9991,
-          "val_acc": 0.9315,
-          "top5_acc": 0.9919
+          "train_loss": 2.0488,
+          "train_acc": 0.3207,
+          "val_acc": 0.33,
+          "top5_acc": 0.9704
+        },
+        {
+          "epoch": 13,
+          "train_loss": 2.0136,
+          "train_acc": 0.3328,
+          "val_acc": 0.4236,
+          "top5_acc": 1.0
+        },
+        {
+          "epoch": 14,
+          "train_loss": 1.9707,
+          "train_acc": 0.3176,
+          "val_acc": 0.2808,
+          "top5_acc": 1.0
         }
       ],
-      "training_time_seconds": 20.5
+      "training_time_seconds": 6.48
     }
   },
   "evaluation": [
     {
-      "video_name": "MVI_9699.MOV",
-      "target_class": "dead",
-      "target_id": 66,
-      "display": "Dead / Deceased",
-      "hi": "मृत / मरा हुआ",
+      "video_name": "MVI_5158.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
       "lstm": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9537304043769836,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9741143584251404,
         "is_correct": true,
         "top5": [
           {
-            "class": "dead",
-            "confidence": 0.9537304043769836,
-            "display": "Dead / Deceased",
-            "hi": "मृत / मरा हुआ"
+            "class": "good",
+            "confidence": 0.9741143584251404,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
           },
           {
-            "class": "dirty",
-            "confidence": 0.01900131069123745,
-            "display": "Dirty / Unclean",
-            "hi": "गंदा / मैला"
+            "class": "father",
+            "confidence": 0.001225799904204905,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
           },
           {
-            "class": "red",
-            "confidence": 0.0063032228499650955,
-            "display": "Red",
-            "hi": "लाल"
+            "class": "clean",
+            "confidence": 0.0009422756265848875,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
           },
           {
-            "class": "colour",
-            "confidence": 0.004710902459919453,
-            "display": "Colour / Color",
-            "hi": "रंग"
+            "class": "weak",
+            "confidence": 0.0009080925374291837,
+            "display": "Weak / Feeble",
+            "hi": "कमज़ोर / दुर्बल"
           },
           {
-            "class": "white",
-            "confidence": 0.004135412164032459,
-            "display": "White",
-            "hi": "सफ़ेद"
+            "class": "goodnight",
+            "confidence": 0.000899091362953186,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
           }
         ]
       },
       "cnn": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9767042398452759,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9913398623466492,
         "is_correct": true
       }
     },
     {
-      "video_name": "MVI_9700.MOV",
-      "target_class": "dead",
-      "target_id": 66,
-      "display": "Dead / Deceased",
-      "hi": "मृत / मरा हुआ",
+      "video_name": "MVI_5159.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
       "lstm": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9684991836547852,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9744970202445984,
         "is_correct": true,
         "top5": [
           {
-            "class": "dead",
-            "confidence": 0.9684991836547852,
-            "display": "Dead / Deceased",
-            "hi": "मृत / मरा हुआ"
+            "class": "good",
+            "confidence": 0.9744970202445984,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
           },
           {
-            "class": "colour",
-            "confidence": 0.01125915627926588,
-            "display": "Colour / Color",
-            "hi": "रंग"
+            "class": "father",
+            "confidence": 0.001206598593853414,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
           },
           {
-            "class": "dirty",
-            "confidence": 0.005040719639509916,
-            "display": "Dirty / Unclean",
-            "hi": "गंदा / मैला"
+            "class": "clean",
+            "confidence": 0.0009139072499237955,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
           },
           {
-            "class": "ugly",
-            "confidence": 0.004195401445031166,
-            "display": "Ugly",
-            "hi": "कुरूप / भद्दा"
+            "class": "weak",
+            "confidence": 0.0008856203057803214,
+            "display": "Weak / Feeble",
+            "hi": "कमज़ोर / दुर्बल"
           },
           {
-            "class": "red",
-            "confidence": 0.003017209470272064,
-            "display": "Red",
-            "hi": "लाल"
+            "class": "goodnight",
+            "confidence": 0.0008789282292127609,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
           }
         ]
       },
       "cnn": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9560177326202393,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9904166460037231,
         "is_correct": true
       }
     },
     {
-      "video_name": "MVI_9701.MOV",
-      "target_class": "dead",
-      "target_id": 66,
-      "display": "Dead / Deceased",
-      "hi": "मृत / मरा हुआ",
+      "video_name": "MVI_5160.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
       "lstm": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9685386419296265,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.97487872838974,
         "is_correct": true,
         "top5": [
           {
-            "class": "dead",
-            "confidence": 0.9685386419296265,
-            "display": "Dead / Deceased",
-            "hi": "मृत / मरा हुआ"
+            "class": "good",
+            "confidence": 0.97487872838974,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
           },
           {
-            "class": "dirty",
-            "confidence": 0.009521516039967537,
-            "display": "Dirty / Unclean",
-            "hi": "गंदा / मैला"
+            "class": "father",
+            "confidence": 0.0011919786920771003,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
           },
           {
-            "class": "colour",
-            "confidence": 0.005809832364320755,
-            "display": "Colour / Color",
-            "hi": "रंग"
+            "class": "goodnight",
+            "confidence": 0.0008841887465678155,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
           },
           {
-            "class": "ugly",
-            "confidence": 0.0038408630061894655,
-            "display": "Ugly",
-            "hi": "कुरूप / भद्दा"
+            "class": "clean",
+            "confidence": 0.0008665959467180073,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
           },
           {
-            "class": "young",
-            "confidence": 0.001584214041940868,
-            "display": "Young / Youth",
-            "hi": "युवा / जवान"
+            "class": "weak",
+            "confidence": 0.0008443520055152476,
+            "display": "Weak / Feeble",
+            "hi": "कमज़ोर / दुर्बल"
           }
         ]
       },
       "cnn": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9430719614028931,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9903528094291687,
         "is_correct": true
       }
     },
     {
-      "video_name": "MVI_9702.MOV",
-      "target_class": "dead",
-      "target_id": 66,
-      "display": "Dead / Deceased",
-      "hi": "मृत / मरा हुआ",
+      "video_name": "MVI_5238.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
       "lstm": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.8745394945144653,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9771724343299866,
         "is_correct": true,
         "top5": [
           {
-            "class": "dead",
-            "confidence": 0.8745394945144653,
-            "display": "Dead / Deceased",
-            "hi": "मृत / मरा हुआ"
+            "class": "good",
+            "confidence": 0.9771724343299866,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
           },
           {
-            "class": "colour",
-            "confidence": 0.059354256838560104,
-            "display": "Colour / Color",
-            "hi": "रंग"
+            "class": "father",
+            "confidence": 0.0010732297087088227,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
           },
           {
-            "class": "dirty",
-            "confidence": 0.027330324053764343,
-            "display": "Dirty / Unclean",
-            "hi": "गंदा / मैला"
+            "class": "goodevening",
+            "confidence": 0.0008282045600935817,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
           },
           {
-            "class": "white",
-            "confidence": 0.010395143181085587,
-            "display": "White",
-            "hi": "सफ़ेद"
+            "class": "goodnight",
+            "confidence": 0.0007667404715903103,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
           },
           {
-            "class": "ugly",
-            "confidence": 0.008849802426993847,
-            "display": "Ugly",
-            "hi": "कुरूप / भद्दा"
+            "class": "clean",
+            "confidence": 0.0007554204203188419,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
           }
         ]
       },
       "cnn": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.7263091206550598,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9811289310455322,
         "is_correct": true
       }
     },
     {
-      "video_name": "MVI_9823.MOV",
-      "target_class": "dead",
-      "target_id": 66,
-      "display": "Dead / Deceased",
-      "hi": "मृत / मरा हुआ",
+      "video_name": "MVI_5239.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
       "lstm": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9612732529640198,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.976679801940918,
         "is_correct": true,
         "top5": [
           {
-            "class": "dead",
-            "confidence": 0.9612732529640198,
-            "display": "Dead / Deceased",
-            "hi": "मृत / मरा हुआ"
+            "class": "good",
+            "confidence": 0.976679801940918,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
           },
           {
-            "class": "red",
-            "confidence": 0.009716540575027466,
-            "display": "Red",
-            "hi": "लाल"
+            "class": "father",
+            "confidence": 0.0010839476017281413,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
           },
           {
-            "class": "female",
-            "confidence": 0.006072048097848892,
-            "display": "Female / Woman",
-            "hi": "महिला / स्त्री"
+            "class": "goodevening",
+            "confidence": 0.0008093022042885423,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
           },
           {
-            "class": "colour",
-            "confidence": 0.004426535684615374,
-            "display": "Colour / Color",
-            "hi": "रंग"
+            "class": "goodnight",
+            "confidence": 0.0007869917899370193,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
           },
           {
-            "class": "young",
-            "confidence": 0.0035389172844588757,
-            "display": "Young / Youth",
-            "hi": "युवा / जवान"
+            "class": "clean",
+            "confidence": 0.0007551706512458622,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
           }
         ]
       },
       "cnn": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9832518100738525,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.986790120601654,
         "is_correct": true
       }
     },
     {
-      "video_name": "MVI_9824.MOV",
-      "target_class": "dead",
-      "target_id": 66,
-      "display": "Dead / Deceased",
-      "hi": "मृत / मरा हुआ",
+      "video_name": "MVI_5240.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
       "lstm": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.976378858089447,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9766848087310791,
         "is_correct": true,
         "top5": [
           {
-            "class": "dead",
-            "confidence": 0.976378858089447,
-            "display": "Dead / Deceased",
-            "hi": "मृत / मरा हुआ"
+            "class": "good",
+            "confidence": 0.9766848087310791,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
           },
           {
-            "class": "red",
-            "confidence": 0.006114679854363203,
-            "display": "Red",
-            "hi": "लाल"
+            "class": "father",
+            "confidence": 0.0010777664138004184,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
           },
           {
-            "class": "female",
-            "confidence": 0.0059660254046320915,
-            "display": "Female / Woman",
-            "hi": "महिला / स्त्री"
+            "class": "goodevening",
+            "confidence": 0.0008043653215281665,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
           },
           {
-            "class": "expensive",
-            "confidence": 0.0026240963488817215,
-            "display": "Expensive / Costly",
-            "hi": "महंगा"
+            "class": "goodnight",
+            "confidence": 0.000787910888902843,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
           },
           {
-            "class": "young",
-            "confidence": 0.0013315659016370773,
-            "display": "Young / Youth",
-            "hi": "युवा / जवान"
+            "class": "clean",
+            "confidence": 0.0007560442900285125,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
           }
         ]
       },
       "cnn": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9781898856163025,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9849804639816284,
         "is_correct": true
       }
     },
     {
-      "video_name": "MVI_9825.MOV",
-      "target_class": "dead",
-      "target_id": 66,
-      "display": "Dead / Deceased",
-      "hi": "मृत / मरा हुआ",
+      "video_name": "MVI_5316.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
       "lstm": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9642263054847717,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9735295176506042,
         "is_correct": true,
         "top5": [
           {
-            "class": "dead",
-            "confidence": 0.9642263054847717,
-            "display": "Dead / Deceased",
-            "hi": "मृत / मरा हुआ"
+            "class": "good",
+            "confidence": 0.9735295176506042,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
           },
           {
-            "class": "female",
-            "confidence": 0.008071639575064182,
-            "display": "Female / Woman",
-            "hi": "महिला / स्त्री"
+            "class": "father",
+            "confidence": 0.0012708829017356038,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
           },
           {
-            "class": "white",
-            "confidence": 0.004063911270350218,
-            "display": "White",
-            "hi": "सफ़ेद"
+            "class": "goodnight",
+            "confidence": 0.0009545339271426201,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
           },
           {
-            "class": "thin",
-            "confidence": 0.002651318907737732,
-            "display": "Thin / Slender",
-            "hi": "पतला"
+            "class": "clean",
+            "confidence": 0.0009272528695873916,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
           },
           {
-            "class": "young",
-            "confidence": 0.0025091422721743584,
-            "display": "Young / Youth",
-            "hi": "युवा / जवान"
+            "class": "goodevening",
+            "confidence": 0.0008869781740941107,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
           }
         ]
       },
       "cnn": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.989837110042572,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9882017970085144,
         "is_correct": true
       }
     },
     {
-      "video_name": "MVI_9826.MOV",
-      "target_class": "dead",
-      "target_id": 66,
-      "display": "Dead / Deceased",
-      "hi": "मृत / मरा हुआ",
+      "video_name": "MVI_5317.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
       "lstm": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.7035127282142639,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9729825258255005,
         "is_correct": true,
         "top5": [
           {
-            "class": "dead",
-            "confidence": 0.7035127282142639,
-            "display": "Dead / Deceased",
-            "hi": "मृत / मरा हुआ"
+            "class": "good",
+            "confidence": 0.9729825258255005,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
           },
           {
-            "class": "young",
-            "confidence": 0.19070088863372803,
-            "display": "Young / Youth",
-            "hi": "युवा / जवान"
+            "class": "father",
+            "confidence": 0.0012880110880360007,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
           },
           {
-            "class": "howareyou",
-            "confidence": 0.026879549026489258,
-            "display": "How Are You",
-            "hi": "आप कैसे हैं?"
+            "class": "clean",
+            "confidence": 0.0009973554406315088,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
           },
           {
-            "class": "red",
-            "confidence": 0.020056676119565964,
-            "display": "Red",
-            "hi": "लाल"
+            "class": "goodnight",
+            "confidence": 0.0009882330195978284,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
           },
           {
-            "class": "expensive",
-            "confidence": 0.016469065099954605,
-            "display": "Expensive / Costly",
-            "hi": "महंगा"
+            "class": "weak",
+            "confidence": 0.0009447468910366297,
+            "display": "Weak / Feeble",
+            "hi": "कमज़ोर / दुर्बल"
           }
         ]
       },
       "cnn": {
-        "predicted_class": "dead",
-        "predicted_id": 66,
-        "confidence": 0.9579824805259705,
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9913122057914734,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_5318.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9732362031936646,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9732362031936646,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0012818214017897844,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0009739254601299763,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0009464362519793212,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          },
+          {
+            "class": "weak",
+            "confidence": 0.0008977957186289132,
+            "display": "Weak / Feeble",
+            "hi": "कमज़ोर / दुर्बल"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9916771650314331,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9268.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9741307497024536,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9741307497024536,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0012149797985330224,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0009134687716141343,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0009076658170670271,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          },
+          {
+            "class": "weak",
+            "confidence": 0.0008754584705457091,
+            "display": "Weak / Feeble",
+            "hi": "कमज़ोर / दुर्बल"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9859086871147156,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9269.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9754704833030701,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9754704833030701,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0011402490781620145,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0008546971948817372,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "goodevening",
+            "confidence": 0.0008360857609659433,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0008246913785114884,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9833620190620422,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9270.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9751871824264526,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9751871824264526,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.001142530469223857,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0008573719533160329,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0008460392127744853,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          },
+          {
+            "class": "goodevening",
+            "confidence": 0.0008258935413323343,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.983660876750946,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9349.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9763712882995605,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9763712882995605,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0011129840277135372,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodevening",
+            "confidence": 0.000820603861939162,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0008083624998107553,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0007440687040798366,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.983842134475708,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9350.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.974179744720459,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.974179744720459,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0012459619902074337,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0009382582502439618,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "goodevening",
+            "confidence": 0.0008709804969839752,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0008640920277684927,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9854508638381958,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9351.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9762618541717529,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9762618541717529,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0011196386767551303,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodevening",
+            "confidence": 0.0008363459492102265,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0008161535952240229,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0007441269117407501,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9852994680404663,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9430.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9728248119354248,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9728248119354248,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0013609480811282992,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0010422259801998734,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "goodevening",
+            "confidence": 0.0009247626294381917,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0009194818558171391,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9804310202598572,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9431.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9754254221916199,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9754254221916199,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0011030451860278845,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0008668999653309584,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          },
+          {
+            "class": "weak",
+            "confidence": 0.00083358702249825,
+            "display": "Weak / Feeble",
+            "hi": "कमज़ोर / दुर्बल"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0008234317065216601,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9828656315803528,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9432.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9735817313194275,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9735817313194275,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0012522561009973288,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.000968008185736835,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0009276979835703969,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          },
+          {
+            "class": "weak",
+            "confidence": 0.0008924966678023338,
+            "display": "Weak / Feeble",
+            "hi": "कमज़ोर / दुर्बल"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9830659627914429,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9510.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9758761525154114,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9758761525154114,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.001206447253935039,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodevening",
+            "confidence": 0.0009038212010636926,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0008461599354632199,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0008418448269367218,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.974428653717041,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9511.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9750730395317078,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.9750730395317078,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0011422844836488366,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.0008652106625959277,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "goodevening",
+            "confidence": 0.0008470785105600953,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0008416888304054737,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9830045700073242,
+        "is_correct": true
+      }
+    },
+    {
+      "video_name": "MVI_9512.MOV",
+      "target_class": "good",
+      "target_id": 54,
+      "display": "Good",
+      "hi": "अच्छा / बढ़िया",
+      "lstm": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.973301112651825,
+        "is_correct": true,
+        "top5": [
+          {
+            "class": "good",
+            "confidence": 0.973301112651825,
+            "display": "Good",
+            "hi": "अच्छा / बढ़िया"
+          },
+          {
+            "class": "father",
+            "confidence": 0.0012838859111070633,
+            "display": "Father / Dad",
+            "hi": "पिताजी"
+          },
+          {
+            "class": "goodnight",
+            "confidence": 0.00100496388040483,
+            "display": "Good Night",
+            "hi": "शुभ रात्रि"
+          },
+          {
+            "class": "goodevening",
+            "confidence": 0.0009156458545476198,
+            "display": "Good Evening",
+            "hi": "शुभ संध्या"
+          },
+          {
+            "class": "clean",
+            "confidence": 0.0008728487882763147,
+            "display": "Clean",
+            "hi": "साफ़ / स्वच्छ"
+          }
+        ]
+      },
+      "cnn": {
+        "predicted_class": "good",
+        "predicted_id": 54,
+        "confidence": 0.9823349714279175,
         "is_correct": true
       }
     }

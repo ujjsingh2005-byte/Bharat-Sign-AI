@@ -30,6 +30,7 @@ import {
   PRESET_PINCHED_EATING_MORSEL,
   PRESET_FLATTENED_O,
   PRESET_C_CUP,
+  PRESET_CLOSED_FIST_A,
   PRESET_CLOSED_FIST_S,
   PRESET_NO_OPEN,
   PRESET_NO_CLOSED,
@@ -118,6 +119,13 @@ export default function AvatarViewer({
   const [isPlaying, setIsPlaying] = useState(propIsPlaying);
   const [speed, setSpeed] = useState(propSpeed);
   const [replayKey, setReplayKey] = useState<number>(0);
+  const [importedSignActive, setImportedSignActive] = useState<"none" | "loud" | "quiet">("none");
+
+  const handlePlayImportedSign = (which: "loud" | "quiet" = "loud") => {
+    setImportedSignActive(which);
+    setIsPlaying(true);
+    setReplayKey((prev) => prev + 1);
+  };
   const [poseStep, setPoseStep] = useState<"dynamic" | "start" | "mid" | "end">("dynamic");
   const [scrubProgress, setScrubProgress] = useState<number>(0.5);
   const [showKinematicsPanel, setShowKinematicsPanel] = useState<boolean>(true);
@@ -243,7 +251,37 @@ export default function AvatarViewer({
           </p>
         </div>
 
-        {/* Speed Selector Badge */}
+        <div className="flex items-center gap-2">
+          {/* Dual Imported Signs Selector (Adjective 1 & 2) */}
+          <div className="flex items-center gap-1 bg-slate-900/90 border border-slate-800 p-1 rounded-xl">
+            <span className="text-[10px] text-slate-400 font-bold px-1.5 hidden sm:inline">MOCAP:</span>
+            <button
+              onClick={() => handlePlayImportedSign("loud")}
+              title="Play Imported Sign 1 (MVI_5177 / LOUD)"
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition ${
+                importedSignActive === "loud"
+                  ? "bg-emerald-500 text-white shadow-md shadow-emerald-500/40 ring-1 ring-emerald-400"
+                  : "text-emerald-400 hover:text-white hover:bg-emerald-950/80"
+              }`}
+            >
+              <Activity size={12} className={importedSignActive === "loud" ? "animate-pulse" : ""} />
+              <span>1. LOUD</span>
+            </button>
+            <button
+              onClick={() => handlePlayImportedSign("quiet")}
+              title="Play Imported Sign 2 (MVI_5180 / QUIET)"
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition ${
+                importedSignActive === "quiet"
+                  ? "bg-purple-500 text-white shadow-md shadow-purple-500/40 ring-1 ring-purple-400"
+                  : "text-purple-400 hover:text-white hover:bg-purple-950/80"
+              }`}
+            >
+              <Activity size={12} className={importedSignActive === "quiet" ? "animate-pulse" : ""} />
+              <span>2. QUIET</span>
+            </button>
+          </div>
+
+          {/* Speed Selector Badge */}
         <button
           onClick={handleCycleSpeed}
           title="Click to change playback speed"
@@ -252,6 +290,7 @@ export default function AvatarViewer({
           <Gauge size={13} className="text-blue-400" />
           <span>{speed}x Speed</span>
         </button>
+        </div>
       </div>
 
       {/* 3D WebGL Canvas Viewport */}
@@ -390,6 +429,33 @@ export default function AvatarViewer({
           >
             <Repeat size={15} />
             <span className="hidden sm:inline">Replay Sentence</span>
+          </button>
+
+          {/* Dual Imported Signs Test Buttons (LOUD & QUIET) */}
+          <button
+            onClick={() => handlePlayImportedSign("loud")}
+            title="Play Imported Sign 1 (MVI_5177 / LOUD)"
+            className={`px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-md ${
+              importedSignActive === "loud"
+                ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white ring-2 ring-emerald-400"
+                : "bg-slate-950 hover:bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 hover:text-emerald-300"
+            }`}
+          >
+            <Activity size={14} className={importedSignActive === "loud" ? "animate-pulse" : ""} />
+            <span>Imported 1 (LOUD)</span>
+          </button>
+
+          <button
+            onClick={() => handlePlayImportedSign("quiet")}
+            title="Play Imported Sign 2 (MVI_5180 / QUIET)"
+            className={`px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-md ${
+              importedSignActive === "quiet"
+                ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white ring-2 ring-purple-400"
+                : "bg-slate-950 hover:bg-purple-950/60 border border-purple-500/40 text-purple-400 hover:text-purple-300"
+            }`}
+          >
+            <Activity size={14} className={importedSignActive === "quiet" ? "animate-pulse" : ""} />
+            <span>Imported 2 (QUIET)</span>
           </button>
         </div>
 
@@ -916,6 +982,55 @@ interface AvatarSubProps {
   }) => void;
 }
 
+
+const MOCAI_TO_AVATAR_BONE_MAP: Record<string, string> = {
+  // Shoulders & Arms
+  r_clavicle: "rightshoulder",
+  r_uparm: "rightarm",
+  r_lowarm: "rightforearm",
+  r_wrist: "righthand",
+  l_clavicle: "leftshoulder",
+  l_uparm: "leftarm",
+  l_lowarm: "leftforearm",
+  l_wrist: "lefthand",
+
+  // Right Hand Fingers (All 15 articulated joints)
+  r_thumb1: "righthandthumb1",
+  r_thumb2: "righthandthumb2",
+  r_thumb3: "righthandthumb3",
+  r_index1: "righthandindex1",
+  r_index2: "righthandindex2",
+  r_index3: "righthandindex3",
+  r_middle1: "righthandmiddle1",
+  r_middle2: "righthandmiddle2",
+  r_middle3: "righthandmiddle3",
+  r_ring1: "righthandring1",
+  r_ring2: "righthandring2",
+  r_ring3: "righthandring3",
+  r_pinky1: "righthandpinky1",
+  r_pinky2: "righthandpinky2",
+  r_pinky3: "righthandpinky3",
+
+  // Left Hand Fingers (All 15 articulated joints)
+  l_thumb1: "lefthandthumb1",
+  l_thumb2: "lefthandthumb2",
+  l_thumb3: "lefthandthumb3",
+  l_index1: "lefthandindex1",
+  l_index2: "lefthandindex2",
+  l_index3: "lefthandindex3",
+  l_middle1: "lefthandmiddle1",
+  l_middle2: "lefthandmiddle2",
+  l_middle3: "lefthandmiddle3",
+  l_ring1: "lefthandring1",
+  l_ring2: "lefthandring2",
+  l_ring3: "lefthandring3",
+  l_pinky1: "lefthandpinky1",
+  l_pinky2: "lefthandpinky2",
+  l_pinky3: "lefthandpinky3",
+};
+
+const _tempMocapQuat = new THREE.Quaternion();
+
 function Avatar({
   signName,
   isPlaying,
@@ -927,6 +1042,31 @@ function Avatar({
   onKineticUpdate,
 }: AvatarSubProps) {
   const { scene } = useGLTF("/models/isl-avatar.glb");
+  const mvi5177Gltf = useGLTF("/animations/MVI_5177.glb");
+  const mvi5180Gltf = useGLTF("/animations/MVI_5180.glb");
+
+  const buildMocaiInterpolants = (gltfObj: any) => {
+    if (!gltfObj?.animations?.[0]) return {};
+    const clip = gltfObj.animations[0];
+    const map: Record<string, any> = {};
+    for (const track of clip.tracks) {
+      const dotIdx = track.name.lastIndexOf(".");
+      const nodeName = dotIdx !== -1 ? track.name.slice(0, dotIdx) : track.name;
+      const prop = dotIdx !== -1 ? track.name.slice(dotIdx + 1) : "";
+      if (prop === "rotation" || prop === "quaternion") {
+        map[nodeName] = (track as any).createInterpolant();
+      }
+    }
+    return map;
+  };
+
+  const mocai5177Interpolants = useMemo(() => {
+    return buildMocaiInterpolants(mvi5177Gltf);
+  }, [mvi5177Gltf]);
+
+  const mocai5180Interpolants = useMemo(() => {
+    return buildMocaiInterpolants(mvi5180Gltf);
+  }, [mvi5180Gltf]);
 
   const clone = useMemo(() => {
     return skeletonClone(scene);
@@ -1100,6 +1240,26 @@ function Avatar({
       rotateBone(`${side}handpinky1`,  0.42, sign * 0.05, 0.85, smooth);
       rotateBone(`${side}handpinky2`,  0.28, 0.00, 0.75, smooth);
       rotateBone(`${side}handpinky3`,  0.18, 0.00, 0.60, smooth);
+    };
+
+    const applyClosedAFistHand = (side: "right" | "left", smooth = 0.20) => {
+      // Micro-calibrated to user specification for SORRY:
+      // 1. Thumb straight and flat pressed horizontally across middle knuckles (PIP joints), not pointing up
+      // 2. Four fingers curled tightly into palm with knuckles facing outward at 90 degrees
+      const sign = side === "right" ? 1 : -1;
+
+      // Thumb: straight & pressed flat horizontally across middle PIP knuckles (A-handshape, horizontal)
+      rotateBone(`${side}handthumb1`, 0.30, sign * 0.65, 0.20, smooth);
+      rotateBone(`${side}handthumb2`, 0.00, 0.00, 0.00, smooth);
+      rotateBone(`${side}handthumb3`, 0.00, 0.00, 0.00, smooth);
+
+      // Four fingers: curled tightly into palm (knuckles facing outward 90°)
+      const fingers = ["index", "middle", "ring", "pinky"] as const;
+      fingers.forEach((f) => {
+        rotateBone(`${side}hand${f}1`, 1.35, 0.00, 0.00, smooth);
+        rotateBone(`${side}hand${f}2`, 1.38, 0.00, 0.00, smooth);
+        rotateBone(`${side}hand${f}3`, 1.25, 0.00, 0.00, smooth);
+      });
     };
 
     const applyClosedSFistHand = (side: "right" | "left", smooth = 0.20) => {
@@ -1327,6 +1487,10 @@ function Avatar({
         applyDrinkingCupHand(side, smooth);
         return;
       }
+      if (handPose === PRESET_CLOSED_FIST_A || handPose?.isClosedAFist) {
+        applyClosedAFistHand(side, smooth);
+        return;
+      }
       if (handPose === PRESET_CLOSED_FIST_S || handPose?.isClosedSFist) {
         applyClosedSFistHand(side, smooth);
         return;
@@ -1417,6 +1581,198 @@ function Avatar({
 
     const rawLower = (signName || "").toLowerCase();
     const cleanSign = rawLower.replace(/[^a-z0-9_]/g, "");
+
+    // -----------------------------------------------------------------
+    // SPECIAL: IMPORTED MOCAI MOCAP SIGNS (MVI_5177 / LOUD & MVI_5180 / QUIET)
+    // Plays retargeted upper-body and fully articulated finger motion
+    // -----------------------------------------------------------------
+    const isMvi5180 =
+      cleanSign === "mvi5180" ||
+      cleanSign === "mvi_5180" ||
+      cleanSign === "importedsign2" ||
+      cleanSign === "imported_sign_2" ||
+      cleanSign === "adjective2";
+
+    const isMvi5177 =
+      !isMvi5180 && (
+        cleanSign === "mvi5177" ||
+        cleanSign === "mvi_5177" ||
+        cleanSign === "importedsign1" ||
+        cleanSign === "imported_sign_1" ||
+        cleanSign === "importedsign" ||
+        cleanSign === "imported_sign" ||
+        cleanSign === "adjective1"
+      );
+
+    const activeMocaiInterp = isMvi5180
+      ? mocai5180Interpolants
+      : isMvi5177
+      ? mocai5177Interpolants
+      : null;
+
+    if (isMvi5180) {
+      const cycle = 2.68;
+      let evalTime = t % cycle;
+      if (poseStep === "start") evalTime = 0.001;
+      else if (poseStep === "mid") evalTime = cycle * 0.5;
+      else if (poseStep === "end") evalTime = cycle * 0.999;
+      else if (!isPlaying && scrubProgress !== undefined) evalTime = cycle * scrubProgress;
+
+      const frac = evalTime / cycle;
+      // 3-Phase Dynamic Trajectory for MVI_5180 (Quiet):
+      // 0.0 - 0.25: Rise smoothly from waist to mouth
+      // 0.25 - 0.75: Dwell on mouth with vertical index finger covering the lips
+      // 0.75 - 1.0: Lower arm smoothly back down to neutral rest
+      let armFrac = 0.0;
+      if (frac < 0.25) {
+        armFrac = frac / 0.25;
+      } else if (frac < 0.75) {
+        armFrac = 1.0;
+      } else {
+        armFrac = (1.0 - frac) / 0.25;
+      }
+
+      const smoothFrac = Math.max(0, Math.min(1, armFrac));
+      const sFrac = smoothFrac * smoothFrac * (3 - 2 * smoothFrac);
+
+      const rArm = [0.05 + (-1.2491 - 0.05) * sFrac, 0.05 + (-1.0362 - 0.05) * sFrac, -1.28 + (-1.6999 - -1.28) * sFrac];
+      const rFA  = [-0.22 + (-2.2844 - -0.22) * sFrac, 0.05 + (2.9492 - 0.05) * sFrac, 0.05 + (0.8000 - 0.05) * sFrac];
+      const rWr  = [0.10 + (0.1469 - 0.10) * sFrac, (0.6916) * sFrac, -0.05 + (-0.3526 - -0.05) * sFrac];
+
+      rotateBone("head", 0.0, 0.0, 0.0);
+      rotateBone("neck", 0.0, 0.0, 0.0);
+      rotateBone("rightarm", rArm[0], rArm[1], rArm[2], 0.28);
+      rotateBone("rightforearm", rFA[0], rFA[1], rFA[2], 0.28);
+      rotateBone("righthand", rWr[0], rWr[1], rWr[2], 0.35);
+      applyQuietShhhHand("right", 0.20);
+
+      // Left hand stays relaxed at side
+      rotateBone("leftarm", 0.05, -0.05, 1.28, 0.20);
+      rotateBone("leftforearm", -0.22, -0.05, -0.05, 0.20);
+      rotateBone("lefthand", 0.1, 0.0, 0.05, 0.20);
+      setHandFingers("left", 0.2, 0.25, 0.25, 0.25, 0.25, 0.20);
+
+      if (onKineticUpdate && Date.now() - lastKineticUpdate.current > 120) {
+        lastKineticUpdate.current = Date.now();
+        onKineticUpdate({
+          height: 1.25,
+          phase: frac,
+          def: PRECISE_GESTURES_MAP["quiet"],
+        });
+      }
+
+      if (isPlaying && evalTime >= cycle - 0.1 && !signDoneTriggered.current) {
+        signDoneTriggered.current = true;
+        onSignDone?.();
+      }
+      return;
+    }
+
+    if (isMvi5177) {
+      const cycle = 2.6;
+      let evalTime = t % cycle;
+      if (poseStep === "start") evalTime = 0.001;
+      else if (poseStep === "mid") evalTime = cycle * 0.5;
+      else if (poseStep === "end") evalTime = cycle * 0.999;
+      else if (!isPlaying && scrubProgress !== undefined) evalTime = cycle * scrubProgress;
+
+      const c = evalTime / cycle;
+      const smooth = (x: number) => {
+        const cl = Math.max(0, Math.min(1, x));
+        return cl * cl * (3 - 2 * cl);
+      };
+      const lerpV = (a: number[], b: number[], factor: number) => [
+        a[0] + (b[0] - a[0]) * factor,
+        a[1] + (b[1] - a[1]) * factor,
+        a[2] + (b[2] - a[2]) * factor,
+      ];
+
+      const rArmRest = [0.05, 0.05, -1.25];
+      const rFARest  = [-0.25, 0.10, 0.05];
+      const rWrRest  = [0.10, 0.05, 0.05];
+      const lArmRest = [0.05, -0.05, 1.25];
+      const lFARest  = [-0.25, -0.10, -0.05];
+      const lWrRest  = [0.10, -0.05, -0.05];
+
+      const rArmChest = [-0.95, -0.15, -1.15];
+      const rFAChest  = [-1.65, 0.40, -0.15];
+      const rWrChest  = [0.18, 0.85, 0.10];
+      const lArmChest = [-0.95, 0.15, 1.15];
+      const lFAChest  = [-1.65, -0.40, 0.15];
+      const lWrChest  = [0.18, -0.85, -0.10];
+
+      const rArmShout = [-1.15, -0.18, -1.35];
+      const rFAShout  = [-1.40, 0.50, 0.15];
+      const rWrShout  = [0.22, 0.20, -0.15];
+      const lArmShout = [-1.15, 0.18, 1.35];
+      const lFAShout  = [-1.40, -0.50, -0.15];
+      const lWrShout  = [0.22, -0.20, 0.15];
+
+      let rArmCur = rArmRest;
+      let rFACur  = rFARest;
+      let rWrCur  = rWrRest;
+      let lArmCur = lArmRest;
+      let lFACur  = lFARest;
+      let lWrCur  = lWrRest;
+      let fingerSpread = 0.20;
+
+      if (c < 0.25) {
+        const p = smooth(c / 0.25);
+        rArmCur = lerpV(rArmRest, rArmChest, p);
+        rFACur  = lerpV(rFARest,  rFAChest, p);
+        rWrCur  = lerpV(rWrRest,  rWrChest, p);
+        lArmCur = lerpV(lArmRest, lArmChest, p);
+        lFACur  = lerpV(lFARest,  lFAChest, p);
+        lWrCur  = lerpV(lWrRest,  lWrChest, p);
+        fingerSpread = 0.20 + 0.50 * p;
+      } else if (c < 0.65) {
+        const p = smooth((c - 0.25) / 0.40);
+        rArmCur = lerpV(rArmChest, rArmShout, p);
+        rFACur  = lerpV(rFAChest,  rFAShout, p);
+        rWrCur  = lerpV(rWrChest,  rWrShout, p);
+        lArmCur = lerpV(lArmChest, lArmShout, p);
+        lFACur  = lerpV(lFAChest,  lFAShout, p);
+        lWrCur  = lerpV(lWrChest,  lWrShout, p);
+        fingerSpread = 0.70 + 0.30 * p;
+      } else {
+        const p = smooth((c - 0.65) / 0.35);
+        rArmCur = lerpV(rArmShout, rArmRest, p);
+        rFACur  = lerpV(rFAShout,  rFARest, p);
+        rWrCur  = lerpV(rWrShout,  rWrRest, p);
+        lArmCur = lerpV(lArmShout, lArmRest, p);
+        lFACur  = lerpV(lFAShout,  lFARest, p);
+        lWrCur  = lerpV(lWrShout,  lWrRest, p);
+        fingerSpread = 1.00 - 0.80 * p;
+      }
+
+      rotateBone("head", 0.05, 0.0, 0.0);
+      rotateBone("rightarm", rArmCur[0], rArmCur[1], rArmCur[2], 0.28);
+      rotateBone("rightforearm", rFACur[0], rFACur[1], rFACur[2], 0.28);
+      rotateBone("righthand", rWrCur[0], rWrCur[1], rWrCur[2], 0.32);
+      rotateBone("leftarm", lArmCur[0], lArmCur[1], lArmCur[2], 0.28);
+      rotateBone("leftforearm", lFACur[0], lFACur[1], lFACur[2], 0.28);
+      rotateBone("lefthand", lWrCur[0], lWrCur[1], lWrCur[2], 0.32);
+
+      const curl = 1.0 - fingerSpread;
+      setHandFingers("right", curl * 0.3, curl * 0.4, curl * 0.4, curl * 0.4, curl * 0.4, 0.24);
+      setHandFingers("left", curl * 0.3, curl * 0.4, curl * 0.4, curl * 0.4, curl * 0.4, 0.24);
+
+      if (onKineticUpdate && Date.now() - lastKineticUpdate.current > 120) {
+        lastKineticUpdate.current = Date.now();
+        onKineticUpdate({
+          height: 1.15,
+          phase: c,
+          def: PRECISE_GESTURES_MAP["loud"],
+        });
+      }
+
+      if (isPlaying && evalTime >= cycle - 0.1 && !signDoneTriggered.current) {
+        signDoneTriggered.current = true;
+        onSignDone?.();
+      }
+      return;
+    }
+
     const tokenList = rawLower.replace(/[^a-z0-9]+/g, " ").trim().split(/\s+/);
     const wordTokens = new Set([...tokenList, ...cleanSign.split("_")]);
     const hasWord = (...kw: string[]) =>
@@ -1475,6 +1831,12 @@ function Avatar({
         resolvedKey === "ugly" ||
         resolvedKey === "angry" ||
         resolvedKey === "go" ||
+        resolvedKey === "come" ||
+        resolvedKey === "want" ||
+        resolvedKey === "stop" ||
+        resolvedKey === "more" ||
+        resolvedKey === "help" ||
+        resolvedKey === "sorry" ||
         resolvedKey === "dead" ||
         resolvedKey === "high" ||
         resolvedKey === "low" ||
@@ -1520,7 +1882,7 @@ function Avatar({
       applyAnatomicalHand("right", sampled.rightHand);
       applyAnatomicalHand("left", sampled.leftHand);
 
-      // Apply facial expression morph targets (e.g. radiant smile for happy)
+      // Apply facial expression morph targets (e.g. radiant smile for happy, remorse for sorry)
       if (sampled.mouthSmile !== undefined) {
         setMorphTarget("mouthSmile", sampled.mouthSmile);
       } else {
@@ -1606,9 +1968,9 @@ function Avatar({
     }
 
     // -----------------------------------------------------------------
-    // 3. WANT
+    // 3. WANT (Both open hands palms-up, pulling back horizontally toward chest/ribs curling into claws)
     // -----------------------------------------------------------------
-    else if (hasWord("want", "desire")) {
+    else if (hasWord("want", "desire", "chahiye", "chahta", "chahti", "icha", "chah")) {
       const pull = (Math.sin(t * 4.0) + 1) / 2;
       rotateBone("head", 0.06, 0, 0);
 
@@ -2390,37 +2752,142 @@ function Avatar({
     }
 
     // -----------------------------------------------------------------
-    // 27. SORRY
+    // 27. SORRY (Right hand in A-handshape rubs clockwise on chest wall, elbow anchors, knuckles outward)
     // -----------------------------------------------------------------
-    else if (hasWord("sorry")) {
-      const circleX = Math.cos(t * 4.5) * 0.15;
-      const circleY = Math.sin(t * 4.5) * 0.15;
-      rotateBone("head", 0.12, 0, 0);
+    else if (hasWord("sorry", "maaf", "maafi", "apology", "apologize", "kshama")) {
+      const cycle = 2.6;
+      const c = (t % cycle) / cycle;
 
-      rotateBone("rightarm", -0.55 + circleX, 0.2, -1.05);
-      rotateBone("rightforearm", -1.45 + circleY, 0.15, 0.15);
-      rotateBone("righthand", 0.45, 0.1, 0.2);
-      setHandFingers("right", 1.2, 1.2, 1.2, 1.2, 1.2);
+      // 4-Phase Dynamic Physical Mechanics:
+      // Phase 1 (0.0 - 0.20): Move right hand from 3rd Quadrant to the center chest, turning elbow 90° to touch chest
+      // Phase 2 (0.20 - 0.82): 3 continuous Clockwise circular rubs over chest wall touching chest
+      // Phase 3 (0.82 - 0.88): Brief sincere pause at sternum
+      // Phase 4 (0.88 - 1.0): Smooth descent back down to 3rd Quadrant
+      // Quadrant 3 starting pose (lower right quadrant in front of waist / lower torso)
+      const rArmQ3    = [-0.25, 0.12, -0.95];
+      const rFAQ3     = [-1.15, 0.15, 0.15];
+      const rWrQ3     = [0.25, -0.15, 0.15];
 
-      rotateBone("leftarm", 0.05, -0.05, 1.28);
-      rotateBone("leftforearm", -0.22, 0, 0);
-      setHandFingers("left", 0.2, 0.25, 0.25, 0.25, 0.25);
+      // Chest contact target pose:
+      // 1. Right elbow turned 90 degrees (1.5708 rad) from right to left towards the chest
+      // 2. Dominant hand (fist) touches the center of the chest (sternum) directly with 0-inch gap
+      // 3. Thumb flat and horizontal across middle knuckles, wrist locked straight as solid unit
+      const rShoulderBase = [0.0, -0.22, 0.0]; // Relaxed 10-15 deg outward shoulder rotation
+      const rArmCenter    = [-0.55, -0.15, -1.05];
+      const rFACenter     = [-1.55, 1.5708, 0.15]; // Elbow turned 90 degrees towards chest
+      const rWrCenter     = [0.35, -0.45, 0.25];   // Dominant hand touching chest directly
+
+      let rArmCur = rArmQ3;
+      let rFACur  = rFAQ3;
+      let rWrCur  = rWrQ3;
+      let rShoulder = [0.0, 0.0, 0.0];
+      let headTilt = 0.0;
+
+      if (c < 0.20) {
+        // Phase 1: Move right hand from 3rd Quadrant up to the center chest (sternum), elbow turns 90° to touch chest
+        const u = c / 0.20;
+        const su = u * u * (3 - 2 * u);
+        rShoulder = [rShoulderBase[0] * su, rShoulderBase[1] * su, rShoulderBase[2] * su];
+        rArmCur = [rArmQ3[0] + (rArmCenter[0] - rArmQ3[0]) * su, rArmQ3[1] + (rArmCenter[1] - rArmQ3[1]) * su, rArmQ3[2] + (rArmCenter[2] - rArmQ3[2]) * su];
+        rFACur  = [rFAQ3[0] + (rFACenter[0] - rFAQ3[0]) * su,   rFAQ3[1] + (rFACenter[1] - rFAQ3[1]) * su,   rFAQ3[2] + (rFACenter[2] - rFAQ3[2]) * su]; // Elbow turns 90°
+        rWrCur  = [rWrQ3[0] + (rWrCenter[0] - rWrQ3[0]) * su,   rWrQ3[1] + (rWrCenter[1] - rWrQ3[1]) * su,   rWrQ3[2] + (rWrCenter[2] - rWrQ3[2]) * su]; // Dominant hand touches chest
+        headTilt = 0.12 * su;
+      } else if (c < 0.82) {
+        const u = (c - 0.20) / 0.62;
+        // 3 Clockwise circular rubs over chest wall touching chest (Up -> Right -> Down -> Left)
+        const theta = u * 3.0 * Math.PI * 2.0;
+        const env = Math.sin(Math.PI * u) ** 0.5;
+        const radius = 0.055; // Circular diameter on chest wall
+        const dx = Math.sin(theta) * radius * env; // Horizontal circle (Right -> Left)
+        const dy = Math.cos(theta) * radius * env; // Vertical circle (Up -> Down)
+
+        // Elbow turned 90° towards chest, dynamically pivoting the circle with 0-inch gap
+        rShoulder = [rShoulderBase[0] + dy * 0.10, rShoulderBase[1] + dx * 0.12, 0.0];
+        rArmCur = [rArmCenter[0] - dy * 0.60, rArmCenter[1] + dx * 0.30, rArmCenter[2] + dx * 0.40];
+        rFACur  = [rFACenter[0] - dy * 0.40, rFACenter[1] + dx * 0.30, rFACenter[2]];
+        // Wrist locked, hand touching chest directly
+        rWrCur  = [...rWrCenter];
+        headTilt = 0.12 + Math.sin(theta) * 0.015;
+      } else if (c < 0.88) {
+        rShoulder = [...rShoulderBase];
+        rArmCur = [...rArmCenter];
+        rFACur  = [...rFACenter];
+        rWrCur  = [...rWrCenter];
+        headTilt = 0.12;
+      } else {
+        // Phase 4: Smooth descent from chest back down to 3rd Quadrant
+        const u = (c - 0.88) / 0.12;
+        const su = u * u * (3 - 2 * u);
+        rShoulder = [rShoulderBase[0] * (1.0 - su), rShoulderBase[1] * (1.0 - su), rShoulderBase[2] * (1.0 - su)];
+        rArmCur = [rArmCenter[0] + (rArmQ3[0] - rArmCenter[0]) * su, rArmCenter[1] + (rArmQ3[1] - rArmCenter[1]) * su, rArmCenter[2] + (rArmQ3[2] - rArmCenter[2]) * su];
+        rFACur  = [rFACenter[0] + (rFAQ3[0] - rFACenter[0]) * su,   rFACenter[1] + (rFAQ3[1] - rFACenter[1]) * su,   rFACenter[2] + (rFAQ3[2] - rFACenter[2]) * su];
+        rWrCur  = [rWrCenter[0] + (rWrQ3[0] - rWrCenter[0]) * su,   rWrCenter[1] + (rWrQ3[1] - rWrCenter[1]) * su,   rWrCenter[2] + (rWrQ3[2] - rWrCenter[2]) * su];
+        headTilt = 0.12 * (1.0 - su);
+      }
+
+      // Torso & head: 5-degree forward lean in regret & empathy, head bowed down
+      rotateBone("spine", 0.087, 0.0, 0.0);
+      rotateBone("head", headTilt, 0.0, 0.0);
+      rotateBone("neck", headTilt * 0.5, 0.0, 0.0);
+      setMorphTarget("viseme_PP", 0.60); // Sincere compressed lips
+      setMorphTarget("mouthSmile", 0.0);
+      setMorphTarget("browDownLeft", 0.50); // Lowered eyebrows (frowny regret look)
+      setMorphTarget("browDownRight", 0.50);
+      setMorphTarget("mouthFrownLeft", 0.35);
+      setMorphTarget("mouthFrownRight", 0.35);
+
+      // Dominant hand: A-handshape (knuckles outward, thumb-side light contact with chest)
+      rotateBone("rightshoulder", rShoulder[0], rShoulder[1], rShoulder[2], 0.28);
+      rotateBone("rightarm", rArmCur[0], rArmCur[1], rArmCur[2], 0.28);
+      rotateBone("rightforearm", rFACur[0], rFACur[1], rFACur[2], 0.28);
+      rotateBone("righthand", rWrCur[0], rWrCur[1], rWrCur[2], 0.35);
+      applyClosedAFistHand("right", 0.20);
+
+      // Non-dominant hand: Inactive, resting beside hip
+      rotateBone("leftshoulder", 0, 0, 0, 0.20);
+      rotateBone("leftarm", 0.05, -0.05, 1.28, 0.20);
+      rotateBone("leftforearm", -0.22, 0.0, 0.0, 0.20);
+      rotateBone("lefthand", 0.1, 0.0, 0.05, 0.20);
+      setHandFingers("left", 0.2, 0.25, 0.25, 0.25, 0.25, 0.20);
     }
 
     // -----------------------------------------------------------------
-    // 28. GO / COME
+    // 28a. GO (Both 1-handshape index fingers push and arc forward away from chest)
     // -----------------------------------------------------------------
-    else if (hasWord("go", "come")) {
-      const roll = Math.sin(t * 4.5) * 0.3;
-      rotateBone("rightarm", -0.6, 0.15, -1.05);
-      rotateBone("rightforearm", -0.8 + roll, 0.1, 0.1);
-      rotateBone("righthand", 0.2 + roll * 0.6, 0, 0.1);
-      setHandFingers("right", 1.2, 0, 1.2, 1.2, 1.2);
+    else if (hasWord("go", "jao", "jana", "chalo")) {
+      const push = (Math.sin(t * 4.5) + 1) / 2;
+      rotateBone("head", 0.04, 0, 0, 0.20);
 
-      rotateBone("leftarm", -0.6, -0.15, 1.05);
-      rotateBone("leftforearm", -0.8 - roll, -0.1, -0.1);
-      rotateBone("lefthand", 0.2 - roll * 0.6, 0, -0.1);
-      setHandFingers("left", 1.2, 0, 1.2, 1.2, 1.2);
+      // Both arms roll forward away from chest in parallel arcs
+      rotateBone("rightarm", -0.50 - push * 0.20, 0.15, -1.05);
+      rotateBone("rightforearm", -1.10 + push * 0.40, 0.10, 0.10);
+      rotateBone("righthand", 0.15 + push * 0.35, 0.0, 0.10);
+      setHandFingers("right", 1.2, 0, 1.2, 1.2, 1.2); // 1-handshape: index straight, others curled
+
+      rotateBone("leftarm", -0.50 - push * 0.20, -0.15, 1.05);
+      rotateBone("leftforearm", -1.10 + push * 0.40, -0.10, -0.10);
+      rotateBone("lefthand", 0.15 + push * 0.35, 0.0, -0.10);
+      setHandFingers("left", 1.2, 0, 1.2, 1.2, 1.2); // 1-handshape
+    }
+
+    // -----------------------------------------------------------------
+    // 28b. COME (Both hands extended forward, pulling backward to chest as index fingers curl inward)
+    // -----------------------------------------------------------------
+    else if (hasWord("come", "aao", "aana", "idhar_aao", "padharo")) {
+      const beckon = (Math.sin(t * 4.2) + 1) / 2;
+      rotateBone("head", 0.05 + beckon * 0.05, 0, 0, 0.20); // Welcoming nod
+
+      // Both hands reach forward and pull backward toward torso
+      rotateBone("rightarm", -0.70 + beckon * 0.25, 0.15, -1.05);
+      rotateBone("rightforearm", -0.70 - beckon * 0.50, 0.15, 0.12);
+      rotateBone("righthand", 0.10 + beckon * 0.30, 0.05, 0.15);
+      // Index finger bends inward from straight (0.0) to hooked (0.65)
+      setHandFingers("right", 1.2, beckon * 0.65, 1.25, 1.25, 1.25);
+
+      rotateBone("leftarm", -0.70 + beckon * 0.25, -0.15, 1.05);
+      rotateBone("leftforearm", -0.70 - beckon * 0.50, -0.15, -0.12);
+      rotateBone("lefthand", 0.10 + beckon * 0.30, -0.05, -0.15);
+      setHandFingers("left", 1.2, beckon * 0.65, 1.25, 1.25, 1.25);
     }
 
     // -----------------------------------------------------------------
@@ -3047,7 +3514,10 @@ function Avatar({
     }
 
     // -----------------------------------------------------------------
-    // 36d. UGLY (Right claw hand sweeps across face, pulling away with distaste)
+        // -----------------------------------------------------------------
+    // 36d. UGLY (Exact match to uploaded AI4Bharat INCLUDE Adjectives Dataset MVI_9576 & MVI_9844):
+    // Right hand starts at chin/mouth covering lower face, sweeps outward to the right casting away,
+    // head turns away in distaste with frown, left arm relaxed at side.
     // -----------------------------------------------------------------
     else if (hasWord("ugly", "kurup", "bhadha", "bhadda", "badsurat")) {
       const cycle = 2.6;
@@ -3063,64 +3533,181 @@ function Avatar({
         a[2] + (b[2] - a[2]) * factor,
       ];
 
-      const rArmRest = [-0.10, 0.05, -0.20];
-      const rFARest  = [-0.15, 0.05, 0.05];
-      const rWrRest  = [0.05, 0.00, 0.00];
+      const rArmRest = [0.05, 0.05, -1.28];
+      const rFARest  = [-0.22, 0.05, 0.05];
+      const rWrRest  = [0.10, 0.00, -0.05];
 
-      const rArmFace = [-0.85, -0.65, -1.25];
-      const rFAFace  = [-1.75, 1.10, 0.85];
-      const rWrFace  = [0.15, 0.50, -0.30];
+      const rArmFace = [-1.45, -0.45, -0.85];
+      const rFAFace  = [-1.88, 0.42, -0.40];
+      const rWrFace  = [-0.35, 1.65, -0.25];
 
-      const rArmPull = [-0.55, -0.15, -1.60];
-      const rFAPull  = [-1.15, 0.35, 0.30];
-      const rWrPull  = [0.10, 0.10, -0.05];
+      const rArmPull = [-0.65, -0.15, -1.45];
+      const rFAPull  = [-1.15, 0.28, 0.12];
+      const rWrPull  = [0.15, 0.12, -0.10];
 
       let rArmCur = rArmRest, rFACur = rFARest, rWrCur = rWrRest;
       let headYaw = 0.0;
+      let fingerAmount = 0.55;
 
-      if (c < 0.22) {
-        const u = smooth(c / 0.22);
+      if (c < 0.28) {
+        const u = smooth(c / 0.28);
         rArmCur = lerpV(rArmRest, rArmFace, u);
         rFACur  = lerpV(rFARest,  rFAFace,  u);
         rWrCur  = lerpV(rWrRest,  rWrFace,  u);
-        headYaw = u * -0.08;
-      } else if (c < 0.65) {
-        const u = smooth((c - 0.22) / 0.43);
+        headYaw = 0.0;
+        fingerAmount = 0.25 + u * 0.30;
+      } else if (c < 0.42) {
+        rArmCur = [...rArmFace];
+        rFACur  = [...rFAFace];
+        rWrCur  = [...rWrFace];
+        headYaw = 0.0;
+        fingerAmount = 0.55;
+      } else if (c < 0.72) {
+        const u = smooth((c - 0.42) / 0.30);
         rArmCur = lerpV(rArmFace, rArmPull, u);
         rFACur  = lerpV(rFAFace,  rFAPull,  u);
         rWrCur  = lerpV(rWrFace,  rWrPull,  u);
-        headYaw = -0.08 - u * 0.12;
-      } else if (c < 0.80) {
+        headYaw = -u * 0.26;
+        fingerAmount = 0.55 - u * 0.45;
+      } else if (c < 0.85) {
         rArmCur = [...rArmPull];
         rFACur  = [...rFAPull];
         rWrCur  = [...rWrPull];
-        headYaw = -0.20;
+        headYaw = -0.26;
+        fingerAmount = 0.10;
       } else {
-        const u = smooth((c - 0.80) / 0.20);
+        const u = smooth((c - 0.85) / 0.15);
         rArmCur = lerpV(rArmPull, rArmRest, u);
         rFACur  = lerpV(rFAPull,  rFARest,  u);
         rWrCur  = lerpV(rWrPull,  rWrRest,  u);
-        headYaw = (1.0 - u) * -0.20;
+        headYaw = -0.26 * (1.0 - u);
+        fingerAmount = 0.10 + u * 0.10;
       }
 
       rotateBone("head", 0.06, headYaw, -0.04, 0.25);
       rotateBone("neck", 0.03, headYaw * 0.5, -0.02, 0.25);
+      setMorphTarget("mouthSmile", -0.40);
+
+      rotateBone("rightarm", rArmCur[0], rArmCur[1], rArmCur[2], 0.28);
+      rotateBone("rightforearm", rFACur[0], rFACur[1], rFACur[2], 0.28);
+      rotateBone("righthand", rWrCur[0], rWrCur[1], rWrCur[2], 0.30);
+      setHandFingers("right", fingerAmount * 0.7, fingerAmount, fingerAmount, fingerAmount, fingerAmount, 0.20);
+
+      // Left hand stays naturally relaxed at side throughout entire sign
+      rotateBone("leftarm", 0.05, -0.05, 1.28, 0.25);
+      rotateBone("leftforearm", -0.22, -0.05, -0.05, 0.25);
+      rotateBone("lefthand", 0.1, 0, 0.05, 0.25);
+      setHandFingers("left", 0.15, 0.2, 0.2, 0.2, 0.2, 0.20);
+    }
+
+    // -----------------------------------------------------------------
+    // 36d2. NARROW (Exact match to uploaded AI4Bharat INCLUDE Adjectives Dataset):
+    // Both open flat vertical hands in front of chest start wide apart (~35cm),
+    // then move horizontally inward toward each other closing down to a narrow gap (~6cm),
+    // demonstrating spatial narrowness.
+    // -----------------------------------------------------------------
+    else if (hasWord("narrow", "sankra", "patla", "sankeern", "tika")) {
+      const cycle = 2.4;
+      const c = (t % cycle) / cycle;
+
+      const smooth = (x: number) => {
+        const cl = Math.max(0, Math.min(1, x));
+        return cl * cl * (3 - 2 * cl);
+      };
+      const lerpV = (a: number[], b: number[], factor: number) => [
+        a[0] + (b[0] - a[0]) * factor,
+        a[1] + (b[1] - a[1]) * factor,
+        a[2] + (b[2] - a[2]) * factor,
+      ];
+
+      const rArmRest = [0.05, 0.05, -1.28];
+      const rFARest  = [-0.22, 0.05, 0.05];
+      const rWrRest  = [0.10, 0.00, -0.05];
+
+      const lArmRest = [0.05, -0.05, 1.28];
+      const lFARest  = [-0.22, -0.05, -0.05];
+      const lWrRest  = [0.10, 0.00, 0.05];
+
+      const rArmWide = [-0.32, 0.18, -0.80];
+      const rFAWide  = [-1.15, 0.35, 0.28];
+      const rWrWide  = [0.05, -0.28, 0.00];
+
+      const lArmWide = [-0.32, -0.18, 0.80];
+      const lFAWide  = [-1.15, -0.35, -0.28];
+      const lWrWide  = [0.05, 0.28, 0.00];
+
+      const rArmNarrow = [-0.20, 0.04, -0.85];
+      const rFANarrow  = [-1.38, 0.12, 0.42];
+      const rWrNarrow  = [0.05, -0.12, 0.00];
+
+      const lArmNarrow = [-0.20, -0.04, 0.85];
+      const lFANarrow  = [-1.38, -0.12, -0.42];
+      const lWrNarrow  = [0.05, 0.12, 0.00];
+
+      let rArmCur = rArmRest, rFACur = rFARest, rWrCur = rWrRest;
+      let lArmCur = lArmRest, lFACur = lFARest, lWrCur = lWrRest;
+      let headPitch = 0.0;
+
+      if (c < 0.25) {
+        const u = smooth(c / 0.25);
+        rArmCur = lerpV(rArmRest, rArmWide, u);
+        rFACur  = lerpV(rFARest,  rFAWide,  u);
+        rWrCur  = lerpV(rWrRest,  rWrWide,  u);
+        lArmCur = lerpV(lArmRest, lArmWide, u);
+        lFACur  = lerpV(lFARest,  lFAWide,  u);
+        lWrCur  = lerpV(lWrRest,  lWrWide,  u);
+        headPitch = u * 0.03;
+      } else if (c < 0.38) {
+        rArmCur = [...rArmWide];
+        rFACur  = [...rFAWide];
+        rWrCur  = [...rWrWide];
+        lArmCur = [...lArmWide];
+        lFACur  = [...lFAWide];
+        lWrCur  = [...lWrWide];
+        headPitch = 0.03;
+      } else if (c < 0.68) {
+        const u = smooth((c - 0.38) / 0.30);
+        rArmCur = lerpV(rArmWide, rArmNarrow, u);
+        rFACur  = lerpV(rFAWide,  rFANarrow,  u);
+        rWrCur  = lerpV(rWrWide,  rWrNarrow,  u);
+        lArmCur = lerpV(lArmWide, lArmNarrow, u);
+        lFACur  = lerpV(lFAWide,  lFANarrow,  u);
+        lWrCur  = lerpV(lWrWide,  lWrNarrow,  u);
+        headPitch = 0.03 + u * 0.03;
+      } else if (c < 0.82) {
+        rArmCur = [...rArmNarrow];
+        rFACur  = [...rFANarrow];
+        rWrCur  = [...rWrNarrow];
+        lArmCur = [...lArmNarrow];
+        lFACur  = [...lFANarrow];
+        lWrCur  = [...lWrNarrow];
+        headPitch = 0.06;
+      } else {
+        const u = smooth((c - 0.82) / 0.18);
+        rArmCur = lerpV(rArmNarrow, rArmRest, u);
+        rFACur  = lerpV(rFANarrow,  rFARest,  u);
+        rWrCur  = lerpV(rWrNarrow,  rWrRest,  u);
+        lArmCur = lerpV(lArmNarrow, lArmRest, u);
+        lFACur  = lerpV(lFANarrow,  lFARest,  u);
+        lWrCur  = lerpV(lWrNarrow,  lWrRest,  u);
+        headPitch = 0.06 * (1.0 - u);
+      }
+
+      rotateBone("head", headPitch, 0.0, 0.0, 0.25);
+      rotateBone("neck", headPitch * 0.5, 0.0, 0.0, 0.25);
       setMorphTarget("mouthSmile", 0.0);
 
       rotateBone("rightarm", rArmCur[0], rArmCur[1], rArmCur[2], 0.28);
       rotateBone("rightforearm", rFACur[0], rFACur[1], rFACur[2], 0.28);
       rotateBone("righthand", rWrCur[0], rWrCur[1], rWrCur[2], 0.30);
-      // Claw hand shape
-      setHandFingers("right", 0.45, 0.65, 0.65, 0.65, 0.65, 0.20);
+      setHandFingers("right", 0.05, 0.05, 0.05, 0.05, 0.05, 0.20);
 
-      // Left hand at side
-      rotateBone("leftarm", 0.05, -0.05, 1.28, 0.25);
-      rotateBone("leftforearm", -0.22, -0.05, -0.05, 0.25);
-      rotateBone("lefthand", 0.1, 0, 0.05, 0.25);
-      setHandFingers("left", 0.2, 0.25, 0.25, 0.25, 0.25, 0.20);
+      rotateBone("leftarm", lArmCur[0], lArmCur[1], lArmCur[2], 0.28);
+      rotateBone("leftforearm", lFACur[0], lFACur[1], lFACur[2], 0.28);
+      rotateBone("lefthand", lWrCur[0], lWrCur[1], lWrCur[2], 0.30);
+      setHandFingers("left", 0.05, 0.05, 0.05, 0.05, 0.05, 0.20);
     }
 
-    // -----------------------------------------------------------------
     // 36e. DEAF (Right index finger touches ear then sweeps to mouth/chin)
     // -----------------------------------------------------------------
     else if (hasWord("deaf", "badhir", "bahra", "behra")) {
@@ -3496,13 +4083,40 @@ function Avatar({
     // 43b. QUIET / SHHH (Single right index finger held upright against mouth/lips)
     // -----------------------------------------------------------------
     else if (hasWord("quiet", "shhh", "shh", "shaant", "shant", "silence", "chup")) {
+      const cycle = 2.68;
+      const c = (t % cycle) / cycle;
+
+      let armFrac = 0.0;
+      if (c < 0.22) {
+        armFrac = c / 0.22;
+      } else if (c < 0.78) {
+        armFrac = 1.0;
+      } else {
+        armFrac = (1.0 - c) / 0.22;
+      }
+
+      const cl = Math.max(0, Math.min(1, armFrac));
+      const sFrac = cl * cl * (3 - 2 * cl);
+
       rotateBone("head", 0.0, 0.0, 0.0);
       rotateBone("neck", 0.0, 0.0, 0.0);
 
-      // Right arm brings index finger vertically upright directly on mouth with wrist turned 45 degrees up and elbow turned 180 degrees towards mouth
-      rotateBone("rightarm", -1.2491, -1.0362, -1.6999, 0.28);
-      rotateBone("rightforearm", -2.2844, 2.9492, 0.8000, 0.28);
-      rotateBone("righthand", 0.1469, 0.6916, -0.3526, 0.35);
+      // Interpolate right arm smoothly from waist rest up to mouth
+      const rArmX = 0.05 + (-1.2491 - 0.05) * sFrac;
+      const rArmY = 0.05 + (-1.0362 - 0.05) * sFrac;
+      const rArmZ = -1.28 + (-1.6999 - -1.28) * sFrac;
+
+      const rFAX = -0.22 + (-2.2844 - -0.22) * sFrac;
+      const rFAY = 0.05 + (2.9492 - 0.05) * sFrac;
+      const rFAZ = 0.05 + (0.8000 - 0.05) * sFrac;
+
+      const rWrX = 0.10 + (0.1469 - 0.10) * sFrac;
+      const rWrY = (0.6916) * sFrac;
+      const rWrZ = -0.05 + (-0.3526 - -0.05) * sFrac;
+
+      rotateBone("rightarm", rArmX, rArmY, rArmZ, 0.28);
+      rotateBone("rightforearm", rFAX, rFAY, rFAZ, 0.28);
+      rotateBone("righthand", rWrX, rWrY, rWrZ, 0.35);
       applyQuietShhhHand("right", 0.20);
 
       // Left hand rests neutrally at side
@@ -3840,3 +4454,5 @@ function Avatar({
 }
 
 useGLTF.preload("/models/isl-avatar.glb");
+useGLTF.preload("/animations/MVI_5177.glb");
+useGLTF.preload("/animations/MVI_5180.glb");

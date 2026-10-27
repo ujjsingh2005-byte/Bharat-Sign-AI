@@ -1,0 +1,482 @@
+{
+  "EAT": {
+    "status": "Passed independent testing",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "DRINK": {
+    "status": "Passed independent testing",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "HELLO": {
+    "status": "Passed independent testing",
+    "sample_count": 3,
+    "test_accuracy": 100.0,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "NAMASTE": {
+    "status": "Passed independent testing",
+    "sample_count": 3,
+    "test_accuracy": 100.0,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "THANK_YOU": {
+    "status": "Passed independent testing",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "GOOD_MORNING": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "GOOD_AFTERNOON": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "GOOD_NIGHT": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "GOODBYE": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "PLEASE": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "SORRY": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WELCOME": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "EXCUSE_ME": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "HOW_ARE_YOU": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "NICE_TO_MEET_YOU": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "YES": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "NO": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "OK": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WHAT": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WHY": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WHO": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WHERE": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WHEN": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "HOW": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "UNDERSTAND": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "DONT_UNDERSTAND": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "REPEAT": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "HELP": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "STOP": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WAIT": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WATER": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "FOOD": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "HUNGRY": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "THIRSTY": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "MILK": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "TEA": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "COFFEE": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "TOILET": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "SLEEP": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WAKE_UP": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "BATHROOM": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "MEDICINE": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "PAIN": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "SICK": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "DOCTOR": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "MOTHER": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "FATHER": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "BROTHER": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "SISTER": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "FRIEND": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "FAMILY": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "CHILD": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "TEACHER": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "STUDENT": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "PERSON": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "COME": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "GO": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "SIT": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "STAND": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WALK": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "RUN": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "GIVE": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "TAKE": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "OPEN": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "CLOSE": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "READ": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WRITE": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "LEARN": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "TEACH": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "WORK": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "TODAY": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "TOMORROW": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "YESTERDAY": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "NOW": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "LATER": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "MORNING": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "EVENING": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "DAY": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "NIGHT": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  },
+  "FINISHED": {
+    "status": "Not recorded",
+    "sample_count": 0,
+    "test_accuracy": null,
+    "last_updated": "2026-10-27T12:12:10.102014"
+  }
+}

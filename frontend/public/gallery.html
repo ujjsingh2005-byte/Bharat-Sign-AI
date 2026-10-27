@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bharat Sign AI — All 50 ISL Visual Landmark Cards</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #050816; color: #f8fafc; font-family: ui-sans-serif, system-ui, sans-serif; }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+  <div class="max-w-7xl mx-auto space-y-6">
+    <!-- Top Header -->
+    <div class="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="bg-amber-500/20 text-amber-300 text-xs px-3 py-1 rounded-full border border-amber-500/30 font-bold">
+            50 Verified ISL Reference Cards
+          </span>
+          <span class="bg-emerald-500/20 text-emerald-400 text-xs px-3 py-1 rounded-full border border-emerald-500/30 font-bold">
+            21 MediaPipe Landmarks
+          </span>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-black text-white">Bharat Sign AI — Master Visual Landmark Gallery</h1>
+        <p class="text-xs text-slate-400 mt-1">
+          Complete photographic anatomical landmark cards for 50 Indian Sign Language gestures across all categories.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <a href="/dashboard" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white transition shadow">
+          🎥 Open Camera Studio
+        </a>
+        <a href="/guide.html" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white transition shadow">
+          🦴 3D Interactive Skeleton Guide
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Search & Category Filters -->
+    <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex flex-wrap items-center justify-between gap-3">
+      <input
+        type="text"
+        id="search"
+        placeholder="Search signs by English or Hindi..."
+        onkeyup="filterCards()"
+        class="w-full md:w-80 px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+      />
+      <div class="flex flex-wrap gap-1.5" id="category-pills">
+        <button onclick="setFilter('all')" class="cat-pill active px-3 py-1 rounded-lg text-xs font-bold bg-amber-600 text-white">All (50)</button>
+        <button onclick="setFilter('Greetings and Politeness')" class="cat-pill px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-slate-400 hover:text-white">Greetings (15)</button>
+        <button onclick="setFilter('Basic Conversation')" class="cat-pill px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-slate-400 hover:text-white">Conversation (15)</button>
+        <button onclick="setFilter('Daily Needs')" class="cat-pill px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-slate-400 hover:text-white">Daily Needs (15)</button>
+        <button onclick="setFilter('People and Family')" class="cat-pill px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-slate-400 hover:text-white">Family & People (5)</button>
+      </div>
+    </div>
+
+    <!-- Master Sheets Carousel / Section -->
+    <div class="space-y-4">
+      <h2 class="text-lg font-bold text-slate-200">Composite Overview Sheets (10 Signs / Sheet)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-3 space-y-2">
+          <span class="text-xs font-bold text-amber-300">Sheet 1: Core 5 & Greetings (Signs 1-10)</span>
+          <a href="/sheet_1_greetings.jpg" target="_blank" class="block overflow-hidden rounded-xl group">
+            <img src="/sheet_1_greetings.jpg" alt="Sheet 1: Core 5 & Greetings (Signs 1-10)" class="w-full object-cover group-hover:scale-[1.02] transition duration-300" />
+          </a>
+        </div>
+    
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-3 space-y-2">
+          <span class="text-xs font-bold text-amber-300">Sheet 2: Politeness & Basic Conversation (Signs 11-20)</span>
+          <a href="/sheet_2_politeness_and_conv.jpg" target="_blank" class="block overflow-hidden rounded-xl group">
+            <img src="/sheet_2_politeness_and_conv.jpg" alt="Sheet 2: Politeness & Basic Conversation (Signs 11-20)" class="w-full object-cover group-hover:scale-[1.02] transition duration-300" />
+          </a>
+        </div>
+    
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-3 space-y-2">
+          <span class="text-xs font-bold text-amber-300">Sheet 3: Questions & Common Responses (Signs 21-30)</span>
+          <a href="/sheet_3_questions_and_actions.jpg" target="_blank" class="block overflow-hidden rounded-xl group">
+            <img src="/sheet_3_questions_and_actions.jpg" alt="Sheet 3: Questions & Common Responses (Signs 21-30)" class="w-full object-cover group-hover:scale-[1.02] transition duration-300" />
+          </a>
+        </div>
+    
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-3 space-y-2">
+          <span class="text-xs font-bold text-amber-300">Sheet 4: Daily Needs & Food (Signs 31-40)</span>
+          <a href="/sheet_4_daily_needs_1.jpg" target="_blank" class="block overflow-hidden rounded-xl group">
+            <img src="/sheet_4_daily_needs_1.jpg" alt="Sheet 4: Daily Needs & Food (Signs 31-40)" class="w-full object-cover group-hover:scale-[1.02] transition duration-300" />
+          </a>
+        </div>
+    
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-3 space-y-2">
+          <span class="text-xs font-bold text-amber-300">Sheet 5: Health & Family Relations (Signs 41-50)</span>
+          <a href="/sheet_5_health_and_family.jpg" target="_blank" class="block overflow-hidden rounded-xl group">
+            <img src="/sheet_5_health_and_family.jpg" alt="Sheet 5: Health & Family Relations (Signs 41-50)" class="w-full object-cover group-hover:scale-[1.02] transition duration-300" />
+          </a>
+        </div>
+    
+      </div>
+    </div>
+
+    <!-- Individual 50 Sign Cards Grid -->
+    <div class="space-y-4">
+      <h2 class="text-lg font-bold text-slate-200">Individual Landmark Guide Cards (50 Signs)</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="cards-grid">
+
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="eat"
+             data-display="eat"
+             data-hindi="खाना"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#1 Eat</span>
+              <span class="text-xs font-bold text-amber-400">(खाना)</span>
+            </div>
+            <a href="/guide_eat.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_eat.jpg" alt="Eat" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="drink"
+             data-display="drink"
+             data-hindi="पीना"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#2 Drink</span>
+              <span class="text-xs font-bold text-amber-400">(पीना)</span>
+            </div>
+            <a href="/guide_drink.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_drink.jpg" alt="Drink" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="hello"
+             data-display="hello"
+             data-hindi="हेलो"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#3 Hello</span>
+              <span class="text-xs font-bold text-amber-400">(हेलो)</span>
+            </div>
+            <a href="/guide_hello.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_hello.jpg" alt="Hello" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="namaste"
+             data-display="namaste"
+             data-hindi="नमस्ते"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#4 Namaste</span>
+              <span class="text-xs font-bold text-amber-400">(नमस्ते)</span>
+            </div>
+            <a href="/guide_namaste.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_namaste.jpg" alt="Namaste" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="thank_you"
+             data-display="thank you"
+             data-hindi="धन्यवाद"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#5 Thank You</span>
+              <span class="text-xs font-bold text-amber-400">(धन्यवाद)</span>
+            </div>
+            <a href="/guide_thank_you.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_thank_you.jpg" alt="Thank You" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="good_morning"
+             data-display="good morning"
+             data-hindi="शुभ प्रभात"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#6 Good Morning</span>
+              <span class="text-xs font-bold text-amber-400">(शुभ प्रभात)</span>
+            </div>
+            <a href="/guide_good_morning.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_good_morning.jpg" alt="Good Morning" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="good_afternoon"
+             data-display="good afternoon"
+             data-hindi="शुभ दोपहर"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#7 Good Afternoon</span>
+              <span class="text-xs font-bold text-amber-400">(शुभ दोपहर)</span>
+            </div>
+            <a href="/guide_good_afternoon.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_good_afternoon.jpg" alt="Good Afternoon" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="good_night"
+             data-display="good night"
+             data-hindi="शुभ रात्रि"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#8 Good Night</span>
+              <span class="text-xs font-bold text-amber-400">(शुभ रात्रि)</span>
+            </div>
+            <a href="/guide_good_night.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_good_night.jpg" alt="Good Night" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="goodbye"
+             data-display="goodbye"
+             data-hindi="अलविदा"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#9 Goodbye</span>
+              <span class="text-xs font-bold text-amber-400">(अलविदा)</span>
+            </div>
+            <a href="/guide_goodbye.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_goodbye.jpg" alt="Goodbye" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="please"
+             data-display="please"
+             data-hindi="कृपया"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#10 Please</span>
+              <span class="text-xs font-bold text-amber-400">(कृपया)</span>
+            </div>
+            <a href="/guide_please.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_please.jpg" alt="Please" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="sorry"
+             data-display="sorry"
+             data-hindi="माफ़ कीजिए"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#11 Sorry</span>
+              <span class="text-xs font-bold text-amber-400">(माफ़ कीजिए)</span>
+            </div>
+            <a href="/guide_sorry.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_sorry.jpg" alt="Sorry" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="welcome"
+             data-display="welcome"
+             data-hindi="स्वागत हे"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#12 Welcome</span>
+              <span class="text-xs font-bold text-amber-400">(स्वागत हे)</span>
+            </div>
+            <a href="/guide_welcome.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_welcome.jpg" alt="Welcome" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="excuse_me"
+             data-display="excuse me"
+             data-hindi="क्षमा करें"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#13 Excuse Me</span>
+              <span class="text-xs font-bold text-amber-400">(क्षमा करें)</span>
+            </div>
+            <a href="/guide_excuse_me.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_excuse_me.jpg" alt="Excuse Me" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="how_are_you"
+             data-display="how are you?"
+             data-hindi="आप कैसे हैं?"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#14 How Are You?</span>
+              <span class="text-xs font-bold text-amber-400">(आप कैसे हैं?)</span>
+            </div>
+            <a href="/guide_how_are_you.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_how_are_you.jpg" alt="How Are You?" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="nice_to_meet_you"
+             data-display="nice to meet you"
+             data-hindi="आपसे मिलकर खुशी हुई"
+             data-category="Greetings and Politeness">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#15 Nice to Meet You</span>
+              <span class="text-xs font-bold text-amber-400">(आपसे मिलकर खुशी हुई)</span>
+            </div>
+            <a href="/guide_nice_to_meet_you.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_nice_to_meet_you.jpg" alt="Nice to Meet You" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Greetings</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="yes"
+             data-display="yes"
+             data-hindi="हाँ"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#16 Yes</span>
+              <span class="text-xs font-bold text-amber-400">(हाँ)</span>
+            </div>
+            <a href="/guide_yes.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_yes.jpg" alt="Yes" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="no"
+             data-display="no"
+             data-hindi="नहीं"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#17 No</span>
+              <span class="text-xs font-bold text-amber-400">(नहीं)</span>
+            </div>
+            <a href="/guide_no.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_no.jpg" alt="No" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="ok"
+             data-display="ok"
+             data-hindi="ठीक है"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#18 OK</span>
+              <span class="text-xs font-bold text-amber-400">(ठीक है)</span>
+            </div>
+            <a href="/guide_ok.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_ok.jpg" alt="OK" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="what"
+             data-display="what?"
+             data-hindi="क्या?"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#19 What?</span>
+              <span class="text-xs font-bold text-amber-400">(क्या?)</span>
+            </div>
+            <a href="/guide_what.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_what.jpg" alt="What?" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="why"
+             data-display="why?"
+             data-hindi="क्यों?"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#20 Why?</span>
+              <span class="text-xs font-bold text-amber-400">(क्यों?)</span>
+            </div>
+            <a href="/guide_why.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_why.jpg" alt="Why?" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="who"
+             data-display="who?"
+             data-hindi="कौन?"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#21 Who?</span>
+              <span class="text-xs font-bold text-amber-400">(कौन?)</span>
+            </div>
+            <a href="/guide_who.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_who.jpg" alt="Who?" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="where"
+             data-display="where?"
+             data-hindi="कहाँ?"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#22 Where?</span>
+              <span class="text-xs font-bold text-amber-400">(कहाँ?)</span>
+            </div>
+            <a href="/guide_where.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_where.jpg" alt="Where?" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="when"
+             data-display="when?"
+             data-hindi="कब?"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#23 When?</span>
+              <span class="text-xs font-bold text-amber-400">(कब?)</span>
+            </div>
+            <a href="/guide_when.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_when.jpg" alt="When?" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="how"
+             data-display="how?"
+             data-hindi="कैसे?"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#24 How?</span>
+              <span class="text-xs font-bold text-amber-400">(कैसे?)</span>
+            </div>
+            <a href="/guide_how.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_how.jpg" alt="How?" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="understand"
+             data-display="understand"
+             data-hindi="समझ गया"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#25 Understand</span>
+              <span class="text-xs font-bold text-amber-400">(समझ गया)</span>
+            </div>
+            <a href="/guide_understand.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_understand.jpg" alt="Understand" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="dont_understand"
+             data-display="don't understand"
+             data-hindi="नहीं समझा"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#26 Don't Understand</span>
+              <span class="text-xs font-bold text-amber-400">(नहीं समझा)</span>
+            </div>
+            <a href="/guide_dont_understand.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_dont_understand.jpg" alt="Don't Understand" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="repeat"
+             data-display="repeat / again"
+             data-hindi="दोहराएं"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#27 Repeat / Again</span>
+              <span class="text-xs font-bold text-amber-400">(दोहराएं)</span>
+            </div>
+            <a href="/guide_repeat.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_repeat.jpg" alt="Repeat / Again" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="help"
+             data-display="help"
+             data-hindi="मदद"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#28 Help</span>
+              <span class="text-xs font-bold text-amber-400">(मदद)</span>
+            </div>
+            <a href="/guide_help.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_help.jpg" alt="Help" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="stop"
+             data-display="stop"
+             data-hindi="रुकें"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#29 Stop</span>
+              <span class="text-xs font-bold text-amber-400">(रुकें)</span>
+            </div>
+            <a href="/guide_stop.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_stop.jpg" alt="Stop" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="wait"
+             data-display="wait"
+             data-hindi="इंतज़ार करें"
+             data-category="Basic Conversation">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#30 Wait</span>
+              <span class="text-xs font-bold text-amber-400">(इंतज़ार करें)</span>
+            </div>
+            <a href="/guide_wait.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_wait.jpg" alt="Wait" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Basic</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="water"
+             data-display="water"
+             data-hindi="पानी"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#31 Water</span>
+              <span class="text-xs font-bold text-amber-400">(पानी)</span>
+            </div>
+            <a href="/guide_water.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_water.jpg" alt="Water" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="food"
+             data-display="food"
+             data-hindi="खाना"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#32 Food</span>
+              <span class="text-xs font-bold text-amber-400">(खाना)</span>
+            </div>
+            <a href="/guide_food.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_food.jpg" alt="Food" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="hungry"
+             data-display="hungry"
+             data-hindi="भूख लगी है"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#33 Hungry</span>
+              <span class="text-xs font-bold text-amber-400">(भूख लगी है)</span>
+            </div>
+            <a href="/guide_hungry.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_hungry.jpg" alt="Hungry" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="thirsty"
+             data-display="thirsty"
+             data-hindi="प्यास लगी है"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#34 Thirsty</span>
+              <span class="text-xs font-bold text-amber-400">(प्यास लगी है)</span>
+            </div>
+            <a href="/guide_thirsty.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_thirsty.jpg" alt="Thirsty" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="milk"
+             data-display="milk"
+             data-hindi="दूध"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#35 Milk</span>
+              <span class="text-xs font-bold text-amber-400">(दूध)</span>
+            </div>
+            <a href="/guide_milk.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_milk.jpg" alt="Milk" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="tea"
+             data-display="tea"
+             data-hindi="चाय"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#36 Tea</span>
+              <span class="text-xs font-bold text-amber-400">(चाय)</span>
+            </div>
+            <a href="/guide_tea.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_tea.jpg" alt="Tea" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="coffee"
+             data-display="coffee"
+             data-hindi="कॉफ़ी"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#37 Coffee</span>
+              <span class="text-xs font-bold text-amber-400">(कॉफ़ी)</span>
+            </div>
+            <a href="/guide_coffee.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_coffee.jpg" alt="Coffee" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="toilet"
+             data-display="toilet"
+             data-hindi="शौचालय"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#38 Toilet</span>
+              <span class="text-xs font-bold text-amber-400">(शौचालय)</span>
+            </div>
+            <a href="/guide_toilet.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_toilet.jpg" alt="Toilet" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="sleep"
+             data-display="sleep"
+             data-hindi="सोना"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#39 Sleep</span>
+              <span class="text-xs font-bold text-amber-400">(सोना)</span>
+            </div>
+            <a href="/guide_sleep.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_sleep.jpg" alt="Sleep" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="wake_up"
+             data-display="wake up"
+             data-hindi="जागना"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#40 Wake Up</span>
+              <span class="text-xs font-bold text-amber-400">(जागना)</span>
+            </div>
+            <a href="/guide_wake_up.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_wake_up.jpg" alt="Wake Up" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="bathroom"
+             data-display="bathroom"
+             data-hindi="स्नानघर"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#41 Bathroom</span>
+              <span class="text-xs font-bold text-amber-400">(स्नानघर)</span>
+            </div>
+            <a href="/guide_bathroom.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_bathroom.jpg" alt="Bathroom" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="medicine"
+             data-display="medicine"
+             data-hindi="दवा"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#42 Medicine</span>
+              <span class="text-xs font-bold text-amber-400">(दवा)</span>
+            </div>
+            <a href="/guide_medicine.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_medicine.jpg" alt="Medicine" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="pain"
+             data-display="pain"
+             data-hindi="दर्द"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#43 Pain</span>
+              <span class="text-xs font-bold text-amber-400">(दर्द)</span>
+            </div>
+            <a href="/guide_pain.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_pain.jpg" alt="Pain" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="sick"
+             data-display="sick"
+             data-hindi="बीमार"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#44 Sick</span>
+              <span class="text-xs font-bold text-amber-400">(बीमार)</span>
+            </div>
+            <a href="/guide_sick.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_sick.jpg" alt="Sick" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="doctor"
+             data-display="doctor"
+             data-hindi="चिकित्सक"
+             data-category="Daily Needs">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#45 Doctor</span>
+              <span class="text-xs font-bold text-amber-400">(चिकित्सक)</span>
+            </div>
+            <a href="/guide_doctor.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_doctor.jpg" alt="Doctor" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Daily</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="mother"
+             data-display="mother"
+             data-hindi="माँ"
+             data-category="People and Family">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#46 Mother</span>
+              <span class="text-xs font-bold text-amber-400">(माँ)</span>
+            </div>
+            <a href="/guide_mother.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_mother.jpg" alt="Mother" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>People</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="father"
+             data-display="father"
+             data-hindi="पिताजी"
+             data-category="People and Family">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#47 Father</span>
+              <span class="text-xs font-bold text-amber-400">(पिताजी)</span>
+            </div>
+            <a href="/guide_father.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_father.jpg" alt="Father" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>People</span>
+            <span class="font-bold text-sky-400">1 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="brother"
+             data-display="brother"
+             data-hindi="भाई"
+             data-category="People and Family">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#48 Brother</span>
+              <span class="text-xs font-bold text-amber-400">(भाई)</span>
+            </div>
+            <a href="/guide_brother.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_brother.jpg" alt="Brother" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>People</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="sister"
+             data-display="sister"
+             data-hindi="बहन"
+             data-category="People and Family">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#49 Sister</span>
+              <span class="text-xs font-bold text-amber-400">(बहन)</span>
+            </div>
+            <a href="/guide_sister.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_sister.jpg" alt="Sister" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>People</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+        <div class="sign-card p-3 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition flex flex-col justify-between"
+             data-sign="friend"
+             data-display="friend"
+             data-hindi="दोस्त"
+             data-category="People and Family">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">#50 Friend</span>
+              <span class="text-xs font-bold text-amber-400">(दोस्त)</span>
+            </div>
+            <a href="/guide_friend.jpg" target="_blank" class="block overflow-hidden rounded-xl bg-black">
+              <img src="/guide_friend.jpg" alt="Friend" class="w-full object-cover hover:scale-105 transition duration-200" />
+            </a>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>People</span>
+            <span class="font-bold text-sky-400">2 Hand(s)</span>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let activeCat = 'all';
+
+    function setFilter(cat) {
+      activeCat = cat;
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        if ((cat === 'all' && btn.innerText.includes('All')) || btn.innerText.includes(cat.split(' ')[0])) {
+          btn.className = 'cat-pill active px-3 py-1 rounded-lg text-xs font-bold bg-amber-600 text-white';
+        } else {
+          btn.className = 'cat-pill px-3 py-1 rounded-lg text-xs font-bold bg-slate-900 text-slate-400 hover:text-white';
+        }
+      });
+      filterCards();
+    }
+
+    function filterCards() {
+      const q = document.getElementById('search').value.toLowerCase().trim();
+      document.querySelectorAll('.sign-card').forEach(card => {
+        const sign = card.dataset.sign;
+        const display = card.dataset.display;
+        const hindi = card.dataset.hindi;
+        const cat = card.dataset.category;
+
+        const matchesCat = activeCat === 'all' || cat.includes(activeCat);
+        const matchesQuery = !q || sign.includes(q) || display.includes(q) || hindi.includes(q);
+
+        if (matchesCat && matchesQuery) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

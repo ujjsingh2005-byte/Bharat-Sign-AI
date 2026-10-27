@@ -10,6 +10,7 @@ import ISLDictionary from "../../components/dashboard/ISLDictionary";
 import ResearchStudio from "../../components/research/ResearchStudio";
 import LearnSignLanguage from "../../components/dashboard/LearnSignLanguage";
 import MotionValidationStudio from "../../components/dashboard/MotionValidationStudio";
+import AutoTrainingStudio from "../../components/dashboard/AutoTrainingStudio";
 import { processLocalSemanticPipeline } from "../../utils/localSemanticPipeline";
 import {
   Sparkles,
@@ -35,6 +36,7 @@ const TAB_BACKGROUNDS: Record<DashboardTab, string> = {
   camera_recognition: "bg-[#04171D]",
   live_studio: "bg-[#100B22]",
   dictionary: "bg-[#071A17]",
+  auto_training: "bg-[#07121C]",
 };
 
 export default function Dashboard() {
@@ -79,6 +81,14 @@ export default function Dashboard() {
           {/* ========================================================= */}
           {/* TAB 1: STUDIO OVERVIEW (ALL MODES UNIFIED) */}
           {/* ========================================================= */}
+          
+          {/* ========================================================= */}
+          {/* TAB: AUTO VIDEO TRAINING & 3D AVATAR SYNC */}
+          {/* ========================================================= */}
+          {activeTab === "auto_training" && (
+            <AutoTrainingStudio />
+          )}
+
           {activeTab === "all" && (
             <div className="space-y-8 max-w-7xl mx-auto">
               {/* Quick Hero Banner */}

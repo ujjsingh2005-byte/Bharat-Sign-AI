@@ -354,7 +354,7 @@ KNOWN_VIDEO_STEM_MAP: Dict[str, str] = {
     "MVI_9262": "old", "MVI_9263": "old", "MVI_9264": "old",
     "MVI_9343": "old", "MVI_9344": "old", "MVI_9345": "old",
     "MVI_9424": "old", "MVI_9425": "old", "MVI_9426": "old",
-    "MVI_9504": "old", "MVI_9505": "old", "MVI_9506": "old",
+    "MVI_9504": "young", "MVI_9505": "young", "MVI_9506": "young",
     "MVI_5155": "young", "MVI_5156": "young", "MVI_5157": "young",
     "MVI_5235": "young", "MVI_5236": "young", "MVI_5237": "young",
     "MVI_5313": "young", "MVI_5314": "young", "MVI_5315": "young",

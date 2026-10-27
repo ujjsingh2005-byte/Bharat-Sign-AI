@@ -1,6 +1,7 @@
 import io
 import base64
 from typing import Optional
+from functools import lru_cache
 from gtts import gTTS
 
 # Mapping ISO 639 codes to gTTS language tags
@@ -22,6 +23,7 @@ GTTS_LANG_MAP = {
     "sa": "hi",  # Sanskrit fallback to Hindi phonetics
 }
 
+@lru_cache(maxsize=256)
 def generate_voice_audio(text: str, language: str = "hi") -> Optional[str]:
     """
     Generates high-quality native audio speech for text in 14 regional languages.

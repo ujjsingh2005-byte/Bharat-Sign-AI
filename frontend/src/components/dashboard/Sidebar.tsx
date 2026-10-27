@@ -21,7 +21,8 @@ export type DashboardTab =
   | "camera_recognition"
   | "live_studio"
   | "dictionary"
-  | "research";
+  | "research"
+  | "auto_training";
 
 interface SidebarProps {
   activeTab: DashboardTab;

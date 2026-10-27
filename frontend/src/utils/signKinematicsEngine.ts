@@ -1,4 +1,14 @@
-/**
+
+// Global runtime cache for dynamically learned video sign kinematics
+export const DYNAMIC_LEARNED_KINEMATICS: Record<string, any> = {};
+
+export function registerDynamicKinematics(key: string, data: any) {
+  if (!key || !data) return;
+  const cleanKey = key.toLowerCase().replace(/[^a-z0-9_]/g, '').trim();
+  DYNAMIC_LEARNED_KINEMATICS[cleanKey] = data;
+}
+
+﻿/**
  * Bharat Sign AI - Precise Anatomical Sign-Language Kinematics Engine
  * 
  * Defines standard coordinate frames, anatomical joint limits, keyframed
@@ -57,6 +67,7 @@ export interface HandAnatomicalPose {
   isPinchedMorsel?: boolean;
   isDrinkingCup?: boolean;
   isClosedSFist?: boolean;
+  isClosedAFist?: boolean;
   isNoSnap?: boolean;
   snapProgress?: number;
   isPleaseChin?: boolean;
@@ -209,11 +220,12 @@ export const PRESET_CLOSED_FIST_S: HandAnatomicalPose = {
 };
 
 export const PRESET_CLOSED_FIST_A: HandAnatomicalPose = {
-  thumb: { cmc: 0.1, mcp: 0.2, ip: 0.1, opposition: 0.1 }, // Thumb straight alongside index
-  index: { base: 1.25, mid: 1.35, tip: 1.2, spread: 0.0 },
-  middle: { base: 1.25, mid: 1.35, tip: 1.2, spread: 0.0 },
-  ring: { base: 1.25, mid: 1.35, tip: 1.2, spread: 0.0 },
-  pinky: { base: 1.25, mid: 1.35, tip: 1.2, spread: 0.0 },
+  thumb: { cmc: 0.30, mcp: 0.0, ip: 0.0, opposition: 0.65 }, // Thumb straight & horizontal flat pressed across middle PIP knuckles (not pointing up)
+  index: { base: 1.35, mid: 1.38, tip: 1.25, spread: 0.0 },     // Four fingers closed firmly in tight fist, knuckles facing outward 90°
+  middle: { base: 1.35, mid: 1.38, tip: 1.25, spread: 0.0 },
+  ring: { base: 1.35, mid: 1.38, tip: 1.25, spread: 0.0 },
+  pinky: { base: 1.35, mid: 1.38, tip: 1.25, spread: 0.0 },
+  isClosedAFist: true,
 };
 
 export const PRESET_H_HANDSHAPE: HandAnatomicalPose = {
@@ -232,6 +244,31 @@ export const PRESET_ILY_HANDSHAPE: HandAnatomicalPose = {
   pinky: { base: 0.0, mid: 0.0, tip: 0.0, spread: 0.1 },      // Pinky extended straight
 };
 
+
+
+export const PRESET_WET_OPEN: HandAnatomicalPose = {
+  thumb:  { cmc: 0.06, mcp: 0.12, ip: 0.08, opposition: 0.25 }, // Open thumb spread outward
+  index:  { base: 0.12, mid: 0.14, tip: 0.08, spread: 0.12 },   // Spread 5, slightly relaxed curve
+  middle: { base: 0.10, mid: 0.14, tip: 0.08, spread: 0.03 },   // Spread 5
+  ring:   { base: 0.12, mid: 0.14, tip: 0.08, spread: -0.07 },  // Spread 5
+  pinky:  { base: 0.14, mid: 0.16, tip: 0.08, spread: -0.14 },  // Spread 5
+};
+
+export const PRESET_WET_CLOSED: HandAnatomicalPose = {
+  thumb:  { cmc: 0.55, mcp: 0.70, ip: 0.60, opposition: 0.85 }, // Thumb pad opposes all 4 fingertips
+  index:  { base: 0.82, mid: 0.88, tip: 0.78, spread: -0.04 },  // All fingertips meet thumb pad (chutki / catching water droplet)
+  middle: { base: 0.82, mid: 0.88, tip: 0.78, spread: 0.00 },
+  ring:   { base: 0.82, mid: 0.88, tip: 0.78, spread: 0.04 },
+  pinky:  { base: 0.82, mid: 0.88, tip: 0.78, spread: 0.08 },
+  isPinchedMorsel: true,
+};
+export const PRESET_F_OK_HANDSHAPE: HandAnatomicalPose = {
+  thumb: { cmc: 0.15, mcp: 0.25, ip: 0.20, opposition: 0.65 },
+  index: { base: 0.60, mid: 0.75, tip: 0.50, spread: -0.05 }, // Form circle/loop with thumb
+  middle: { base: 0.05, mid: 0.02, tip: 0.00, spread: 0.08 },  // Extended straight upright
+  ring:   { base: 0.05, mid: 0.02, tip: 0.00, spread: 0.02 },  // Extended straight upright
+  pinky:  { base: 0.05, mid: 0.02, tip: 0.00, spread: -0.08 }, // Extended straight upright
+};
 export const PRESET_PINCHED_EATING_MORSEL: HandAnatomicalPose = {
   thumb: { cmc: 0.55, mcp: 0.70, ip: 0.60, opposition: 0.85 }, // Thumb pad opposes all 4 fingertips
   index: { base: 0.85, mid: 0.90, tip: 0.85, spread: -0.05 },  // 4 fingers curved inward together
@@ -241,7 +278,14 @@ export const PRESET_PINCHED_EATING_MORSEL: HandAnatomicalPose = {
   isPinchedMorsel: true,
 };
 
-export const PRESET_FLATTENED_O: HandAnatomicalPose = PRESET_PINCHED_EATING_MORSEL;
+export const PRESET_FLATTENED_O: HandAnatomicalPose = {
+  thumb:  { cmc: 0.55, mcp: 0.70, ip: 0.60, opposition: 0.85 }, // Thumb pad opposes all 4 fingertips (Flattened-O / chutki / katori)
+  index:  { base: 0.85, mid: 0.90, tip: 0.85, spread: -0.04 },  // All 4 fingertips gathered together touching thumb tip
+  middle: { base: 0.85, mid: 0.90, tip: 0.85, spread: 0.00 },
+  ring:   { base: 0.85, mid: 0.90, tip: 0.85, spread: 0.04 },
+  pinky:  { base: 0.85, mid: 0.90, tip: 0.85, spread: 0.08 },
+  isPinchedMorsel: true,
+};
 
 export const PRESET_C_CUP: HandAnatomicalPose = {
   thumb: { cmc: 0.05, mcp: 0.05, ip: 0.0, opposition: 0.10 }, // Open thumb extended forward horizontally (Matches user photo)
@@ -978,50 +1022,55 @@ export const PRECISE_GESTURES_MAP: Record<string, PreciseGestureDefinition> = {
     signLanguage: "ISL",
     referenceSource: "Signs Everyone Should Know",
     involvesHands: "right",
-    durationSeconds: 2.2,
+    durationSeconds: 2.6,
     motionType: "circular",
     measurements: {
-      initialWristHeight: -0.08, // Sternum / heart level
+      initialWristHeight: -0.08, // Sternum / center chest level
       finalWristHeight: -0.08,
       verticalDisplacement: 0.0,
       horizontalDisplacement: 0.0,
       depthDisplacement: 0.0,
       totalMovementDistance: 0.25, // Circular circumference
-      palmOrientationStart: "Closed fist knuckles resting against center chest",
-      palmOrientationEnd: "Circling clockwise over sternum with head bowed",
-      wristRotationDegrees: [25.8, 5.7, 11.5],
+      palmOrientationStart: "Right hand in ASL 'A' fist resting against center chest (sternum), palm facing inward toward chest, knuckles facing outward",
+      palmOrientationEnd: "Rubbing in 2-3 continuous clockwise circles over sternum with locked neutral wrist and head bowed in remorse",
+      wristRotationDegrees: [20.0, 5.7, 8.6],
       trajectoryType: "circular",
       anatomicalFeatures: [
-        "Closed A-handshape (thumb resting alongside index knuckle)",
-        "Placed firmly over sternum / heart",
-        "Circles clockwise with head bowed slightly in contrition",
+        "Thumb: Angutha bilkul straight aur baki ungliyon ke middle knuckles (PIP joints) ke upar flat press, horizontal (not pointing up)",
+        "Fingers (Index to Pinky): Charo ungliyan tight fist (muthhi), knuckles bahar ki taraf 90-degree angle pr face karenge",
+        "Wrist: Bilkul locked aur straight (zero flex/bend), pura haath aur wrist single solid unit",
+        "Contact Point: Muthhi ka Thumb-side aur Index finger ka side sternum (chest ke bilkul bich) pr touch karega (0-inch gap)",
+        "Shoulder: Relaxed par 10-15 degrees bahar rotated taaki elbow body se thoda door rahe (no upward shrink)",
+        "Elbow: Nichli taraf aur bahar (outward) point karegi 45-degree angle banate hue, main pivot point banegi",
+        "Motion: 2-3 Clockwise circles (Upar -> Right -> Neeche -> Left) diameter ~3-4 inches",
+        "Torso & Head: 5 degrees forward lean, head tilted down (bowed), remorseful expression with compressed lips & lowered brows",
       ],
     },
     startPose: {
       timeFraction: 0.0,
-      rightArm: { arm: [-0.55, 0.20, -1.05], forearm: [-1.45, 0.15, 0.15], wrist: [0.45, 0.10, 0.20] },
+      rightArm: { arm: [-0.25, 0.12, -0.95], forearm: [-1.15, 0.15, 0.15], wrist: [0.25, -0.15, 0.15] },
       leftArm: NEUTRAL_REST_ARM_LEFT,
       rightHand: PRESET_CLOSED_FIST_A,
       leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.12, 0.0, 0.0],
+      head: [0.0, 0.0, 0.0],
     },
     endPose: {
       timeFraction: 1.0,
-      rightArm: { arm: [-0.55, 0.20, -1.05], forearm: [-1.45, 0.15, 0.15], wrist: [0.45, 0.10, 0.20] },
+      rightArm: { arm: [-0.25, 0.12, -0.95], forearm: [-1.15, 0.15, 0.15], wrist: [0.25, -0.15, 0.15] },
       leftArm: NEUTRAL_REST_ARM_LEFT,
       rightHand: PRESET_CLOSED_FIST_A,
       leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.12, 0.0, 0.0],
+      head: [0.0, 0.0, 0.0],
     },
-    description: "Closed fist circles over the chest in a circular motion with an apologetic expression.",
-    facialExpression: "Apologetic, remorseful facial expression with head slightly bowed.",
+    description: "SORRY Sign: Right hand moves from 3rd quadrant up to the chest, turning the elbow 90 degrees from right to left towards the chest; dominant hand directly touches the center of the chest (sternum) with zero gap; thumb horizontal flat across middle knuckles; rubs in 2-3 continuous clockwise circles.",
+    facialExpression: "Remorseful, apologetic facial expression with head bowed forward and downcast eyes in contrition.",
     verifiedStatus: "LINGUISTICALLY_VERIFIED",
   },
 
   // --------------------------------------------------------------------------
   // 10. STOP
   // --------------------------------------------------------------------------
-  stop: {
+    stop: {
     id: "stop",
     name: "Stop",
     meaningHindi: "रुको",
@@ -1121,107 +1170,508 @@ export const PRECISE_GESTURES_MAP: Record<string, PreciseGestureDefinition> = {
   // --------------------------------------------------------------------------
   // 12. EAT
   // --------------------------------------------------------------------------
-  eat: {
-    id: "eat",
-    name: "Eat",
-    meaningHindi: "खाना",
+  // --------------------------------------------------------------------------
+  // OLD / ELDERLY (Two-Stage Compound Motion requested by user):
+  // 1. First perform the complete EAT sign: pinched morsel hand moving from lower
+  //    quadrant to mouth / lips and dwelling.
+  // 2. Then transition hand upward and backwards behind the head / nape of neck.
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+  // YOUNG / YOUTH (युवा / जवान / नया):
+  // Reverse motion of old:
+  // Starts near neck/mouth with closed/pinched hand, wrist turned facing OUTWARD
+  // towards the user/viewer (opposite of old).
+  // Then the hand moves DOWNWARD in front of chest while all fingers and thumb
+  // blossom open facing the user, expressing blooming vitality and youth.
+    // --------------------------------------------------------------------------
+  // YOUNG (Trained on reference video MVI_9504.MOV / INCLUDE Class 52):
+  // Right hand starts beside body, rises toward face and nose/eye, reaches
+  // forehead/temple with pinched fingertips, sweeps outward/away, and returns down.
+  // --------------------------------------------------------------------------
+  young: {
+    id: "young",
+    name: "Young",
+    meaningHindi: "युवा / जवान / नया",
     signLanguage: "ISL",
     referenceSource: "Signs Everyone Should Know",
     involvesHands: "right",
-    durationSeconds: 2.4,
-    motionType: "arc",
+    durationSeconds: 2.36,
+    motionType: "compound",
     measurements: {
-      initialWristHeight: 0.14,
-      finalWristHeight: 0.30, // Lips / mouth level
-      verticalDisplacement: 0.16,
-      horizontalDisplacement: 0.35, // Moves from Quadrant III (-X) to mouth center
-      depthDisplacement: -0.35, // Moves inward toward lips
-      totalMovementDistance: 0.52,
-      palmOrientationStart: "Right hand in Quadrant III (-X, -Y) holding morsel with thumb and four fingers pinched together, wrist turned 90° towards the mouth with palm facing upward/inward and elbow naturally directed towards the mouth",
-      palmOrientationEnd: "Pinched fingertips brought directly to lips/mouth touching mouth surface with palm facing inward/upward, matching user reference photo",
-      wristRotationDegrees: [97.4, -45.3, -20.1],
-      trajectoryType: "arc",
+      initialWristHeight: -0.45,
+      finalWristHeight: -0.45,
+      verticalDisplacement: 0.65,
+      horizontalDisplacement: 0.28,
+      depthDisplacement: 0.20,
+      totalMovementDistance: 0.72,
+      palmOrientationStart: "Right hand begins resting beside body; raises toward face with fingers bunched in bud pinch",
+      palmOrientationEnd: "Hand reaches forehead and temple with elbow bent, sweeps outward away from head with blossoming fingers, then lowers back down beside body",
+      wristRotationDegrees: [15.0, -12.0, -20.0],
+      trajectoryType: "compound",
       anatomicalFeatures: [
-        "Thumb and four fingers (index, middle, ring, pinky) closed together with fingertips meeting thumb pad in pinched morsel eating handshape (matching user hand photo)",
-        "From the very start in Quadrant III (-X, -Y), the wrist and finger cone are turned 90° towards the mouth (supinated, palm facing upward/inward), with pinched fingers, thumb, and elbow directed straight towards the mouth",
-        "Hand moves smoothly upward and inward from Quadrant III directly to the mouth/lips (matching user selfie photo)",
-        "Fingertips physically contact the mouth surface (X = 0.000, Y = 1.513, Z = 0.135)",
-        "Left hand rests relaxed down at side doing nothing",
+        "Phase 1 (0.0–0.4s): Right hand raises smoothly from side beside the body toward the face",
+        "Phase 2 (0.4–0.8s): Hand moves toward the nose and eye area, then upward toward the forehead",
+        "Phase 3 (0.8–1.4s): Hand positions near the forehead and right temple, keeping elbow bent with fingertips together",
+        "Phase 4 (1.4–1.9s): Hand sweeps outward and away from the head as fingers blossom open",
+        "Phase 5 (1.9–2.36s): Hand lowers smoothly back toward the side of the body to rest",
+        "Left hand remains stationary beside the body throughout the entire gesture",
+        "Preserves facial posture observed in reference video MVI_9504.MOV",
       ],
     },
     startPose: {
       timeFraction: 0.0,
-      rightArm: { arm: [0.97, -0.80, 0.59], forearm: [-2.15, 0.10, -0.45], wrist: [0.04, 3.11, 0.19] },
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
       leftArm: NEUTRAL_REST_ARM_LEFT,
       rightHand: PRESET_PINCHED_EATING_MORSEL,
       leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.03, 0.0, 0.0],
+      head: [0.02, 0.0, 0.0],
     },
     endPose: {
       timeFraction: 1.0,
-      rightArm: { arm: [-1.37, -0.45, -0.99], forearm: [-1.95, 0.45, -0.65], wrist: [-0.05, 3.11, 0.11] },
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
       leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_PINCHED_EATING_MORSEL,
+      rightHand: PRESET_STANDBY_RELAXED,
       leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.08, 0.0, 0.0],
+      head: [0.0, 0.0, 0.0],
     },
-    description: "Right hand with thumb and all four fingers pinched together in morsel shape with wrist turned 180° opposite moves smoothly from Quadrant III up to touch the mouth twice in feeding motion; left hand rests at side.",
-    facialExpression: "Pleasant, engaged expression with subtle head nod on mouth contact.",
+    description: "In Young (trained on ISL reference video MVI_9504.MOV), right hand raises from side of body toward nose and eyes, moves upward near forehead and temple with elbow bent and pinched fingers, sweeps outward away from head as fingers blossom open, and returns smoothly down beside body.",
+    facialExpression: "Lively, alert facial expression with direct eye contact matching reference video MVI_9504.MOV.",
     verifiedStatus: "LINGUISTICALLY_VERIFIED",
   },
 
   // --------------------------------------------------------------------------
-  // 13. DRINK
+  // UNKNOWN_SIGN_001 (Reference Video: MVI_9504.MOV)
+  // Verified Meaning: PENDING | Validation Status: PENDING
+  // Exact 5-phase gesture reproduction from reference video MVI_9504.MOV
   // --------------------------------------------------------------------------
-  drink: {
-    id: "drink",
-    name: "Drink",
-    meaningHindi: "पीना",
+  unknown_sign_001: {
+    id: "unknown_sign_001",
+    name: "UNKNOWN_SIGN_001",
+    meaningHindi: "विचाराधीन (PENDING)",
     signLanguage: "ISL",
     referenceSource: "Signs Everyone Should Know",
     involvesHands: "right",
-    durationSeconds: 2.4,
-    motionType: "arc",
+    durationSeconds: 2.36,
+    motionType: "compound",
     measurements: {
-      initialWristHeight: -0.22, // In Quadrant III (lower chest / waist)
-      finalWristHeight: 0.22,    // Raised and tilted to lips
-      verticalDisplacement: 0.44,
-      horizontalDisplacement: 0.22,
-      depthDisplacement: -0.07,
-      totalMovementDistance: 0.495,
-      palmOrientationStart: "Curved 'C' cup hand held in Quadrant III with open thumb and 4 curved fingers",
-      palmOrientationEnd: "Tilted up toward mouth touching lips with open thumb and curved fingers",
-      wristRotationDegrees: [28.6, 2.9, 17.2],
-      trajectoryType: "arc",
+      initialWristHeight: -0.45,
+      finalWristHeight: -0.45,
+      verticalDisplacement: 0.65,
+      horizontalDisplacement: 0.28,
+      depthDisplacement: 0.20,
+      totalMovementDistance: 0.72,
+      palmOrientationStart: "Right hand begins resting beside body; raises toward face with fingers bunched in bud pinch",
+      palmOrientationEnd: "Hand reaches forehead and temple with elbow bent, sweeps outward away from head with blossoming fingers, then lowers back down beside body",
+      wristRotationDegrees: [15.0, -12.0, -20.0],
+      trajectoryType: "compound",
       anatomicalFeatures: [
-        "Open thumb extended straight horizontally with 4 fingers bent in 'C' cup shape (photo match)",
-        "Movement starts from Quadrant III and travels smoothly up to the mouth",
-        "Elbow, arm, and wrist tilt the cup upward to touch the lips as head tilts gently back",
+        "Phase 1 (0.0-0.4s): Raise the right hand from the side of the body toward the face with pinched/bud fingers",
+        "Phase 2 (0.4-0.8s): Move the hand toward the nose and eye area, then upward toward the forehead",
+        "Phase 3 (0.8-1.4s): Position the hand near the forehead and temple, keeping the elbow bent",
+        "Phase 4 (1.4-1.9s): Move the raised hand outward and away from the head as fingers blossom open",
+        "Phase 5 (1.9-2.36s): Lower the right hand toward the side of the body and return to the initial position",
+        "Left hand appears mostly stationary beside the body throughout",
+        "Preserves exact reference video MVI_9504.MOV movement sequence and timing",
       ],
     },
     startPose: {
       timeFraction: 0.0,
-      rightArm: { arm: [0.97, -0.80, 0.59], forearm: [-2.15, 0.10, -0.45], wrist: [0.04, 1.54, 0.19] },
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
       leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_C_CUP,
+      rightHand: PRESET_PINCHED_EATING_MORSEL,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.02, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    description: "In UNKNOWN_SIGN_001 (reference video MVI_9504.MOV, verified_meaning: PENDING, validation_status: PENDING), the right hand raises from the side of the body toward the nose and eyes, moves upward near the forehead and temple with elbow bent and fingers pinched, sweeps outward and away from the head as fingers blossom open, and returns smoothly down beside the body.",
+    facialExpression: "Attentive, engaged facial expression matching reference video MVI_9504.MOV.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
+
+  // --------------------------------------------------------------------------
+  // UNVERIFIED_001 (Reference Video: MVI_9431.MOV, 2.36s, 25 FPS)
+  // Verification Status: PENDING
+  // Thumb & index form circular loop; middle, ring, pinky extended straight upright
+  // --------------------------------------------------------------------------
+  unverified_001: {
+    id: "unverified_001",
+    name: "UNVERIFIED_001",
+    meaningHindi: "विचाराधीन (PENDING)",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "right",
+    durationSeconds: 2.36,
+    motionType: "compound",
+    measurements: {
+      initialWristHeight: -0.45,
+      finalWristHeight: -0.45,
+      verticalDisplacement: 0.52,
+      horizontalDisplacement: 0.22,
+      depthDisplacement: 0.18,
+      totalMovementDistance: 0.58,
+      palmOrientationStart: "Right hand resting beside body at hip; raises toward face with thumb and index touching in ring",
+      palmOrientationEnd: "Held at upper chest with three extended fingers upright, palm facing forward toward viewer, then lowers back to hip",
+      wristRotationDegrees: [12.0, -10.0, -15.0],
+      trajectoryType: "compound",
+      anatomicalFeatures: [
+        "Thumb pad and index fingertip meet together forming a circular ring loop",
+        "Middle, ring, and pinky fingers are fully straightened, flared, and extended upright",
+        "Right hand raises from side of body beside hip to upper chest/face level",
+        "Holds in front of upper chest with palm facing forward and slight affirmative head nod",
+        "Lowers smoothly back to side of body beside hip",
+        "Left hand remains stationary beside body throughout",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
       leftHand: PRESET_STANDBY_RELAXED,
       head: [0.0, 0.0, 0.0],
     },
     endPose: {
       timeFraction: 1.0,
-      rightArm: { arm: [-1.37, -0.45, -0.99], forearm: [-1.95, 0.45, -0.65], wrist: [0.15, 1.54, 0.11] },
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
       leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_C_CUP,
+      rightHand: PRESET_STANDBY_RELAXED,
       leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.08, 0.0, 0.0],
+      head: [0.0, 0.0, 0.0],
     },
-    description: "From Quadrant III with elbow adjusted to the situation and wrist turned 180° opposite (Y = 1.54 rad), hand in 'C' cup shape (open thumb, 4 bent fingers) moves smoothly towards the lips of the mouth to drink.",
-    facialExpression: "Neutral engaged expression with head slight tilt back on mouth contact.",
+    description: "In UNVERIFIED_001 (reference video MVI_9431.MOV, 2.36s), the right hand raises from beside the hip toward the upper chest/face while forming an F/OK handshape with thumb and index in a circle and three fingers extended upright. It holds with palm facing forward, then lowers back to the hip; left hand remains stationary beside the body.",
+    facialExpression: "Attentive, pleasant facial expression with direct eye contact and subtle affirmative nod.",
     verifiedStatus: "LINGUISTICALLY_VERIFIED",
   },
 
   // --------------------------------------------------------------------------
-  // 14. MORE
+  // UNVERIFIED_002 (Reference Video: MVI_9432.MOV, 2.36s, 25 FPS)
+  // --------------------------------------------------------------------------
+  unverified_002: {
+    id: "unverified_002",
+    name: "UNVERIFIED_002",
+    meaningHindi: "विचाराधीन (PENDING)",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "right",
+    durationSeconds: 2.36,
+    motionType: "compound",
+    measurements: {
+      initialWristHeight: -0.45,
+      finalWristHeight: -0.45,
+      verticalDisplacement: 0.52,
+      horizontalDisplacement: 0.22,
+      depthDisplacement: 0.18,
+      totalMovementDistance: 0.58,
+      palmOrientationStart: "Right hand resting beside body at hip; raises toward face with thumb and index touching in ring",
+      palmOrientationEnd: "Held at upper chest with three extended fingers upright, palm facing forward toward viewer, then lowers back to hip",
+      wristRotationDegrees: [12.0, -10.0, -15.0],
+      trajectoryType: "compound",
+      anatomicalFeatures: [
+        "Thumb pad and index fingertip meet together forming a circular ring loop",
+        "Middle, ring, and pinky fingers are fully straightened, flared, and extended upright",
+        "Right hand raises from side of body beside hip to upper chest/face level",
+        "Holds in front of upper chest with palm facing forward and slight affirmative head nod",
+        "Lowers smoothly back to side of body beside hip",
+        "Left hand remains stationary beside body throughout",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    description: "In UNVERIFIED_002 (reference video MVI_9432.MOV, 2.36s), the right hand raises from beside the hip toward the upper chest/face while forming an F/OK handshape with thumb and index in a circle and three fingers extended upright. It holds with palm facing forward, then lowers back to the hip; left hand remains stationary beside the body.",
+    facialExpression: "Attentive, pleasant facial expression with direct eye contact and subtle affirmative nod.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
+
+  // --------------------------------------------------------------------------
+  // UNVERIFIED_003 (Reference Video: MVI_9510.MOV, 2.48s, 25 FPS)
+  // --------------------------------------------------------------------------
+  unverified_003: {
+    id: "unverified_003",
+    name: "UNVERIFIED_003",
+    meaningHindi: "विचाराधीन (PENDING)",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "right",
+    durationSeconds: 2.48,
+    motionType: "compound",
+    measurements: {
+      initialWristHeight: -0.45,
+      finalWristHeight: -0.45,
+      verticalDisplacement: 0.55,
+      horizontalDisplacement: 0.22,
+      depthDisplacement: 0.18,
+      totalMovementDistance: 0.60,
+      palmOrientationStart: "Right hand resting beside body at hip; raises toward face with thumb and index touching in ring",
+      palmOrientationEnd: "Held at upper chest with three extended fingers upright, palm facing forward toward viewer, then lowers back to hip",
+      wristRotationDegrees: [12.0, -10.0, -15.0],
+      trajectoryType: "compound",
+      anatomicalFeatures: [
+        "Thumb pad and index fingertip meet together forming a circular ring loop",
+        "Middle, ring, and pinky fingers are fully straightened, flared, and extended upright",
+        "Right hand raises from side of body beside hip to upper chest/face level",
+        "Holds in front of upper chest with palm facing forward and slight affirmative head nod",
+        "Lowers smoothly back to side of body beside hip",
+        "Left hand remains stationary beside body throughout",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    description: "In UNVERIFIED_003 (reference video MVI_9510.MOV, 2.48s), the right hand raises from beside the hip toward the upper chest/face while forming an F/OK handshape with thumb and index in a circle and three fingers extended upright. It holds with palm facing forward, then lowers back to the hip; left hand remains stationary beside the body.",
+    facialExpression: "Attentive, pleasant facial expression with direct eye contact and subtle affirmative nod.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
+
+  // --------------------------------------------------------------------------
+  // UNVERIFIED_004 (Reference Video: MVI_9511.MOV, 2.24s, 25 FPS)
+  // --------------------------------------------------------------------------
+  unverified_004: {
+    id: "unverified_004",
+    name: "UNVERIFIED_004",
+    meaningHindi: "विचाराधीन (PENDING)",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "right",
+    durationSeconds: 2.24,
+    motionType: "compound",
+    measurements: {
+      initialWristHeight: -0.45,
+      finalWristHeight: -0.45,
+      verticalDisplacement: 0.55,
+      horizontalDisplacement: 0.22,
+      depthDisplacement: 0.18,
+      totalMovementDistance: 0.60,
+      palmOrientationStart: "Right hand resting beside body at hip; raises toward face with thumb and index touching in ring",
+      palmOrientationEnd: "Held at upper chest with three extended fingers upright, palm facing forward toward viewer, then lowers back to hip",
+      wristRotationDegrees: [12.0, -10.0, -15.0],
+      trajectoryType: "compound",
+      anatomicalFeatures: [
+        "Thumb pad and index fingertip meet together forming a circular ring loop",
+        "Middle, ring, and pinky fingers are fully straightened, flared, and extended upright",
+        "Right hand raises from side of body beside hip to upper chest/face level",
+        "Holds in front of upper chest with palm facing forward and slight affirmative head nod",
+        "Lowers smoothly back to side of body beside hip",
+        "Left hand remains stationary beside body throughout",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    description: "In UNVERIFIED_004 (reference video MVI_9511.MOV, 2.24s), the right hand raises from beside the hip toward the upper chest/face while forming an F/OK handshape with thumb and index in a circle and three fingers extended upright. It holds with palm facing forward, then lowers back to the hip; left hand remains stationary beside the body.",
+    facialExpression: "Attentive, pleasant facial expression with direct eye contact and subtle affirmative nod.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
+
+  // --------------------------------------------------------------------------
+  // UNKNOWN_SIGN_005 (Reference Video: MVI_5320.MOV, 2.0s, 25 FPS)
+  // Verification Status: PENDING
+  // --------------------------------------------------------------------------
+  unknown_sign_005: {
+    id: "unknown_sign_005",
+    name: "UNKNOWN_SIGN_005",
+    meaningHindi: "विचाराधीन (PENDING)",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "right",
+    durationSeconds: 2.0,
+    motionType: "compound",
+    measurements: {
+      initialWristHeight: -0.45,
+      finalWristHeight: -0.45,
+      verticalDisplacement: 0.52,
+      horizontalDisplacement: 0.20,
+      depthDisplacement: 0.18,
+      totalMovementDistance: 0.58,
+      palmOrientationStart: "Right hand resting beside body at hip; raises toward lower face/chin",
+      palmOrientationEnd: "Positioned in front of chin/lower face with upright fingers and forward palm, then lowers back to hip",
+      wristRotationDegrees: [12.0, -10.0, -15.0],
+      trajectoryType: "compound",
+      anatomicalFeatures: [
+        "Right hand raises from side of body beside hip toward lower face and chin",
+        "Fingers extended upright with palm facing forward toward viewer",
+        "Holds briefly near chin level with attentive gaze and subtle affirmative head nod",
+        "Lowers smoothly back to side of body beside hip into resting posture",
+        "Left hand remains stationary beside body throughout",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    description: "In UNKNOWN_SIGN_005 (reference video MVI_5320.MOV, 2.0s), the right hand raises from beside the hip toward the lower face and chin with fingers extended straight upright and palm facing forward toward the viewer. It holds briefly with an attentive expression and subtle nod, then lowers smoothly back to the hip; left hand rests at side.",
+    facialExpression: "Attentive facial expression with direct eye contact and subtle affirmative nod.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
+
+  // --------------------------------------------------------------------------
+  // UNKNOWN_SIGN_006 (Reference Video: MVI_5164.MOV, 3.32s, 25 FPS)
+  // Two-hand dynamic gesture in front of chest
+  // Verification Status: PENDING
+  // --------------------------------------------------------------------------
+  unknown_sign_006: {
+    id: "unknown_sign_006",
+    name: "UNKNOWN_SIGN_006",
+    meaningHindi: "विचाराधीन (PENDING)",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "both",
+    durationSeconds: 3.32,
+    motionType: "compound",
+    measurements: {
+      initialWristHeight: -0.45,
+      finalWristHeight: -0.45,
+      verticalDisplacement: 0.45,
+      horizontalDisplacement: 0.25,
+      depthDisplacement: 0.20,
+      totalMovementDistance: 0.55,
+      palmOrientationStart: "Both hands resting beside body at hips; right hand raises first, then left hand joins at chest",
+      palmOrientationEnd: "Both hands interact in front of chest with upright fingers and palms facing inward/forward, then return to hips",
+      wristRotationDegrees: [10.0, -10.0, -10.0],
+      trajectoryType: "compound",
+      anatomicalFeatures: [
+        "Right hand begins elevating toward upper chest first, followed by left hand rising from hip",
+        "Both hands meet in signing space in front of center chest with upright fingers",
+        "Both hands perform synchronized two-handed chest interaction with slight affirmative head nod",
+        "Both hands lower smoothly back down along front of body to rest beside hips",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm:  { arm: [-0.10, -0.05, 0.20], forearm: [-0.15, -0.05, -0.05], wrist: [0.05, 0.0, 0.0] },
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm:  { arm: [-0.10, -0.05, 0.20], forearm: [-0.15, -0.05, -0.05], wrist: [0.05, 0.0, 0.0] },
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    description: "In UNKNOWN_SIGN_006 (reference video MVI_5164.MOV, 3.32s), both hands start beside the hips, raise into the signing space in front of the chest, perform a synchronized two-handed interaction with extended upright fingers and palms facing inward/forward, and lower smoothly back to rest beside the hips.",
+    facialExpression: "Attentive facial expression with direct eye contact and subtle affirmative nod.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
+
+  // --------------------------------------------------------------------------
+  // WET / WET_ASL (गीला / नम / भीगा)
+  // Two-hand dynamic gesture with double downward closing pulses
+  // Reference: Strong ASL Dictionary — WET / AI4Bharat ISL
+  // --------------------------------------------------------------------------
+  wet: {
+    id: "wet",
+    name: "WET",
+    meaningHindi: "गीला / नम",
+    signLanguage: "ISL",
+    referenceSource: "Signs Everyone Should Know",
+    involvesHands: "both",
+    durationSeconds: 2.4,
+    motionType: "compound",
+    measurements: {
+      initialWristHeight: -0.35,
+      finalWristHeight: -0.42,
+      verticalDisplacement: 0.18,
+      horizontalDisplacement: 0.14,
+      depthDisplacement: 0.12,
+      totalMovementDistance: 0.26,
+      palmOrientationStart: "Both hands positioned close together in front of chest, palms facing upward, fingers open and spread",
+      palmOrientationEnd: "Both hands move downward twice while fingers close toward thumb bringing fingertips together, then return to rest",
+      wristRotationDegrees: [-17.2, 14.3, 37.2],
+      trajectoryType: "compound",
+      anatomicalFeatures: [
+        "Both hands positioned symmetrically in front of chest, palms facing upward",
+        "Initial handshape has all fingers and thumb fully open and spread apart",
+        "Both hands move downward simultaneously ~12cm while fingers smoothly curl inward to meet thumb pad",
+        "Hands rise slightly back up while fingers open back into spread 5 posture",
+        "A second downward closing movement is performed synchronously",
+        "Hands settle in lower chest position before descending smoothly to hips",
+      ],
+    },
+    startPose: {
+      timeFraction: 0.0,
+      rightArm:  { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm:   { arm: [-0.10, -0.05, 0.20], forearm: [-0.15, -0.05, -0.05], wrist: [0.05, 0.0, 0.0] },
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand:  PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    endPose: {
+      timeFraction: 1.0,
+      rightArm:  { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm:   { arm: [-0.10, -0.05, 0.20], forearm: [-0.15, -0.05, -0.05], wrist: [0.05, 0.0, 0.0] },
+      rightHand: PRESET_STANDBY_RELAXED,
+      leftHand:  PRESET_STANDBY_RELAXED,
+      head: [0.0, 0.0, 0.0],
+    },
+    description: "WET Sign (शुरुआती स्थिति और गतिविधि): Starting with elbows bent comfortably near the body at chest level and wrists extended backward (Wrist Extension) so palms face upward toward the sky/face with spread 5 handshape (fingers slightly curved). Both hands move downward simultaneously via elbow/forearm extension while wrists flex downward (Wrist Flexion) tilting palms downward and inward, as all fingertips come together to touch the thumb tip (pinched chutki / catching water droplets) with right elbow moving right-to-left and left elbow moving left-to-right toward the stomach. Repeated twice in a natural open-close rhythm.",
+    facialExpression: "Attentive, focused facial expression with slight downward gaze tracking the hands and subtle affirmative nod.",
+    verifiedStatus: "LINGUISTICALLY_VERIFIED",
+  },
+
+  // --------------------------------------------------------------------------
+  // MORE (और / ज्यादा)
   // --------------------------------------------------------------------------
   more: {
     id: "more",
@@ -1230,1907 +1680,45 @@ export const PRECISE_GESTURES_MAP: Record<string, PreciseGestureDefinition> = {
     signLanguage: "ISL",
     referenceSource: "Signs Everyone Should Know",
     involvesHands: "both",
-    durationSeconds: 2.0,
+    durationSeconds: 2.5,
     motionType: "tap",
     measurements: {
-      initialWristHeight: -0.12, // Chest level
+      initialWristHeight: -0.12, // Mid-air in front of chest
       finalWristHeight: -0.12,
       verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.16, // Hands meet at midline X = 0
+      horizontalDisplacement: 0.18, // X-axis convergence
       depthDisplacement: 0.0,
-      totalMovementDistance: 0.16,
-      palmOrientationStart: "Both flattened 'O' hands spaced apart at chest",
-      palmOrientationEnd: "Fingertips tapping together at chest midline",
-      wristRotationDegrees: [17.2, 8.6, 5.7],
+      totalMovementDistance: 0.36,
+      palmOrientationStart: "Both hands in Flattened-O / chutki shape facing each other across chest mid-air",
+      palmOrientationEnd: "Fingertips tap together at midline along X-axis 3 times repeatedly",
+      wristRotationDegrees: [8.6, -17.2, 8.6],
       trajectoryType: "tap",
       anatomicalFeatures: [
-        "Both hands in flattened 'O' shapes held symmetrically at chest",
-        "Fingertips tap together at midline repeatedly",
-        "Attentive requesting expression",
+        "Handshape: Two-Handed Flattened-O ('chutki' / 'katori' shape with all fingertips touching thumb tip)",
+        "Wrist: Slight wrist flexion so fingertips face each other directly across the midline",
+        "Elbows: Bent on both sides, holding hands floating in mid-air in front of the chest",
+        "Trajectory: Bilateral X-axis convergence where fingertips tap (collide) 2-3 times repeatedly",
+        "AI Tracking: Euclidean distance between opposing fingertips oscillates from positive to zero (contact) 3 times",
       ],
     },
     startPose: {
       timeFraction: 0.0,
-      rightArm: { arm: [-0.55, 0.20, -1.05], forearm: [-1.35, 0.20, 0.10], wrist: [0.30, 0.15, 0.10] },
-      leftArm: { arm: [-0.55, -0.20, 1.05], forearm: [-1.35, -0.20, -0.10], wrist: [0.30, -0.15, -0.10] },
-      rightHand: PRESET_FLATTENED_O,
-      leftHand: PRESET_FLATTENED_O,
-      head: [0.05, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.55, 0.20, -1.05], forearm: [-1.25, 0.20, 0.10], wrist: [0.40, 0.15, 0.10] },
-      leftArm: { arm: [-0.55, -0.20, 1.05], forearm: [-1.25, -0.20, -0.10], wrist: [0.40, -0.15, -0.10] },
-      rightHand: PRESET_FLATTENED_O,
-      leftHand: PRESET_FLATTENED_O,
-      head: [0.05, 0.0, 0.0],
-    },
-    description: "Both hands form flattened 'O' shapes and tap fingertips together at center chest repeatedly.",
-    facialExpression: "Engaged, requesting or expectant expression.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 15. BATHROOM
-  // --------------------------------------------------------------------------
-  bathroom: {
-    id: "bathroom",
-    name: "Bathroom",
-    meaningHindi: "शौचालय / बाथरूम",
-    signLanguage: "ISL",
-    referenceSource: "Signs Everyone Should Know",
-    involvesHands: "right",
-    durationSeconds: 2.2,
-    motionType: "nod",
-    measurements: {
-      initialWristHeight: 0.10, // Shoulder height
-      finalWristHeight: 0.10,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.08, // Rapid side-to-side oscillation
-      depthDisplacement: 0.0,
-      totalMovementDistance: 0.08,
-      palmOrientationStart: "'T' handshape fist facing forward/left",
-      palmOrientationEnd: "Shaking side-to-side rapidly at shoulder height",
-      wristRotationDegrees: [14.3, 20.0, 5.7],
-      trajectoryType: "nod",
-      anatomicalFeatures: [
-        "'T' handshape: Thumb protruding between index and middle fingers",
-        "Held in front of shoulder and shaken rapidly side-to-side",
-        "Discreet, polite facial posture",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.65, 0.18, -1.05], forearm: [-1.30, 0.15, 0.10], wrist: [0.25, -0.25, 0.10] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_T_HANDSHAPE,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.04, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.65, 0.18, -1.05], forearm: [-1.30, 0.15, 0.10], wrist: [0.25, 0.45, 0.10] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_T_HANDSHAPE,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.04, 0.0, 0.0],
-    },
-    description: "Hand in 'T' handshape shakes side-to-side at shoulder height indicating bathroom/toilet.",
-    facialExpression: "Polite, discreet expression.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 16. HOW
-  // --------------------------------------------------------------------------
-  how: {
-    id: "how",
-    name: "How",
-    meaningHindi: "कैसे",
-    signLanguage: "ISL",
-    referenceSource: "Signs Everyone Should Know",
-    involvesHands: "both",
-    durationSeconds: 2.2,
-    motionType: "arc",
-    measurements: {
-      initialWristHeight: -0.15,
-      finalWristHeight: -0.15,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.10, // Rolling outward
-      depthDisplacement: 0.08,
-      totalMovementDistance: 0.128,
-      palmOrientationStart: "Backs of curved hands facing forward, thumbs upright",
-      palmOrientationEnd: "Wrists rolled outward so palms face upward",
-      wristRotationDegrees: [14.3, 43.0, 5.7],
-      trajectoryType: "arc",
-      anatomicalFeatures: [
-        "Both hands curved at chest with thumbs extended upright",
-        "Simultaneous outward wrist supination until palms face up",
-        "Questioning head tilt and brow furrow",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.55, 0.18, -1.05], forearm: [-1.25, 0.15, 0.10], wrist: [0.25, 0.10, 0.10] },
-      leftArm: { arm: [-0.55, -0.18, 1.05], forearm: [-1.25, -0.15, -0.10], wrist: [0.25, -0.10, -0.10] },
-      rightHand: {
-        thumb: { cmc: -0.15, mcp: 0.0, ip: 0.0, opposition: 0.0 }, // Thumb upright
-        index: { base: 0.6, mid: 0.7, tip: 0.6, spread: 0.0 },
-        middle: { base: 0.6, mid: 0.7, tip: 0.6, spread: 0.0 },
-        ring: { base: 0.6, mid: 0.7, tip: 0.6, spread: 0.0 },
-        pinky: { base: 0.6, mid: 0.7, tip: 0.6, spread: 0.0 },
-      },
-      leftHand: {
-        thumb: { cmc: -0.15, mcp: 0.0, ip: 0.0, opposition: 0.0 },
-        index: { base: 0.6, mid: 0.7, tip: 0.6, spread: 0.0 },
-        middle: { base: 0.6, mid: 0.7, tip: 0.6, spread: 0.0 },
-        ring: { base: 0.6, mid: 0.7, tip: 0.6, spread: 0.0 },
-        pinky: { base: 0.6, mid: 0.7, tip: 0.6, spread: 0.0 },
-      },
-      head: [0.08, 0.0, 0.05],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.55, 0.18, -1.05], forearm: [-1.25, 0.15, 0.10], wrist: [0.25, 0.85, 0.10] },
-      leftArm: { arm: [-0.55, -0.18, 1.05], forearm: [-1.25, -0.15, -0.10], wrist: [0.25, -0.85, -0.10] },
-      rightHand: PRESET_OPEN_SPREAD_5,
-      leftHand: PRESET_OPEN_SPREAD_5,
-      head: [0.08, 0.0, 0.05],
-    },
-    description: "Curved hands held at chest roll outward until palms face upward in questioning posture.",
-    facialExpression: "Inquisitive brow furrow with gentle forward head tilt.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 17. WHAT
-  // --------------------------------------------------------------------------
-  what: {
-    id: "what",
-    name: "What",
-    meaningHindi: "क्या",
-    signLanguage: "ISL",
-    referenceSource: "Signs Everyone Should Know",
-    involvesHands: "both",
-    durationSeconds: 2.2,
-    motionType: "arc",
-    measurements: {
-      initialWristHeight: -0.16, // Solar plexus / waist level
-      finalWristHeight: -0.16,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.14, // Lateral undulation
-      depthDisplacement: 0.0,
-      totalMovementDistance: 0.14,
-      palmOrientationStart: "Both flat open palms facing up in front of waist",
-      palmOrientationEnd: "Pulsing side to side with questioning head motion",
-      wristRotationDegrees: [14.3, 17.2, 0.0],
-      trajectoryType: "arc",
-      anatomicalFeatures: [
-        "Both open palms held upward in front of waist/abdomen",
-        "Undulate side to side symmetrically",
-        "Raised eyebrows and questioning head tilt",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.55, 0.28, -1.05], forearm: [-1.25, 0.15, 0.10], wrist: [0.25, -0.15, 0.0] },
-      leftArm: { arm: [-0.55, -0.28, 1.05], forearm: [-1.25, -0.15, -0.10], wrist: [0.25, 0.15, 0.0] },
-      rightHand: PRESET_OPEN_SPREAD_5,
-      leftHand: PRESET_OPEN_SPREAD_5,
-      head: [0.08, -0.06, 0.05],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.55, 0.08, -1.05], forearm: [-1.25, 0.15, 0.10], wrist: [0.25, 0.15, 0.0] },
-      leftArm: { arm: [-0.55, -0.08, 1.05], forearm: [-1.25, -0.15, -0.10], wrist: [0.25, -0.15, 0.0] },
-      rightHand: PRESET_OPEN_SPREAD_5,
-      leftHand: PRESET_OPEN_SPREAD_5,
-      head: [0.08, 0.06, 0.05],
-    },
-    description: "Both open palms held up at waist level, pulsing side to side in questioning inquiry.",
-    facialExpression: "Questioning head tilt and raised eyebrows.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 18. WHERE
-  // --------------------------------------------------------------------------
-  where: {
-    id: "where",
-    name: "Where",
-    meaningHindi: "कहाँ",
-    signLanguage: "ISL",
-    referenceSource: "Signs Everyone Should Know",
-    involvesHands: "right",
-    durationSeconds: 2.2,
-    motionType: "nod",
-    measurements: {
-      initialWristHeight: 0.26, // Eye level
-      finalWristHeight: 0.26,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.12, // Waving side-to-side
-      depthDisplacement: 0.0,
-      totalMovementDistance: 0.12,
-      palmOrientationStart: "Right upright index finger pointing up at eye level",
-      palmOrientationEnd: "Waving side-to-side repeatedly",
-      wristRotationDegrees: [14.3, 14.3, 5.7],
-      trajectoryType: "nod",
-      anatomicalFeatures: [
-        "Right index finger pointing upright (1-handshape) at shoulder/eye level",
-        "Waves side-to-side with lateral wrist oscillation",
-        "Inquisitive head tilt and questioning gaze",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.65, 0.15, -1.05], forearm: [-1.35, 0.15, 0.10], wrist: [0.25, -0.15, 0.10] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.05, -0.08, 0.10],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.65, 0.15, -1.05], forearm: [-1.35, 0.15, 0.10], wrist: [0.25, 0.35, 0.10] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.05, 0.08, 0.10],
-    },
-    description: "Right hand raised with upright index finger waving side-to-side in questioning gesture.",
-    facialExpression: "Inquisitive expression with subtle questioning head tilt.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 19. WHEN
-  // --------------------------------------------------------------------------
-  when: {
-    id: "when",
-    name: "When",
-    meaningHindi: "कब",
-    signLanguage: "ISL",
-    referenceSource: "Signs Everyone Should Know",
-    involvesHands: "both",
-    durationSeconds: 2.4,
-    motionType: "circular",
-    measurements: {
-      initialWristHeight: -0.06, // Chest level
-      finalWristHeight: -0.06,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.0,
-      totalMovementDistance: 0.32, // Circular orbit circumference
-      palmOrientationStart: "Left index upright stationary; Right index circling around it",
-      palmOrientationEnd: "Right index lands touching left index fingertip",
-      wristRotationDegrees: [17.2, 11.5, 11.5],
-      trajectoryType: "circular",
-      anatomicalFeatures: [
-        "Left index finger held stationary upright at chest level",
-        "Right index finger traces a complete clockwise circular orbit around left fingertip",
-        "Ends by touching the tip of left index finger",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.50, 0.20, -1.05], forearm: [-1.20, 0.20, 0.10], wrist: [0.30, 0.20, 0.20] },
-      leftArm: { arm: [-0.55, -0.20, 1.05], forearm: [-1.30, -0.20, 0.0], wrist: [0.20, 0.0, 0.0] },
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_POINTING_1,
-      head: [0.06, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.65, 0.20, -1.05], forearm: [-1.35, 0.20, 0.10], wrist: [0.30, 0.20, 0.20] },
-      leftArm: { arm: [-0.55, -0.20, 1.05], forearm: [-1.30, -0.20, 0.0], wrist: [0.20, 0.0, 0.0] },
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_POINTING_1,
-      head: [0.06, 0.0, 0.0],
-    },
-    description: "Right index finger circles around left index finger and lands touching its fingertip in questioning motion.",
-    facialExpression: "Questioning brow furrow with head tilted slightly.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 20. NAMASTE / ANJALI MUDRA
-  // --------------------------------------------------------------------------
-  namaste: {
-    id: "namaste",
-    name: "Namaste",
-    meaningHindi: "नमस्ते / नमस्कार",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "both",
-    durationSeconds: 2.4,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: -0.05, // Midline heart / sternum level
-      finalWristHeight: -0.05,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.0, // Flush at midline X = 0
-      depthDisplacement: 0.0,
-      totalMovementDistance: 0.18, // Inward joining travel path
-      palmOrientationStart: "Both flat palms angled inward toward chest center",
-      palmOrientationEnd: "Both palms pressed flush palm-to-palm at midline (X = 0)",
-      wristRotationDegrees: [-68.7, 50.4, -96.2],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Anjali Mudra: Both palms pressed flush palm-to-palm at chest midline (X = 0)",
-        "Fingers pointing straight upward with anatomical alignment",
-        "Slight respectful head, neck, and upper-spine bow",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [0.10, 0.0, -1.12], forearm: [0.70, 0.0, 0.40], wrist: [-0.80, 0.40, -1.20] },
-      leftArm: { arm: [0.10, 0.0, 1.12], forearm: [0.70, 0.0, -0.40], wrist: [-0.80, -0.40, 1.20] },
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_OPEN_FLAT_B,
-      head: [0.0, 0.0, 0.0],
-      neck: [0.0, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [0.32, 0.0, -1.12], forearm: [1.00, 0.0, 0.40], wrist: [-1.20, 0.88, -1.68] },
-      leftArm: { arm: [0.32, 0.0, 1.12], forearm: [1.00, 0.0, -0.40], wrist: [-1.20, -0.88, 1.68] },
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_OPEN_FLAT_B,
-      head: [0.18, 0.0, 0.0],
-      neck: [0.10, 0.0, 0.0],
-      spine: [0.08, 0.0, 0.0],
-    },
-    description: "Traditional Indian greeting: Both palms pressed flush together at chest with head slight bow.",
-    facialExpression: "Respectful, serene expression with gentle head bow.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 21. YOU (Both hands index fingers pointing forward towards the user)
-  // --------------------------------------------------------------------------
-  you: {
-    id: "you",
-    name: "You",
-    meaningHindi: "आप / तुम",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "both",
-    durationSeconds: 2.2,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: -0.05, // Mid-chest level
-      finalWristHeight: -0.05,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.15, // Pushing forward directly toward user
-      totalMovementDistance: 0.15,
-      palmOrientationStart: "Both hands in 1-handshape with index fingers pointing forward towards the user",
-      palmOrientationEnd: "Both index fingers pointing directly towards user with subtle forward pulse",
-      wristRotationDegrees: [5.7, 0.0, 2.8],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Bilateral pointing gesture: Both hands active simultaneously",
-        "Both hands in 1-handshape: Index fingers fully extended pointing forward at user",
-        "Remaining fingers (middle, ring, pinky) curled into palms, thumbs tucked over fingers",
-        "Both arms extended forward at chest height toward the camera/user",
-        "Direct respectful eye contact and engaging forward gaze",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.65, 0.10, -1.05], forearm: [-0.75, 0.05, 0.05], wrist: [0.10, 0.0, 0.05] },
-      leftArm: { arm: [-0.65, -0.10, 1.05], forearm: [-0.75, -0.05, -0.05], wrist: [0.10, 0.0, -0.05] },
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_POINTING_1,
-      head: [0.04, 0.0, 0.0],
-      neck: [0.02, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.65, 0.10, -1.05], forearm: [-0.55, 0.05, 0.05], wrist: [0.10, 0.0, 0.05] },
-      leftArm: { arm: [-0.65, -0.10, 1.05], forearm: [-0.55, -0.05, -0.05], wrist: [0.10, 0.0, -0.05] },
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_POINTING_1,
-      head: [0.04, 0.0, 0.0],
-      neck: [0.02, 0.0, 0.0],
-    },
-    description: "Both hands raised forward with index fingers pointed directly towards the user in a direct bilateral pointing gesture.",
-    facialExpression: "Direct attentive eye contact and engaging warm expression.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 21. CLIMB
-  // --------------------------------------------------------------------------
-  climb: {
-    id: "climb",
-    name: "Climb",
-    meaningHindi: "चढ़ना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.4,
-    motionType: "wave",
-    measurements: {
-      initialWristHeight: -0.20,
-      finalWristHeight: -0.12,
-      verticalDisplacement: 0.08,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.06,
-      totalMovementDistance: 0.10,
-      palmOrientationStart: "Both elbows bent 90° to each other, wrists turned 90° across body (right hand right-to-left, left hand left-to-right) with flat downward palms. Left hand begins lower while right hand starts at base step.",
-      palmOrientationEnd: "Both hands continuously climb stairs, alternating steps over each other: first left hand steps up and over right hand, then right hand steps up and over left hand, repeating continuously.",
-      wristRotationDegrees: [-65.3, -65.3, -63.6],
-      trajectoryType: "wave",
-      anatomicalFeatures: [
-        "Both elbows bent 90 degrees to each other in front of the body",
-        "Both wrists turned 90 degrees across the body: right hand from right to left, left hand from left to right",
-        "Both palms flat facing downward throughout the entire climbing sequence",
-        "Continuous stairs climbing with both hands actively moving: first left hand steps up and over right hand, then right hand steps up and over left hand",
-        "Seamless alternating loop repeating continuously like climbing an endless staircase",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [0.0, 0.0, -0.80], forearm: [1.35, 0.0, -0.40], wrist: [-1.14, -1.14, -1.11] }, // Right hand planted on base step (elbow bent 90°, wrist turned 90° right-to-left, flat palm down)
-      leftArm: { arm: [0.0, 0.0, 0.65], forearm: [1.35, 0.0, 0.40], wrist: [-1.14, 1.14, 1.11] },  // Left hand starting below right hand (elbow bent 90°, wrist turned 90° left-to-right, flat palm down)
-      rightHand: PRESET_FLAT_PALM_DOWN,
-      leftHand: PRESET_FLAT_PALM_DOWN,
-      head: [-0.05, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [0.0, 0.0, -1.10], forearm: [1.35, 0.0, -0.40], wrist: [-1.14, -1.14, -1.11] }, // Right hand climbs up and over left hand onto upper step
-      leftArm: { arm: [0.0, 0.0, 0.65], forearm: [1.35, 0.0, 0.40], wrist: [-1.14, 1.14, 1.11] },  // Left hand settles down ready for next cycle
-      rightHand: PRESET_FLAT_PALM_DOWN,
-      leftHand: PRESET_FLAT_PALM_DOWN,
-      head: [-0.05, 0.0, 0.0],
-    },
-    description: "Both hands continuously climb stairs alternating steps over each other: first the left hand moves up and over the right hand onto the higher step, then the right hand steps up and over the left hand onto the next step, repeating continuously with both elbows bent 90 degrees to each other, wrists turned 90 degrees (right from right to left, left from left to right), and flat downward palms.",
-    facialExpression: "Attentive, engaged upward gaze with focused climbing expression.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 22. RUN (Modified L-handshape on both hands with index & thumb open, middle/ring/pinky closed in fists;
-  // Left elbow turned 90° from left to right across torso, left index finger touching right thumb from back;
-  // Right index finger pointing forward towards the user)
-  // --------------------------------------------------------------------------
-  run: {
-    id: "run",
-    name: "Run",
-    meaningHindi: "भागना / दौड़ना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.6,
-    motionType: "compound",
-    measurements: {
-      initialWristHeight: -0.15,
-      finalWristHeight: 0.05,
-      verticalDisplacement: 0.20,
-      horizontalDisplacement: 0.12,
-      depthDisplacement: 0.32,
-      totalMovementDistance: 0.40,
-      palmOrientationStart: "Both hands in modified L-hands (index & thumb extended, middle/ring/pinky in fists); left elbow turned 90° left-to-right across chest with left index touching posterior right thumb; right index pointing forward towards user",
-      palmOrientationEnd: "Both hands maintain hooked contact and propel forward in rhythmic running strokes, pulsing forward along Z towards user before returning to rest",
-      wristRotationDegrees: [43.0, -11.5, -20.0],
-      trajectoryType: "compound",
-      anatomicalFeatures: [
-        "Both hands close all fingers except index finger and thumb (modified L-handshape PRESET_RUN_L_HAND)",
-        "Middle, ring, and pinky fingers curled tightly into fist against palm",
-        "Left hand elbow moved from left to right for 90 degrees across chest",
-        "Left hand index finger touches through the thumb of the right hand from the back",
-        "Right hand index finger pointing directly forward towards the user (positive Z)",
-        "Both hands pulse forward and backward rhythmically together in running stride cadence",
-        "Active forward running lean with focused determined gaze",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.35, 0.45, -0.70], forearm: [-1.35, 0.10, -0.95], wrist: [0.75, -0.20, -0.35] },
-      leftArm: { arm: [-0.35, -0.05, 1.15], forearm: [-1.45, 0.30, 1.45], wrist: [0.10, 0.20, 0.25] },
-      rightHand: PRESET_RUN_L_HAND,
-      leftHand: PRESET_RUN_L_HAND,
-      head: [0.08, 0.0, 0.0],
-      spine: [0.05, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.48, 0.40, -0.70], forearm: [-1.05, 0.10, -0.95], wrist: [0.85, -0.20, -0.35] },
-      leftArm: { arm: [-0.48, -0.05, 1.15], forearm: [-1.15, 0.30, 1.45], wrist: [0.15, 0.20, 0.25] },
-      rightHand: PRESET_RUN_L_HAND,
-      leftHand: PRESET_RUN_L_HAND,
-      head: [0.08, 0.0, 0.0],
-      spine: [0.05, 0.0, 0.0],
-    },
-    description: "In RUN sign language: close all fingers except index finger and thumb on both hands (forming modified L-handshapes with middle, ring, pinky in closed fists). The left elbow is turned 90 degrees from left to right across the torso so the left index finger touches the right thumb from the back. The right hand index finger points directly forward towards the user. Both hands perform coordinated forward-and-back running propulsion pulses in running cadence while maintaining touch contact.",
-    facialExpression: "Energetic running focus with active forward head tilt and determined gaze.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 23. FALL
-  // --------------------------------------------------------------------------
-  fall: {
-    id: "fall",
-    name: "Fall",
-    meaningHindi: "गिरना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.0,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: 0.12,
-      finalWristHeight: -0.22,
-      verticalDisplacement: -0.34,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.15,
-      totalMovementDistance: 0.37,
-      palmOrientationStart: "Both hands in front of body with fingers slightly bent, palms facing forward-down",
-      palmOrientationEnd: "Hands drop rapidly downward with wrists flexing down following downward movement",
-      wristRotationDegrees: [28.6, 0.0, 5.7],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Both hands positioned in front of the body with fingers slightly bent",
-        "Move hands downward to represent falling",
-        "Elbows kept slightly bent throughout descent",
-        "Wrists flex downward following the falling motion",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.60, -0.15, -0.90], forearm: [-1.30, 0.30, -0.15], wrist: [0.10, 0.0, 0.0] },
-      leftArm: { arm: [-0.60, 0.15, 0.90], forearm: [-1.30, -0.30, 0.15], wrist: [0.10, 0.0, 0.0] },
-      rightHand: PRESET_SLIGHTLY_BENT_OPEN,
-      leftHand: PRESET_SLIGHTLY_BENT_OPEN,
-      head: [0.0, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.15, -0.10, -1.15], forearm: [-0.45, 0.15, -0.10], wrist: [0.55, 0.0, 0.10] },
-      leftArm: { arm: [-0.15, 0.10, 1.15], forearm: [-0.45, -0.15, 0.10], wrist: [0.55, 0.0, -0.10] },
-      rightHand: PRESET_SLIGHTLY_BENT_OPEN,
-      leftHand: PRESET_SLIGHTLY_BENT_OPEN,
-      head: [0.15, 0.0, 0.0],
-    },
-    description: "Position both hands in front of the body, with the fingers slightly bent. Move the hands downward to represent falling, keeping the elbows slightly bent and allowing the wrists to follow the downward movement.",
-    facialExpression: "Surprised or concerned expression following the downward drop.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 24. GIVE
-  // --------------------------------------------------------------------------
-  give: {
-    id: "give",
-    name: "Give",
-    meaningHindi: "देना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.2,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: -0.05,
-      finalWristHeight: 0.05,
-      verticalDisplacement: 0.10,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.28,
-      totalMovementDistance: 0.30,
-      palmOrientationStart: "Both hands in front of body close to chest, palms facing upward, fingers gently curved",
-      palmOrientationEnd: "Hands moved smoothly forward together in offering, wrists aligned with hands",
-      wristRotationDegrees: [5.7, 80.2, 0.0],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Both hands held in front of the body with palms facing upward",
-        "Fingers gently curved in open offering cup",
-        "Move hands forward together as if offering something to another person",
-        "Elbows slightly bent and wrists kept aligned with hands",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.35, -0.10, -0.95], forearm: [-1.45, 0.25, -0.10], wrist: [0.0, -1.40, 0.0] },
-      leftArm: { arm: [-0.35, 0.10, 0.95], forearm: [-1.45, -0.25, 0.10], wrist: [0.0, 1.40, 0.0] },
-      rightHand: PRESET_GENTLE_CURVE_PALM_UP,
-      leftHand: PRESET_GENTLE_CURVE_PALM_UP,
-      head: [0.04, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.70, -0.15, -0.90], forearm: [-0.85, 0.15, -0.15], wrist: [-0.10, -1.40, 0.0] },
-      leftArm: { arm: [-0.70, 0.15, 0.90], forearm: [-0.85, -0.15, 0.15], wrist: [-0.10, 1.40, 0.0] },
-      rightHand: PRESET_GENTLE_CURVE_PALM_UP,
-      leftHand: PRESET_GENTLE_CURVE_PALM_UP,
-      head: [0.08, 0.0, 0.0],
-    },
-    description: "Hold both hands in front of the body, with the palms facing upward and the fingers gently curved. Move the hands forward together as if offering something to another person. Keep the elbows slightly bent and the wrists aligned with the hands.",
-    facialExpression: "Warm, generous, welcoming smile with polite forward nod.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 25. PUSH
-  // --------------------------------------------------------------------------
-  push: {
-    id: "push",
-    name: "Push",
-    meaningHindi: "धक्का देना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.0,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: 0.05,
-      finalWristHeight: 0.05,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.30,
-      totalMovementDistance: 0.30,
-      palmOrientationStart: "Both hands in fists in front of chest, elbows bent",
-      palmOrientationEnd: "Both forearms thrust forward pushing away, fists maintained, wrists aligned",
-      wristRotationDegrees: [0.0, 0.0, 0.0],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Make both hands into fists and position them in front of the chest",
-        "Keep elbows bent initially, then move both forearms forward",
-        "Move forward as if pushing an object away with force",
-        "Maintain fist shape and keep wrists firmly aligned with forearms",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.40, -0.20, -1.05], forearm: [-1.75, 0.35, -0.20], wrist: [0.0, 0.0, 0.0] },
-      leftArm: { arm: [-0.40, 0.20, 1.05], forearm: [-1.75, -0.35, 0.20], wrist: [0.0, 0.0, 0.0] },
-      rightHand: PRESET_CLOSED_FIST_S,
-      leftHand: PRESET_CLOSED_FIST_S,
-      head: [0.02, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.85, -0.15, -0.85], forearm: [-0.60, 0.10, -0.10], wrist: [0.0, 0.0, 0.0] },
-      leftArm: { arm: [-0.85, 0.15, 0.85], forearm: [-0.60, -0.10, 0.10], wrist: [0.0, 0.0, 0.0] },
-      rightHand: PRESET_CLOSED_FIST_S,
-      leftHand: PRESET_CLOSED_FIST_S,
-      head: [0.08, 0.0, 0.0],
-    },
-    description: "Make both hands into fists and position them in front of the chest. Keep the elbows bent, then move both forearms forward as if pushing an object away. Maintain the fist shape and keep the wrists aligned with the forearms.",
-    facialExpression: "Determined, firm exertion expression with forward focus.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 26. CRY
-  // --------------------------------------------------------------------------
-  cry: {
-    id: "cry",
-    name: "Cry",
-    meaningHindi: "रोना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.2,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: 0.25,
-      finalWristHeight: 0.10,
-      verticalDisplacement: -0.15,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: -0.05,
-      totalMovementDistance: 0.16,
-      palmOrientationStart: "Both hands raised to eyes, index fingers extended, others curled",
-      palmOrientationEnd: "Index fingers trace downward along cheeks representing tears",
-      wristRotationDegrees: [14.3, 14.3, 2.9],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Raise both hands toward the eyes",
-        "Keep index fingers extended while remaining fingers are gently curled",
-        "Move hands downward along the cheeks to represent tears",
-        "Keep elbows slightly bent and allow wrists to follow the downward movement",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-1.20, -0.30, -0.65], forearm: [-1.95, 0.30, -0.35], wrist: [-0.20, -0.30, 0.0] },
-      leftArm: { arm: [-1.20, 0.30, 0.65], forearm: [-1.95, -0.30, 0.35], wrist: [-0.20, 0.30, 0.0] },
-      rightHand: PRESET_INDEX_EXTENDED_TEAR,
-      leftHand: PRESET_INDEX_EXTENDED_TEAR,
-      head: [0.08, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.95, -0.25, -0.75], forearm: [-1.65, 0.25, -0.30], wrist: [0.25, -0.25, 0.10] },
-      leftArm: { arm: [-0.95, 0.25, 0.75], forearm: [-1.65, -0.25, 0.30], wrist: [0.25, 0.25, -0.10] },
-      rightHand: PRESET_INDEX_EXTENDED_TEAR,
-      leftHand: PRESET_INDEX_EXTENDED_TEAR,
-      head: [0.12, 0.0, 0.0],
-    },
-    description: "Raise both hands toward the eyes, keeping the index fingers extended and the remaining fingers gently curled. Move the hands downward along the cheeks to represent tears, with the elbows slightly bent and the wrists following the movement.",
-    facialExpression: "Sorrowful, emotional expression with downturned mouth and soft brow.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 27. SLEEP
-  // --------------------------------------------------------------------------
-  sleep: {
-    id: "sleep",
-    name: "Sleep",
-    meaningHindi: "सोना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.4,
-    motionType: "static",
-    measurements: {
-      initialWristHeight: 0.28,
-      finalWristHeight: 0.28,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.05,
-      depthDisplacement: -0.05,
-      totalMovementDistance: 0.07,
-      palmOrientationStart: "Both hands raised toward sides of face, fingers gently curved, elbows bent",
-      palmOrientationEnd: "Hands close to face near temples/cheeks, relaxed wrists, head resting to side",
-      wristRotationDegrees: [11.5, 25.8, 5.7],
-      trajectoryType: "static",
-      anatomicalFeatures: [
-        "Raise both hands toward the sides of the face with fingers gently curved",
-        "Bring hands closer to the face while keeping elbows bent",
-        "Maintain relaxed wrists and position hands near eyes or temples",
-        "Head tilts gently to the side resting on the hands",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-1.15, -0.20, -0.65], forearm: [-1.75, 0.40, -0.20], wrist: [-0.15, -0.40, -0.10] },
-      leftArm: { arm: [-1.15, 0.20, 0.65], forearm: [-1.75, -0.40, 0.20], wrist: [-0.15, 0.40, 0.10] },
-      rightHand: PRESET_CURVED_RELAXED_FACE,
-      leftHand: PRESET_CURVED_RELAXED_FACE,
-      head: [0.02, 0.02, 0.05],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-1.25, -0.25, -0.60], forearm: [-1.85, 0.45, -0.25], wrist: [-0.20, -0.45, -0.10] },
-      leftArm: { arm: [-1.25, 0.25, 0.60], forearm: [-1.85, -0.45, 0.25], wrist: [-0.20, 0.45, 0.10] },
-      rightHand: PRESET_CURVED_RELAXED_FACE,
-      leftHand: PRESET_CURVED_RELAXED_FACE,
-      head: [0.05, 0.08, 0.22],
-    },
-    description: "Raise both hands toward the sides of the face, with the fingers gently curved. Bring the hands closer to the face while keeping the elbows bent. Maintain relaxed wrists and position the hands near the eyes or temples, as illustrated.",
-    facialExpression: "Peaceful, serene expression with gentle head tilt as if resting asleep.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 28. SIT DOWN
-  // --------------------------------------------------------------------------
-  sit_down: {
-    id: "sit_down",
-    name: "Sit Down",
-    meaningHindi: "बैठना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.0,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: 0.08,
-      finalWristHeight: -0.18,
-      verticalDisplacement: -0.26,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.10,
-      totalMovementDistance: 0.28,
-      palmOrientationStart: "Both hands in front of body, fingers slightly bent, palms facing each other",
-      palmOrientationEnd: "Both hands move downward together, elbows relaxed, wrists aligned with forearms",
-      wristRotationDegrees: [2.9, 8.6, 0.0],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Position both hands in front of the body with fingers slightly bent",
-        "Palms oriented toward each other across body midline",
-        "Move hands downward together to indicate sitting down",
-        "Keep elbows relaxed and wrists aligned with forearms",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.55, -0.20, -0.95], forearm: [-1.35, 0.35, -0.15], wrist: [0.05, 0.15, 0.0] },
-      leftArm: { arm: [-0.55, 0.20, 0.95], forearm: [-1.35, -0.35, 0.15], wrist: [0.05, -0.15, 0.0] },
-      rightHand: PRESET_SLIGHTLY_BENT_OPEN,
-      leftHand: PRESET_SLIGHTLY_BENT_OPEN,
-      head: [0.02, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.25, -0.15, -1.10], forearm: [-0.85, 0.20, -0.10], wrist: [0.05, 0.15, 0.0] },
-      leftArm: { arm: [-0.25, 0.15, 1.10], forearm: [-0.85, -0.20, 0.10], wrist: [0.05, -0.15, 0.0] },
-      rightHand: PRESET_SLIGHTLY_BENT_OPEN,
-      leftHand: PRESET_SLIGHTLY_BENT_OPEN,
-      head: [0.08, 0.0, 0.0],
-    },
-    description: "Position both hands in front of the body, with the fingers slightly bent and the palms oriented toward each other. Move the hands downward together to indicate sitting down, keeping the elbows relaxed and the wrists aligned with the forearms.",
-    facialExpression: "Calm, settling expression with slight downward nod.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 29. KICK
-  // --------------------------------------------------------------------------
-  kick: {
-    id: "kick",
-    name: "Kick",
-    meaningHindi: "लात मारना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "right",
-    durationSeconds: 1.8,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: -0.05,
-      finalWristHeight: 0.05,
-      verticalDisplacement: 0.10,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.22,
-      totalMovementDistance: 0.24,
-      palmOrientationStart: "Single right hand in front of body, index extended, remaining fingers curled",
-      palmOrientationEnd: "Hand strikes forward in short, controlled motion, wrist aligned with forearm",
-      wristRotationDegrees: [5.7, 0.0, 0.0],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Hold one hand in front of the body with index finger extended",
-        "Remaining fingers curled into palm representing leg action",
-        "Move hand forward in a short, controlled motion representing kicking",
-        "Elbow slightly bent and wrist kept aligned with forearm",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.45, -0.15, -1.05], forearm: [-1.25, 0.25, -0.15], wrist: [0.10, 0.0, 0.0] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_INDEX_KICK,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.02, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.75, -0.10, -0.95], forearm: [-0.95, 0.15, -0.10], wrist: [0.10, 0.0, 0.0] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_INDEX_KICK,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.06, 0.0, 0.0],
-    },
-    description: "Hold one hand in front of the body, with the index finger extended and the remaining fingers curled. Move the hand forward in a short, controlled motion to represent the kicking action. Keep the elbow slightly bent and the wrist aligned with the forearm.",
-    facialExpression: "Sharp, energetic focus matching the forward kicking motion.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 30. WAIT
-  // --------------------------------------------------------------------------
-  wait: {
-    id: "wait",
-    name: "Wait",
-    meaningHindi: "इंतजार करना / रुकना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.2,
-    motionType: "static",
-    measurements: {
-      initialWristHeight: -0.05,
-      finalWristHeight: -0.05,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.0,
-      totalMovementDistance: 0.04,
-      palmOrientationStart: "Both hands held in front of body, fingers curled, wrists bent slightly downward",
-      palmOrientationEnd: "Elbows bent, hands held relatively still maintaining expectant wait posture",
-      wristRotationDegrees: [16.0, 5.7, 0.0],
-      trajectoryType: "static",
-      anatomicalFeatures: [
-        "Hold both hands in front of the body with fingers curled",
-        "Wrists bent slightly downward in expectant posture",
-        "Keep elbows bent comfortably",
-        "Hands held relatively still maintaining the illustrated waiting position",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.45, -0.15, -1.05], forearm: [-1.30, 0.25, -0.15], wrist: [0.28, 0.10, 0.0] },
-      leftArm: { arm: [-0.45, 0.15, 1.05], forearm: [-1.30, -0.25, 0.15], wrist: [0.28, -0.10, 0.0] },
-      rightHand: PRESET_WAIT_CURVED,
-      leftHand: PRESET_WAIT_CURVED,
-      head: [0.02, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.48, -0.15, -1.05], forearm: [-1.32, 0.25, -0.15], wrist: [0.28, 0.10, 0.0] },
-      leftArm: { arm: [-0.48, 0.15, 1.05], forearm: [-1.32, -0.25, 0.15], wrist: [0.28, -0.10, 0.0] },
-      rightHand: PRESET_WAIT_CURVED,
-      leftHand: PRESET_WAIT_CURVED,
-      head: [0.04, 0.0, 0.0],
-    },
-    description: "Hold both hands in front of the body, with the fingers curled and the wrists bent slightly downward. Keep the elbows bent and the hands relatively still, maintaining the illustrated hand position to represent waiting.",
-    facialExpression: "Patient, expectant expression with calm attentive gaze.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 31. WALK
-  // --------------------------------------------------------------------------
-  walk: {
-    id: "walk",
-    name: "Walk",
-    meaningHindi: "चलना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.0,
-    motionType: "wave",
-    measurements: {
-      initialWristHeight: -0.08,
-      finalWristHeight: -0.08,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.20,
-      totalMovementDistance: 0.20,
-      palmOrientationStart: "Both hands in front of body, fingers curled, index fingers pointing downward",
-      palmOrientationEnd: "Hands alternately swing forward and backward representing walking strides",
-      wristRotationDegrees: [25.8, 0.0, 0.0],
-      trajectoryType: "wave",
-      anatomicalFeatures: [
-        "Position both hands in front of the body with fingers curled",
-        "Index fingers pointing downward representing two walking legs",
-        "Move hands alternately forward and backward in walking strides",
-        "Elbows slightly bent and wrists kept stable throughout",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.55, -0.10, -1.05], forearm: [-1.20, 0.20, -0.10], wrist: [0.45, 0.0, 0.0] },
-      leftArm: { arm: [-0.30, 0.10, 1.05], forearm: [-1.20, -0.20, 0.10], wrist: [0.45, 0.0, 0.0] },
-      rightHand: PRESET_INDEX_POINTING_DOWN,
-      leftHand: PRESET_INDEX_POINTING_DOWN,
-      head: [0.04, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.30, -0.10, -1.05], forearm: [-1.20, 0.20, -0.10], wrist: [0.45, 0.0, 0.0] },
-      leftArm: { arm: [-0.55, 0.10, 1.05], forearm: [-1.20, -0.20, 0.10], wrist: [0.45, 0.0, 0.0] },
-      rightHand: PRESET_INDEX_POINTING_DOWN,
-      leftHand: PRESET_INDEX_POINTING_DOWN,
-      head: [0.04, 0.0, 0.0],
-    },
-    description: "Position both hands in front of the body, with the fingers curled and the index fingers pointing downward. Move the hands alternately forward and backward to represent walking, keeping the elbows slightly bent and the wrists stable.",
-    facialExpression: "Steady, pleasant walking rhythm with relaxed natural expression.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 32. WASH
-  // --------------------------------------------------------------------------
-  wash: {
-    id: "wash",
-    name: "Wash",
-    meaningHindi: "धोना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.2,
-    motionType: "circular",
-    measurements: {
-      initialWristHeight: 0.0,
-      finalWristHeight: 0.0,
-      verticalDisplacement: 0.08,
-      horizontalDisplacement: 0.08,
-      depthDisplacement: 0.05,
-      totalMovementDistance: 0.12,
-      palmOrientationStart: "Both hands brought together in front of body, fingers curved, palms facing each other",
-      palmOrientationEnd: "Hands move against each other in rhythmic rubbing motion, wrists moving naturally",
-      wristRotationDegrees: [8.6, 17.2, 0.0],
-      trajectoryType: "circular",
-      anatomicalFeatures: [
-        "Bring both hands together in front of the body",
-        "Fingers curved and palms facing each other in contact",
-        "Move hands against each other in an active rubbing motion",
-        "Keep elbows bent and allow wrists to move naturally with rubbing",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.55, -0.15, -0.95], forearm: [-1.45, 0.30, -0.20], wrist: [0.15, 0.30, 0.0] },
-      leftArm: { arm: [-0.55, 0.15, 0.95], forearm: [-1.45, -0.30, 0.20], wrist: [0.15, -0.30, 0.0] },
-      rightHand: PRESET_CUPPED_WASH,
-      leftHand: PRESET_CUPPED_WASH,
-      head: [0.04, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.55, -0.15, -0.95], forearm: [-1.45, 0.30, -0.20], wrist: [-0.15, 0.30, 0.0] },
-      leftArm: { arm: [-0.55, 0.15, 0.95], forearm: [-1.45, -0.30, 0.20], wrist: [-0.15, -0.30, 0.0] },
-      rightHand: PRESET_CUPPED_WASH,
-      leftHand: PRESET_CUPPED_WASH,
-      head: [0.04, 0.0, 0.0],
-    },
-    description: "Bring both hands together in front of the body, with the fingers curved and the palms facing each other. Move the hands against each other in a rubbing motion, keeping the elbows bent and allowing the wrists to move naturally.",
-    facialExpression: "Engaged, clean, attentive hygiene expression with downward gaze.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 33. LOOK
-  // --------------------------------------------------------------------------
-  look: {
-    id: "look",
-    name: "Look",
-    meaningHindi: "देखना",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "right",
-    durationSeconds: 2.0,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: 0.25,
-      finalWristHeight: 0.18,
-      verticalDisplacement: -0.07,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.25,
-      totalMovementDistance: 0.26,
-      palmOrientationStart: "Single right hand raised near face, index and middle extended, other fingers curled",
-      palmOrientationEnd: "Hand directed smoothly outward from face, elbow bent, wrist aligned with forearm",
-      wristRotationDegrees: [0.0, 0.0, 0.0],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Raise one hand near the face representing the eyes",
-        "Index and middle fingers extended in 'V' shape pointing forward",
-        "Other fingers curled into palm",
-        "Direct hand outward from face to represent looking, wrist aligned with forearm",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-1.15, -0.25, -0.70], forearm: [-1.90, 0.30, -0.30], wrist: [-0.15, 0.0, 0.0] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_TWO_FINGERS_LOOK,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.0, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.75, -0.15, -0.90], forearm: [-1.10, 0.15, -0.15], wrist: [0.0, 0.0, 0.0] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_TWO_FINGERS_LOOK,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.02, 0.0, 0.0],
-    },
-    description: "Raise one hand near the face, with the index and middle fingers extended and the other fingers curled. Direct the hand outward from the face to represent looking, keeping the elbow bent and the wrist aligned with the forearm.",
-    facialExpression: "Attentive, sharp, clear eye gaze looking forward along the finger direction.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // 34. JUMP
-  // --------------------------------------------------------------------------
-  jump: {
-    id: "jump",
-    name: "Jump",
-    meaningHindi: "कूदना / छलांग",
-    signLanguage: "ISL",
-    referenceSource: "Everyday Things We Do",
-    involvesHands: "both",
-    durationSeconds: 2.0,
-    motionType: "arc",
-    measurements: {
-      initialWristHeight: -0.15,
-      finalWristHeight: 0.18,
-      verticalDisplacement: 0.33,
-      horizontalDisplacement: 0.0,
-      depthDisplacement: 0.08,
-      totalMovementDistance: 0.34,
-      palmOrientationStart: "Both hands in front of body, fingers curled, palms oriented inward",
-      palmOrientationEnd: "Both hands spring upward together, elbows slightly bent, wrists following upward movement",
-      wristRotationDegrees: [14.3, 0.0, 0.0],
-      trajectoryType: "arc",
-      anatomicalFeatures: [
-        "Hold both hands in front of the body with fingers curled",
-        "Palms oriented inward toward the torso",
-        "Move both hands upward together in spring arc to represent jumping",
-        "Elbows slightly bent and wrists following the upward leap",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.35, -0.15, -1.10], forearm: [-1.10, 0.25, -0.15], wrist: [0.10, 0.0, 0.0] },
-      leftArm: { arm: [-0.35, 0.15, 1.10], forearm: [-1.10, -0.25, 0.15], wrist: [0.10, 0.0, 0.0] },
-      rightHand: PRESET_JUMP_CURLED,
-      leftHand: PRESET_JUMP_CURLED,
-      head: [0.04, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.85, -0.20, -0.85], forearm: [-1.55, 0.35, -0.20], wrist: [-0.25, 0.0, 0.0] },
-      leftArm: { arm: [-0.85, 0.20, 0.85], forearm: [-1.55, -0.35, 0.20], wrist: [-0.25, 0.0, 0.0] },
-      rightHand: PRESET_JUMP_CURLED,
-      leftHand: PRESET_JUMP_CURLED,
-      head: [-0.08, 0.0, 0.0],
-    },
-    description: "Hold both hands in front of the body, with the fingers curled and the palms oriented inward. Move both hands upward together to represent jumping, keeping the elbows slightly bent and the wrists following the upward movement.",
-    facialExpression: "Bouncy, playful, joyful jumping expression with head bouncing upward.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // QUIET (Right index finger held vertically upright directly against lips in "shhh" silence gesture)
-  // --------------------------------------------------------------------------
-  quiet: {
-    id: "quiet",
-    name: "Quiet",
-    meaningHindi: "शांत / चुप",
-    signLanguage: "ISL",
-    referenceSource: "Signs Everyone Should Know",
-    involvesHands: "right",
-    durationSeconds: 2.2,
-    motionType: "arc",
-    measurements: {
-      initialWristHeight: -0.15, // Lower chest standby
-      finalWristHeight: 0.20,    // Lips / mouth height (reference height +0.20m)
-      verticalDisplacement: 0.35,
-      horizontalDisplacement: 0.12,
-      depthDisplacement: 0.05,
-      totalMovementDistance: 0.37,
-      palmOrientationStart: "Right arm poised at lower chest, index finger extended upright, thumb folded across curled fingers",
-      palmOrientationEnd: "Single right index finger held vertically upright directly against center of lips in canonical 'shhh' silence gesture; left arm relaxed down at side",
-      wristRotationDegrees: [6.9, 2.9, 8.6],
-      trajectoryType: "arc",
-      anatomicalFeatures: [
-        "Single right index finger extended vertically upright directly in front of the center of the lips/mouth",
-        "Thumb folded closed across the curled fingers",
-        "Middle, ring, and pinky fingers curled tightly into a fist against the palm",
-        "Palm orientation: back of hand facing forward / slightly outward towards camera",
-        "Left arm remains completely relaxed straight down at the side (neutral rest)",
-        "Calm, composed facial expression with lips closed in silence",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.15, 0.10, -1.15], forearm: [-0.60, 0.20, 0.10], wrist: [0.10, 0.05, 0.05] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_QUIET_SHHH_INDEX_LIPS,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.0, 0.0, 0.0],
-      neck: [0.0, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-1.2491, -1.0362, -1.6999], forearm: [-2.2844, 2.9492, 0.8000], wrist: [0.1469, 0.6916, -0.3526] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_QUIET_SHHH_INDEX_LIPS,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.0, 0.0, 0.0],
-      neck: [0.0, 0.0, 0.0],
-    },
-    description: "Single right index finger extended vertically upright placed directly on the mouth with wrist turned 45 degrees up and elbow turned 180 degrees towards the mouth; all remaining fingers (middle, ring, pinky) and thumb tightly closed into a firm fist; left arm resting relaxed at side.",
-    facialExpression: "Calm, quiet facial expression with closed lips and direct eye contact.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-  loud: {
-    id: "loud",
-    name: "Loud",
-    meaningHindi: "ज़ोर / शोर / चिल्लाना",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "both",
-    durationSeconds: 2.6,
-    motionType: "arc",
-    measurements: {
-      initialWristHeight: -0.25,
-      finalWristHeight: 0.15,
-      verticalDisplacement: 0.40,
-      horizontalDisplacement: 0.25,
-      depthDisplacement: 0.22,
-      totalMovementDistance: 0.52,
-      palmOrientationStart: "Both arms relaxed down at sides/waist in neutral standing rest position",
-      palmOrientationEnd: "Both hands flare outward at face level with spread fingers, projecting sound loudly",
-      wristRotationDegrees: [12.0, 8.5, 6.0],
-      trajectoryType: "arc",
-      anatomicalFeatures: [
-        "Phase 1: Neutral starting pose with person standing straight, arms relaxed at waist sides, head forward",
-        "Phase 2: Coordinated initial ascent from waist to torso, bending elbows and lifting wrists",
-        "Phase 3: Both hands positioned in front of upper chest with relatively close distance, fingers opening",
-        "Phase 4: Coordinated upward & outward flare from chest toward face level with open spread fingers",
-        "Phase 5: Smooth deceleration returning both arms from chest back to relaxed waist rest pose",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [0.05, 0.05, -1.25], forearm: [-0.25, 0.10, 0.05], wrist: [0.10, 0.05, 0.05] },
-      leftArm: { arm: [0.05, -0.05, 1.25], forearm: [-0.25, -0.10, -0.05], wrist: [0.10, -0.05, -0.05] },
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm:  { arm: [-0.10, -0.05, 0.20], forearm: [-0.15, -0.05, -0.05], wrist: [0.05, 0.0, 0.0] },
       rightHand: PRESET_STANDBY_RELAXED,
-      leftHand: PRESET_STANDBY_RELAXED,
+      leftHand:  PRESET_STANDBY_RELAXED,
       head: [0.0, 0.0, 0.0],
-      neck: [0.0, 0.0, 0.0],
     },
-    intermediateKeyframes: [
-      {
-        timeFraction: 0.25,
-        rightArm: { arm: [-0.55, 0.10, -0.95], forearm: [-1.25, 0.25, 0.15], wrist: [0.15, 0.40, 0.10] },
-        leftArm: { arm: [-0.55, -0.10, 0.95], forearm: [-1.25, -0.25, -0.15], wrist: [0.15, -0.40, -0.10] },
-        rightHand: PRESET_CUPPED_SHOUT_MOUTH,
-        leftHand: PRESET_CUPPED_SHOUT_MOUTH,
-        head: [0.0, 0.0, 0.0],
-        neck: [0.0, 0.0, 0.0],
-      },
-      {
-        timeFraction: 0.42,
-        rightArm: { arm: [-0.95, -0.15, -1.15], forearm: [-1.65, 0.40, -0.15], wrist: [0.18, 0.85, 0.10] },
-        leftArm: { arm: [-0.95, 0.15, 1.15], forearm: [-1.65, -0.40, 0.15], wrist: [0.18, -0.85, -0.10] },
-        rightHand: PRESET_CUPPED_SHOUT_MOUTH,
-        leftHand: PRESET_CUPPED_SHOUT_MOUTH,
-        head: [0.02, 0.0, 0.0],
-        neck: [0.01, 0.0, 0.0],
-      },
-      {
-        timeFraction: 0.68,
-        rightArm: { arm: [-1.15, -0.18, -1.35], forearm: [-1.40, 0.50, 0.15], wrist: [0.22, 0.20, -0.15] },
-        leftArm: { arm: [-1.15, 0.18, 1.35], forearm: [-1.40, -0.50, -0.15], wrist: [0.22, -0.20, 0.15] },
-        rightHand: PRESET_OPEN_SPREAD_5,
-        leftHand: PRESET_OPEN_SPREAD_5,
-        head: [-0.07, 0.0, 0.0],
-        neck: [-0.04, 0.0, 0.0],
-      },
-    ],
     endPose: {
       timeFraction: 1.0,
-      rightArm: { arm: [0.05, 0.05, -1.25], forearm: [-0.25, 0.10, 0.05], wrist: [0.10, 0.05, 0.05] },
-      leftArm: { arm: [0.05, -0.05, 1.25], forearm: [-0.25, -0.10, -0.05], wrist: [0.10, -0.05, -0.05] },
+      rightArm: { arm: [-0.10, 0.05, -0.20], forearm: [-0.15, 0.05, 0.05], wrist: [0.05, 0.0, 0.0] },
+      leftArm:  { arm: [-0.10, -0.05, 0.20], forearm: [-0.15, -0.05, -0.05], wrist: [0.05, 0.0, 0.0] },
       rightHand: PRESET_STANDBY_RELAXED,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.0, 0.0, 0.0],
-      neck: [0.0, 0.0, 0.0],
-    },
-    description: "5-phase coordinated trajectory matching reference video: starting from waist sides, ascending to upper chest, expanding upward and outward to face level with open fingers as shouting loudly, then smoothly descending back to neutral standing posture.",
-    facialExpression: "Intense shout expression with open mouth, raised eyebrows, and physical exertion of projecting sound loudly.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // --------------------------------------------------------------------------
-  // HAPPY (Both flat hands brushing upward along chest toward collarbones in rhythmic sweeps)
-  // --------------------------------------------------------------------------
-  happy: {
-    id: "happy",
-    name: "Happy",
-    meaningHindi: "खुश / प्रसन्नता",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "both",
-    durationSeconds: 2.8,
-    motionType: "arc",
-    measurements: {
-      initialWristHeight: -0.22,
-      finalWristHeight: 0.12,
-      verticalDisplacement: 0.34,
-      horizontalDisplacement: 0.02,
-      depthDisplacement: 0.02,
-      totalMovementDistance: 0.36,
-      palmOrientationStart: "Both flat open palms placed in front of lower chest, palms facing inward toward body",
-      palmOrientationEnd: "Both flat open palms brush upward along chest toward collarbones/chin with joyful smile",
-      wristRotationDegrees: [-11.5, 17.2, -22.9],
-      trajectoryType: "arc",
-      anatomicalFeatures: [
-        "Right elbow turned 90 degrees from right to left across in front of lower chest",
-        "Left elbow turned 90 degrees from left to right across in front of lower chest",
-        "Both flat open palms (PRESET_OPEN_FLAT_B) held flush facing inward toward the chest",
-        "Wrists start turned DOWN pointing downward, then turn slowly from DOWN to UP",
-        "Slow upward wrist rotation brushes flat palms upward along chest toward collarbones/chin",
-        "Warm, radiant joyful smile on avatar face (mouthSmile morph target) with uplifted expression",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.20, 0.00, -0.85], forearm: [-1.35, -0.30, -1.45], wrist: [-1.94, 0.70, -2.04] },
-      leftArm: { arm: [-0.20, 0.00, 0.85], forearm: [-1.35, 0.30, 1.45], wrist: [-1.94, -0.70, 2.04] },
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_OPEN_FLAT_B,
-      head: [-0.02, 0.0, 0.0],
-      neck: [0.0, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.38, 0.05, -0.95], forearm: [-1.35, -0.30, -1.45], wrist: [-2.14, 0.80, 1.94] },
-      leftArm: { arm: [-0.38, -0.05, 0.95], forearm: [-1.35, 0.30, 1.45], wrist: [-2.14, -0.80, -1.94] },
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_OPEN_FLAT_B,
-      head: [-0.10, 0.0, 0.0],
-      neck: [-0.04, 0.0, 0.0],
-    },
-    description: "Both hands position in front of chest with right elbow turned 90 degrees from right to left and left elbow turned 90 degrees from left to right, flat palms facing chest; after that wrists turn slowly from pointing DOWN to pointing UP in repeated uplifting brushes along chest to collarbones with a warm, joyful radiant smile on the face.",
-    facialExpression: "Warm, cheerful, radiant smile on the face with uplifted cheeks (mouthSmile morph target = 0.95) and slight head tilt of happiness.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // SAD (Single right index finger extended, all other fingers and thumb closed in a fist; placed at eye and moved from UP to DOWN)
-  // --------------------------------------------------------------------------
-  sad: {
-    id: "sad",
-    name: "Sad",
-    meaningHindi: "उदास / दुःखी",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "both",
-    durationSeconds: 2.8,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: 0.35,
-      finalWristHeight: 0.18,
-      verticalDisplacement: -0.17,
-      horizontalDisplacement: 0.03,
-      depthDisplacement: 0.13,
-      totalMovementDistance: 0.21,
-      palmOrientationStart: "Both hands with index fingers extended straight and remaining fingers/thumbs closed in firm fists; placed directly at both eyes",
-      palmOrientationEnd: "Both index fingers move simultaneously from UP to DOWN along both cheeks representing tears falling down",
-      wristRotationDegrees: [8.6, 37.2, -25.8],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Both hands with index fingers extended straight; middle, ring, pinky and thumbs tightly closed into firm fists",
-        "Both index fingertips placed directly at eyes / tear lines",
-        "Both index fingers trace simultaneously from UP to DOWN along cheeks representing falling tears",
-        "Head droops downward with sorrowful sad facial expression",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-1.22, -1.05, -1.70], forearm: [-2.28, 2.95, 0.80], wrist: [0.15, 0.65, -0.45] },
-      leftArm:  { arm: [-1.22, 1.05, 1.70], forearm: [-2.28, -2.95, -0.80], wrist: [0.15, -0.65, 0.45] },
-      rightHand: PRESET_SAD_TEAR_INDEX_EYE,
-      leftHand: PRESET_SAD_TEAR_INDEX_EYE,
-      head: [0.14, 0.0, 0.0],
-      neck: [0.06, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-1.45, -1.25, -1.35], forearm: [-2.20, 2.90, 0.75], wrist: [-0.15, 0.55, -0.45] },
-      leftArm:  { arm: [-1.45, 1.25, 1.35], forearm: [-2.20, -2.90, -0.75], wrist: [-0.15, -0.55, 0.45] },
-      rightHand: PRESET_SAD_TEAR_INDEX_EYE,
-      leftHand: PRESET_SAD_TEAR_INDEX_EYE,
-      head: [0.16, 0.0, 0.0],
-      neck: [0.08, 0.0, 0.0],
-    },
-    description: "Both hands have index fingers extended with thumbs and remaining fingers tightly closed in firm fists; index fingers placed at both eyes and moved simultaneously from UP to DOWN along both cheeks representing tears falling, with head drooping sadly in sorrow.",
-    facialExpression: "Sorrowful, sad expression with head drooping forward-down and solemn downward gaze.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // BEAUTIFUL (L-hand circles face contour with index, then index & thumb close, 3 fingers open pointing to user with wrist at 90° of elbow)
-  // --------------------------------------------------------------------------
-  beautiful: {
-    id: "beautiful",
-    name: "Beautiful",
-    meaningHindi: "सुंदर / ख़ूबसूरत",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "right",
-    durationSeconds: 3.2,
-    motionType: "compound",
-    measurements: {
-      initialWristHeight: -0.25,
-      finalWristHeight: 0.28,
-      verticalDisplacement: 0.53,
-      horizontalDisplacement: 0.24,
-      depthDisplacement: 0.20,
-      totalMovementDistance: 0.62,
-      palmOrientationStart: "Right elbow turns 180 degrees from 3rd quadrant towards the mouth and wrist rotates 180 degrees towards the mouth with L-handshape (all fingers closed except index and thumb); left hand rests at side",
-      palmOrientationEnd: "Right index & thumb close, 3 fingers (middle, ring, pinky) open pointing towards user with wrist at 90 degrees to elbow",
-      wristRotationDegrees: [83.0, 0.0, 3.0],
-      trajectoryType: "compound",
-      anatomicalFeatures: [
-        "Right elbow turns 180 degrees from 3rd quadrant towards the mouth",
-        "Right wrist rotates 180 degrees towards the mouth as the arm ascends",
-        "Right hand forms L-handshape: index and thumb extended, middle/ring/pinky closed tightly in a fist",
-        "Index finger circles around the contour of the signer's own face starting and finishing at the mouth",
-        "At mouth level, index finger and thumb close while middle, ring, and pinky open straight pointing towards the user",
-        "Right wrist bends 90 degrees relative to the elbow, directing the three open fingers forward at the user",
-        "Warm, appreciative radiant smile with gentle admiring gaze (mouthSmile = 0.92)",
-        "Left arm remains naturally relaxed at side throughout",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.20, 0.10, -0.85], forearm: [-1.30, -0.30, -1.57], wrist: [-0.30, -1.57, 0.20] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_BEAUTIFUL_L_HAND,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [-0.04, 0.04, 0.0],
-      neck: [-0.02, 0.02, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.45, -0.10, -1.05], forearm: [-1.40, 0.15, 0.10], wrist: [1.57, 0.00, 0.00] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_BEAUTIFUL_THREE_FINGERS,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [-0.05, 0.05, 0.0],
-      neck: [-0.02, 0.02, 0.0],
-    },
-    description: "Turn elbow 180 degrees towards the mouth and rotate wrist also 180 degrees towards the mouth with all fingers closed except index finger and thumb (L-handshape), then round with the index finger on the circle of their own face, and after that close index finger and thumb and open another three fingers pointing towards the user with wrist at 90 degrees of the elbow.",
-    facialExpression: "Warm, appreciative radiant smile with gentle admiring gaze (mouthSmile = 0.92).",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // UGLY (Right claw hand placed in front of face and sweeps across/pulls away with distaste expression)
-  // --------------------------------------------------------------------------
-  ugly: {
-    id: "ugly",
-    name: "Ugly",
-    meaningHindi: "कुरूप / भद्दा",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "right",
-    durationSeconds: 2.6,
-    motionType: "compound",
-    measurements: {
-      initialWristHeight: -0.25,
-      finalWristHeight: 0.30,
-      verticalDisplacement: 0.55,
-      horizontalDisplacement: -0.32,
-      depthDisplacement: 0.18,
-      totalMovementDistance: 0.66,
-      palmOrientationStart: "Right claw hand placed in front of nose/face, palm facing inward; left hand at side",
-      palmOrientationEnd: "Right claw sweeps horizontally across face from left to right and pulls away with distaste",
-      wristRotationDegrees: [12.0, -25.0, 18.0],
-      trajectoryType: "compound",
-      anatomicalFeatures: [
-        "Right hand curved into claw handshape (PRESET_CLAW_HAND) in front of face",
-        "Hand sweeps horizontally across face from left to right as if pulling a distorting mask away",
-        "Avatar head turns slightly away with displeased grimace and wrinkled brow",
-        "Left arm remains naturally relaxed down at side",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.85, -0.65, -1.25], forearm: [-1.75, 1.10, 0.85], wrist: [0.15, 0.50, -0.30] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_CLAW_HAND,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.05, -0.12, -0.05],
-      neck: [0.02, -0.06, -0.02],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.60, -0.20, -1.55], forearm: [-1.20, 0.40, 0.35], wrist: [0.10, 0.15, -0.10] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_CLAW_HAND,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.08, -0.18, -0.08],
-      neck: [0.04, -0.09, -0.04],
-    },
-    description: "Right claw hand rises in front of the face, sweeps horizontally across from left to right and pulls away sharply, while the avatar turns head slightly aside with a distasteful facial expression; left hand rests at side.",
-    facialExpression: "Displeased expression with wrinkled nose/brow and slight turn of head in distaste.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // DEAF (Right index finger touches ear, then moves forward to touch mouth/chin, indicating cannot hear or speak)
-  // --------------------------------------------------------------------------
-  deaf: {
-    id: "deaf",
-    name: "Deaf",
-    meaningHindi: "बधिर / बहरा",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "right",
-    durationSeconds: 2.8,
-    motionType: "compound",
-    measurements: {
-      initialWristHeight: -0.25,
-      finalWristHeight: 0.38,
-      verticalDisplacement: 0.63,
-      horizontalDisplacement: 0.22,
-      depthDisplacement: 0.14,
-      totalMovementDistance: 0.68,
-      palmOrientationStart: "Right index finger points to and touches right ear; left hand rests at side",
-      palmOrientationEnd: "Right index finger transitions smoothly from ear to touch corner of mouth/chin",
-      wristRotationDegrees: [5.0, 18.0, -12.0],
-      trajectoryType: "compound",
-      anatomicalFeatures: [
-        "Right index finger extended straight while thumb and other fingers remain closed (PRESET_POINTING_1)",
-        "Fingertip touches right ear lobe / ear area",
-        "Finger sweeps smoothly in a forward arc to touch lips / chin area",
-        "Compound ISL sign indicating hearing + speech impairment",
-        "Left arm remains naturally relaxed down at side",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.95, -0.90, -1.45], forearm: [-1.95, 1.45, 0.90], wrist: [0.25, 0.60, -0.40] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.02, 0.08, 0.04],
-      neck: [0.01, 0.04, 0.02],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.80, -0.45, -1.20], forearm: [-1.65, 0.95, 0.60], wrist: [0.15, 0.35, -0.20] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.02, 0.02, 0.0],
-      neck: [0.01, 0.01, 0.0],
-    },
-    description: "Right hand with index finger extended touches the right ear, then moves forward in a smooth arc to touch near the lips/chin, expressing Deaf in Indian Sign Language; left hand rests at side.",
-    facialExpression: "Attentive, neutral and respectful facial expression with direct eye contact.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // BLIND (Right V-handshape index & middle fingers point toward eyes, then sweep across with eyes closing)
-  // --------------------------------------------------------------------------
-  blind: {
-    id: "blind",
-    name: "Blind",
-    meaningHindi: "दृष्टिहीन / अंधा",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "right",
-    durationSeconds: 2.7,
-    motionType: "arc",
-    measurements: {
-      initialWristHeight: -0.25,
-      finalWristHeight: 0.40,
-      verticalDisplacement: 0.65,
-      horizontalDisplacement: 0.24,
-      depthDisplacement: 0.16,
-      totalMovementDistance: 0.71,
-      palmOrientationStart: "Right V-handshape (index & middle fingers) points toward eyes at eye level; left hand at side",
-      palmOrientationEnd: "Two extended fingers sweep horizontally across eye line as avatar gently closes eyes",
-      wristRotationDegrees: [8.0, 15.0, -18.0],
-      trajectoryType: "arc",
-      anatomicalFeatures: [
-        "Right hand in V-handshape with index and middle fingers extended apart (PRESET_TWO_FINGERS_LOOK)",
-        "Fingertips point toward eye level / eyes",
-        "Two fingers sweep horizontally across the eyes from right to left",
-        "Avatar head nods slightly with solemn, respectful expression",
-        "Left arm remains naturally relaxed down at side",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-1.05, -0.80, -1.40], forearm: [-1.90, 1.30, 0.85], wrist: [0.20, 0.55, -0.35] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_TWO_FINGERS_LOOK,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.06, 0.0, 0.0],
-      neck: [0.03, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-1.00, -0.40, -1.25], forearm: [-1.80, 0.90, 0.70], wrist: [0.15, 0.35, -0.25] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_TWO_FINGERS_LOOK,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.08, 0.0, 0.0],
-      neck: [0.04, 0.0, 0.0],
-    },
-    description: "Right hand in V-handshape points index and middle fingers toward the eyes at eye level, then sweeps horizontally across the sightline to convey Blind in Indian Sign Language; left hand rests at side.",
-    facialExpression: "Solemn, respectful facial expression with eyelids gently softening.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-  // --------------------------------------------------------------------------
-  // ANGRY (Claw handshapes at chest, intense tensed expression)
-  // --------------------------------------------------------------------------
-  angry: {
-    id: "angry",
-    name: "Angry",
-    meaningHindi: "गुस्सा / क्रोध",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "both",
-    durationSeconds: 2.6,
-    motionType: "arc",
-    measurements: {
-      initialWristHeight: -0.25,
-      finalWristHeight: 0.10,
-      verticalDisplacement: 0.35,
-      horizontalDisplacement: 0.10,
-      depthDisplacement: 0.12,
-      totalMovementDistance: 0.39,
-      palmOrientationStart: "Both claw hands start in front of lower ribs, palms facing inward toward body",
-      palmOrientationEnd: "Both hands rise to upper chest level with tensed claw posture, conveying anger",
-      wristRotationDegrees: [-10.0, 15.0, 20.0],
-      trajectoryType: "arc",
-      anatomicalFeatures: [
-        "Both hands formed into claw handshapes with bent, tense fingers",
-        "Hands rise upward from lower torso to chest level in rapid, forceful movement",
-        "Avatar displays intense furrowed-brow frown with focused angry expression",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.30, 0.10, -0.60], forearm: [-1.20, 0.40, 0.20], wrist: [-0.20, 0.10, 0.20] },
-      leftArm: { arm: [0.30, 0.10, -0.60], forearm: [1.20, 0.40, -0.20], wrist: [0.20, 0.10, -0.20] },
-      rightHand: PRESET_CLAW_HAND,
-      leftHand: PRESET_CLAW_HAND,
-      head: [-0.08, 0.0, 0.0],
-      neck: [-0.04, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.70, -0.20, -1.10], forearm: [-1.80, 0.80, 0.50], wrist: [0.20, 0.30, -0.20] },
-      leftArm: { arm: [0.70, -0.20, -1.10], forearm: [1.80, 0.80, -0.50], wrist: [-0.20, 0.30, 0.20] },
-      rightHand: PRESET_CLAW_HAND,
-      leftHand: PRESET_CLAW_HAND,
-      head: [-0.12, 0.0, 0.0],
-      neck: [-0.06, 0.0, 0.0],
-    },
-    description: "Both hands in claw handshapes rise vigorously up the torso toward the upper chest while the avatar shows a strong furrowed-brow frown, indicating Anger in ISL.",
-    facialExpression: "Intense, furrowed frown conveying frustration and anger.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // GO (Both hands point forward and swing outward away from body)
-  // --------------------------------------------------------------------------
-  go: {
-    id: "go",
-    name: "Go",
-    meaningHindi: "जाओ / जाना",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "both",
-    durationSeconds: 2.4,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: -0.10,
-      finalWristHeight: -0.05,
-      verticalDisplacement: 0.05,
-      horizontalDisplacement: 0.18,
-      depthDisplacement: 0.28,
-      totalMovementDistance: 0.34,
-      palmOrientationStart: "Index fingers pointing upward and slightly forward near chest",
-      palmOrientationEnd: "Both hands pivot forward and thrust away from body toward destination",
-      wristRotationDegrees: [25.0, 0.0, 0.0],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Both hands in index pointing handshape (PRESET_POINTING_1)",
-        "Both arms push forward from mid-chest toward the horizon",
-        "Wrists flex slightly downward to emphasize directing outward",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.40, 0.0, -0.80], forearm: [-1.40, 0.30, 0.10], wrist: [-0.20, 0.0, 0.0] },
-      leftArm: { arm: [0.40, 0.0, -0.80], forearm: [1.40, 0.30, -0.10], wrist: [0.20, 0.0, 0.0] },
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_POINTING_1,
+      leftHand:  PRESET_STANDBY_RELAXED,
       head: [0.0, 0.0, 0.0],
     },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.20, 0.15, -1.25], forearm: [-0.85, 0.15, 0.05], wrist: [0.35, 0.0, 0.0] },
-      leftArm: { arm: [0.20, 0.15, -1.25], forearm: [0.85, 0.15, -0.05], wrist: [-0.35, 0.0, 0.0] },
-      rightHand: PRESET_POINTING_1,
-      leftHand: PRESET_POINTING_1,
-      head: [0.04, 0.0, 0.0],
-    },
-    description: "Both index fingers point and thrust forward away from the body in an outward directional arc, indicating Go in Indian Sign Language.",
-    facialExpression: "Attentive, forward-focused gaze indicating direction.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // DEAD (Both flat hands start palm-up, then flip over 180° to palm-down)
-  // Corresponds to user's uploaded adjective 1file videos (MVI_9699-9702, MVI_9823-9826)
-  // --------------------------------------------------------------------------
-  dead: {
-    id: "dead",
-    name: "Dead",
-    meaningHindi: "मृत / मरा हुआ",
-    signLanguage: "ISL",
-    referenceSource: "Simple Signs Chart",
-    involvesHands: "both",
-    durationSeconds: 2.8,
-    motionType: "arc",
-    measurements: {
-      initialWristHeight: -0.15,
-      finalWristHeight: -0.22,
-      verticalDisplacement: -0.07,
-      horizontalDisplacement: 0.05,
-      depthDisplacement: 0.15,
-      totalMovementDistance: 0.18,
-      palmOrientationStart: "Both open flat palms held horizontal facing upward in front of waist/chest",
-      palmOrientationEnd: "Both forearms rotate 180 degrees flipping palms completely downward to indicate death",
-      wristRotationDegrees: [0.0, 0.0, 180.0],
-      trajectoryType: "arc",
-      anatomicalFeatures: [
-        "Both hands held flat with fingers extended together (PRESET_OPEN_FLAT_B)",
-        "Hands held at lower chest / upper abdomen level",
-        "Both hands flip simultaneously from palm-up to palm-down, representing turnover/cessation of life in ISL",
-        "Solemn, respectful facial expression",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.35, 0.15, -0.70], forearm: [-1.45, 0.20, -1.40], wrist: [-0.10, 0.0, -0.30] },
-      leftArm: { arm: [0.35, 0.15, -0.70], forearm: [1.45, 0.20, 1.40], wrist: [0.10, 0.0, 0.30] },
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_OPEN_FLAT_B,
-      head: [0.04, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.35, 0.15, -0.75], forearm: [-1.30, 0.20, 0.30], wrist: [0.20, 0.0, 0.10] },
-      leftArm: { arm: [0.35, 0.15, -0.75], forearm: [1.30, 0.20, -0.30], wrist: [-0.20, 0.0, -0.10] },
-      rightHand: PRESET_FLAT_PALM_DOWN,
-      leftHand: PRESET_FLAT_PALM_DOWN,
-      head: [0.08, 0.0, 0.0],
-    },
-    description: "Both open hands start palm-up in front of the body and flip 180 degrees over to palm-down, the standard Indian Sign Language gesture for Dead.",
-    facialExpression: "Solemn, respectful facial expression.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // HIGH (Right flat B-hand moves upward from chest level to high above head)
-  // Corresponds to AI4Bharat INCLUDE Adjective "high" class 50
-  // --------------------------------------------------------------------------
-  high: {
-    id: "high",
-    name: "High",
-    meaningHindi: "ऊँचा / उच्च",
-    signLanguage: "ISL",
-    referenceSource: "Signs Everyone Should Know",
-    involvesHands: "right",
-    durationSeconds: 2.2,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: -0.10,
-      finalWristHeight: 0.38,
-      verticalDisplacement: 0.48,
-      horizontalDisplacement: 0.05,
-      depthDisplacement: 0.05,
-      totalMovementDistance: 0.48,
-      palmOrientationStart: "Right open flat palm held at chest level facing downward toward floor",
-      palmOrientationEnd: "Right open flat palm elevated smoothly straight upward above head level",
-      wristRotationDegrees: [0.0, 0.0, 0.0],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Right hand in open flat B-handshape (PRESET_OPEN_FLAT_B) with palm facing down",
-        "Starts in front of upper chest at Y = -0.10m",
-        "Moves steadily upward in smooth vertical ascent to Y = +0.38m above head level",
-        "Left arm remains in relaxed neutral standby at side",
-        "Attentive gaze tracking upward toward elevated hand",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.35, 0.15, -0.65], forearm: [-1.20, 0.15, 0.25], wrist: [0.25, 0.0, 0.10] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.0, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.95, -0.10, -0.60], forearm: [-0.75, 0.10, 0.20], wrist: [0.20, 0.0, 0.10] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [-0.10, 0.0, 0.0],
-    },
-    description: "Right flat hand held horizontally with palm facing downward moves steadily upward from chest level to high above the head, indicating High in Indian Sign Language.",
-    facialExpression: "Attentive, upward-tilted head gaze indicating elevated height.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // LOW (Right flat B-hand moves downward from chest level toward waist)
-  // Corresponds to AI4Bharat INCLUDE Adjective "low"
-  // --------------------------------------------------------------------------
-  low: {
-    id: "low",
-    name: "Low",
-    meaningHindi: "नीचा / कम",
-    signLanguage: "ISL",
-    referenceSource: "Signs Everyone Should Know",
-    involvesHands: "right",
-    durationSeconds: 2.0,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: 0.05,
-      finalWristHeight: -0.32,
-      verticalDisplacement: -0.37,
-      horizontalDisplacement: 0.02,
-      depthDisplacement: 0.05,
-      totalMovementDistance: 0.37,
-      palmOrientationStart: "Right open flat palm held horizontal at mid-chest level facing down",
-      palmOrientationEnd: "Right open flat palm lowered deliberately toward waist level",
-      wristRotationDegrees: [0.0, 0.0, 0.0],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Right hand in flat B-handshape (PRESET_OPEN_FLAT_B) with palm facing downward",
-        "Starts at mid-chest height (Y = +0.05m)",
-        "Lowers smoothly and firmly straight downward toward waist (Y = -0.32m)",
-        "Left hand remains in relaxed neutral standby at side",
-        "Head tilts slightly downward acknowledging low level",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.45, 0.10, -0.60], forearm: [-1.30, 0.15, 0.25], wrist: [0.20, 0.0, 0.10] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.0, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.15, 0.05, -0.40], forearm: [-0.85, 0.10, 0.15], wrist: [0.15, 0.0, 0.10] },
-      leftArm: NEUTRAL_REST_ARM_LEFT,
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.08, 0.0, 0.0],
-    },
-    description: "Right flat hand held horizontally with palm facing downward moves steadily downward from chest level toward the waist, indicating Low in Indian Sign Language.",
-    facialExpression: "Slight downward head nod acknowledging low level.",
-    verifiedStatus: "LINGUISTICALLY_VERIFIED",
-  },
-
-  // --------------------------------------------------------------------------
-  // NARROW (Both open flat hands held vertically move inward toward each other)
-  // Corresponds to AI4Bharat INCLUDE Adjective "narrow" class 57
-  // --------------------------------------------------------------------------
-  narrow: {
-    id: "narrow",
-    name: "Narrow",
-    meaningHindi: "संकरा / पतला / संकीर्ण",
-    signLanguage: "ISL",
-    referenceSource: "Signs Everyone Should Know",
-    involvesHands: "both",
-    durationSeconds: 2.4,
-    motionType: "linear",
-    measurements: {
-      initialWristHeight: -0.10,
-      finalWristHeight: -0.10,
-      verticalDisplacement: 0.0,
-      horizontalDisplacement: -0.26,
-      depthDisplacement: 0.0,
-      totalMovementDistance: 0.26,
-      palmOrientationStart: "Both flat palms vertical facing each other ~35cm apart in front of chest",
-      palmOrientationEnd: "Both flat palms brought close together (~6cm apart) indicating narrow corridor/width",
-      wristRotationDegrees: [0.0, 0.0, 0.0],
-      trajectoryType: "linear",
-      anatomicalFeatures: [
-        "Both hands in flat B-handshapes with fingers together and thumbs extended upward",
-        "Palms held vertically facing inward toward each other at mid-chest level",
-        "Hands move horizontally inward toward the midline in symmetric motion",
-        "Demonstrates a confined, narrow width or spatial restriction",
-        "Focused squinting facial expression indicating tightness/narrowness",
-      ],
-    },
-    startPose: {
-      timeFraction: 0.0,
-      rightArm: { arm: [-0.30, 0.20, -0.75], forearm: [-1.20, 0.35, 0.30], wrist: [0.05, -0.30, 0.0] },
-      leftArm: { arm: [0.30, 0.20, -0.75], forearm: [1.20, 0.35, -0.30], wrist: [-0.05, 0.30, 0.0] },
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_OPEN_FLAT_B,
-      head: [0.02, 0.0, 0.0],
-    },
-    endPose: {
-      timeFraction: 1.0,
-      rightArm: { arm: [-0.20, 0.05, -0.80], forearm: [-1.35, 0.10, 0.45], wrist: [0.05, -0.15, 0.0] },
-      leftArm: { arm: [0.20, 0.05, -0.80], forearm: [1.35, 0.10, -0.45], wrist: [-0.05, 0.15, 0.0] },
-      rightHand: PRESET_OPEN_FLAT_B,
-      leftHand: PRESET_OPEN_FLAT_B,
-      head: [0.04, 0.0, 0.0],
-    },
-    description: "Both open flat hands with vertical palms facing inward move symmetrically closer together until only a few centimeters apart, expressing Narrow in Indian Sign Language.",
-    facialExpression: "Focused, attentive expression with slightly squinted eyes indicating narrowness.",
+    description: "MORE Sign (और / ज्यादा): Both hands form the Flattened-O / 'chutki' handshape with all fingertips and thumb tips touching together. The wrists maintain slight flexion so the fingertips face each other in front of the chest. Driven by horizontal X-axis convergence, both hands move inward from the sides and tap (collide) their fingertips together 2 to 3 times before returning to rest.",
+    facialExpression: "Interested, affirmative expression with slight forward head tilt.",
     verifiedStatus: "LINGUISTICALLY_VERIFIED",
   },
 };
@@ -3159,12 +1747,12 @@ export function resolveKinematicKey(rawKey: string): string {
   if (clean === "no" || clean === "nahi" || clean === "nahin") return "no";
   if (clean === "help" || clean === "emergency" || clean === "madad") return "help";
   if (clean === "please" || clean === "kripya" || clean === "krpya") return "please";
-  if (clean === "sorry" || clean === "maaf" || clean === "kshama") return "sorry";
+  if (clean === "sorry" || clean === "maaf" || clean === "kshama" || clean === "maafi" || clean === "apology" || clean === "apologize" || clean === "forgive" || clean === "sori") return "sorry";
   if (clean === "stop" || clean === "ruko" || clean === "rok") return "stop";
   if (clean === "pain" || clean === "dard" || clean === "takleef") return "pain";
   if (clean === "eat" || clean === "food" || clean === "khana") return "eat";
   if (clean === "drink" || clean === "drinking" || clean === "peena" || clean === "peeyo" || clean === "water" || clean === "paani") return "drink";
-  if (clean === "more" || clean === "aur" || clean === "extra") return "more";
+  if (clean === "more" || clean === "aur" || clean === "extra" || clean === "zyada" || clean === "jyada" || clean === "adhik") return "more";
   if (clean === "bathroom" || clean === "toilet" || clean === "washroom" || clean === "shauchalay") return "bathroom";
   if (clean === "how" || clean === "kaise") return "how";
   if (clean === "what" || clean === "kya") return "what";
@@ -3186,7 +1774,7 @@ export function resolveKinematicKey(rawKey: string): string {
   if (clean === "look" || clean === "dekhna" || clean === "looking") return "look";
   if (clean === "jump" || clean === "koodna" || clean === "jumping" || clean === "chhalang") return "jump";
   if (clean === "quiet" || clean === "shhh" || clean === "shh" || clean === "shaant" || clean === "shant" || clean === "silence" || clean === "chup") return "quiet";
-  if (clean === "loud" || clean === "shor" || clean === "awaaz" || clean === "chillana" || clean === "hungama") return "loud";
+  if (clean === "loud" || clean === "adjective" || clean === "mvi5177" || clean === "mvi_5177" || clean === "importedsign" || clean === "imported_sign" || clean === "tez" || clean === "shor" || clean === "awaaz" || clean === "chillana" || clean === "hungama") return "loud";
   if (clean === "happy" || clean === "khush" || clean === "khushi" || clean === "prasann" || clean === "anand") return "happy";
   if (clean === "sad" || clean === "dukhi" || clean === "dukh" || clean === "udaas" || clean === "udas") return "sad";
   if (clean === "beautiful" || clean === "sundar" || clean === "khoobsurat" || clean === "khubsurat" || clean === "pretty") return "beautiful";
@@ -3195,12 +1783,24 @@ export function resolveKinematicKey(rawKey: string): string {
   if (clean === "blind" || clean === "andha" || clean === "andhaa" || clean === "drishtihin" || clean === "netrahin") return "blind";
   if (clean === "angry" || clean === "gussa" || clean === "krodh" || clean === "krodhi") return "angry";
   if (clean === "go" || clean === "jao" || clean === "jana" || clean === "chalo") return "go";
+  if (clean === "come" || clean === "aao" || clean === "aana" || clean === "idhar_aao" || clean === "padharo") return "come";
+  if (clean === "want" || clean === "chahiye" || clean === "chahta" || clean === "chahti" || clean === "desire" || clean === "icha" || clean === "chah") return "want";
   if (clean === "dead" || clean === "mar" || clean === "mrit" || clean === "death" || clean === "deceased") return "dead";
   if (clean === "high" || clean === "uncha" || clean === "ooncha" || clean === "uccha") return "high";
   if (clean === "low" || clean === "neecha" || clean === "nicha") return "low";
   if (clean === "narrow" || clean === "sankra" || clean === "patla" || clean === "sankeern") return "narrow";
+  if (clean === "old" || clean === "buddha" || clean === "budha" || clean === "elderly" || clean === "vriddha") return "old";
+  if (clean === "young" || clean === "yuva" || clean === "jawan" || clean === "naya" || clean === "youth") return "young";
 
-  return clean;
+    if (clean === "unknown_sign_001" || clean === "unknownsign001" || clean === "unknown_001" || clean === "mvi_9504") return "unknown_sign_001";
+  if (clean === "unverified_001" || clean === "unverified001" || clean === "mvi_9431" || clean === "sign_video_001") return "unverified_001";
+  if (clean === "unverified_002" || clean === "unverified002" || clean === "mvi_9432" || clean === "sign_video_002") return "unverified_002";
+  if (clean === "unverified_003" || clean === "unverified003" || clean === "mvi_9510" || clean === "sign_video_003") return "unverified_003";
+  if (clean === "unverified_004" || clean === "unverified004" || clean === "mvi_9511" || clean === "sign_video_004") return "unverified_004";
+  if (clean === "unknown_sign_005" || clean === "unknownsign005" || clean === "mvi_5320") return "unknown_sign_005";
+  if (clean === "unknown_sign_006" || clean === "unknownsign006" || clean === "mvi_5164") return "unknown_sign_006";
+  if (clean === "wet" || clean === "wet_asl" || clean === "wetasl" || clean === "geela" || clean === "nam" || clean === "bheega") return "wet";
+return clean;
 }
 
 /**
@@ -3268,6 +1868,29 @@ export function sampleKinematicsAtTime(
   mouthSmile?: number;
 } {
   const resolved = resolveKinematicKey(gestureKey);
+  if (DYNAMIC_LEARNED_KINEMATICS[resolved]) {
+    const dyn = DYNAMIC_LEARNED_KINEMATICS[resolved];
+    const duration = dyn.durationSeconds || 2.4;
+    const loopTime = t % duration;
+    const rawPhase = loopTime / duration;
+    const traj = dyn.trajectory || [];
+    if (traj.length > 0) {
+      const idx = Math.min(traj.length - 1, Math.floor(rawPhase * traj.length));
+      const kf = traj[idx];
+      return {
+        phase: rawPhase,
+        rightArm: kf.rightArm || NEUTRAL_REST_ARM_RIGHT,
+        leftArm: kf.leftArm || NEUTRAL_REST_ARM_LEFT,
+        rightHand: PRESET_STANDBY_RELAXED,
+        leftHand: PRESET_STANDBY_RELAXED,
+        head: [0, 0, 0],
+        neck: [0, 0, 0],
+        spine: [0, 0, 0],
+        currentWristHeight: -0.4,
+        mouthSmile: 0.0,
+      };
+    }
+  }
   const def = PRECISE_GESTURES_MAP[resolved];
 
   if (!def) {
@@ -3489,6 +2112,117 @@ export function sampleKinematicsAtTime(
     };
   }
 
+  // --------------------------------------------------------------------------
+  // SORRY (ASL/ISL 'A' Handshape Clockwise Sternum Rubbing)
+  // Frame 1: Right hand 'A' fist touches center chest (sternum)
+  // Frame 2: Shoulder & forearm move fist Up & Right in clockwise circle
+  // Frame 3: Fist sweeps Down & Left completing the circle
+  // Frame 4: Repeats 2-3 continuous clockwise loops without lifting off chest
+  // --------------------------------------------------------------------------
+  if (resolved === "sorry") {
+    const cycleDuration = def.durationSeconds || 2.6;
+    const c = (t % cycleDuration) / cycleDuration;
+
+    // Quadrant 3 starting pose (lower right quadrant in front of waist / lower torso)
+    const rArmQ3: [number, number, number] = [-0.25, 0.12, -0.95];
+    const rFAQ3:  [number, number, number] = [-1.15, 0.15, 0.15];
+    const rWrQ3:  [number, number, number] = [0.25, -0.15, 0.15];
+
+    // Chest contact target pose:
+    // 1. Right elbow turned 90 degrees (1.5708 rad) from right to left towards the chest
+    // 2. Dominant hand (fist) touches the center of the chest (sternum) directly with 0-inch gap
+    // 3. Thumb flat and horizontal across middle knuckles, wrist locked straight as solid unit
+    const rShoulderBase: [number, number, number] = [0.0, -0.22, 0.0]; // Relaxed 10-15 deg outward shoulder rotation
+    const rArmCenter:    [number, number, number] = [-0.55, -0.15, -1.05];
+    const rFACenter:     [number, number, number] = [-1.55, 1.5708, 0.15]; // Elbow turned 90 degrees towards chest
+    const rWrCenter:     [number, number, number] = [0.35, -0.45, 0.25];   // Dominant hand touching chest directly
+
+    let rArmCur: [number, number, number];
+    let rFACur:  [number, number, number];
+    let rWrCur:  [number, number, number];
+    let rShoulder: [number, number, number] = [0.0, 0.0, 0.0];
+    let rHandCur: HandAnatomicalPose;
+    let headPitch = 0.0;
+    let smileWeight = 0.0;
+
+    if (c < 0.20) {
+      // Phase 1: Move right hand from 3rd Quadrant up to the chest, turning elbow 90° to touch chest
+      const u = smoothstep(c / 0.20);
+      rShoulder = lerpTuple3([0.0, -0.10, 0.0], rShoulderBase, u);
+      rArmCur = lerpTuple3(rArmQ3, rArmCenter, u);
+      rFACur  = lerpTuple3(rFAQ3,  rFACenter,  u); // Elbow turns 90° towards chest
+      rWrCur  = lerpTuple3(rWrQ3,  rWrCenter,  u); // Dominant hand moves to touch chest
+      rHandCur = PRESET_CLOSED_FIST_A;
+      headPitch = u * 0.12; // Head bows forward in contrition (~7 degrees)
+      smileWeight = -0.35 * u; // Apologetic remorseful facial expression
+    } else if (c < 0.82) {
+      // Phase 2 (Frames 2-4): 3 continuous Clockwise circles over sternum touching chest (Up -> Right -> Down -> Left)
+      const u = (c - 0.20) / 0.62;
+      const theta = u * 3.0 * Math.PI * 2.0; // 3 complete clockwise circular loops
+      const env = Math.sin(Math.PI * u) ** 0.5;
+
+      const radius = 0.055; // Circular diameter on chest wall
+      const dx = Math.sin(theta) * radius * env; // Clockwise horizontal: Up -> Right -> Down -> Left
+      const dy = Math.cos(theta) * radius * env; // Clockwise vertical
+
+      // Elbow turned 90° towards chest, dynamically pivoting the circle with 0-inch gap
+      rShoulder = [rShoulderBase[0] + dy * 0.10, rShoulderBase[1] + dx * 0.12, 0.0];
+      rArmCur = [
+        rArmCenter[0] - dy * 0.60,
+        rArmCenter[1] + dx * 0.30,
+        rArmCenter[2] + dx * 0.40,
+      ];
+      rFACur = [
+        rFACenter[0] - dy * 0.40,
+        rFACenter[1] + dx * 0.30,
+        rFACenter[2],
+      ];
+      // Wrist locked, hand touching chest directly
+      rWrCur = [...rWrCenter];
+      rHandCur = PRESET_CLOSED_FIST_A;
+      headPitch = 0.12 + Math.sin(theta) * 0.015; // Contrite bowed head
+      smileWeight = -0.35; // Remorseful sad mouth expression
+    } else if (c < 0.88) {
+      // Phase 3: Settle with dominant hand touching chest
+      rShoulder = [...rShoulderBase];
+      rArmCur = [...rArmCenter];
+      rFACur  = [...rFACenter];
+      rWrCur  = [...rWrCenter];
+      rHandCur = PRESET_CLOSED_FIST_A;
+      headPitch = 0.12;
+      smileWeight = -0.35;
+    } else {
+      // Phase 4: Smooth descent from chest back down to 3rd Quadrant
+      const u = smoothstep((c - 0.88) / 0.12);
+      rShoulder = lerpTuple3(rShoulderBase, [0.0, -0.10, 0.0], u);
+      rArmCur = lerpTuple3(rArmCenter, rArmQ3, u);
+      rFACur  = lerpTuple3(rFACenter,  rFAQ3,  u);
+      rWrCur  = lerpTuple3(rWrCenter,  rWrQ3,  u);
+      rHandCur = PRESET_CLOSED_FIST_A;
+      headPitch = 0.12 * (1.0 - u);
+      smileWeight = -0.35 * (1.0 - u);
+    }
+
+    return {
+      definition: def,
+      phase: c,
+      rightArm: {
+        shoulder: rShoulder,
+        arm: rArmCur,
+        forearm: rFACur,
+        wrist: rWrCur,
+      },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: rHandCur,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [headPitch, 0.0, 0.0],
+      neck: [headPitch * 0.5, 0.0, 0.0],
+      spine: [0.087, 0.0, 0.0], // 5 degree forward torso lean in regret
+      currentWristHeight: def.measurements.initialWristHeight,
+      mouthSmile: smileWeight,
+    };
+  }
+
   // 5. YES (Matching reference image: Closed fist nodding up and down at wrist, head nodding synchronously)
   if (resolved === "yes") {
     const cycleDuration = def.durationSeconds || 1.4;
@@ -3572,6 +2306,885 @@ export function sampleKinematicsAtTime(
   }
 
   // 7. EAT / FOOD (Matching user photos: All fingers and thumb pinched in morsel shape, moving from Quadrant III to Mouth)
+  // --------------------------------------------------------------------------
+  // OLD (Requested User Choreography:
+  // Phase 1 (0.00 - 0.55): Full complete EAT sign (lower quadrant -> mouth -> touch)
+  // Phase 2 (0.55 - 0.85): Hand travels from mouth up and behind the head
+  // Phase 3 (0.85 - 1.00): Dwell behind head and return
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+  // YOUNG (User Requested Specification & Screenshot Match):
+  // - Starts at mouth/chin level with wrist facing OUTWARD towards user
+  // - Fingers start closed/pinched
+  // - Hand descends DOWNWARD in front of chest while all fingers and thumb
+  //   blossom from closed to open facing the user
+    // --------------------------------------------------------------------------
+  // YOUNG (User Calibrated ISL Sign):
+  // - Starts directly in front of mouth with wrist facing straight toward user (viewer)
+  // - All fingers and thumb begin closed in a bud/pinch
+  // - Hand descends straight vertically down in front of mouth, chin, throat, chest
+  // - All fingers and thumb blossom wide open facing straight toward user as hand lowers
+  // - Avatar displays youthful vibrant smile
+    // --------------------------------------------------------------------------
+  // YOUNG (Trained on Reference Video MVI_9504.MOV / INCLUDE Class 52):
+  // Phase 1 (0.00 - 0.17 | 0.0 - 0.4s): Raise right hand from side beside body toward face with pinched/bud fingers
+  // Phase 2 (0.17 - 0.34 | 0.4 - 0.8s): Move hand past mouth/nose toward eyes and upward to forehead
+  // Phase 3 (0.34 - 0.59 | 0.8 - 1.4s): Dwell near forehead and right temple, elbow bent
+  // Phase 4 (0.59 - 0.80 | 1.4 - 1.9s): Move raised hand outward and away from head/temple with blossoming fingers
+  // Phase 5 (0.80 - 1.00 | 1.9 - 2.36s): Lower right hand smoothly back toward side of body to neutral rest
+  // Left hand: Rested calmly beside body throughout
+  // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+  // UNKNOWN_SIGN_001 (Reference Video: MVI_9504.MOV | Status: PENDING)
+  // Exact 5-phase reproduction:
+  // Phase 1 (0.0-0.4s): Raise right hand from side beside body toward face with pinched fingers
+  // Phase 2 (0.4-0.8s): Move hand toward nose/eyes and upward toward forehead
+  // Phase 3 (0.8-1.4s): Dwell near forehead and temple with elbow bent
+  // Phase 4 (1.4-1.9s): Move raised hand outward and away from head, fingers blossom open
+  // Phase 5 (1.9-2.36s): Lower right hand back toward side of body to rest
+  // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+  // UNVERIFIED_001..004 (Reference Videos: MVI_9431.MOV, MVI_9432.MOV, MVI_9510.MOV, MVI_9511.MOV)
+  // Exact 4-phase gesture reproduction:
+  // Phase 1 (0.00 - 0.38): Smooth ascent from hip to upper chest while forming F/OK ring
+  // Phase 2 (0.38 - 0.60): Emphatic hold in front of upper chest with palm facing viewer and head nodding
+  // Phase 3 (0.60 - 0.85): Smooth descent back toward hip
+  // Phase 4 (0.85 - 1.00): Rest at hip before seamless repeat
+  // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+  // UNKNOWN_SIGN_005 (Reference Video: MVI_5320.MOV, 2.0s, 25 FPS)
+  // Phase 1 (0.00 - 0.20): Elevation from hip to chin/lower face
+  // Phase 2 (0.20 - 0.40): Hold in front of chin with forward palm and subtle nod
+  // Phase 3 (0.40 - 0.55): Descent back toward hip
+  // Phase 4 (0.55 - 1.00): Rest at hip for remainder of cycle
+  // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+  // UNKNOWN_SIGN_006 (Reference Video: MVI_5164.MOV, 3.32s, 25 FPS)
+  // Two-hand dynamic gesture
+  // Phase 1 (0.00 - 0.25): Right hand leads ascent to chest; left hand begins rising
+  // Phase 2 (0.25 - 0.40): Left hand joins right hand in front of chest
+  // Phase 3 (0.40 - 0.65): Synchronized bilateral chest interaction with slight nod
+  // Phase 4 (0.65 - 0.85): Smooth bilateral descent back toward hips
+  // Phase 5 (0.85 - 1.00): Bilateral rest beside hips
+  // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+  // WET / WET_ASL (Double downward closing pulses with palms up)
+  // Repetition 1:
+  //   0.00 - 0.10: Hands elevate to high chest position, opening to PRESET_WET_OPEN (palms up)
+  //   0.10 - 0.30: 1st downward motion + fingers closing to PRESET_WET_CLOSED
+  //   0.30 - 0.42: Hands rise back up toward high chest, blooming open to PRESET_WET_OPEN
+  // Repetition 2:
+  //   0.42 - 0.65: 2nd downward motion + fingers closing to PRESET_WET_CLOSED
+  //   0.65 - 0.78: Brief hold/settle at lower chest
+  // Return:
+  //   0.78 - 0.92: Hands smoothly descend back to hips
+  //   0.92 - 1.00: Standby rest at hips
+  // --------------------------------------------------------------------------
+  if (resolved === "wet") {
+    const cycleDuration = def.durationSeconds || 2.4;
+    const c = (t % cycleDuration) / cycleDuration;
+
+    // Resting arm poses beside body
+    const rArmRest: [number, number, number] = [-0.10, 0.05, -0.20];
+    const rFARest:  [number, number, number] = [-0.15, 0.05, 0.05];
+    const rWrRest:  [number, number, number] = [0.05, 0.0, 0.0];
+
+    const lArmRest: [number, number, number] = [-0.10, -0.05, 0.20];
+    const lFARest:  [number, number, number] = [-0.15, -0.05, -0.05];
+    const lWrRest:  [number, number, number] = [0.05, 0.0, 0.0];
+
+    // 1. Starting Position (High Chest):
+    // - Elbows bent comfortably near the body at chest level
+    // - Wrists extended backward (Wrist Extension), palms facing up toward sky/face
+    // - Hand: PRESET_WET_OPEN (ASL 5 open spread fingers, slightly curved)
+    const rArmHigh: [number, number, number] = [-0.60, 0.08, -0.36];
+    const rFAHigh:  [number, number, number] = [-1.42, 0.26, 0.18];
+    const rWrHigh:  [number, number, number] = [-0.35, -0.20, 0.70];
+
+    const lArmHigh: [number, number, number] = [-0.60, -0.08, 0.36];
+    const lFAHigh:  [number, number, number] = [-1.42, -0.26, -0.18];
+    const lWrHigh:  [number, number, number] = [-0.35, 0.20, -0.70];
+
+    // 2. Downward Motion (Low Stomach / Flexion):
+    // - Forearm and elbow slight extension (opening downward)
+    // - Wrist flexion (palms tilting downward & inward)
+    // - Right elbow draws right-to-left and left elbow draws left-to-right toward the stomach
+    // - Hand: PRESET_WET_CLOSED (all fingertips meet thumb tip in chutki / water drop shape)
+    const rArmLow:  [number, number, number] = [-0.45, 0.06, -0.16];
+    const rFALow:   [number, number, number] = [-1.22, 0.20, 0.14];
+    const rWrLow:   [number, number, number] = [0.35, -0.20, 0.35];
+
+    const lArmLow:  [number, number, number] = [-0.45, -0.06, 0.16];
+    const lFALow:   [number, number, number] = [-1.22, -0.20, -0.14];
+    const lWrLow:   [number, number, number] = [0.35, 0.20, -0.35];
+
+    let rArmCur: [number, number, number];
+    let rFACur:  [number, number, number];
+    let rWrCur:  [number, number, number];
+    let lArmCur: [number, number, number];
+    let lFACur:  [number, number, number];
+    let lWrCur:  [number, number, number];
+
+    let rHandCur: HandAnatomicalPose;
+    let lHandCur: HandAnatomicalPose;
+    let headPitch = 0.0;
+
+    if (c < 0.10) {
+      // Starting Position: Smooth ascent to high chest with elbows near body, wrists extended upward, hands open spread 5
+      const u = smoothstep(c / 0.10);
+      rArmCur = lerpTuple3(rArmRest, rArmHigh, u);
+      rFACur  = lerpTuple3(rFARest,  rFAHigh,  u);
+      rWrCur  = lerpTuple3(rWrRest,  rWrHigh,  u);
+      rHandCur = lerpHand(PRESET_STANDBY_RELAXED, PRESET_WET_OPEN, u);
+
+      lArmCur = lerpTuple3(lArmRest, lArmHigh, u);
+      lFACur  = lerpTuple3(lFARest,  lFAHigh,  u);
+      lWrCur  = lerpTuple3(lWrRest,  lWrHigh,  u);
+      lHandCur = lerpHand(PRESET_STANDBY_RELAXED, PRESET_WET_OPEN, u);
+      headPitch = u * 0.02;
+    } else if (c < 0.30) {
+      // Repetition 1: Downward movement with elbow/forearm extension, wrist flexion, fingertips closing to thumb (chutki), elbows moving right-to-left and left-to-right toward stomach
+      const u = smoothstep((c - 0.10) / 0.20);
+      const phi1 = ((c - 0.10) / 0.20) * Math.PI * 2.0;
+      const env1 = Math.sin(Math.PI * u);
+
+      const medialSweep = Math.sin(Math.PI * u) * 0.05;
+      const orbitPitch1 = -Math.cos(phi1) * 0.04 * env1;
+      const orbitLat1   = Math.sin(phi1) * 0.03 * env1;
+
+      rArmCur = lerpTuple3(rArmHigh, rArmLow, u);
+      rArmCur[0] += orbitPitch1;
+      rArmCur[2] += medialSweep - orbitLat1; // Right elbow moves right to left toward stomach
+
+      lArmCur = lerpTuple3(lArmHigh, lArmLow, u);
+      lArmCur[0] += orbitPitch1;
+      lArmCur[2] += -medialSweep + orbitLat1; // Left elbow moves left to right toward stomach
+
+      rFACur  = lerpTuple3(rFAHigh,  rFALow,  u);
+      rFACur[0] -= Math.sin(phi1) * 0.02 * env1;
+
+      lFACur  = lerpTuple3(lFAHigh,  lFALow,  u);
+      lFACur[0] -= Math.sin(phi1) * 0.02 * env1;
+
+      rWrCur  = lerpTuple3(rWrHigh,  rWrLow,  u); // Wrist flexes down (palms tilt down & inward)
+      lWrCur  = lerpTuple3(lWrHigh,  lWrLow,  u);
+      rHandCur = lerpHand(PRESET_WET_OPEN, PRESET_WET_CLOSED, u); // Fingers close into chutki
+      lHandCur = lerpHand(PRESET_WET_OPEN, PRESET_WET_CLOSED, u);
+      headPitch = 0.02 + u * 0.02;
+    } else if (c < 0.42) {
+      // Rebound/Rise back up to chest: wrists re-extend upward, fingers blossom open back to spread 5
+      const u = smoothstep((c - 0.30) / 0.12);
+      rArmCur = lerpTuple3(rArmLow, rArmHigh, u);
+      rFACur  = lerpTuple3(rFALow,  rFAHigh,  u);
+      rWrCur  = lerpTuple3(rWrLow,  rWrHigh,  u);
+      rHandCur = lerpHand(PRESET_WET_CLOSED, PRESET_WET_OPEN, u);
+
+      lArmCur = lerpTuple3(lArmLow, lArmHigh, u);
+      lFACur  = lerpTuple3(lFALow,  lFAHigh,  u);
+      lWrCur  = lerpTuple3(lWrLow,  lWrHigh,  u);
+      lHandCur = lerpHand(PRESET_WET_CLOSED, PRESET_WET_OPEN, u);
+      headPitch = 0.04 - u * 0.02;
+    } else if (c < 0.65) {
+      // Repetition 2: 2nd downward movement with wrist flexion and fingertips closing to thumb
+      const u = smoothstep((c - 0.42) / 0.23);
+      const phi2 = ((c - 0.42) / 0.23) * Math.PI * 2.0;
+      const env2 = Math.sin(Math.PI * u);
+
+      const medialSweep = Math.sin(Math.PI * u) * 0.05;
+      const orbitPitch2 = -Math.cos(phi2) * 0.04 * env2;
+      const orbitLat2   = Math.sin(phi2) * 0.03 * env2;
+
+      rArmCur = lerpTuple3(rArmHigh, rArmLow, u);
+      rArmCur[0] += orbitPitch2;
+      rArmCur[2] += medialSweep - orbitLat2;
+
+      lArmCur = lerpTuple3(lArmHigh, lArmLow, u);
+      lArmCur[0] += orbitPitch2;
+      lArmCur[2] += -medialSweep + orbitLat2;
+
+      rFACur  = lerpTuple3(rFAHigh,  rFALow,  u);
+      rFACur[0] -= Math.sin(phi2) * 0.02 * env2;
+
+      lFACur  = lerpTuple3(lFAHigh,  lFALow,  u);
+      lFACur[0] -= Math.sin(phi2) * 0.02 * env2;
+
+      rWrCur  = lerpTuple3(rWrHigh,  rWrLow,  u); // Wrist flexes down again
+      lWrCur  = lerpTuple3(lWrHigh,  lWrLow,  u);
+      rHandCur = lerpHand(PRESET_WET_OPEN, PRESET_WET_CLOSED, u);
+      lHandCur = lerpHand(PRESET_WET_OPEN, PRESET_WET_CLOSED, u);
+      headPitch = 0.02 + u * 0.03;
+    } else if (c < 0.78) {
+      // Pause/settle at stomach level with closed chutki handshape and flexed wrists
+      rArmCur = [...rArmLow];
+      rFACur  = [...rFALow];
+      rWrCur  = [...rWrLow];
+      rHandCur = PRESET_WET_CLOSED;
+
+      lArmCur = [...lArmLow];
+      lFACur  = [...lFALow];
+      lWrCur  = [...lWrLow];
+      lHandCur = PRESET_WET_CLOSED;
+      headPitch = 0.05;
+    } else if (c < 0.92) {
+      // Smooth descent back to hips
+      const u = smoothstep((c - 0.78) / 0.14);
+      rArmCur = lerpTuple3(rArmLow, rArmRest, u);
+      rFACur  = lerpTuple3(rFALow,  rFARest,  u);
+      rWrCur  = lerpTuple3(rWrLow,  rWrRest,  u);
+      rHandCur = lerpHand(PRESET_WET_CLOSED, PRESET_STANDBY_RELAXED, u);
+
+      lArmCur = lerpTuple3(lArmLow, lArmRest, u);
+      lFACur  = lerpTuple3(lFALow,  lFARest,  u);
+      lWrCur  = lerpTuple3(lWrLow,  lWrRest,  u);
+      lHandCur = lerpHand(PRESET_WET_CLOSED, PRESET_STANDBY_RELAXED, u);
+      headPitch = 0.05 * (1.0 - u);
+    } else {
+      // Standby rest at hips
+      rArmCur = [...rArmRest];
+      rFACur  = [...rFARest];
+      rWrCur  = [...rWrRest];
+      rHandCur = PRESET_STANDBY_RELAXED;
+
+      lArmCur = [...lArmRest];
+      lFACur  = [...lFARest];
+      lWrCur  = [...lWrRest];
+      lHandCur = PRESET_STANDBY_RELAXED;
+      headPitch = 0.0;
+    }
+
+    return {
+      definition: def,
+      phase: c,
+      rightArm: { arm: rArmCur, forearm: rFACur, wrist: rWrCur },
+      leftArm:  { arm: lArmCur, forearm: lFACur, wrist: lWrCur },
+      rightHand: rHandCur,
+      leftHand:  lHandCur,
+      head: [headPitch, 0.0, 0.0],
+      neck: [headPitch * 0.5, 0.0, 0.0],
+      spine: [0.0, 0.0, 0.0],
+      currentWristHeight: lerp(-0.45, 0.10, c < 0.10 ? c / 0.10 : (c < 0.78 ? 1.0 : (c < 0.92 ? 1.0 - (c - 0.78) / 0.14 : 0.0))),
+      mouthSmile: 0.15,
+    };
+  }
+
+
+  // --------------------------------------------------------------------------
+  // MORE (Two-Handed Flattened-O / Chutki Fingertip Tapping on X-Axis)
+  // --------------------------------------------------------------------------
+  if (resolved === "more") {
+    const cycleDuration = def.durationSeconds || 2.5;
+    const c = (t % cycleDuration) / cycleDuration;
+
+    // Resting arm poses beside body
+    const rArmRest: [number, number, number] = [-0.10, 0.05, -0.20];
+    const rFARest:  [number, number, number] = [-0.15, 0.05, 0.05];
+    const rWrRest:  [number, number, number] = [0.05, 0.0, 0.0];
+
+    const lArmRest: [number, number, number] = [-0.10, -0.05, 0.20];
+    const lFARest:  [number, number, number] = [-0.15, -0.05, -0.05];
+    const lWrRest:  [number, number, number] = [0.05, 0.0, 0.0];
+
+    // Apart Pose (Mid-air in front of chest, ~20cm separation on X-axis):
+    // - Elbows bent on either side, hands floating mid-air
+    // - Wrists in slight flexion so fingertips face each other
+    const rArmApart: [number, number, number] = [-0.62, 0.20, -0.90];
+    const rFAApart:  [number, number, number] = [-1.48, 0.25, 0.15];
+    const rWrApart:  [number, number, number] = [0.15, -0.30, 0.15];
+
+    const lArmApart: [number, number, number] = [-0.62, -0.20, 0.90];
+    const lFAApart:  [number, number, number] = [-1.48, -0.25, -0.15];
+    const lWrApart:  [number, number, number] = [0.15, 0.30, -0.15];
+
+    // Contact Pose (Touch at midline along X-axis, Euclidean distance drops to 0):
+    const rArmTouch: [number, number, number] = [-0.62, 0.20, -0.62];
+    const rFATouch:  [number, number, number] = [-1.52, 0.48, 0.15];
+    const rWrTouch:  [number, number, number] = [0.15, -0.30, 0.15];
+
+    const lArmTouch: [number, number, number] = [-0.62, -0.20, 0.62];
+    const lFATouch:  [number, number, number] = [-1.52, -0.48, -0.15];
+    const lWrTouch:  [number, number, number] = [0.15, 0.30, -0.15];
+
+    let rArmCur: [number, number, number];
+    let rFACur:  [number, number, number];
+    let rWrCur:  [number, number, number];
+    let lArmCur: [number, number, number];
+    let lFACur:  [number, number, number];
+    let lWrCur:  [number, number, number];
+
+    let rHandCur: HandAnatomicalPose;
+    let lHandCur: HandAnatomicalPose;
+    let headPitch = 0.0;
+
+    if (c < 0.18) {
+      // Phase 1: Bilateral ascent into mid-air chest signing area in apart position
+      const u = smoothstep(c / 0.18);
+      rArmCur = lerpTuple3(rArmRest, rArmApart, u);
+      rFACur  = lerpTuple3(rFARest,  rFAApart,  u);
+      rWrCur  = lerpTuple3(rWrRest,  rWrApart,  u);
+      rHandCur = lerpHand(PRESET_STANDBY_RELAXED, PRESET_FLATTENED_O, u);
+
+      lArmCur = lerpTuple3(lArmRest, lArmApart, u);
+      lFACur  = lerpTuple3(lFARest,  lFAApart,  u);
+      lWrCur  = lerpTuple3(lWrRest,  lWrApart,  u);
+      lHandCur = lerpHand(PRESET_STANDBY_RELAXED, PRESET_FLATTENED_O, u);
+      headPitch = u * 0.03;
+    } else if (c < 0.78) {
+      // Phase 2: 3 Rhythmic Taps (Collisions) along X-axis
+      // Time window 0.18 to 0.78 (duration 0.60, each tap is 0.20)
+      const tWindow = c - 0.18;
+      const uTap = (tWindow % 0.20) / 0.20;
+      // Convergence pulse: at uTap=0.5, contactWeight=1.0 (touch), at 0 and 1, contactWeight=0 (apart)
+      const contactWeight = Math.pow(Math.sin(uTap * Math.PI), 1.5);
+
+      rArmCur = lerpTuple3(rArmApart, rArmTouch, contactWeight);
+      rFACur  = lerpTuple3(rFAApart,  rFATouch,  contactWeight);
+      rWrCur  = lerpTuple3(rWrApart,  rWrTouch,  contactWeight);
+
+      lArmCur = lerpTuple3(lArmApart, lArmTouch, contactWeight);
+      lFACur  = lerpTuple3(lFAApart,  lFATouch,  contactWeight);
+      lWrCur  = lerpTuple3(lWrApart,  lWrTouch,  contactWeight);
+
+      rHandCur = PRESET_FLATTENED_O;
+      lHandCur = PRESET_FLATTENED_O;
+      headPitch = 0.03 + contactWeight * 0.02; // Subtle affirmative nod on each tap
+    } else if (c < 0.86) {
+      // Phase 3: Brief settle together at midline
+      rArmCur = [...rArmTouch];
+      rFACur  = [...rFATouch];
+      rWrCur  = [...rWrTouch];
+
+      lArmCur = [...lArmTouch];
+      lFACur  = [...lFATouch];
+      lWrCur  = [...lWrTouch];
+
+      rHandCur = PRESET_FLATTENED_O;
+      lHandCur = PRESET_FLATTENED_O;
+      headPitch = 0.04;
+    } else {
+      // Phase 4: Smooth descent back to hips
+      const u = smoothstep((c - 0.86) / 0.14);
+      rArmCur = lerpTuple3(rArmTouch, rArmRest, u);
+      rFACur  = lerpTuple3(rFATouch,  rFARest,  u);
+      rWrCur  = lerpTuple3(rWrTouch,  rWrRest,  u);
+      rHandCur = lerpHand(PRESET_FLATTENED_O, PRESET_STANDBY_RELAXED, u);
+
+      lArmCur = lerpTuple3(lArmTouch, lArmRest, u);
+      lFACur  = lerpTuple3(lFATouch,  lFARest,  u);
+      lWrCur  = lerpTuple3(lWrTouch,  lWrRest,  u);
+      lHandCur = lerpHand(PRESET_FLATTENED_O, PRESET_STANDBY_RELAXED, u);
+      headPitch = 0.04 * (1.0 - u);
+    }
+
+    return {
+      definition: def,
+      phase: c,
+      rightArm: { arm: rArmCur, forearm: rFACur, wrist: rWrCur },
+      leftArm:  { arm: lArmCur, forearm: lFACur, wrist: lWrCur },
+      rightHand: rHandCur,
+      leftHand:  lHandCur,
+      head: [headPitch, 0.0, 0.0],
+      neck: [headPitch * 0.5, 0.0, 0.0],
+      spine: [0.0, 0.0, 0.0],
+      currentWristHeight: def.measurements.initialWristHeight,
+      mouthSmile: 0.15,
+    };
+  }
+
+  if (resolved === "unknown_sign_006") {
+    const cycleDuration = def.durationSeconds || 3.32;
+    const c = (t % cycleDuration) / cycleDuration;
+
+    const rArmRest:   [number, number, number] = [-0.10, 0.05, -0.20];
+    const rFARest:    [number, number, number] = [-0.15, 0.05, 0.05];
+    const rWrRest:    [number, number, number] = [0.05, 0.0, 0.0];
+
+    const lArmRest:   [number, number, number] = [-0.10, -0.05, 0.20];
+    const lFARest:    [number, number, number] = [-0.15, -0.05, -0.05];
+    const lWrRest:    [number, number, number] = [0.05, 0.0, 0.0];
+
+    const rArmChest:  [number, number, number] = [-0.55, 0.15, -0.70];
+    const rFAChest:   [number, number, number] = [-1.40, 0.35, 0.15];
+    const rWrChest:   [number, number, number] = [0.10, -0.20, -0.15];
+
+    const lArmChest:  [number, number, number] = [-0.55, -0.15, 0.70];
+    const lFAChest:   [number, number, number] = [-1.40, -0.35, -0.15];
+    const lWrChest:   [number, number, number] = [0.10, 0.20, 0.15];
+
+    let rArmCur: [number, number, number];
+    let rFACur:  [number, number, number];
+    let rWrCur:  [number, number, number];
+    let lArmCur: [number, number, number];
+    let lFACur:  [number, number, number];
+    let lWrCur:  [number, number, number];
+
+    let rHandCur: HandAnatomicalPose;
+    let lHandCur: HandAnatomicalPose;
+    let headPitch = 0.0;
+
+    if (c < 0.25) {
+      // Phase 1: Right hand raises toward chest (left lags slightly)
+      const uR = smoothstep(c / 0.25);
+      const uL = smoothstep(Math.max(0, c - 0.10) / 0.15);
+      rArmCur = lerpTuple3(rArmRest, rArmChest, uR);
+      rFACur  = lerpTuple3(rFARest,  rFAChest,  uR);
+      rWrCur  = lerpTuple3(rWrRest,  rWrChest,  uR);
+      rHandCur = lerpHand(PRESET_STANDBY_RELAXED, PRESET_OPEN_FLAT_B, uR);
+
+      lArmCur = lerpTuple3(lArmRest, lArmChest, uL);
+      lFACur  = lerpTuple3(lFARest,  lFAChest,  uL);
+      lWrCur  = lerpTuple3(lWrRest,  lWrChest,  uL);
+      lHandCur = lerpHand(PRESET_STANDBY_RELAXED, PRESET_OPEN_FLAT_B, uL);
+      headPitch = uR * 0.02;
+    } else if (c < 0.40) {
+      // Phase 2: Left hand completes ascent meeting right hand at chest
+      const uL = smoothstep((c - 0.25) / 0.15);
+      rArmCur = [...rArmChest];
+      rFACur  = [...rFAChest];
+      rWrCur  = [...rWrChest];
+      rHandCur = PRESET_OPEN_FLAT_B;
+
+      lArmCur = lerpTuple3(lerpTuple3(lArmRest, lArmChest, 0.5), lArmChest, uL);
+      lFACur  = lerpTuple3(lerpTuple3(lFARest,  lFAChest,  0.5), lFAChest,  uL);
+      lWrCur  = lerpTuple3(lerpTuple3(lWrRest,  lWrChest,  0.5), lWrChest,  uL);
+      lHandCur = PRESET_OPEN_FLAT_B;
+      headPitch = 0.02;
+    } else if (c < 0.65) {
+      // Phase 3: Bilateral interaction at chest with nod
+      const pulse = Math.sin((c - 0.40) / 0.25 * Math.PI * 2) * 0.05;
+      rArmCur = [rArmChest[0] + pulse, rArmChest[1], rArmChest[2]];
+      rFACur  = [...rFAChest];
+      rWrCur  = [...rWrChest];
+      rHandCur = PRESET_OPEN_FLAT_B;
+
+      lArmCur = [lArmChest[0] + pulse, lArmChest[1], lArmChest[2]];
+      lFACur  = [...lFAChest];
+      lWrCur  = [...lWrChest];
+      lHandCur = PRESET_OPEN_FLAT_B;
+      headPitch = 0.02 + Math.sin((c - 0.40) / 0.25 * Math.PI) * 0.04;
+    } else if (c < 0.85) {
+      // Phase 4: Bilateral descent back to hips
+      const u = smoothstep((c - 0.65) / 0.20);
+      rArmCur = lerpTuple3(rArmChest, rArmRest, u);
+      rFACur  = lerpTuple3(rFAChest,  rFARest,  u);
+      rWrCur  = lerpTuple3(rWrChest,  rWrRest,  u);
+      rHandCur = lerpHand(PRESET_OPEN_FLAT_B, PRESET_STANDBY_RELAXED, u);
+
+      lArmCur = lerpTuple3(lArmChest, lArmRest, u);
+      lFACur  = lerpTuple3(lFAChest,  lFARest,  u);
+      lWrCur  = lerpTuple3(lWrChest,  lWrRest,  u);
+      lHandCur = lerpHand(PRESET_OPEN_FLAT_B, PRESET_STANDBY_RELAXED, u);
+      headPitch = 0.02 * (1.0 - u);
+    } else {
+      // Phase 5: Bilateral rest beside hips
+      rArmCur = [...rArmRest];
+      rFACur  = [...rFARest];
+      rWrCur  = [...rWrRest];
+      rHandCur = PRESET_STANDBY_RELAXED;
+
+      lArmCur = [...lArmRest];
+      lFACur  = [...lFARest];
+      lWrCur  = [...lWrRest];
+      lHandCur = PRESET_STANDBY_RELAXED;
+      headPitch = 0.0;
+    }
+
+    return {
+      definition: def,
+      phase: c,
+      rightArm: { arm: rArmCur, forearm: rFACur, wrist: rWrCur },
+      leftArm:  { arm: lArmCur, forearm: lFACur, wrist: lWrCur },
+      rightHand: rHandCur,
+      leftHand:  lHandCur,
+      head: [headPitch, 0.0, 0.0],
+      neck: [headPitch * 0.5, 0.0, 0.0],
+      spine: [0.0, 0.0, 0.0],
+      currentWristHeight: lerp(-0.45, 0.15, c < 0.25 ? c / 0.25 : (c < 0.65 ? 1.0 : (c < 0.85 ? 1.0 - (c - 0.65) / 0.20 : 0.0))),
+      mouthSmile: 0.25,
+    };
+  }
+
+
+  if (resolved === "unknown_sign_005") {
+    const cycleDuration = def.durationSeconds || 2.0;
+    const c = (t % cycleDuration) / cycleDuration;
+
+    const rArmRest:   [number, number, number] = [-0.10, 0.05, -0.20];
+    const rFARest:    [number, number, number] = [-0.15, 0.05, 0.05];
+    const rWrRest:    [number, number, number] = [0.05, 0.0, 0.0];
+
+    const rArmChin:   [number, number, number] = [-0.65, 0.12, -0.90];
+    const rFAChin:    [number, number, number] = [-1.50, 0.40, 0.20];
+    const rWrChin:    [number, number, number] = [0.15, -0.10, -0.20];
+
+    let rArmCur: [number, number, number];
+    let rFACur:  [number, number, number];
+    let rWrCur:  [number, number, number];
+    let rHandCur: HandAnatomicalPose;
+    let headPitch = 0.0;
+
+    if (c < 0.20) {
+      // Phase 1: Ascent to chin/face
+      const u = smoothstep(c / 0.20);
+      rArmCur = lerpTuple3(rArmRest, rArmChin, u);
+      rFACur  = lerpTuple3(rFARest,  rFAChin,  u);
+      rWrCur  = lerpTuple3(rWrRest,  rWrChin,  u);
+      rHandCur = lerpHand(PRESET_STANDBY_RELAXED, PRESET_OPEN_FLAT_B, u);
+      headPitch = u * 0.02;
+    } else if (c < 0.40) {
+      // Phase 2: Hold at chin with slight nod
+      rArmCur = [...rArmChin];
+      rFACur  = [...rFAChin];
+      rWrCur  = [...rWrChin];
+      rHandCur = PRESET_OPEN_FLAT_B;
+      headPitch = 0.02 + Math.sin((c - 0.20) / 0.20 * Math.PI) * 0.04;
+    } else if (c < 0.55) {
+      // Phase 3: Descent back toward hip
+      const u = smoothstep((c - 0.40) / 0.15);
+      rArmCur = lerpTuple3(rArmChin, rArmRest, u);
+      rFACur  = lerpTuple3(rFAChin,  rFARest,  u);
+      rWrCur  = lerpTuple3(rWrChin,  rWrRest,  u);
+      rHandCur = lerpHand(PRESET_OPEN_FLAT_B, PRESET_STANDBY_RELAXED, u);
+      headPitch = 0.02 * (1.0 - u);
+    } else {
+      // Phase 4: Standby rest at hip
+      rArmCur = [...rArmRest];
+      rFACur  = [...rFARest];
+      rWrCur  = [...rWrRest];
+      rHandCur = PRESET_STANDBY_RELAXED;
+      headPitch = 0.0;
+    }
+
+    return {
+      definition: def,
+      phase: c,
+      rightArm: { arm: rArmCur, forearm: rFACur, wrist: rWrCur },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: rHandCur,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [headPitch, 0.0, 0.0],
+      neck: [headPitch * 0.5, 0.0, 0.0],
+      spine: [0.0, 0.0, 0.0],
+      currentWristHeight: lerp(-0.45, 0.18, c < 0.20 ? c / 0.20 : (c < 0.40 ? 1.0 : (c < 0.55 ? 1.0 - (c - 0.40) / 0.15 : 0.0))),
+      mouthSmile: 0.25,
+    };
+  }
+
+
+  if (
+    resolved === "unverified_001" ||
+    resolved === "unverified_002" ||
+    resolved === "unverified_003" ||
+    resolved === "unverified_004"
+  ) {
+    const cycleDuration = def.durationSeconds || 2.36;
+    const c = (t % cycleDuration) / cycleDuration;
+
+    const rArmRest:   [number, number, number] = [-0.10, 0.05, -0.20];
+    const rFARest:    [number, number, number] = [-0.15, 0.05, 0.05];
+    const rWrRest:    [number, number, number] = [0.05, 0.0, 0.0];
+
+    const rArmChest:  [number, number, number] = [-0.60, 0.10, -0.85];
+    const rFAChest:   [number, number, number] = [-1.45, 0.35, 0.15];
+    const rWrChest:   [number, number, number] = [0.10, -0.15, -0.25];
+
+    let rArmCur: [number, number, number];
+    let rFACur:  [number, number, number];
+    let rWrCur:  [number, number, number];
+    let rHandCur: HandAnatomicalPose;
+    let headPitch = 0.0;
+
+    if (c < 0.38) {
+      // Phase 1: Ascent from hip to upper chest while forming F/OK handshape
+      const u = smoothstep(c / 0.38);
+      rArmCur = lerpTuple3(rArmRest, rArmChest, u);
+      rFACur  = lerpTuple3(rFARest,  rFAChest,  u);
+      rWrCur  = lerpTuple3(rWrRest,  rWrChest,  u);
+      rHandCur = lerpHand(PRESET_STANDBY_RELAXED, PRESET_F_OK_HANDSHAPE, u);
+      headPitch = u * 0.02;
+    } else if (c < 0.60) {
+      // Phase 2: Emphatic hold at upper chest with affirmative nod
+      rArmCur = [...rArmChest];
+      rFACur  = [...rFAChest];
+      rWrCur  = [...rWrChest];
+      rHandCur = PRESET_F_OK_HANDSHAPE;
+      headPitch = 0.02 + Math.sin((c - 0.38) / 0.22 * Math.PI) * 0.04;
+    } else if (c < 0.85) {
+      // Phase 3: Smooth descent back toward hip
+      const u = smoothstep((c - 0.60) / 0.25);
+      rArmCur = lerpTuple3(rArmChest, rArmRest, u);
+      rFACur  = lerpTuple3(rFAChest,  rFARest,  u);
+      rWrCur  = lerpTuple3(rWrChest,  rWrRest,  u);
+      rHandCur = lerpHand(PRESET_F_OK_HANDSHAPE, PRESET_STANDBY_RELAXED, u);
+      headPitch = 0.02 * (1.0 - u);
+    } else {
+      // Phase 4: Standby rest at hip
+      rArmCur = [...rArmRest];
+      rFACur  = [...rFARest];
+      rWrCur  = [...rWrRest];
+      rHandCur = PRESET_STANDBY_RELAXED;
+      headPitch = 0.0;
+    }
+
+    return {
+      definition: def,
+      phase: c,
+      rightArm: { arm: rArmCur, forearm: rFACur, wrist: rWrCur },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: rHandCur,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [headPitch, 0.0, 0.0],
+      neck: [headPitch * 0.5, 0.0, 0.0],
+      spine: [0.0, 0.0, 0.0],
+      currentWristHeight: lerp(-0.45, 0.15, c < 0.38 ? c / 0.38 : (c < 0.60 ? 1.0 : (1.0 - (c - 0.60) / 0.25))),
+      mouthSmile: 0.30,
+    };
+  }
+
+
+  if (resolved === "unknown_sign_001") {
+    const cycleDuration = def.durationSeconds || 2.36;
+    const c = (t % cycleDuration) / cycleDuration;
+
+    const rArmRest:     [number, number, number] = [-0.10, 0.05, -0.20];
+    const rFARest:      [number, number, number] = [-0.15, 0.05, 0.05];
+    const rWrRest:      [number, number, number] = [0.05, 0.0, 0.0];
+
+    const rArmFace:     [number, number, number] = [-0.85, -0.25, -1.10];
+    const rFAFace:      [number, number, number] = [-1.85, 0.75, 0.35];
+    const rWrFace:      [number, number, number] = [0.20, -0.15, -0.30];
+
+    const rArmForehead: [number, number, number] = [-1.05, -0.35, -1.30];
+    const rFAForehead:  [number, number, number] = [-2.10, 0.95, 0.50];
+    const rWrForehead:  [number, number, number] = [0.30, -0.20, -0.40];
+
+    const rArmSweepOut: [number, number, number] = [-0.75, 0.20, -1.10];
+    const rFASweepOut:  [number, number, number] = [-1.40, 0.55, 0.15];
+    const rWrSweepOut:  [number, number, number] = [0.15, -0.10, -0.15];
+
+    let rArmCur: [number, number, number];
+    let rFACur:  [number, number, number];
+    let rWrCur:  [number, number, number];
+    let rHandCur: HandAnatomicalPose;
+    let headPitch = 0.0;
+
+    if (c < 0.17) {
+      // Phase 1 (0.0 - 0.4s): Raise from side toward face
+      const u = smoothstep(c / 0.17);
+      rArmCur = lerpTuple3(rArmRest, rArmFace, u);
+      rFACur  = lerpTuple3(rFARest,  rFAFace,  u);
+      rWrCur  = lerpTuple3(rWrRest,  rWrFace,  u);
+      rHandCur = PRESET_PINCHED_EATING_MORSEL;
+      headPitch = u * 0.02;
+    } else if (c < 0.34) {
+      // Phase 2 (0.4 - 0.8s): Move toward nose/eyes and upward toward forehead
+      const u = smoothstep((c - 0.17) / 0.17);
+      rArmCur = lerpTuple3(rArmFace, rArmForehead, u);
+      rFACur  = lerpTuple3(rFAFace,  rFAForehead,  u);
+      rWrCur  = lerpTuple3(rWrFace,  rWrForehead,  u);
+      rHandCur = PRESET_PINCHED_EATING_MORSEL;
+      headPitch = 0.02 + u * 0.02;
+    } else if (c < 0.59) {
+      // Phase 3 (0.8 - 1.4s): Dwell near forehead and temple, elbow bent
+      rArmCur = [...rArmForehead];
+      rFACur  = [...rFAForehead];
+      rWrCur  = [...rWrForehead];
+      rHandCur = PRESET_PINCHED_EATING_MORSEL;
+      headPitch = 0.04;
+    } else if (c < 0.80) {
+      // Phase 4 (1.4 - 1.9s): Move outward and away from head, fingers blossom open
+      const u = smoothstep((c - 0.59) / 0.21);
+      rArmCur = lerpTuple3(rArmForehead, rArmSweepOut, u);
+      rFACur  = lerpTuple3(rFAForehead,  rFASweepOut,  u);
+      rWrCur  = lerpTuple3(rWrForehead,  rWrSweepOut,  u);
+      rHandCur = lerpHand(PRESET_PINCHED_EATING_MORSEL, PRESET_OPEN_SPREAD_5, u);
+      headPitch = 0.04 - u * 0.02;
+    } else {
+      // Phase 5 (1.9 - 2.36s): Lower back toward side of body
+      const u = smoothstep((c - 0.80) / 0.20);
+      rArmCur = lerpTuple3(rArmSweepOut, rArmRest, u);
+      rFACur  = lerpTuple3(rFASweepOut,  rFARest,  u);
+      rWrCur  = lerpTuple3(rWrSweepOut,  rWrRest,  u);
+      rHandCur = u > 0.5 ? PRESET_STANDBY_RELAXED : PRESET_OPEN_SPREAD_5;
+      headPitch = 0.02 - u * 0.02;
+    }
+
+    return {
+      definition: def,
+      phase: c,
+      rightArm: { arm: rArmCur, forearm: rFACur, wrist: rWrCur },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: rHandCur,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [headPitch, 0.0, 0.0],
+      neck: [headPitch * 0.5, 0.0, 0.0],
+      spine: [0.0, 0.0, 0.0],
+      currentWristHeight: lerp(-0.45, 0.20, c < 0.59 ? c / 0.59 : 1.0 - (c - 0.59) / 0.41),
+      mouthSmile: 0.20,
+    };
+  }
+
+
+  if (resolved === "young") {
+    const cycleDuration = def.durationSeconds || 2.36;
+    const c = (t % cycleDuration) / cycleDuration;
+
+    // Keyframes from MVI_9504.MOV reference motion
+    const rArmRest:     [number, number, number] = [-0.10, 0.05, -0.20];
+    const rFARest:      [number, number, number] = [-0.15, 0.05, 0.05];
+    const rWrRest:      [number, number, number] = [0.05, 0.0, 0.0];
+
+    const rArmFace:     [number, number, number] = [-0.85, -0.25, -1.10];
+    const rFAFace:      [number, number, number] = [-1.85, 0.75, 0.35];
+    const rWrFace:      [number, number, number] = [0.20, -0.15, -0.30];
+
+    const rArmForehead: [number, number, number] = [-1.05, -0.35, -1.30];
+    const rFAForehead:  [number, number, number] = [-2.10, 0.95, 0.50];
+    const rWrForehead:  [number, number, number] = [0.30, -0.20, -0.40];
+
+    const rArmSweepOut: [number, number, number] = [-0.75, 0.20, -1.10];
+    const rFASweepOut:  [number, number, number] = [-1.40, 0.55, 0.15];
+    const rWrSweepOut:  [number, number, number] = [0.15, -0.10, -0.15];
+
+    let rArmCur: [number, number, number];
+    let rFACur:  [number, number, number];
+    let rWrCur:  [number, number, number];
+    let rHandCur: HandAnatomicalPose;
+    let headPitch = 0.0;
+
+    if (c < 0.17) {
+      // Phase 1 (0.0 - 0.4s): Raise from side toward face
+      const u = smoothstep(c / 0.17);
+      rArmCur = lerpTuple3(rArmRest, rArmFace, u);
+      rFACur  = lerpTuple3(rFARest,  rFAFace,  u);
+      rWrCur  = lerpTuple3(rWrRest,  rWrFace,  u);
+      rHandCur = PRESET_PINCHED_EATING_MORSEL;
+      headPitch = u * 0.02;
+    } else if (c < 0.34) {
+      // Phase 2 (0.4 - 0.8s): Move toward nose/eyes and upward toward forehead
+      const u = smoothstep((c - 0.17) / 0.17);
+      rArmCur = lerpTuple3(rArmFace, rArmForehead, u);
+      rFACur  = lerpTuple3(rFAFace,  rFAForehead,  u);
+      rWrCur  = lerpTuple3(rWrFace,  rWrForehead,  u);
+      rHandCur = PRESET_PINCHED_EATING_MORSEL;
+      headPitch = 0.02 + u * 0.02;
+    } else if (c < 0.59) {
+      // Phase 3 (0.8 - 1.4s): Dwell near forehead and temple, elbow bent
+      rArmCur = [...rArmForehead];
+      rFACur  = [...rFAForehead];
+      rWrCur  = [...rWrForehead];
+      rHandCur = PRESET_PINCHED_EATING_MORSEL;
+      headPitch = 0.04;
+    } else if (c < 0.80) {
+      // Phase 4 (1.4 - 1.9s): Move outward and away from head, fingers blossom open
+      const u = smoothstep((c - 0.59) / 0.21);
+      rArmCur = lerpTuple3(rArmForehead, rArmSweepOut, u);
+      rFACur  = lerpTuple3(rFAForehead,  rFASweepOut,  u);
+      rWrCur  = lerpTuple3(rWrForehead,  rWrSweepOut,  u);
+      rHandCur = lerpHand(PRESET_PINCHED_EATING_MORSEL, PRESET_OPEN_SPREAD_5, u);
+      headPitch = 0.04 - u * 0.02;
+    } else {
+      // Phase 5 (1.9 - 2.36s): Lower back toward side of body
+      const u = smoothstep((c - 0.80) / 0.20);
+      rArmCur = lerpTuple3(rArmSweepOut, rArmRest, u);
+      rFACur  = lerpTuple3(rFASweepOut,  rFARest,  u);
+      rWrCur  = lerpTuple3(rWrSweepOut,  rWrRest,  u);
+      rHandCur = u > 0.5 ? PRESET_STANDBY_RELAXED : PRESET_OPEN_SPREAD_5;
+      headPitch = 0.02 - u * 0.02;
+    }
+
+    return {
+      definition: def,
+      phase: c,
+      rightArm: { arm: rArmCur, forearm: rFACur, wrist: rWrCur },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: rHandCur,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [headPitch, 0.0, 0.0],
+      neck: [headPitch * 0.5, 0.0, 0.0],
+      spine: [0.0, 0.0, 0.0],
+      currentWristHeight: lerp(-0.45, 0.20, c < 0.59 ? c / 0.59 : 1.0 - (c - 0.59) / 0.41),
+      mouthSmile: 0.35,
+    };
+  }
+
+  if (resolved === "old") {
+    const cycleDuration = def.durationSeconds || 3.2;
+    const c = (t % cycleDuration) / cycleDuration;
+
+    // Posture A: Eat start (low quadrant, pinched morsel)
+    const rArmEatStart: [number, number, number] = [0.97, -0.80, 0.59];
+    const rFAEatStart:  [number, number, number] = [-2.15, 0.10, -0.45];
+    const rWrEatStart:  [number, number, number] = [0.04, 3.11, 0.19];
+
+    // Posture B: Eat mouth touch (lips level, pinched morsel touching mouth)
+    const rArmMouth: [number, number, number] = [-1.37, -0.45, -0.99];
+    const rFAMouth:  [number, number, number] = [-1.95, 0.45, -0.65];
+    const rWrMouth:  [number, number, number] = [-0.05, 3.11, 0.11];
+
+    // Posture C: Behind the head (arm elevated, elbow flexed, hand positioned behind occiput / nape of neck)
+    const rArmBehindHead: [number, number, number] = [-1.55, -0.25, -1.40];
+    const rFABehindHead:  [number, number, number] = [-2.45, 0.90, 0.60];
+    const rWrBehindHead:  [number, number, number] = [0.40, 0.25, -0.35];
+
+    let rArmCur: [number, number, number];
+    let rFACur:  [number, number, number];
+    let rWrCur:  [number, number, number];
+    let rHandCur = PRESET_PINCHED_EATING_MORSEL;
+    let headPitch = 0.03;
+
+    if (c < 0.25) {
+      // Step 1: Raise pinched hand from low quadrant to mouth
+      const u = smoothstep(c / 0.25);
+      rArmCur = lerpTuple3(rArmEatStart, rArmMouth, u);
+      rFACur  = lerpTuple3(rFAEatStart,  rFAMouth,  u);
+      rWrCur  = lerpTuple3(rWrEatStart,  rWrMouth,  u);
+      headPitch = 0.03 + u * 0.04;
+    } else if (c < 0.50) {
+      // Step 2: Dwell at mouth (performing full complete EAT sign)
+      rArmCur = [...rArmMouth];
+      rFACur  = [...rFAMouth];
+      rWrCur  = [...rWrMouth];
+      headPitch = 0.07;
+    } else if (c < 0.80) {
+      // Step 3: Move from mouth smoothly up and behind the head
+      const u = smoothstep((c - 0.50) / 0.30);
+      rArmCur = lerpTuple3(rArmMouth, rArmBehindHead, u);
+      rFACur  = lerpTuple3(rFAMouth,  rFABehindHead,  u);
+      rWrCur  = lerpTuple3(rWrMouth,  rWrBehindHead,  u);
+      // Hand gradually opens from pinched to relaxed palm behind head
+      if (u > 0.5) {
+        rHandCur = PRESET_STANDBY_RELAXED;
+      }
+      headPitch = 0.07 - u * 0.04;
+    } else {
+      // Step 4: Dwell behind head briefly, then descend smoothly
+      const u = smoothstep((c - 0.80) / 0.20);
+      rArmCur = lerpTuple3(rArmBehindHead, rArmEatStart, u);
+      rFACur  = lerpTuple3(rFABehindHead,  rFAEatStart,  u);
+      rWrCur  = lerpTuple3(rWrBehindHead,  rWrEatStart,  u);
+      rHandCur = u > 0.6 ? PRESET_PINCHED_EATING_MORSEL : PRESET_STANDBY_RELAXED;
+      headPitch = 0.03;
+    }
+
+    return {
+      definition: def,
+      phase: c,
+      rightArm: {
+        arm: rArmCur,
+        forearm: rFACur,
+        wrist: rWrCur,
+      },
+      leftArm: NEUTRAL_REST_ARM_LEFT,
+      rightHand: rHandCur,
+      leftHand: PRESET_STANDBY_RELAXED,
+      head: [headPitch, 0.0, 0.0],
+      neck: [headPitch * 0.6, 0.0, 0.0],
+      spine: [0.0, 0.0, 0.0],
+      currentWristHeight: 0.30,
+      mouthSmile: 0.0,
+    };
+  }
+
   if (resolved === "eat") {
     const cycleDuration = def.durationSeconds || 2.4;
     const biteCycle = 1.2;
@@ -4983,58 +4596,89 @@ export function sampleKinematicsAtTime(
 
   // --------------------------------------------------------------------------
   // UGLY: Right claw hand rises in front of face, sweeps across/pulls away with distaste
+    // --------------------------------------------------------------------------
+  // UGLY (Exact match to uploaded AI4Bharat INCLUDE Adjectives Dataset MVI_9576 & MVI_9844):
+  // 1. Left arm rests naturally straight down at side throughout entire sign.
+  // 2. Right hand rises smoothly from neutral rest up to lower face / chin / mouth level,
+  //    curved in front of the mouth.
+  // 3. Right hand sweeps horizontally outward to the right away from the face,
+  //    releasing/spreading fingers in rejection.
+  // 4. Head turns away to the left with an unmistakable expression of distaste/grimace.
+  // 5. Right hand drops smoothly back down to neutral rest.
   // --------------------------------------------------------------------------
   if (resolved === "ugly") {
     const cycle = def.durationSeconds || 2.6;
     const c = (t % cycle) / cycle;
 
-    const rArmRest: [number, number, number] = [-0.10, 0.05, -0.20];
-    const rFARest:  [number, number, number] = [-0.15, 0.05, 0.05];
-    const rWrRest:  [number, number, number] = [0.05, 0.00, 0.00];
+    // Resting right arm hanging naturally at the side
+    const rArmRest: [number, number, number] = [0.05, 0.05, -1.28];
+    const rFARest:  [number, number, number] = [-0.22, 0.05, 0.05];
+    const rWrRest:  [number, number, number] = [0.10, 0.00, -0.05];
 
-    const rArmFace: [number, number, number] = [-0.85, -0.65, -1.25];
-    const rFAFace:  [number, number, number] = [-1.75, 1.10, 0.85];
-    const rWrFace:  [number, number, number] = [0.15, 0.50, -0.30];
+    // Right hand held directly in front of the chin / mouth (covering lower face)
+    const rArmFace: [number, number, number] = [-1.45, -0.45, -0.85];
+    const rFAFace:  [number, number, number] = [-1.88, 0.42, -0.40];
+    const rWrFace:  [number, number, number] = [-0.35, 1.65, -0.25];
 
-    const rArmPull: [number, number, number] = [-0.55, -0.15, -1.60];
-    const rFAPull:  [number, number, number] = [-1.15, 0.35, 0.30];
-    const rWrPull:  [number, number, number] = [0.10, 0.10, -0.05];
+    // Right hand swept outward to the right into space away from the face
+    const rArmPull: [number, number, number] = [-0.65, -0.15, -1.45];
+    const rFAPull:  [number, number, number] = [-1.15, 0.28, 0.12];
+    const rWrPull:  [number, number, number] = [0.15, 0.12, -0.10];
 
     let rArmCur: number[], rFACur: number[], rWrCur: number[];
     let curPhase = 0.0;
     let headYaw = 0.0;
+    let headPitch = 0.0;
+    let smileVal = -0.40;
 
-    if (c < 0.22) {
-      // Approach to face
-      const u = smoothstep(c / 0.22);
+    if (c < 0.28) {
+      // Phase 1: Hand rises smoothly from side up to chin/mouth
+      const u = smoothstep(c / 0.28);
       rArmCur = lerpTuple3(rArmRest, rArmFace, u);
       rFACur  = lerpTuple3(rFARest,  rFAFace,  u);
       rWrCur  = lerpTuple3(rWrRest,  rWrFace,  u);
-      curPhase = u * 0.4;
-      headYaw = u * -0.08;
-    } else if (c < 0.65) {
-      // Sweep across face and pull away
-      const u = smoothstep((c - 0.22) / 0.43);
+      curPhase = u * 0.35;
+      headYaw = 0.0;
+      headPitch = u * 0.04;
+      smileVal = -0.10 - u * 0.25;
+    } else if (c < 0.42) {
+      // Phase 2: Dwell at chin/mouth covering lower face
+      rArmCur = [...rArmFace];
+      rFACur  = [...rFAFace];
+      rWrCur  = [...rWrFace];
+      curPhase = 0.35;
+      headYaw = 0.0;
+      headPitch = 0.04;
+      smileVal = -0.35;
+    } else if (c < 0.72) {
+      // Phase 3: Sharp outward sweep to right, fingers flicking open, head turns away in distaste
+      const u = smoothstep((c - 0.42) / 0.30);
       rArmCur = lerpTuple3(rArmFace, rArmPull, u);
       rFACur  = lerpTuple3(rFAFace,  rFAPull,  u);
       rWrCur  = lerpTuple3(rWrFace,  rWrPull,  u);
-      curPhase = 0.4 + u * 0.5;
-      headYaw = -0.08 - u * 0.12;
-    } else if (c < 0.80) {
-      // Repelled hold
+      curPhase = 0.35 + u * 0.50;
+      headYaw = -u * 0.26; // Head turns away to left
+      headPitch = 0.04 - u * 0.02;
+      smileVal = -0.35 - u * 0.25;
+    } else if (c < 0.85) {
+      // Phase 4: Hold repelled/rejected pose
       rArmCur = [...rArmPull];
       rFACur  = [...rFAPull];
       rWrCur  = [...rWrPull];
-      curPhase = 0.9;
-      headYaw = -0.20;
+      curPhase = 0.85;
+      headYaw = -0.26;
+      headPitch = 0.02;
+      smileVal = -0.60;
     } else {
-      // Return to rest
-      const u = smoothstep((c - 0.80) / 0.20);
+      // Phase 5: Return to neutral rest
+      const u = smoothstep((c - 0.85) / 0.15);
       rArmCur = lerpTuple3(rArmPull, rArmRest, u);
       rFACur  = lerpTuple3(rFAPull,  rFARest,  u);
       rWrCur  = lerpTuple3(rWrPull,  rWrRest,  u);
-      curPhase = 1.0 - u;
-      headYaw = (1.0 - u) * -0.20;
+      curPhase = 0.85 + u * 0.15;
+      headYaw = -0.26 * (1.0 - u);
+      headPitch = 0.02 * (1.0 - u);
+      smileVal = -0.60 * (1.0 - u);
     }
 
     return {
@@ -5048,16 +4692,14 @@ export function sampleKinematicsAtTime(
       leftArm: NEUTRAL_REST_ARM_LEFT,
       rightHand: PRESET_CLAW_HAND,
       leftHand: PRESET_STANDBY_RELAXED,
-      head: [0.06, headYaw, -0.04],
-      neck: [0.03, headYaw * 0.5, -0.02],
+      head: [0.06 + headPitch, headYaw, -0.04],
+      neck: [0.03 + headPitch * 0.5, headYaw * 0.5, -0.02],
       spine: [0.0, 0.0, 0.0],
       currentWristHeight: lerp(def.measurements.initialWristHeight, def.measurements.finalWristHeight, curPhase),
-      mouthSmile: -0.40,
+      mouthSmile: smileVal,
     };
   }
 
-  // --------------------------------------------------------------------------
-  // DEAF: Right index finger touches ear, then sweeps to touch mouth/chin
   // --------------------------------------------------------------------------
   if (resolved === "deaf") {
     const cycle = def.durationSeconds || 2.8;

@@ -15,7 +15,14 @@ class LandmarkPoint:
         self.z = z
 
 SUPPORTED_ISL_GESTURES = {
-    "HELLO": {"label": "Hello / Namaste", "meaning": "Greetings", "category": "social", "lesson": 3},
+    "EAT": {"label": "Eat", "meaning": "Eating / Morsel Tap", "category": "needs", "lesson": 4},
+    "DRINK": {"label": "Drink", "meaning": "Drinking / Cup Tilt", "category": "needs", "lesson": 4},
+    "HELLO": {"label": "Hello", "meaning": "Greeting Wave", "category": "social", "lesson": 3},
+    "NAMASTE": {"label": "Namaste", "meaning": "Traditional Indian Greeting (Both Hands)", "category": "social", "lesson": 3},
+    "THANK_YOU": {"label": "Thank You", "meaning": "Gratitude / Chin Forward", "category": "social", "lesson": 3},
+    "THANK YOU": {"label": "Thank You", "meaning": "Gratitude / Chin Forward", "category": "social", "lesson": 3},
+    "HELLO": {"label": "Hello", "meaning": "Greeting Wave", "category": "social", "lesson": 3},
+    "NAMASTE": {"label": "Namaste", "meaning": "Traditional Indian Greeting (Both Hands Joined)", "category": "social", "lesson": 3},
     "THANK YOU": {"label": "Thank You", "meaning": "Gratitude", "category": "social", "lesson": 3},
     "PLEASE": {"label": "Please", "meaning": "Polite Request", "category": "social", "lesson": 3},
     "GOODBYE": {"label": "Goodbye", "meaning": "Farewell", "category": "social", "lesson": 3},
@@ -103,9 +110,17 @@ class SignRecognitionEngine:
 
         is_pinched = tip_cluster < 0.35
 
+        thumb_index_dist = self.calculate_distance(thumb_tip, index_tip) / scale_div
+        fingers_curved = (
+            self.calculate_distance(index_tip, wrist) < self.calculate_distance(landmarks[5], wrist) * 1.55 and
+            self.calculate_distance(middle_tip, wrist) < self.calculate_distance(landmarks[9], wrist) * 1.55
+        )
+        is_cup_shape = (0.35 <= thumb_index_dist <= 1.25) and fingers_curved and not is_pinched and _get_val(wrist, 'y') < 0.70
+
         up_count = sum([1 for f in [index_up, middle_up, ring_up, pinky_up] if f])
 
         return {
+            "is_cup_shape": is_cup_shape,
             "valid": True,
             "wrist": wrist,
             "index_up": index_up,
@@ -121,7 +136,7 @@ class SignRecognitionEngine:
             "wrist_y": _get_val(wrist, 'y'),
         }
 
-    def classify_landmarks(self, landmarks: List[Any]) -> Dict[str, Any]:
+    def classify_landmarks(self, landmarks: List[Any], all_hands: Optional[List[Any]] = None) -> Dict[str, Any]:
         """
         Classifies MediaPipe 21 hand landmarks into ISL gestures with confidence scoring & abstention policy.
         """
@@ -151,71 +166,114 @@ class SignRecognitionEngine:
         confidence = 0.0
         alternatives = []
 
-        if feats["is_pinched"]:
-            sign = "FOOD"
-            confidence = 0.96
-            alternatives = [{"sign": "WATER", "confidence": 0.68}, {"sign": "EAT", "confidence": 0.85}]
+        # 1. Check for NAMASTE (Dual-Hand Anjali Mudra / Prayer Pose)
+        if all_hands and len(all_hands) >= 2:
+            h1 = all_hands[0]
+            h2 = all_hands[1]
+            if len(h1) >= 21 and len(h2) >= 21:
+                w1 = h1[0]
+                w2 = h2[0]
+                wrist_dist = self.calculate_distance(w1, w2)
+                # Wrists close together in front of torso (< 0.28 normalized distance)
+                if wrist_dist < 0.28:
+                    tip_y_1 = _get_val(h1[12], 'y')
+                    tip_y_2 = _get_val(h2[12], 'y')
+                    wrist_y_1 = _get_val(w1, 'y')
+                    wrist_y_2 = _get_val(w2, 'y')
+                    # Both hands pointing upward (fingertips above wrists)
+                    if tip_y_1 < wrist_y_1 and tip_y_2 < wrist_y_2:
+                        return {
+                            "detected": True,
+                            "sign": "NAMASTE",
+                            "label": "Namaste",
+                            "meaning": "Traditional Indian Greeting (Both Hands Joined)",
+                            "confidence": 0.99,
+                            "shouldAbstain": False,
+                            "alternatives": [{"sign": "HELLO", "confidence": 0.65}],
+                            "model_engine": "ISL Dual-Hand Geometric Tracker",
+                            "message": "Recognized ISL Sign: 'NAMASTE' (99% confidence - Both Hands Anjali Mudra)",
+                            "lesson": 3,
+                            "lesson_title": "Basic Words 1",
+                            "category": "social",
+                        }
 
-        elif feats["index_up"] and feats["middle_up"] and feats["ring_up"] and feats["pinky_up"] and feats["thumb_extended"]:
-            sign = "HELLO"
+        wrist_y = feats.get("wrist_y", 0.6)
+        all_four_up = feats["index_up"] and feats["middle_up"] and feats["ring_up"] and feats["pinky_up"]
+        is_fist = (feats["up_count"] == 0)
+
+        # 2. Check for EAT (Morsel Pinch near Mouth)
+        if feats["is_pinched"] and 0.30 <= wrist_y <= 0.65:
+            sign = "EAT"
             confidence = 0.98
-            alternatives = [{"sign": "GOODBYE", "confidence": 0.88}, {"sign": "THANK YOU", "confidence": 0.78}]
+            alternatives = [{"sign": "FOOD", "confidence": 0.92}, {"sign": "DRINK", "confidence": 0.65}]
 
-        elif feats["index_up"] and feats["middle_up"] and feats["ring_up"] and feats["pinky_up"] and not feats["thumb_extended"]:
-            sign = "PLEASE"
-            confidence = 0.98
-            alternatives = [{"sign": "THANK YOU", "confidence": 0.88}, {"sign": "HELLO", "confidence": 0.75}]
+        # 3. Check for DRINK (C-cup near Mouth - Strictly NOT a closed fist!)
+        elif feats.get("is_cup_shape") and not is_fist and 0.28 <= wrist_y <= 0.62:
+            sign = "DRINK"
+            confidence = 0.97
+            alternatives = [{"sign": "WATER", "confidence": 0.88}, {"sign": "TEA", "confidence": 0.72}]
 
-        elif feats["index_up"] and feats["middle_up"] and (feats["ring_up"] or not feats["pinky_up"]):
+        # 4. Check for WATER ('W' 3-finger shape: index, middle, ring up, thumb+pinky curled)
+        elif feats["index_up"] and feats["middle_up"] and feats["ring_up"] and not feats["pinky_up"] and 0.30 <= wrist_y <= 0.60:
             sign = "WATER"
             confidence = 0.96
-            alternatives = [{"sign": "YOU", "confidence": 0.65}]
+            alternatives = [{"sign": "DRINK", "confidence": 0.78}]
 
+        # 5. Open Flat Hand Disambiguation (HELLO vs THANK_YOU vs PLEASE)
+        elif all_four_up:
+            # A. HELLO: Temple/Ear height (wrist_y < 0.40)
+            if wrist_y < 0.40:
+                sign = "HELLO"
+                confidence = 0.98
+                alternatives = [{"sign": "GOODBYE", "confidence": 0.85}, {"sign": "THANK_YOU", "confidence": 0.65}]
+            # B. PLEASE: Flat hand placed on CHEST (wrist_y >= 0.58)
+            elif wrist_y >= 0.58:
+                sign = "PLEASE"
+                confidence = 0.96
+                alternatives = [{"sign": "THANK_YOU", "confidence": 0.78}, {"sign": "SORRY", "confidence": 0.70}]
+            # C. THANK_YOU: Chin height moving forward (0.40 <= wrist_y < 0.58)
+            else:
+                sign = "THANK_YOU"
+                confidence = 0.97
+                alternatives = [{"sign": "PLEASE", "confidence": 0.80}, {"sign": "HELLO", "confidence": 0.65}]
+
+        # 6. Fist Disambiguation (YES vs SORRY)
+        elif is_fist:
+            # A. YES: Fist with thumb pointed straight up
+            if feats["thumb_extended"] and feats["thumb_tip_y"] < feats["thumb_mcp_y"] - 0.03:
+                sign = "YES"
+                confidence = 0.97
+                alternatives = [{"sign": "GOOD", "confidence": 0.82}]
+            # B. SORRY: Closed fist on CHEST (wrist_y >= 0.55)
+            elif wrist_y >= 0.55:
+                sign = "SORRY"
+                confidence = 0.96
+                alternatives = [{"sign": "PLEASE", "confidence": 0.75}]
+            else:
+                sign = None
+                confidence = 0.0
+
+        # 7. NO: Index finger pointing / wagging
         elif feats["index_up"] and not feats["middle_up"] and not feats["ring_up"] and not feats["pinky_up"]:
-            sign = "YOU"
-            confidence = 0.97
-            alternatives = [{"sign": "POINTING", "confidence": 0.85}]
+            sign = "NO"
+            confidence = 0.95
+            alternatives = [{"sign": "YOU", "confidence": 0.80}, {"sign": "WHERE", "confidence": 0.72}]
 
+        # 8. LOVE / WHY Gestures
         elif feats["thumb_extended"] and feats["pinky_up"] and feats["index_up"] and not feats["middle_up"] and not feats["ring_up"]:
             sign = "LOVE"
-            confidence = 0.97
-            alternatives = [{"sign": "HELLO", "confidence": 0.75}]
+            confidence = 0.96
+            alternatives = [{"sign": "HELLO", "confidence": 0.65}]
 
         elif feats["thumb_extended"] and feats["pinky_up"] and not feats["index_up"] and not feats["middle_up"] and not feats["ring_up"]:
             sign = "WHY"
             confidence = 0.95
-            alternatives = [{"sign": "CALL", "confidence": 0.72}]
-
-        elif feats["up_count"] == 0 and feats["thumb_extended"] and feats["thumb_tip_y"] < feats["thumb_mcp_y"]:
-            sign = "YES"
-            confidence = 0.96
-            alternatives = [{"sign": "GOOD", "confidence": 0.80}]
-
-        elif feats["up_count"] == 0 and feats["thumb_extended"] and feats["thumb_tip_y"] > feats["wrist_y"]:
-            sign = "NO"
-            confidence = 0.95
-            alternatives = [{"sign": "STOP", "confidence": 0.75}]
-
-        elif feats["up_count"] == 0 and not feats["thumb_extended"]:
-            sign = "HELP"
-            confidence = 0.94
-            alternatives = [{"sign": "NO", "confidence": 0.70}]
+            alternatives = [{"sign": "CALL", "confidence": 0.70}]
 
         else:
-            # Query AI4Bharat INCLUDE-50 Neural Network for vocabulary classification
-            try:
-                from app.ai.include.engine import include_sign_engine
-                include_res = include_sign_engine.add_frame_and_predict(landmarks)
-                if include_res.get("detected") and include_res.get("confidence", 0) >= 0.50:
-                    sign = include_res["sign"]
-                    confidence = include_res["confidence"]
-                    alternatives = include_res.get("alternatives", [])
-                else:
-                    sign = "HELLO"
-                    confidence = 0.60
-            except Exception:
-                sign = "HELLO"
-                confidence = 0.60
+            # Insufficient geometric confidence -> DO NOT DEFAULT TO HELLO! ABSTAIN!
+            sign = None
+            confidence = 0.0
 
         should_abstain = confidence < self.min_confidence_threshold
 

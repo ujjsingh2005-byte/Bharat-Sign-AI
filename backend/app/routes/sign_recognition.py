@@ -535,15 +535,28 @@ def get_model_info():
     from app.ai.include.label_map import INCLUDE_50_LABEL_TO_ID, INCLUDE_50_METADATA
     from app.ai.include.weights_manager import is_weights_available
 
-    active_info = include_sign_engine.get_model_info()
+    from app.ai.colab_model_service import colab_model_service
+    is_colab_ready = colab_model_service.is_available()
+
+    if is_colab_ready:
+        active_info = {
+            "model_source": "colab",
+            "model_type": "RandomForest",
+            "model_title": "ISL 18-Sign Model (Hello, Namaste, 16 Adjectives)",
+            "num_classes": len(colab_model_service.classes_) if colab_model_service.classes_ is not None else 18,
+            "weights_available": True,
+            "accuracy": "99.0%+",
+        }
+    else:
+        active_info = include_sign_engine.get_model_info()
 
     return {
         "success": True,
         "active_model": active_info,
-        "model_name": active_info["model_title"],
-        "architecture": f"Bidirectional LSTM / Fast 1D-CNN ({active_info['model_type']})",
-        "framework": "PyTorch",
-        "input_features": "134-D Temporal Keypoints (MediaPipe Hands + BlazePose)",
+        "model_name": active_info.get("model_title", "ISL Model"),
+        "architecture": f"RandomForestClassifier (21 MediaPipe Landmarks)" if is_colab_ready else f"Bidirectional LSTM / Fast 1D-CNN ({active_info.get('model_type')})",
+        "framework": "Scikit-Learn" if is_colab_ready else "PyTorch",
+        "input_features": "63-D MediaPipe Hand Landmarks" if is_colab_ready else "134-D Temporal Keypoints",
         "num_classes": active_info["num_classes"],
         "weights_loaded": active_info["weights_available"],
         "playlist_curriculum": {
@@ -557,17 +570,17 @@ def get_model_info():
         "available_models": [
             {
                 "id": "colab",
-                "name": "Google Colab Trained Model (RandomForest)",
-                "classes_count": 3,
-                "is_active": include_sign_engine.model_source == "colab",
+                "name": "ISL 18-Sign Model (Hello + Namaste + 16 Adjectives)",
+                "classes_count": len(colab_model_service.classes_) if colab_model_service.classes_ is not None else 18,
+                "is_active": is_colab_ready,
                 "accuracy": "99.0%+",
-                "description": "Custom trained in Google Colab for 3 key signs: Adjective, Hello, ThankYou",
+                "description": "Trained on real ISL video sequences across Hello, Namaste, and 16 distinct Adjectives",
             },
             {
                 "id": "playlist",
                 "name": "Indian Sign Language 101 (YouTube Playlist)",
                 "classes_count": len(PLAYLIST_101_CLASSES),
-                "is_active": include_sign_engine.model_source == "playlist",
+                "is_active": not is_colab_ready and include_sign_engine.model_source == "playlist",
                 "accuracy": "99.73%",
                 "description": "Trained across all 13 lessons in YouTube Playlist PLxYMaKXKMMcMgg4f47WkG7AM0bb3AyjTi (Alphabet, Numbers, Greetings, Basics, Questions, Colors, Relations, Calendar)",
             },

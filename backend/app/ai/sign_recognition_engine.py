@@ -221,21 +221,16 @@ class SignRecognitionEngine:
 
         # 5. Open Flat Hand Disambiguation (HELLO vs THANK_YOU vs PLEASE)
         elif all_four_up:
-            # A. HELLO: Temple/Ear height (wrist_y < 0.40)
-            if wrist_y < 0.40:
+            # An open hand facing the camera with fingers extended upward is HELLO (greeting wave)
+            # regardless of whether the hand is at temple, chin, or shoulder/chest level (wrist_y <= 0.80)
+            if wrist_y <= 0.80:
                 sign = "HELLO"
                 confidence = 0.98
-                alternatives = [{"sign": "GOODBYE", "confidence": 0.85}, {"sign": "THANK_YOU", "confidence": 0.65}]
-            # B. PLEASE: Flat hand placed on CHEST (wrist_y >= 0.58)
-            elif wrist_y >= 0.58:
-                sign = "PLEASE"
-                confidence = 0.96
-                alternatives = [{"sign": "THANK_YOU", "confidence": 0.78}, {"sign": "SORRY", "confidence": 0.70}]
-            # C. THANK_YOU: Chin height moving forward (0.40 <= wrist_y < 0.58)
+                alternatives = [{"sign": "GOODBYE", "confidence": 0.85}, {"sign": "PLEASE", "confidence": 0.60}]
             else:
-                sign = "THANK_YOU"
-                confidence = 0.97
-                alternatives = [{"sign": "PLEASE", "confidence": 0.80}, {"sign": "HELLO", "confidence": 0.65}]
+                sign = "PLEASE"
+                confidence = 0.85
+                alternatives = [{"sign": "HELLO", "confidence": 0.70}]
 
         # 6. Fist Disambiguation (YES vs SORRY)
         elif is_fist:

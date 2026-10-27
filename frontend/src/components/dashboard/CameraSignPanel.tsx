@@ -73,7 +73,7 @@ export default function CameraSignPanel() {
       .get(`${API}/sign/models`)
       .then((res) => {
         if (res.data && res.data.success && res.data.active_model) {
-          setActiveModelSource(res.data.active_model.model_source || "playlist");
+          setActiveModelSource(res.data.active_model.model_source || "colab");
         }
       })
       .catch(() => {});

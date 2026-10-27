@@ -133,6 +133,20 @@ class ColabModelService:
             # Unknown gestures only reach diffuse probabilities (0.15 - 0.35 with margin < 0.08)
             is_known_sign = (top_prob >= 0.48) and (margin >= 0.12) and (not is_idle_or_resting)
 
+            # Extra Guard: In BEAUTIFUL, middle and ring fingers must be extended (not curled into a fist)
+            if is_known_sign and prediction == "BEAUTIFUL":
+                mid_tip_y = feature_vals[12 * 3 + 1]
+                mid_pip_y = feature_vals[10 * 3 + 1]
+                if mid_tip_y >= mid_pip_y: # Finger is curled into a closed fist
+                    is_known_sign = False
+
+            # Extra Guard: In BEAUTIFUL, middle and ring fingers must be extended (not curled into a fist)
+            if is_known_sign and prediction == "BEAUTIFUL":
+                mid_tip_y = feature_vals[12 * 3 + 1]
+                mid_pip_y = feature_vals[10 * 3 + 1]
+                if mid_tip_y >= mid_pip_y: # Finger is curled into a closed fist
+                    is_known_sign = False
+
             if not is_known_sign:
                 # STRICT REJECTION: Do NOT output ANY of the 10 target sign words!
                 return {

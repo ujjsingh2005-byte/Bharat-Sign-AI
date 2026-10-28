@@ -17,17 +17,14 @@
         };
       })();
     </script>
-    <!-- MediaPipe Hands & Camera Utils: Local High-Speed with CDN Fallback -->
-    <script src="/mediapipe/camera_utils.js"></script>
-    <script src="/mediapipe/hands.js"></script>
+    <!-- MediaPipe Hands & Camera Utils: Official Tested CDN with Local Fallback -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.4/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js" crossorigin="anonymous"></script>
     <script>
       if (!window.Hands) {
-        var s1 = document.createElement('script');
-        s1.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.4/camera_utils.js';
-        document.head.appendChild(s1);
-        var s2 = document.createElement('script');
-        s2.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js';
-        document.head.appendChild(s2);
+        var s = document.createElement('script');
+        s.src = '/mediapipe/hands.js';
+        document.head.appendChild(s);
       }
     </script>
   </head>

@@ -530,7 +530,7 @@ export default function CameraSignPanel() {
       }
       try {
         handsInstance = new (window as any).Hands({
-          locateFile: (file: string) => `/mediapipe/${file}`,
+          locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`,
         });
         handsInstance.setOptions({
           maxNumHands: 2,

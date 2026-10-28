@@ -47,9 +47,8 @@ var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
           var size = packageSize;
           if (event.total) size = event.total;
           if (event.loaded) {
-            if (!xhr.addedTotal) {
-              xhr.addedTotal = true;
-              if (!Module.dataFileDownloads) Module.dataFileDownloads = {};
+            if (!Module.dataFileDownloads) Module.dataFileDownloads = {};
+            if (!Module.dataFileDownloads[url]) {
               Module.dataFileDownloads[url] = {
                 loaded: event.loaded,
                 total: size

@@ -133,19 +133,7 @@ class ColabModelService:
             # Unknown gestures only reach diffuse probabilities (0.15 - 0.35 with margin < 0.08)
             is_known_sign = (top_prob >= 0.48) and (margin >= 0.12) and (not is_idle_or_resting)
 
-            # Extra Guard: In BEAUTIFUL, middle and ring fingers must be extended (not curled into a fist)
-            if is_known_sign and prediction == "BEAUTIFUL":
-                mid_tip_y = feature_vals[12 * 3 + 1]
-                mid_pip_y = feature_vals[10 * 3 + 1]
-                if mid_tip_y >= mid_pip_y: # Finger is curled into a closed fist
-                    is_known_sign = False
 
-            # Extra Guard: In BEAUTIFUL, middle and ring fingers must be extended (not curled into a fist)
-            if is_known_sign and prediction == "BEAUTIFUL":
-                mid_tip_y = feature_vals[12 * 3 + 1]
-                mid_pip_y = feature_vals[10 * 3 + 1]
-                if mid_tip_y >= mid_pip_y: # Finger is curled into a closed fist
-                    is_known_sign = False
 
             if not is_known_sign:
                 # STRICT REJECTION: Do NOT output ANY of the 10 target sign words!
@@ -163,7 +151,7 @@ class ColabModelService:
                     "probabilities": prob_map,
                     "alternatives": [],
                     "model_engine": "ISL 10-Sign Expanded Model",
-                    "message": "Unknown sign. Gesture does not match any of the 18 target ISL signs."
+                    "message": "Unknown sign. Gesture does not match any of the 17 target ISL signs."
                 }
 
             alternatives = [
@@ -172,7 +160,7 @@ class ColabModelService:
                 if prob > 0.10 and cls_name != prediction
             ]
 
-            # Display labels and translation helper across all 18 ISL signs (Greetings + Adjectives)
+            # Display labels and translation helper across all 17 ISL signs (Greetings + Adjectives)
             label_map = {
                 "HELLO": {"display": "Hello (हैलो)", "hi": "हैलो", "meaning": "Single Hand Greeting Wave (एक हाथ से हैलो)"},
                 "NAMASTE": {"display": "Namaste (नमस्ते)", "hi": "नमस्ते", "meaning": "Traditional Indian Greeting (Both Hands Joined)"},
@@ -180,7 +168,6 @@ class ColabModelService:
                 "QUIET": {"display": "Quiet (शांत)", "hi": "शांत", "meaning": "Silence / Quietness"},
                 "HAPPY": {"display": "Happy (खुश)", "hi": "खुश", "meaning": "Joy / Happiness"},
                 "SAD": {"display": "Sad (उदास / दुखी)", "hi": "उदास", "meaning": "Sorrow / Sadness"},
-                "BEAUTIFUL": {"display": "Beautiful (सुंदर)", "hi": "सुंदर", "meaning": "Pleasing Appearance / Beautiful"},
                 "UGLY": {"display": "Ugly (कुरूप / भद्दा)", "hi": "कुरूप", "meaning": "Unattractive / Ugly"},
                 "DEAF": {"display": "Deaf (बधिर / बहरा)", "hi": "बधिर", "meaning": "Deaf / Hearing Impairment"},
                 "BLIND": {"display": "Blind (दृष्टिहीन / अंधा)", "hi": "दृष्टिहीन", "meaning": "Blind / Vision Impairment"},

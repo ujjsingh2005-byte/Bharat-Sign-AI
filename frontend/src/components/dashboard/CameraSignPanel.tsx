@@ -236,7 +236,6 @@ export default function CameraSignPanel() {
     { sign: "UNDERSTAND", hi: "समझना", lesson: 11, lessonTitle: "Standards", category: "Standards" },
     { sign: "RIGHT", hi: "सही", lesson: 11, lessonTitle: "Standards", category: "Standards" },
     { sign: "WRONG", hi: "गलत", lesson: 11, lessonTitle: "Standards", category: "Standards" },
-    { sign: "BEAUTIFUL", hi: "सुंदर", lesson: 11, lessonTitle: "Standards", category: "Standards" },
     { sign: "DEAF", hi: "बधिर", lesson: 11, lessonTitle: "Standards", category: "Standards" },
   ];
 
@@ -292,7 +291,6 @@ export default function CameraSignPanel() {
     { sign: "YEAR", hi: "साल" },
     { sign: "YOU (PLURAL)", hi: "आप सब" },
     { sign: "SAD", hi: "उदास / दुखी" },
-    { sign: "BEAUTIFUL", hi: "सुंदर" },
     { sign: "UGLY", hi: "कुरूप" },
     { sign: "DEAF", hi: "बधिर" },
     { sign: "BLIND", hi: "दृष्टिहीन" },
@@ -305,7 +303,6 @@ export default function CameraSignPanel() {
     { sign: "QUIET", hi: "शांत", desc: "Index finger placed vertically against lips for silence (97% Conf)" },
     { sign: "HAPPY", hi: "खुश", desc: "Both palms brushing upward repeatedly over chest (91% Conf)" },
     { sign: "SAD", hi: "उदास / दुखी", desc: "Hand dropping down in front of face with sorrowful expression (95% Conf)" },
-    { sign: "BEAUTIFUL", hi: "सुंदर", desc: "Fingers opening gracefully in circular contour around face (87% Conf)" },
     { sign: "UGLY", hi: "कुरूप / भद्दा", desc: "Hooked finger crossing across face in front of nose (91% Conf)" },
     { sign: "DEAF", hi: "बधिर / बहरा", desc: "Index finger pointing to ear then touching closed mouth (96% Conf)" },
     { sign: "BLIND", hi: "दृष्टिहीन / अंधा", desc: "Inverted V-hand pointing towards eyes then folding closed (98% Conf)" },
@@ -1005,7 +1002,7 @@ export default function CameraSignPanel() {
                 🎯 Bharat 80-Sign Trained Model (Custom ISL Studio)
               </option>
               <option value="colab" className="bg-slate-900 text-white font-semibold">
-                ⚡ ISL 18-Sign Model (Hello • Namaste • 16 Adjectives)
+                ⚡ ISL 17-Sign Model (Hello • Namaste • 15 Adjectives)
               </option>
               <option value="playlist" className="bg-slate-900 text-white font-semibold">
                 🎓 ISL 101 Playlist Model (123 Signs • 99.7% Acc)
@@ -1029,7 +1026,7 @@ export default function CameraSignPanel() {
             <BookOpen size={14} className="text-indigo-400" />
             <span>
               {activeModelSource === "colab"
-                ? "ISL 18-Sign Model (18 Signs)"
+                ? "ISL 17-Sign Model (18 Signs)"
                 : activeModelSource === "playlist"
                 ? "Curriculum (123 Signs)"
                 : "INCLUDE (50 Signs)"}
@@ -1075,7 +1072,7 @@ export default function CameraSignPanel() {
                     Google Colab Trained Model (RandomForest):
                   </span>
                   <span className="text-slate-300">
-                    Trained on 167 real ISL video sequences (2,076 MediaPipe frames) across Hello, Namaste, and 16 distinct Adjectives
+                    Trained on 167 real ISL video sequences (2,076 MediaPipe frames) across Hello, Namaste, and 15 distinct Adjectives
                   </span>
                 </div>
                 <span className="text-[11px] text-emerald-300 font-mono">

@@ -78,7 +78,7 @@ async def recognize_sign(
         target_lang = target_language or "en"
         sign_lang = sign_language or "ISL"
 
-        # 1. Primary High-Precision MediaPipe Landmark + 18-Sign Random Forest Model
+        # 1. Primary High-Precision MediaPipe Landmark + 17-Sign Random Forest Model
         detector = get_mediapipe_detector()
         if detector is not None and frame is not None:
             try:
@@ -542,8 +542,8 @@ def get_model_info():
         active_info = {
             "model_source": "colab",
             "model_type": "RandomForest",
-            "model_title": "ISL 18-Sign Model (Hello, Namaste, 16 Adjectives)",
-            "num_classes": len(colab_model_service.classes_) if colab_model_service.classes_ is not None else 18,
+            "model_title": "ISL 17-Sign Model (Hello, Namaste, 15 Adjectives)",
+            "num_classes": len(colab_model_service.classes_) if colab_model_service.classes_ is not None else 17,
             "weights_available": True,
             "accuracy": "99.0%+",
         }
@@ -570,11 +570,11 @@ def get_model_info():
         "available_models": [
             {
                 "id": "colab",
-                "name": "ISL 18-Sign Model (Hello + Namaste + 16 Adjectives)",
-                "classes_count": len(colab_model_service.classes_) if colab_model_service.classes_ is not None else 18,
+                "name": "ISL 17-Sign Model (Hello + Namaste + 15 Adjectives)",
+                "classes_count": len(colab_model_service.classes_) if colab_model_service.classes_ is not None else 17,
                 "is_active": is_colab_ready,
                 "accuracy": "99.0%+",
-                "description": "Trained on real ISL video sequences across Hello, Namaste, and 16 distinct Adjectives",
+                "description": "Trained on real ISL video sequences across Hello, Namaste, and 15 distinct Adjectives",
             },
             {
                 "id": "playlist",

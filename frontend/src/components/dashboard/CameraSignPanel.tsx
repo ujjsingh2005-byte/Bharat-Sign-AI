@@ -761,19 +761,19 @@ export default function CameraSignPanel() {
         return;
       }
 
-      // 2. Otherwise send camera frame JPEG to backend computer vision endpoint
-      const context = canvas.getContext("2d");
-      if (!context) return;
-
+      // 2. Otherwise send camera frame JPEG to backend computer vision endpoint (using offscreen canvas)
       const width = 480;
       const height = Math.round((video.videoHeight / video.videoWidth) * width) || 360;
-      canvas.width = width;
-      canvas.height = height;
+      const offscreenCanvas = document.createElement("canvas");
+      offscreenCanvas.width = width;
+      offscreenCanvas.height = height;
+      const offscreenCtx = offscreenCanvas.getContext("2d");
+      if (!offscreenCtx) return;
 
-      context.drawImage(video, 0, 0, width, height);
+      offscreenCtx.drawImage(video, 0, 0, width, height);
 
       const blob = await new Promise<Blob | null>((resolve) => {
-        canvas.toBlob((b) => resolve(b), "image/jpeg", 0.8);
+        offscreenCanvas.toBlob((b) => resolve(b), "image/jpeg", 0.8);
       });
 
       if (!blob) return;
@@ -1046,7 +1046,7 @@ export default function CameraSignPanel() {
               <Sparkles size={16} className="text-indigo-400" />
               <h4 className="text-sm font-bold text-white">
                 {activeModelSource === "colab"
-                  ? "18 Classes • ISL Real-Video Trained (92.0% Accuracy)"
+                  ? "17 Classes • ISL Real-Video Trained (92.0% Accuracy)"
                   : activeModelSource === "playlist"
                   ? "Indian Sign Language 101 — YouTube Playlist Curriculum"
                   : "AI4Bharat INCLUDE-50 Supported Signs & Gestures"}
@@ -1056,7 +1056,7 @@ export default function CameraSignPanel() {
               <span className="text-xs text-emerald-300 font-semibold bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 {activeModelSource === "colab"
-                  ? "18 Classes • ISL Real-Video Trained (92.0% Accuracy)"
+                  ? "17 Classes • ISL Real-Video Trained (92.0% Accuracy)"
                   : activeModelSource === "playlist"
                   ? "123 Classes • 13 Lessons • 99.73% Accuracy (Bi-LSTM / 1D-CNN)"
                   : "50 Classes • Official AI4Bharat Pretrained Weights"}
@@ -1072,11 +1072,11 @@ export default function CameraSignPanel() {
                     Google Colab Trained Model (RandomForest):
                   </span>
                   <span className="text-slate-300">
-                    Trained on 167 real ISL video sequences (2,076 MediaPipe frames) across Hello, Namaste, and 15 distinct Adjectives
+                    Trained on 167 real ISL video sequences (2,076 MediaPipe frames) across Hello, Namaste, and 14 distinct Adjectives (BEAUTIFUL removed)
                   </span>
                 </div>
                 <span className="text-[11px] text-emerald-300 font-mono">
-                  18 Trained Signs (92.0% Acc)
+                  17 Trained Signs (89.2% Acc)
                 </span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

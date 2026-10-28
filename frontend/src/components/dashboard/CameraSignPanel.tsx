@@ -32,6 +32,7 @@ export default function CameraSignPanel() {
   const isProcessingHandRef = useRef(false);
   const allHandsLandmarksRef = useRef<any[][]>([]);
   const mediaPipeHandsRef = useRef<any>(null);
+  const lastSeenHandsTimestamp = useRef<number>(0);
 
   const [cameraOn, setCameraOn] = useState(false);
   const [detecting, setDetecting] = useState(false);
@@ -387,15 +388,17 @@ export default function CameraSignPanel() {
     const ctx = overlay.getContext("2d");
     if (!ctx) return;
 
-    overlay.width = video.videoWidth || 640;
-    overlay.height = video.videoHeight || 480;
+    const targetW = video.videoWidth || 640;
+    const targetH = video.videoHeight || 480;
+    if (overlay.width !== targetW) overlay.width = targetW;
+    if (overlay.height !== targetH) overlay.height = targetH;
     const w = overlay.width;
     const h = overlay.height;
 
     ctx.clearRect(0, 0, w, h);
 
     // Trigger continuous real-time 30-60 FPS hand tracking
-    if (mediaPipeHandsRef.current && video.readyState >= 2 && !isProcessingHandRef.current) {
+    if (mediaPipeHandsRef.current && video.readyState >= 2 && video.videoWidth > 0 && !isProcessingHandRef.current) {
       isProcessingHandRef.current = true;
       mediaPipeHandsRef.current.send({ image: video })
         .catch(() => {})
@@ -490,17 +493,6 @@ export default function CameraSignPanel() {
       ctx.stroke();
     }
 
-    // 3. Real-time continuous MediaPipe tracking pump
-    if (cameraOn && video && video.readyState >= 2 && !isProcessingHandRef.current && mediaPipeHandsRef.current) {
-      isProcessingHandRef.current = true;
-      mediaPipeHandsRef.current
-        .send({ image: video })
-        .catch(() => {})
-        .finally(() => {
-          isProcessingHandRef.current = false;
-        });
-    }
-
     animFrameRef.current = requestAnimationFrame(drawOverlay);
   }, [cameraOn, detecting]);
 
@@ -535,13 +527,14 @@ export default function CameraSignPanel() {
         handsInstance.setOptions({
           maxNumHands: 2,
           modelComplexity: 1,
-          minDetectionConfidence: 0.4,
-          minTrackingConfidence: 0.4,
+          minDetectionConfidence: 0.3,
+          minTrackingConfidence: 0.3,
         });
 
         handsInstance.onResults((results: any) => {
           if (cancelled) return;
           if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+            lastSeenHandsTimestamp.current = Date.now();
             allHandsLandmarksRef.current = results.multiHandLandmarks;
             liveLandmarksRef.current = results.multiHandLandmarks[0];
             if (results.multiHandedness && results.multiHandedness.length > 0) {
@@ -552,12 +545,14 @@ export default function CameraSignPanel() {
             setHandDetected(true);
             setHandCount(results.multiHandLandmarks.length);
           } else {
-            allHandsHandednessRef.current = ["Right"];
-            allHandsLandmarksRef.current = [];
-            liveLandmarksRef.current = null;
-            setHandDetected(false);
-    setHandCount(0);
-            setHandCount(0);
+            // Keep landmarks visible for 120ms to prevent flickering during fast transitions
+            if (Date.now() - lastSeenHandsTimestamp.current > 120) {
+              allHandsHandednessRef.current = ["Right"];
+              allHandsLandmarksRef.current = [];
+              liveLandmarksRef.current = null;
+              setHandDetected(false);
+              setHandCount(0);
+            }
           }
         });
 
@@ -736,13 +731,6 @@ export default function CameraSignPanel() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     if (!video || !canvas || video.readyState < 2 || video.videoWidth === 0) return;
-
-    // Send frame to MediaPipe client-side tracking if enabled
-    if (mediaPipeHandsRef.current) {
-      try {
-        await mediaPipeHandsRef.current.send({ image: video });
-      } catch {}
-    }
 
     sendingFrameRef.current = true;
 

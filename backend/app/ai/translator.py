@@ -351,49 +351,82 @@ def is_pure_latin_english(text: str) -> bool:
     has_indic = bool(re.search(r"[\u0900-\u0DFF]", text))
     return has_latin and not has_indic and not is_hinglish(text)
 
-# Instant English to Regional Language dictionary for Sign-to-Text & Sign-to-Voice
+# Instant English to Regional Language dictionary for Sign-to-Text & Sign-to-Voice (All 17 ISL Signs)
 ENGLISH_TO_REGIONAL = {
     "hi": {
-        "hello": "हेलो", "namaste": "नमस्ते", "water": "पानी", "food": "खाना", "eat": "खाना", "drink": "पीना",
-        "help": "मदद", "doctor": "डॉक्टर", "school": "स्कूल", "college": "कॉलेज", "yes": "हाँ",
-        "no": "नहीं", "thank you": "धन्यवाद", "thank_you": "धन्यवाद", "goodbye": "अलविदा", "you": "आप", "me": "मैं",
-        "where": "कहाँ", "why": "क्यों", "live": "रहना", "want": "चाहिए", "need": "ज़रूरत",
+        "hello": "हैलो", "namaste": "नमस्ते", "loud": "तेज़", "quiet": "शांत", "happy": "खुश",
+        "sad": "उदास", "ugly": "कुरूप", "deaf": "बधिर", "blind": "दृष्टिहीन", "shallow": "उथला",
+        "clean": "साफ़", "dirty": "गंदा", "strong": "मजबूत", "weak": "कमज़ोर", "dead": "मृत",
+        "alive": "जीवित", "heavy": "भारी", "water": "पानी", "food": "खाना", "eat": "खाना",
+        "drink": "पीना", "help": "मदद", "doctor": "डॉक्टर", "school": "स्कूल", "yes": "हाँ", "no": "नहीं"
     },
     "bho": {
-        "hello": "हेलो", "namaste": "प्रणाम", "water": "पानी", "food": "खाना", "eat": "खाना",
-        "help": "मदद", "doctor": "डॉक्टर", "school": "स्कूल", "yes": "हाँ", "no": "नाहीं",
-        "thank you": "धन्यवाद", "goodbye": "अलविदा", "you": "रउआ", "me": "हम", "where": "कहाँ",
+        "hello": "हेलो", "namaste": "प्रणाम", "loud": "बड़हन आवाज़", "quiet": "चुपचाप", "happy": "खुस",
+        "sad": "दुखी", "ugly": "भद्दा", "deaf": "बहिरा", "blind": "अनहर", "shallow": "कम गहिर",
+        "clean": "साफ़-सुथरा", "dirty": "मैल", "strong": "बरियार", "weak": "पातर", "dead": "मरल",
+        "alive": "जियत", "heavy": "गरु", "water": "पानी", "food": "खाना", "eat": "खाना",
+        "help": "मदद", "doctor": "डॉक्टर", "school": "स्कूल", "yes": "हाँ", "no": "नाहीं"
     },
     "ta": {
-        "hello": "ஹலோ", "namaste": "வணக்கம்", "water": "தண்ணீர்", "food": "உணவு",
-        "help": "உதவி", "doctor": "மருத்துவர்", "school": "பள்ளி", "yes": "ஆம்", "no": "இல்லை",
-        "thank you": "நன்றி", "goodbye": "சென்று வருகிறேன்", "you": "நீங்கள்", "me": "நான்",
+        "hello": "ஹலோ", "namaste": "வணக்கம்", "loud": "உரத்த", "quiet": "அமைதியான", "happy": "மகிழ்ச்சி",
+        "sad": "சோகம்", "ugly": "அசிங்கமான", "deaf": "காது கேளாதவர்", "blind": "பார்வையற்றவர்", "shallow": "ஆழமற்ற",
+        "clean": "சுத்தமான", "dirty": "அழுக்கான", "strong": "வலுவான", "weak": "பலவீனமான", "dead": "இறந்த",
+        "alive": "உயிருள்ள", "heavy": "கனமான", "water": "தண்ணீர்", "food": "உணவு", "help": "உதவி", "yes": "ஆம்", "no": "இல்லை"
     },
     "te": {
-        "hello": "హలో", "namaste": "నమస్కారం", "water": "నీళ్లు", "food": "అన్నం",
-        "help": "సహాయం", "doctor": "డాక్టర్", "school": "పాఠశాల", "yes": "అవును", "no": "కాదు",
-        "thank you": "ధన్యవాదాలు", "goodbye": "సెలవు", "you": "మీరు", "me": "నేను",
+        "hello": "హలో", "namaste": "నమస్కారం", "loud": "బిగ్గరగా", "quiet": "నిశ్శబ్దంగా", "happy": "సంతోషం",
+        "sad": "విచారంగా", "ugly": "అసహ్యకరమైన", "deaf": "చెవిటి", "blind": "అంధుడు", "shallow": "నిస్సారమైన",
+        "clean": "శుభ్రంగా", "dirty": "మురికి", "strong": "బలమైన", "weak": "బలహీనమైన", "dead": "చనిపోయిన",
+        "alive": "సజీవంగా", "heavy": "బరువైన", "water": "నీళ్లు", "food": "అన్నం", "help": "సహాయం", "yes": "అవును", "no": "కాదు"
     },
     "bn": {
-        "hello": "হ্যালো", "namaste": "নমস্কার", "water": "জল", "food": "খাবার",
-        "help": "সাহায্য", "doctor": "ডাক্তার", "school": "স্কুল", "yes": "হ্যাঁ", "no": "না",
-        "thank you": "ধন্যবাদ", "goodbye": "বিদায়", "you": "আপনি", "me": "আমি",
+        "hello": "হ্যালো", "namaste": "নমস্কার", "loud": "জোরে", "quiet": "শান্ত", "happy": "খুশি",
+        "sad": "দুঃখিত", "ugly": "কুৎসিত", "deaf": "বধির", "blind": "অন্ধ", "shallow": "অগভীর",
+        "clean": "পরিষ্কার", "dirty": "নোংরা", "strong": "শক্তিশালী", "weak": "দুর্বল", "dead": "মৃত",
+        "alive": "জীবিত", "heavy": "ভারী", "water": "জল", "food": "খাবার", "help": "সাহায্য", "yes": "হ্যাঁ", "no": "না"
     },
     "mr": {
-        "hello": "हॅलो", "namaste": "नमस्कार", "water": "पाणी", "food": "जेवण",
-        "help": "मदत", "doctor": "डॉक्टर", "school": "शाळा", "yes": "होय", "no": "नाही",
-        "thank you": "धन्यवाद", "goodbye": "पुन्हा भेटू", "you": "तुम्ही", "me": "मी",
+        "hello": "हॅलो", "namaste": "नमस्कार", "loud": "जोरात", "quiet": "शांत", "happy": "आनंदी",
+        "sad": "दुःखी", "ugly": "कुरूप", "deaf": "बहिरा", "blind": "अंधळा", "shallow": "उथळ",
+        "clean": "स्वच्छ", "dirty": "घाणेरडा", "strong": "मजबूत", "weak": "अशक्त", "dead": "मृत",
+        "alive": "जिवंत", "heavy": "जड", "water": "पाणी", "food": "जेवण", "help": "मदत", "yes": "होय", "no": "नाही"
     },
     "gu": {
-        "hello": "હેલો", "namaste": "નમસ્તે", "water": "પાણી", "food": "ખોરાક",
-        "help": "મદદ", "doctor": "ડૉક્ટર", "school": "શાળા", "yes": "હા", "no": "ના",
-        "thank you": "આભાર", "goodbye": "આવજો", "you": "તમે", "me": "હું",
+        "hello": "હેલો", "namaste": "નમસ્તે", "loud": "મોટો અવાજ", "quiet": "શાંત", "happy": "ખુશ",
+        "sad": "ઉદાસ", "ugly": "કદરૂપું", "deaf": "બહેરો", "blind": "અંધ", "shallow": "છીછરું",
+        "clean": "સ્વચ્છ", "dirty": "ગંદુ", "strong": "મજબૂત", "weak": "નબળું", "dead": "મૃત",
+        "alive": "જીવંત", "heavy": "ભારે", "water": "પાણી", "food": "ખોરાક", "help": "મદદ", "yes": "હા", "no": "ના"
     },
     "pa": {
-        "hello": "ਹੈਲੋ", "namaste": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "water": "ਪਾਣੀ", "food": "ਖਾਣਾ",
-        "help": "ਮਦਦ", "doctor": "ਡਾਕਟਰ", "school": "ਸਕੂਲ", "yes": "ਹਾਂ", "no": "ਨਹੀਂ",
-        "thank you": "ਧੰਨਵਾਦ", "goodbye": "ਅਲਵਿਦਾ", "you": "ਤੁਸੀਂ", "me": "ਮੈਂ",
+        "hello": "ਹੈਲੋ", "namaste": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "loud": "ਉੱਚੀ", "quiet": "ਸ਼ਾਂਤ", "happy": "ਖੁਸ਼",
+        "sad": "ਉਦਾਸ", "ugly": "ਬਦਸੂਰਤ", "deaf": "ਬੋਲਾ", "blind": "ਅੰਨ੍ਹਾ", "shallow": "ਉੱਥਲਾ",
+        "clean": "ਸਾਫ਼", "dirty": "ਗੰਦਾ", "strong": "ਮਜ਼ਬੂਤ", "weak": "ਕਮਜ਼ੋਰ", "dead": "ਮ੍ਰਿਤਕ",
+        "alive": "ਜਿਊਂਦਾ", "heavy": "ਭਾਰੀ", "water": "ਪਾਣੀ", "food": "ਖਾਣਾ", "help": "ਮਦਦ", "yes": "ਹਾਂ", "no": "ਨਹੀਂ"
     },
+    "kn": {
+        "hello": "ಹಲೋ", "namaste": "ನಮಸ್ಕಾರ", "loud": "ಜೋರಾಗಿ", "quiet": "ಶಾಂತ", "happy": "ಸಂತೋಷ",
+        "sad": "ದುಃಖ", "ugly": "ಕುರೂಪ", "deaf": "ಕಿವುಡ", "blind": "ಕುರುಡ", "shallow": "ಆಳವಿಲ್ಲದ",
+        "clean": "ಸ್ವಚ್ಛ", "dirty": "ಕೊಳಕು", "strong": "ಬಲವಾದ", "weak": "ದುರ್ಬಲ", "dead": "ಸತ್ತ",
+        "alive": "ಜೀವಂತ", "heavy": "ಭಾರವಾದ", "water": "ನೀರು", "food": "ಆಹಾರ", "help": "ಸಹಾಯ", "yes": "ಹೌದು", "no": "ಇಲ್ಲ"
+    },
+    "ml": {
+        "hello": "ഹലോ", "namaste": "നമസ്കാരം", "loud": "ഉച്ചത്തിൽ", "quiet": "ശാന്തമായ", "happy": "സന്തോഷം",
+        "sad": "വിഷമം", "ugly": "വിരൂപമായ", "deaf": "ബധിരൻ", "blind": "അന്ധൻ", "shallow": "ആഴമില്ലാത്ത",
+        "clean": "വൃത്തിയുള്ള", "dirty": "അഴുക്കുള്ള", "strong": "ശക്തമായ", "weak": "ദുർബലമായ", "dead": "മരിച്ച",
+        "alive": "ജീവനോടെയുള്ള", "heavy": "ഭാരമുള്ള", "water": "വെള്ളം", "food": "ഭക്ഷണം", "help": "സഹായം", "yes": "അതെ", "no": "അല്ല"
+    },
+    "ur": {
+        "hello": "ہیلو", "namaste": "آداب", "loud": "اونچی آواز", "quiet": "خاموش", "happy": "خوش",
+        "sad": "اداس", "ugly": "بدصورت", "deaf": "بہرا", "blind": "اندھا", "shallow": "کم گہرا",
+        "clean": "صاف", "dirty": "گندا", "strong": "مضبوط", "weak": "کمزور", "dead": "مردہ",
+        "alive": "زندہ", "heavy": "بھاری", "water": "پانی", "food": "کھانا", "help": "مدد", "yes": "ہاں", "no": "نہیں"
+    },
+    "sa": {
+        "hello": "हरि ॐ", "namaste": "नमस्ते", "loud": "उच्चैः", "quiet": "मौनम्", "happy": "प्रसन्नः",
+        "sad": "दुःखितः", "ugly": "कुरूपः", "deaf": "बधिरः", "blind": "अन्धः", "shallow": "अगाधम्",
+        "clean": "शुद्धम्", "dirty": "मलिनम्", "strong": "बलवान्", "weak": "दुर्बलः", "dead": "मृतः",
+        "alive": "जीवितः", "heavy": "गुरुः", "water": "जलम्", "food": "भोजनम्", "help": "साहाय्यम्", "yes": "आम्", "no": "न"
+    }
 }
 
 def translate_text(

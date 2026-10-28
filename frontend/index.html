@@ -17,16 +17,9 @@
         };
       })();
     </script>
-    <!-- MediaPipe Hands & Camera Utils: Official Tested CDN with Local Fallback -->
+    <!-- MediaPipe Hands & Camera Utils: Official Tested CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js" crossorigin="anonymous"></script>
-    <script>
-      if (!window.Hands) {
-        var s = document.createElement('script');
-        s.src = '/mediapipe/hands.js';
-        document.head.appendChild(s);
-      }
-    </script>
   </head>
   <body>
     <div id="root"></div>

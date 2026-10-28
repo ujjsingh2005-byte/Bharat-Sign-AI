@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
@@ -27,13 +27,8 @@ export default function AppRouter() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Master Dashboard Studio & Typo Redirects */}
+      {/* Master Dashboard Studio */}
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/dashboard." element={<Navigate to="/dashboard" replace />} />
-      <Route path="/dashboard/" element={<Navigate to="/dashboard" replace />} />
-
-      {/* Catch-all fallback */}
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }

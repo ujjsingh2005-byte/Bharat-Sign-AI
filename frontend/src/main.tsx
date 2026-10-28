@@ -19,15 +19,6 @@ console.warn = (...args: any[]) => {
   origWarnGlobal.apply(console, args);
 };
 
-// Catch unhandled runtime errors and log them clearly
-window.addEventListener("error", (event) => {
-  console.error("[Window Error Captured]:", event.message, event.filename, event.lineno);
-});
-
-window.addEventListener("unhandledrejection", (event) => {
-  console.error("[Unhandled Promise Rejection]:", event.reason);
-});
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <GlobalErrorBoundary>

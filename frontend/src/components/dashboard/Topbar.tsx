@@ -5,22 +5,38 @@ import { API_BASE_URL as API } from "../../utils/apiConfig";
 
 export default function Topbar() {
   const [backendOnline, setBackendOnline] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user") || '{"name": "Explorer"}');
+
+  let userName = "Explorer";
+  try {
+    const raw = localStorage.getItem("user");
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed.name === "string") {
+        userName = parsed.name;
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to parse user from localStorage:", e);
+  }
 
   useEffect(() => {
+    let isMounted = true;
     const checkBackend = async () => {
       try {
         const res = await axios.get(`${API}/`, { timeout: 3000 });
-        if (res.data) {
+        if (isMounted && res.data) {
           setBackendOnline(true);
         }
       } catch {
-        setBackendOnline(false);
+        if (isMounted) setBackendOnline(false);
       }
     };
     checkBackend();
     const interval = setInterval(checkBackend, 10000);
-    return () => clearInterval(interval);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -33,7 +49,7 @@ export default function Topbar() {
           </span>
         </h2>
         <p className="text-xs text-[#A5B4FC]">
-          Welcome {user?.name || "User"} • Bridging Spoken Indian Languages & ISL
+          Welcome {userName} • Bridging Spoken Indian Languages & ISL
         </p>
       </div>
 
@@ -50,8 +66,12 @@ export default function Topbar() {
               : "bg-[#3A2A12] border-[#D97706] text-[#FCD34D]"
           }`}
         >
-          <Radio size={14} className={backendOnline ? "animate-pulse" : ""} />
-          <span>{backendOnline ? "Backend AI Online" : "AI Connecting"}</span>
+          <span
+            className={`w-2 h-2 rounded-full ${
+              backendOnline ? "bg-[#34D399] animate-pulse" : "bg-[#FCD34D]"
+            }`}
+          />
+          <span>{backendOnline ? "AI Engine Online" : "AI Connecting..."}</span>
         </div>
       </div>
     </header>

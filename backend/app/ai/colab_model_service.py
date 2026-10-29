@@ -12,7 +12,12 @@ from typing import List, Dict, Any, Optional
 
 MODEL_FILENAME = "bharat_sign_ai_model.pkl"
 POSSIBLE_PATHS = [
+    r"C:\Users\UJJWAL SINGH\Downloads\adjective 2 file\bharat_sign_ai_model39.pkl",
+    r"C:\Users\UJJWAL SINGH\Downloads\adjective 2 file\bharat_sign_ai_model37.pkl",
     r"C:\Users\UJJWAL SINGH\Downloads\adjective 2 file\bharat_sign_ai_model22.pkl",
+    r"C:\Users\UJJWAL SINGH\Downloads\adjective 2 file\bharat_sign_ai_model36.pkl",
+    r"C:\Users\UJJWAL SINGH\Downloads\adjective 2 file\bharat_sign_ai_model35.pkl",
+    r"C:\Users\UJJWAL SINGH\Downloads\adjective 2 file\bharat_sign_ai_model34.pkl",
     os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), MODEL_FILENAME),
     os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "isl_models", "bharat_sign_ai_model22.pkl"),
     os.path.join(os.path.dirname(__file__), "include", "weights", MODEL_FILENAME),
@@ -179,6 +184,7 @@ class ColabModelService:
                 "SAD": {"display": "Sad (उदास / दुखी)", "hi": "उदास", "meaning": "Sorrow / Sadness"},
                 "UGLY": {"display": "Ugly (कुरूप / भद्दा)", "hi": "कुरूप", "meaning": "Unattractive / Ugly"},
                 "DEAF": {"display": "Deaf (बधिर / बहरा)", "hi": "बधिर", "meaning": "Deaf / Hearing Impairment"},
+                "BEAUTIFUL": {"display": "Beautiful (सुंदर / खूबसूरत)", "hi": "सुंदर", "meaning": "Beautiful / Attractive / Aesthetic"},
                 "BLIND": {"display": "Blind (दृष्टिहीन / अंधा)", "hi": "दृष्टिहीन", "meaning": "Blind / Vision Impairment"},
                 "SHALLOW": {"display": "Shallow (उथला / कम गहरा)", "hi": "उथला", "meaning": "Shallow Depth / Low Water Level"},
                 "CLEAN": {"display": "Clean (साफ़ / स्वच्छ)", "hi": "साफ़", "meaning": "Clean / Pure / Neat"},

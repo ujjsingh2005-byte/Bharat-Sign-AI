@@ -12,7 +12,9 @@ from typing import List, Dict, Any, Optional
 
 MODEL_FILENAME = "bharat_sign_ai_model.pkl"
 POSSIBLE_PATHS = [
+    r"C:\Users\UJJWAL SINGH\Downloads\adjective 2 file\bharat_sign_ai_model22.pkl",
     os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), MODEL_FILENAME),
+    os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "isl_models", "bharat_sign_ai_model22.pkl"),
     os.path.join(os.path.dirname(__file__), "include", "weights", MODEL_FILENAME),
     os.path.join(os.getcwd(), MODEL_FILENAME),
 ]

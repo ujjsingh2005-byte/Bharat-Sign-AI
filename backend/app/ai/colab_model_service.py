@@ -153,7 +153,7 @@ class ColabModelService:
                     "probabilities": prob_map,
                     "alternatives": [],
                     "model_engine": "ISL 10-Sign Expanded Model",
-                    "message": "Unknown sign. Gesture does not match any of the 17 target ISL signs."
+                    "message": "Unknown sign. Gesture does not match any of the 18 target ISL signs."
                 }
 
             alternatives = [
@@ -166,6 +166,7 @@ class ColabModelService:
             label_map = {
                 "HELLO": {"display": "Hello (हैलो)", "hi": "हैलो", "meaning": "Single Hand Greeting Wave (एक हाथ से हैलो)"},
                 "NAMASTE": {"display": "Namaste (नमस्ते)", "hi": "नमस्ते", "meaning": "Traditional Indian Greeting (Both Hands Joined)"},
+                "NARROW": {"display": "Narrow (संकीर्ण / तंग)", "hi": "तंग", "meaning": "Small Width / Restricted Space"},
                 "LOUD": {"display": "Loud (तेज़ / ज़ोरदार)", "hi": "तेज़", "meaning": "High Volume / Loud Noise"},
                 "QUIET": {"display": "Quiet (शांत)", "hi": "शांत", "meaning": "Silence / Quietness"},
                 "HAPPY": {"display": "Happy (खुश)", "hi": "खुश", "meaning": "Joy / Happiness"},

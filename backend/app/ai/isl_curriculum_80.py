@@ -1285,6 +1285,19 @@ ISL_CURRICULUM_80: List[Dict[str, Any]] = [
         "status": "Passed independent testing",
         "has_avatar_animation": True,
     },
+    {
+        "id": 97,
+        "sign": "NARROW",
+        "display": "Narrow",
+        "hindi": "संकीर्ण / तंग / संकरा",
+        "category": "Adjectives and Descriptors",
+        "category_id": 7,
+        "hands_required": 2,
+        "is_dynamic": True,
+        "anatomical_cue": "Both flat open palms face each other vertically in front of chest and move inward close together, showing small width / narrow gap.",
+        "status": "Passed independent testing",
+        "has_avatar_animation": True,
+    },
 ]
 
 ISL_CATEGORIES_LIST = [
@@ -1294,5 +1307,5 @@ ISL_CATEGORIES_LIST = [
     {"id": 4, "name": "People and Family", "sign_count": 10},
     {"id": 5, "name": "Common Actions", "sign_count": 15},
     {"id": 6, "name": "Time and Everyday Words", "sign_count": 10},
-    {"id": 7, "name": "Adjectives and Descriptors", "sign_count": 16},
+    {"id": 7, "name": "Adjectives and Descriptors", "sign_count": 17},
 ]

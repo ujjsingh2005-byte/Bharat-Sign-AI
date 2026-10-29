@@ -1,0 +1,149 @@
+{
+  "model": "bharat_sign_ai_model22.pkl",
+  "classes": [
+    "ALIVE",
+    "BLIND",
+    "CLEAN",
+    "DEAD",
+    "DEAF",
+    "DIRTY",
+    "HAPPY",
+    "HEAVY",
+    "HELLO",
+    "LOUD",
+    "NAMASTE",
+    "NARROW",
+    "QUIET",
+    "SAD",
+    "SHALLOW",
+    "STRONG",
+    "UGLY",
+    "WEAK"
+  ],
+  "num_classes": 18,
+  "accuracy": 99.93,
+  "report": {
+    "ALIVE": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 309.0
+    },
+    "BLIND": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 293.0
+    },
+    "CLEAN": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 224.0
+    },
+    "DEAD": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 311.0
+    },
+    "DEAF": {
+      "precision": 1.0,
+      "recall": 0.9898305084745763,
+      "f1-score": 0.9948892674616695,
+      "support": 295.0
+    },
+    "DIRTY": {
+      "precision": 0.9967320261437909,
+      "recall": 1.0,
+      "f1-score": 0.9983633387888707,
+      "support": 305.0
+    },
+    "HAPPY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 523.0
+    },
+    "HEAVY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 209.0
+    },
+    "HELLO": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 189.0
+    },
+    "LOUD": {
+      "precision": 0.99581589958159,
+      "recall": 1.0,
+      "f1-score": 0.9979035639412998,
+      "support": 714.0
+    },
+    "NAMASTE": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 378.0
+    },
+    "NARROW": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 428.0
+    },
+    "QUIET": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 636.0
+    },
+    "SAD": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 326.0
+    },
+    "SHALLOW": {
+      "precision": 1.0,
+      "recall": 0.9959514170040485,
+      "f1-score": 0.9979716024340771,
+      "support": 247.0
+    },
+    "STRONG": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 151.0
+    },
+    "UGLY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 301.0
+    },
+    "WEAK": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 254.0
+    },
+    "accuracy": 0.9993435089446906,
+    "macro avg": {
+      "precision": 0.9995859958736324,
+      "recall": 0.9992101069710349,
+      "f1-score": 0.9993959873681065,
+      "support": 6093.0
+    },
+    "weighted avg": {
+      "precision": 0.9993461054119664,
+      "recall": 0.9993435089446906,
+      "f1-score": 0.9993427347262601,
+      "support": 6093.0
+    }
+  },
+  "timestamp": "2026-10-29T12:28:19.429613"
+}

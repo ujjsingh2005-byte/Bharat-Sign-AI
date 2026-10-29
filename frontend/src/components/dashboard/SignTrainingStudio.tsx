@@ -504,12 +504,12 @@ export default function SignTrainingStudio({
               <h3 className="text-xl font-black text-white flex items-center gap-2">
                 <span>Sign Data Collection & Model Training Studio</span>
                 <span className="text-xs bg-amber-500/20 text-amber-300 font-bold px-2.5 py-0.5 rounded-full border border-amber-500/30">
-                  80 ISL Signs Curriculum
+                  {curriculum.length} ISL Signs Curriculum
                 </span>
               </h3>
             </div>
             <p className="text-xs text-slate-400 max-w-2xl">
-              Record authentic MediaPipe landmark sequences (21 landmarks single-hand, 42 dual-hand) across 6 categories.
+              Record authentic MediaPipe landmark sequences (21 landmarks single-hand, 42 dual-hand) across {categories.length} categories.
               Train real RandomForest & Sequence classifiers with stratified zero-leakage session evaluation.
             </p>
           </div>
@@ -549,7 +549,7 @@ export default function SignTrainingStudio({
         <div className="mt-4 grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4 border-t border-slate-800/80">
           <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
             <span className="text-[11px] text-slate-400 block font-semibold">Total Curriculum Signs</span>
-            <span className="text-base font-black text-white">{curriculum.length} Signs (6 Categories)</span>
+            <span className="text-base font-black text-white">{curriculum.length} Signs ({categories.length} Categories)</span>
           </div>
           <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
             <span className="text-[11px] text-amber-400 block font-semibold">Samples Collected</span>
@@ -641,7 +641,7 @@ export default function SignTrainingStudio({
                     : "bg-slate-900 text-slate-400 hover:text-white"
                 }`}
               >
-                All (80)
+                All ({curriculum.length})
               </button>
               {categories.map((c) => (
                 <button
@@ -653,7 +653,7 @@ export default function SignTrainingStudio({
                       : "bg-slate-900 text-slate-400 hover:text-white"
                   }`}
                 >
-                  {c.name.split(" ")[0]} ({c.count})
+                  {c.name.split(" ")[0]} ({(c as any).sign_count ?? c.count ?? 0})
                 </button>
               ))}
             </div>

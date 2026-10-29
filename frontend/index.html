@@ -6,14 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bharat Sign AI 3 - Master Studio</title>
     <script>
-      // Suppress benign THREE.Clock deprecation warning from @react-three/fiber internals
+      // Suppress benign third-party notices (THREE.Clock deprecation & MediaPipe WebGL WASM GL context notices)
       (function() {
         var _warn = console.warn;
-        console.warn = function() {
-          if (arguments[0] && typeof arguments[0] === 'string' && arguments[0].indexOf('THREE.Clock: This module has been deprecated') !== -1) {
-            return;
+        var _error = console.error;
+        function isBenign(arg) {
+          if (arg && typeof arg === 'string') {
+            if (arg.indexOf('THREE.Clock: This module has been deprecated') !== -1) return true;
+            if (arg.indexOf('gl_context') !== -1 || arg.indexOf('gl_context_webgl') !== -1) return true;
+            if (arg.indexOf('OpenGL error checking is disabled') !== -1) return true;
+            if (arg.indexOf('Successfully created a WebGL context') !== -1) return true;
           }
+          return false;
+        }
+        console.warn = function() {
+          if (isBenign(arguments[0])) return;
           return _warn.apply(console, arguments);
+        };
+        console.error = function() {
+          if (isBenign(arguments[0])) return;
+          return _error.apply(console, arguments);
         };
       })();
     </script>

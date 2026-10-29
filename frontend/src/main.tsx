@@ -7,16 +7,30 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { GlobalErrorBoundary } from "./components/common/GlobalErrorBoundary";
 import "./styles/globals.css";
 
-// Suppress benign THREE.Clock deprecation warning emitted by @react-three/fiber internals until upstream adopts THREE.Timer
+// Suppress benign third-party notices emitted by @react-three/fiber and MediaPipe WebGL Emscripten
 const origWarnGlobal = console.warn;
-console.warn = (...args: any[]) => {
-  if (
-    typeof args[0] === "string" &&
-    args[0].includes("THREE.Clock: This module has been deprecated")
-  ) {
-    return;
+const origErrorGlobal = console.error;
+const isBenignNotice = (msg: any) => {
+  if (typeof msg === "string") {
+    return (
+      msg.includes("THREE.Clock: This module has been deprecated") ||
+      msg.includes("gl_context") ||
+      msg.includes("gl_context_webgl") ||
+      msg.includes("OpenGL error checking is disabled") ||
+      msg.includes("Successfully created a WebGL context")
+    );
   }
+  return false;
+};
+
+console.warn = (...args: any[]) => {
+  if (isBenignNotice(args[0])) return;
   origWarnGlobal.apply(console, args);
+};
+
+console.error = (...args: any[]) => {
+  if (isBenignNotice(args[0])) return;
+  origErrorGlobal.apply(console, args);
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
